@@ -1,0 +1,35 @@
+<settings>
+	<clients>
+		<client version="860" description="Client 8.60 v1" otbversion="19" datsignature="4C28B721" sprsignature="4C220594"/>
+		<client version="860" description="Client 8.60 v2" otbversion="20" datsignature="4C2C7993" sprsignature="4C220594"/>
+		<client version="861" description="Client 8.61" otbversion="21" datsignature="4C6A4CBC" sprsignature="4C63F145"/>
+		<client version="862" description="Client 8.62" otbversion="22" datsignature="4C973450" sprsignature="4C63F145"/>
+		<client version="870" description="Client 8.70" otbversion="23" datsignature="4CFE22C5" sprsignature="4CFD078A"/>
+		<client version="871" description="Client 8.71" otbversion="24" datsignature="4D41979E" sprsignature="4D3D65D0"/>
+		<client version="872" description="Client 8.72" otbversion="25" datsignature="4DAD1A1A" sprsignature="4DAD1A32"/>
+		<client version="873" description="Client 8.73" otbversion="26" datsignature="4DBAA20B" sprsignature="4DAD1A32"/>
+		<client version="900" description="Client 9.00" otbversion="27" datsignature="4DBAA20B" sprsignature="4DAD1A32"/>
+		<client version="910" description="Client 9.10" otbversion="28" datsignature="4E12DAFF" sprsignature="4E12DB27"/>
+		<client version="920" description="Client 9.20" otbversion="29" datsignature="4E807C08" sprsignature="4E807C23"/>
+		<client version="940" description="Client 9.40" otbversion="30" datsignature="4EE71DE5" sprsignature="4EE71E06"/>
+		<client version="944" description="Client 9.44 (old)" otbversion="31" datsignature="4F0EEFBB" sprsignature="4F0EEFEF"/>
+		<client version="944" description="Client 9.44 v1" otbversion="32" datsignature="4F105168" sprsignature="4F1051D7"/>
+		<client version="944" description="Client 9.44 v2" otbversion="33" datsignature="4F16C0D7" sprsignature="4F1051D7"/>
+		<client version="944" description="Client 9.44 v3" otbversion="34" datsignature="4F3131CF" sprsignature="4F3131F6"/>
+		<client version="946" description="Client 9.46" otbversion="35" datsignature="4F6B341F" sprsignature="4F5DCEF7"/>
+		<client version="950" description="Client 9.50" otbversion="36" datsignature="4F75B7AB" sprsignature="4F75B7CD"/>
+		<client version="952" description="Client 9.52" otbversion="37" datsignature="4F857F6C" sprsignature="4F857F8E"/>
+		<client version="953" description="Client 9.53" otbversion="38" datsignature="4FA11252" sprsignature="4FA11282"/>
+		<client version="954" description="Client 9.54" otbversion="39" datsignature="4FD5956B" sprsignature="4FD595B7"/>
+		<client version="960" description="Client 9.60" otbversion="40" datsignature="4FFA74CC" sprsignature="4FFA74F9"/>
+		<client version="961" description="Client 9.61" otbversion="41" datsignature="50226F9D" sprsignature="50226FBD"/>
+		<client version="963" description="Client 9.63" otbversion="42" datsignature="503CB933" sprsignature="503CB954"/>
+		<client version="970" description="Client 9.70" otbversion="43" datsignature="5072A490" sprsignature="5072A567"/>
+		<client version="980" description="Client 9.80" otbversion="44" datsignature="50C70674" sprsignature="50C70753"/>
+		<client version="981" description="Client 9.81" otbversion="45" datsignature="50D1C5B6" sprsignature="50D1C685"/>
+		<client version="982" description="Client 9.82" otbversion="46" datsignature="512CAD09" sprsignature="512CAD68"/>
+		<client version="983" description="Client 9.83" otbversion="47" datsignature="51407B67" sprsignature="51407BC7"/>
+		<client version="985" description="Client 9.85" otbversion="48" datsignature="51641A1B" sprsignature="51641A84"/>
+		<client version="986" description="Client 9.86" otbversion="49" datsignature="5170E904" sprsignature="5170E96F"/>
+	</clients>
+</settings>

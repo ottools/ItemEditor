@@ -1,0 +1,10 @@
+<settings>
+	<clients>
+		<client version="1010" description="Client 10.10" otbversion="50" datsignature="51E3F8C3" sprsignature="51E3F8E9"/>
+		<client version="1020" description="Client 10.20" otbversion="51" datsignature="5236F129" sprsignature="5236F14F"/>
+		<client version="1021" description="Client 10.21" otbversion="52" datsignature="526A5068" sprsignature="526A5090"/>
+		<client version="1030" description="Client 10.30" otbversion="53" datsignature="52A59036" sprsignature="52A5905F"/>
+		<client version="1031" description="Client 10.31" otbversion="54" datsignature="52AED581" sprsignature="52AED5A7"/>
+		<client version="1035" description="Client 10.35" otbversion="55" datsignature="52FDFC2C" sprsignature="52FDFC54"/>
+	</clients>
+</settings>

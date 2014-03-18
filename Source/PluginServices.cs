@@ -18,10 +18,12 @@
 */
 #endregion
 
+using ItemEditor.Helpers;
 using PluginInterface;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace Host
 {
@@ -49,28 +51,20 @@ namespace Host
 		}
 
 		/// <summary>
-		/// Searches the Application's startup directory
+		/// Searches the Path for plugins
 		/// </summary>
 		public void FindPlugins()
 		{
-			string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Plug-ins");
-			if (Directory.Exists(path) == false)
+			string path = PathHelper.Plugins;
+			if (!Directory.Exists(path))
 			{
-				Directory.CreateDirectory(path);
+				MessageBox.Show("Plug-ins were not found. Please reinstall the program.");
+				return;
 			}
 
-			FindPlugins(path);
-		}
-
-		/// <summary>
-		/// Searches the Path for plugins
-		/// </summary>
-		/// <param name="Path">Directory to search for Plugins in</param>
-		public void FindPlugins(string Path)
-		{
 			colAvailablePlugins.Clear();
 
-			foreach (string fileOn in Directory.GetFiles(Path))
+			foreach (string fileOn in Directory.GetFiles(path))
 			{
 				FileInfo file = new FileInfo(fileOn);
 				if (file.Extension.Equals(".dll"))

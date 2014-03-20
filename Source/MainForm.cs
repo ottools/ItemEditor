@@ -97,7 +97,7 @@ namespace ItemEditor
 
 		#region General Methods
 
-		public void Open(string fileName = null, bool extended = false)
+		public void Open(string fileName = null)
 		{
 			if (String.IsNullOrEmpty(fileName))
 			{
@@ -134,7 +134,7 @@ namespace ItemEditor
 					return;
 				}
 
-				if (!LoadClient(currentPlugin, currentOtbVersion, extended))
+				if (!LoadClient(currentPlugin, currentOtbVersion))
 				{
 					currentPlugin = null;
 					items.Clear();
@@ -846,7 +846,7 @@ namespace ItemEditor
 			return copy;
 		}
 
-		private bool LoadClient(Host.Types.Plugin plugin, UInt32 otbVersion, bool extended)
+		private bool LoadClient(Host.Types.Plugin plugin, UInt32 otbVersion)
 		{
 			SupportedClient client = plugin.Instance.SupportedClients.Find(
 				delegate(SupportedClient sc)
@@ -860,16 +860,32 @@ namespace ItemEditor
 				return false;
 			}
 
-			extended = (extended || client.Version >= 960);
-
 			string dataFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Data");
 			if (!Directory.Exists(dataFolder))
 			{
 				Directory.CreateDirectory(dataFolder);
 			}
 
-			string datPath = FindClientFile(Path.Combine(dataFolder, client.Version.ToString()), ".dat");
-			string sprPath = FindClientFile(Path.Combine(dataFolder, client.Version.ToString()), ".spr");
+			string clientFolder = Path.Combine(dataFolder, client.Version.ToString());
+			string clientFolderEx = Path.Combine(dataFolder, client.Version.ToString() + "_EX");
+			string datPath;
+			string sprPath;
+			bool extended;
+
+			if (Directory.Exists(clientFolderEx))
+			{
+				datPath = FindClientFile(clientFolderEx, ".dat");
+				sprPath = FindClientFile(clientFolderEx, ".spr");
+				extended = true;
+			}
+			else
+			{
+				datPath = FindClientFile(clientFolder, ".dat");
+				sprPath = FindClientFile(clientFolder, ".spr");
+				extended = false;
+			}
+
+			extended = (extended || client.Version >= 960);
 
 			if (!File.Exists(datPath) || !File.Exists(sprPath))
 			{
@@ -1176,7 +1192,7 @@ namespace ItemEditor
 					return;
 				}
 
-				if (!LoadClient(updatePlugin, updateClient.OtbVersion, false))
+				if (!LoadClient(updatePlugin, updateClient.OtbVersion))
 				{
 					return;
 				}

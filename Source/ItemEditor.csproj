@@ -76,6 +76,7 @@
     <Compile Include="FindItemForm.Designer.cs">
       <DependentUpon>FindItemForm.cs</DependentUpon>
     </Compile>
+	<Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

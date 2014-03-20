@@ -2,6 +2,12 @@
 	<clients>
 		<client version="800" description="Client 8.00" otbversion="7" datsignature="467FD7E6" sprsignature="467F9E74"/>
 		<client version="810" description="Client 8.10" otbversion="8" datsignature="475D3747" sprsignature="475D0B01"/>
+		<client version="811" description="Client 8.11" otbversion="9" datsignature="47F60E37" sprsignature="47EBB9B2"/>
+		<client version="820" description="Client 8.20" otbversion="10" datsignature="486905AA" sprsignature="4868ECC9"/>
+		<client version="830" description="Client 8.30" otbversion="11" datsignature="48DA1FB6" sprsignature="48C8E712"/>
+		<client version="840" description="Client 8.40" otbversion="12" datsignature="493D607A" sprsignature="493D4E7C"/>
+		<client version="841" description="Client 8.41" otbversion="13" datsignature="49B7CC19" sprsignature="49B140EA"/>
+		<client version="842" description="Client 8.42" otbversion="14" datsignature="49C233C9" sprsignature="49B140EA"/>
 		<client version="850" description="Client 8.50 v1" otbversion="15" datsignature="4A49C5EB" sprsignature="4A44FD4E"/>
 		<client version="850" description="Client 8.50 v2" otbversion="15" datsignature="4A4CC0DC" sprsignature="4A44FD4E"/>
 		<client version="850" description="Client 8.50 v3" otbversion="15" datsignature="4AE97492" sprsignature="4ACB5230"/>

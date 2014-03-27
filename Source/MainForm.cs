@@ -1009,6 +1009,7 @@ namespace ItemEditor
 			SelectItem(null);
 
 			Program.plugins.FindPlugins();
+			Sprite.CreateBlankSprite();
 		}
 
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -1076,12 +1077,13 @@ namespace ItemEditor
 
 		private void itemsListBox_DrawItem(object sender, DrawItemEventArgs e)
 		{
-			if (e.Index == -1)
+			ListBox list = sender as ListBox;
+
+			if (e.Index == -1 || e.Index >= list.Items.Count)
 			{
 				return;
 			}
 
-			ListBox list = sender as ListBox;
 			ServerItem item = (ServerItem)list.Items[e.Index];
 
 			e.DrawBackground();

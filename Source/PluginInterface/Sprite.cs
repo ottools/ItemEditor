@@ -28,80 +28,15 @@ namespace ItemEditor
 {
 	public class Sprite
 	{
-		public static bool LoadSprites(string filename, ref Dictionary<UInt32, Sprite> sprites, SupportedClient client, bool extended)
-		{
-			FileStream fileStream = new FileStream(filename, FileMode.Open);
-			try
-			{
-				using (BinaryReader reader = new BinaryReader(fileStream))
-				{
-					UInt32 sprSignature = reader.ReadUInt32();
-					if (client.SprSignature != sprSignature)
-					{
-						string message = "Bad spr signature. Expected signature is {0:X} and loaded signature is {1:X}.";
-						Trace.WriteLine(String.Format(message, client.SprSignature, sprSignature));
-						return false;
-					}
+		#region Properties
 
-					UInt32 totalPics;
-					if (extended)
-					{
-						totalPics = reader.ReadUInt32();
-					}
-					else
-					{
-						totalPics = reader.ReadUInt16();
-					}
+		public UInt32 id;
+		public UInt32 size;
+		public byte[] dump;
 
-					List<UInt32> spriteIndexes = new List<UInt32>();
-					for (uint i = 0; i < totalPics; ++i)
-					{
-						UInt32 index = reader.ReadUInt32();
-						spriteIndexes.Add(index);
-					}
+		#endregion
 
-					UInt32 id = 1;
-					foreach (UInt32 element in spriteIndexes)
-					{
-						UInt32 index = element + 3;
-						reader.BaseStream.Seek(index, SeekOrigin.Begin);
-						UInt16 size = reader.ReadUInt16();
-
-						Sprite sprite;
-						if (sprites.TryGetValue(id, out sprite))
-						{
-							if (sprite != null && size > 0)
-							{
-								if (sprite.size > 0)
-								{
-									//generate warning
-								}
-								else
-								{
-									sprite.id = id;
-									sprite.size = size;
-									sprite.dump = reader.ReadBytes(size);
-
-									sprites[id] = sprite;
-								}
-							}
-						}
-						else
-						{
-							reader.BaseStream.Seek(size, SeekOrigin.Current);
-						}
-
-						++id;
-					}
-				}
-			}
-			finally
-			{
-				fileStream.Close();
-			}
-
-			return true;
-		}
+		#region Contructor
 
 		public Sprite()
 		{
@@ -110,23 +45,36 @@ namespace ItemEditor
 			dump = null;
 		}
 
-		public UInt32 id;
-		public UInt32 size;
-		public byte[] dump;
+		#endregion
+
+		#region Methods
 
 		public byte[] GetRGBData()
 		{
-			const byte transparentColor = 0x11;
-			return GetRGBData(transparentColor);
+			try
+			{
+				const byte transparentColor = 0x11;
+				return GetRGBData(transparentColor);
+			}
+			catch
+			{
+				Trace.WriteLine(String.Format("Failed to get sprite id {0}", this.id));
+				return blankSprite;
+			}
 		}
 
-		public byte[] GetRGBData(byte transparentColor)
+		private byte[] GetRGBData(byte transparentColor)
 		{
 			byte[] rgb32x32x3 = new byte[32 * 32 * 3];
 			UInt32 bytes = 0;
 			UInt32 x = 0;
 			UInt32 y = 0;
 			Int32 chunkSize;
+
+			if (dump == null || dump.Length != size)
+			{
+				return blankSprite;
+			}
 
 			while (bytes < size)
 			{
@@ -207,5 +155,96 @@ namespace ItemEditor
 
 			return rgbx32x32x4;
 		}
+
+		#endregion
+
+		#region Static
+
+		private static byte[] blankSprite = new byte[32 * 32 * 3];
+
+		public static void CreateBlankSprite()
+		{
+			for (short i = 0; i < blankSprite.Length; i++)
+			{
+				blankSprite[i] = 0x11;
+			}
+		}
+
+		public static bool LoadSprites(string filename, ref Dictionary<UInt32, Sprite> sprites, SupportedClient client, bool extended)
+		{
+			FileStream fileStream = new FileStream(filename, FileMode.Open);
+			try
+			{
+				using (BinaryReader reader = new BinaryReader(fileStream))
+				{
+					UInt32 sprSignature = reader.ReadUInt32();
+					if (client.SprSignature != sprSignature)
+					{
+						string message = "Bad spr signature. Expected signature is {0:X} and loaded signature is {1:X}.";
+						Trace.WriteLine(String.Format(message, client.SprSignature, sprSignature));
+						return false;
+					}
+
+					UInt32 totalPics;
+					if (extended)
+					{
+						totalPics = reader.ReadUInt32();
+					}
+					else
+					{
+						totalPics = reader.ReadUInt16();
+					}
+
+					List<UInt32> spriteIndexes = new List<UInt32>();
+					for (uint i = 0; i < totalPics; ++i)
+					{
+						UInt32 index = reader.ReadUInt32();
+						spriteIndexes.Add(index);
+					}
+
+					UInt32 id = 1;
+					foreach (UInt32 element in spriteIndexes)
+					{
+						UInt32 index = element + 3;
+						reader.BaseStream.Seek(index, SeekOrigin.Begin);
+						UInt16 size = reader.ReadUInt16();
+
+						Sprite sprite;
+						if (sprites.TryGetValue(id, out sprite))
+						{
+							if (sprite != null && size > 0)
+							{
+								if (sprite.size > 0)
+								{
+									//generate warning
+								}
+								else
+								{
+									sprite.id = id;
+									sprite.size = size;
+									sprite.dump = reader.ReadBytes(size);
+
+									sprites[id] = sprite;
+								}
+							}
+						}
+						else
+						{
+							reader.BaseStream.Seek(size, SeekOrigin.Current);
+						}
+
+						++id;
+					}
+				}
+			}
+			finally
+			{
+				fileStream.Close();
+			}
+
+			return true;
+		}
+
+		#endregion
 	}
 }

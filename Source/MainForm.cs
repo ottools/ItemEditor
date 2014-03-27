@@ -37,7 +37,7 @@ namespace ItemEditor
 		#region Private Properties
 
 		public const string applicationName = "ItemEditor";
-		public const string versionString = "0.1";
+		public const string versionString = "0.2";
 		private const int itemMargin = 5;
 		private const int spritePixels = 32;
 
@@ -1417,7 +1417,10 @@ namespace ItemEditor
 
 		private void helpAboutMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show(applicationName + " " + versionString,
+			MessageBox.Show(String.Format("{0} {1} \n\n{2}",
+				applicationName,
+				versionString,
+				"https://github.com/Mignari/ItemEditor"),
 				"About " + applicationName,
 				MessageBoxButtons.OK,
 				MessageBoxIcon.None,

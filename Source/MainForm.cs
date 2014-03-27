@@ -505,9 +505,9 @@ namespace ItemEditor
 			this.itemsListBox.DrawMode = DrawMode.OwnerDrawVariable;
 
 			this.loadingItemsProgressBar.Visible = true;
-			this.loadingItemsProgressBar.Minimum = items.minId;
-			this.loadingItemsProgressBar.Maximum = items.maxId;
-			this.loadingItemsProgressBar.Value = items.minId;
+			this.loadingItemsProgressBar.Minimum = 0;
+			this.loadingItemsProgressBar.Maximum = items.Count + 1;
+			ushort index = 0;
 
 			foreach (ServerItem item in items)
 			{
@@ -523,7 +523,8 @@ namespace ItemEditor
 				}
 
 				itemsListBox.Items.Add(item);
-				this.loadingItemsProgressBar.Value = item.id;
+				this.loadingItemsProgressBar.Value = index;
+				index++;
 			}
 
 			this.loadingItemsProgressBar.Visible = false;

@@ -64,70 +64,70 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompareOtbForm.cs">
+    <Compile Include="Dialogs\CompareOtbForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CompareOtbForm.Designer.cs">
+    <Compile Include="Dialogs\CompareOtbForm.Designer.cs">
       <DependentUpon>CompareOtbForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FindItemForm.cs">
+    <Compile Include="Dialogs\FindItemForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FindItemForm.Designer.cs">
+    <Compile Include="Dialogs\FindItemForm.Designer.cs">
       <DependentUpon>FindItemForm.cs</DependentUpon>
     </Compile>
-	<Compile Include="Helpers\PathHelper.cs" />
+    <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewOtbFileForm.cs">
+    <Compile Include="Dialogs\NewOtbFileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewOtbFileForm.Designer.cs">
+    <Compile Include="Dialogs\NewOtbFileForm.Designer.cs">
       <DependentUpon>NewOtbFileForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UpdateForm.cs">
+    <Compile Include="Dialogs\UpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UpdateForm.Designer.cs">
+    <Compile Include="Dialogs\UpdateForm.Designer.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PluginServices.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProgressForm.cs">
+    <Compile Include="Dialogs\ProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProgressForm.Designer.cs">
+    <Compile Include="Dialogs\ProgressForm.Designer.cs">
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextBoxTraceListener.cs" />
-    <Compile Include="UpdateSettingsForm.cs">
+    <Compile Include="Dialogs\UpdateSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UpdateSettingsForm.Designer.cs">
+    <Compile Include="Dialogs\UpdateSettingsForm.Designer.cs">
       <DependentUpon>UpdateSettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utils.cs" />
-    <EmbeddedResource Include="CompareOtbForm.resx">
+    <Compile Include="Helpers\Utils.cs" />
+    <EmbeddedResource Include="Dialogs\CompareOtbForm.resx">
       <DependentUpon>CompareOtbForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FindItemForm.resx">
+    <EmbeddedResource Include="Dialogs\FindItemForm.resx">
       <DependentUpon>FindItemForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewOtbFileForm.resx">
+    <EmbeddedResource Include="Dialogs\NewOtbFileForm.resx">
       <DependentUpon>NewOtbFileForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UpdateForm.resx">
+    <EmbeddedResource Include="Dialogs\UpdateForm.resx">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProgressForm.resx">
+    <EmbeddedResource Include="Dialogs\ProgressForm.resx">
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -140,7 +140,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UpdateSettingsForm.resx">
+    <EmbeddedResource Include="Dialogs\UpdateSettingsForm.resx">
       <DependentUpon>UpdateSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
@@ -213,6 +213,7 @@
     <None Include="Resources\disk.png" />
     <None Include="Resources\folder_page.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

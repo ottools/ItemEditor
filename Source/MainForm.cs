@@ -19,6 +19,7 @@
 #endregion
 
 using ImageSimilarity;
+using ItemEditor.Helpers;
 using PluginInterface;
 using System;
 using System.Collections.Generic;
@@ -861,7 +862,7 @@ namespace ItemEditor
 				return false;
 			}
 
-			string dataFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Data");
+			string dataFolder = PathHelper.Data;
 			if (!Directory.Exists(dataFolder))
 			{
 				Directory.CreateDirectory(dataFolder);
@@ -912,7 +913,18 @@ namespace ItemEditor
 
 			Trace.WriteLine(String.Format("OTB version {0}.", otbVersion));
 
-			bool result = plugin.Instance.LoadClient(client, extended, datPath, sprPath);
+			bool result;
+
+			try
+			{
+				result = plugin.Instance.LoadClient(client, extended, datPath, sprPath);
+			}
+			catch (UnauthorizedAccessException error)
+			{
+				MessageBox.Show(error.Message + " Please run this program as administrator.");
+				return false;
+			}
+
 			Trace.WriteLine("Loading client files.");
 			if (!result)
 			{

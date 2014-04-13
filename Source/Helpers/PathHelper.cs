@@ -59,5 +59,16 @@ namespace ItemEditor.Helpers
 				return Path.Combine(ApplicationDirectory, "Plug-ins");
 			}
 		}
+
+		/// <summary>
+		/// Path to the Data directory.
+		/// </summary>
+		public static String Data
+		{
+			get
+			{
+				return Path.Combine(ApplicationDirectory, "Data");
+			}
+		}
 	}
 }

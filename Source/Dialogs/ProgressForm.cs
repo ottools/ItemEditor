@@ -20,7 +20,7 @@
 
 using System.Windows.Forms;
 
-namespace ItemEditor
+namespace ItemEditor.Dialogs
 {
 	public partial class ProgressForm : Form
 	{

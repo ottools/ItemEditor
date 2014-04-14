@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace ItemEditor
+namespace ItemEditor.Dialogs
 {
 	public partial class CompareOtbForm : Form
 	{

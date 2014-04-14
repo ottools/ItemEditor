@@ -25,7 +25,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ItemEditor
+namespace ItemEditor.Dialogs
 {
 	public partial class NewOtbFileForm : Form
 	{

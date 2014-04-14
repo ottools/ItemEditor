@@ -21,7 +21,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace ItemEditor
+namespace ItemEditor.Dialogs
 {
 	public partial class FindItemForm : Form
 	{

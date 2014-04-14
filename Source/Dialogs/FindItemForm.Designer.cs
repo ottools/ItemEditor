@@ -1,4 +1,4 @@
-﻿namespace ItemEditor
+﻿namespace ItemEditor.Dialogs
 {
 	partial class FindItemForm
 	{

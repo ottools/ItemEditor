@@ -40,7 +40,7 @@ namespace ItemEditor
 		#region Private Properties
 
 		public const string applicationName = "ItemEditor";
-		public const string versionString = "0.2.1";
+		public const string versionString = "0.3";
 		private const int itemMargin = 5;
 		private const int spritePixels = 32;
 
@@ -871,9 +871,9 @@ namespace ItemEditor
 			{
 				string message;
 				if (datSignature == 0 || sprSignature == 0)
-					message = "No client is selected. Please select the client folder.";
+					message = "No client is selected. Please navigate to the client folder.";
 				else
-					message = "The version of the selected client is incompatible.";
+					message = "The selected client is not compatible with this otb. Please navigate to the folder of a compatible client.";
 				MessageBox.Show(message);
 				PreferencesForm form = new PreferencesForm();
 				form.ShowDialog();

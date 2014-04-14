@@ -76,6 +76,12 @@
     <Compile Include="Dialogs\FindItemForm.Designer.cs">
       <DependentUpon>FindItemForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\PreferencesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\PreferencesForm.Designer.cs">
+      <DependentUpon>PreferencesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -104,6 +110,7 @@
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings\Preferences.cs" />
     <Compile Include="TextBoxTraceListener.cs" />
     <Compile Include="Dialogs\UpdateSettingsForm.cs">
       <SubType>Form</SubType>
@@ -117,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\FindItemForm.resx">
       <DependentUpon>FindItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\PreferencesForm.resx">
+      <DependentUpon>PreferencesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

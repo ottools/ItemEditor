@@ -99,7 +99,7 @@ namespace PluginThree
 
 		#region General Methods
 
-		public bool LoadClient(SupportedClient client, bool extended, string datFullPath, string sprFullPath)
+		public bool LoadClient(SupportedClient client, bool extended, bool transparency, string datFullPath, string sprFullPath)
 		{
 			if (!LoadDat(datFullPath, client, extended))
 			{
@@ -107,7 +107,7 @@ namespace PluginThree
 				return false;
 			}
 
-			if (!LoadSprites(sprFullPath, client, extended))
+			if (!LoadSprites(sprFullPath, client, extended, transparency))
 			{
 				Trace.WriteLine("Failed to load spr.");
 				return false;
@@ -127,9 +127,9 @@ namespace PluginThree
 			items.Clear();
 		}
 
-		public bool LoadSprites(string filename, SupportedClient client, bool extended)
+		public bool LoadSprites(string filename, SupportedClient client, bool extended, bool transparency)
 		{
-			return Sprite.LoadSprites(filename, ref sprites, client, extended);
+			return Sprite.LoadSprites(filename, ref sprites, client, extended, transparency);
 		}
 
 		public bool LoadDat(string filename, SupportedClient client, bool extended)

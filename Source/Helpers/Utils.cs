@@ -19,6 +19,7 @@
 #endregion
 
 using System;
+using System.IO;
 
 namespace ItemEditor
 {
@@ -34,6 +35,22 @@ namespace ItemEditor
 					return false;
 
 			return true;
+		}
+
+		public static string FindClientFile(string directory, string extension)
+		{
+			if (Directory.Exists(directory))
+			{
+				foreach (string fileOn in Directory.GetFiles(directory))
+				{
+					FileInfo file = new FileInfo(fileOn);
+					if (file.Extension.Equals(extension))
+					{
+						return file.FullName;
+					}
+				}
+			}
+			return String.Empty;
 		}
 	}
 }

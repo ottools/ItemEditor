@@ -126,6 +126,8 @@
 			this.candidatesPictureBox4 = new System.Windows.Forms.PictureBox();
 			this.candidatesPictureBox5 = new System.Windows.Forms.PictureBox();
 			this.candidatesDropDown = new System.Windows.Forms.ToolStripDropDown();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.filePreferencesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.appearanceGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.previousPictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -689,6 +691,8 @@
             this.fileOpenMenuItem,
             this.fileSaveMenuItem,
             this.fileSaveAsMenuItem,
+            this.toolStripSeparator3,
+            this.filePreferencesMenuItem,
             this.separatorMenuItem1,
             this.fileExitMenuItem});
 			this.fileMenuItem.Name = "fileMenuItem";
@@ -1121,6 +1125,19 @@
 			this.candidatesDropDown.Name = "candidatesDropDown";
 			this.candidatesDropDown.Size = new System.Drawing.Size(2, 4);
 			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(190, 6);
+			// 
+			// filePreferencesMenuItem
+			// 
+			this.filePreferencesMenuItem.Name = "filePreferencesMenuItem";
+			this.filePreferencesMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+			this.filePreferencesMenuItem.Size = new System.Drawing.Size(193, 22);
+			this.filePreferencesMenuItem.Text = "Preferences";
+			this.filePreferencesMenuItem.Click += new System.EventHandler(this.filePreferencesMenuItem_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1268,6 +1285,8 @@
 		private System.Windows.Forms.PictureBox candidatesPictureBox4;
 		private System.Windows.Forms.PictureBox candidatesPictureBox5;
 		private System.Windows.Forms.Button candidatesButton;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem filePreferencesMenuItem;
 	}
 }
 

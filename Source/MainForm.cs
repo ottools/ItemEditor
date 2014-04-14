@@ -19,7 +19,9 @@
 #endregion
 
 using ImageSimilarity;
+using ItemEditor.Dialogs;
 using ItemEditor.Helpers;
+using ItemEditor.Settings;
 using PluginInterface;
 using System;
 using System.Collections.Generic;
@@ -862,62 +864,47 @@ namespace ItemEditor
 				return false;
 			}
 
-			string dataFolder = PathHelper.Data;
-			if (!Directory.Exists(dataFolder))
+			UInt32 datSignature = Program.preferences.DatSignature;
+			UInt32 sprSignature = Program.preferences.SprSignature;
+
+			if (client.DatSignature != datSignature || client.SprSignature != sprSignature)
 			{
-				Directory.CreateDirectory(dataFolder);
+				string message;
+				if (datSignature == 0 || sprSignature == 0)
+					message = "No client is selected. Please select the client folder.";
+				else
+					message = "The version of the selected client is incompatible.";
+				MessageBox.Show(message);
+				PreferencesForm form = new PreferencesForm();
+				form.ShowDialog();
+				return false;
 			}
 
-			string clientFolder = Path.Combine(dataFolder, client.Version.ToString());
-			string clientFolderEx = Path.Combine(dataFolder, client.Version.ToString() + "_EX");
-			string datPath;
-			string sprPath;
-			bool extended;
+			string clientFolder = Program.preferences.ClientDirectory;
 
-			if (Directory.Exists(clientFolderEx))
+			if (String.IsNullOrEmpty(clientFolder))
 			{
-				datPath = FindClientFile(clientFolderEx, ".dat");
-				sprPath = FindClientFile(clientFolderEx, ".spr");
-				extended = true;
+				return false;
 			}
-			else
-			{
-				datPath = FindClientFile(clientFolder, ".dat");
-				sprPath = FindClientFile(clientFolder, ".spr");
-				extended = false;
-			}
+
+			string datPath = Utils.FindClientFile(clientFolder, ".dat");
+			string sprPath = Utils.FindClientFile(clientFolder, ".spr");
+			bool extended = Program.preferences.Extended;
+			bool transparency = Program.preferences.Transparency;
 
 			extended = (extended || client.Version >= 960);
 
 			if (!File.Exists(datPath) || !File.Exists(sprPath))
 			{
-				string text = String.Empty;
-
-				if (!File.Exists(datPath))
-				{
-					text = String.Format("Unable to load dat file, please place a valid dat in 'Data\\{0}\\'.", client.Version);
-				}
-
-				if (!File.Exists(sprPath))
-				{
-					if (text != String.Empty)
-					{
-						text += "\n";
-					}
-					text += String.Format("Unable to load spr file, please place a valid spr in 'Data\\{0}\\'.", client.Version);
-				}
-
-				MessageBox.Show(text);
+				MessageBox.Show("Client files not found.");
 				return false;
 			}
-
-			Trace.WriteLine(String.Format("OTB version {0}.", otbVersion));
 
 			bool result;
 
 			try
 			{
-				result = plugin.Instance.LoadClient(client, extended, datPath, sprPath);
+				result = plugin.Instance.LoadClient(client, extended, transparency, datPath, sprPath);
 			}
 			catch (UnauthorizedAccessException error)
 			{
@@ -934,22 +921,6 @@ namespace ItemEditor
 			items.clientVersion = client.Version;
 			Trace.WriteLine(String.Format("Client version {0}.", client.Version));
 			return result;
-		}
-
-		private string FindClientFile(string path, string extension)
-		{
-			if (Directory.Exists(path))
-			{
-				foreach (string fileOn in Directory.GetFiles(path))
-				{
-					FileInfo file = new FileInfo(fileOn);
-					if (file.Extension.Equals(extension))
-					{
-						return file.FullName;
-					}
-				}
-			}
-			return String.Empty;
 		}
 
 		private bool GenerateSpriteSignatures(ref ClientItems items)
@@ -1021,6 +992,7 @@ namespace ItemEditor
 
 			SelectItem(null);
 
+			Program.preferences.Load();
 			Program.plugins.FindPlugins();
 			Sprite.CreateBlankSprite();
 		}
@@ -1062,6 +1034,12 @@ namespace ItemEditor
 		private void fileExitMenuItem_Click(object sender, EventArgs e)
 		{
 			this.Close();
+		}
+
+		private void filePreferencesMenuItem_Click(object sender, EventArgs e)
+		{
+			PreferencesForm form = new PreferencesForm();
+			form.ShowDialog();
 		}
 
 		private void itemsListBoxContextMenu_Opening(object sender, CancelEventArgs e)

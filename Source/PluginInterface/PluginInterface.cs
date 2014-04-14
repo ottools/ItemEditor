@@ -104,7 +104,7 @@ namespace PluginInterface
 
 		ClientItems Items { get; }
 		List<SupportedClient> SupportedClients { get; }
-		bool LoadClient(SupportedClient client, bool extended, string datFullPath, string sprFullPath);
+		bool LoadClient(SupportedClient client, bool extended, bool transparency, string datFullPath, string sprFullPath);
 
 		void Initialize();
 		void Dispose();

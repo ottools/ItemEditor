@@ -192,6 +192,27 @@ namespace Host
 
 				return null;
 			}
+
+			/// <summary>
+			/// Search for a plugin by signatures
+			/// </summary>
+			/// <param name="datSignature">The dat file signature</param>
+			/// <param name="sprSignature">The spr file signature</param>
+			/// <returns>a plugin, or null if the plugin is not found</returns>
+			public Types.Plugin Find(UInt32 datSignature, UInt32 sprSignature)
+			{
+				foreach (Types.Plugin plugin in this.List)
+				{
+					foreach (SupportedClient client in plugin.Instance.SupportedClients)
+					{
+						if (client.DatSignature == datSignature && client.SprSignature == sprSignature)
+						{
+							return plugin;
+						}
+					}
+				}
+				return null;
+			}
 		}
 
 		/// <summary>

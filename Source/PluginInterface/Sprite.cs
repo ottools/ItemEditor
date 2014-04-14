@@ -33,6 +33,7 @@ namespace ItemEditor
 		public UInt32 id;
 		public UInt32 size;
 		public byte[] dump;
+		public bool useAlpha;
 
 		#endregion
 
@@ -43,6 +44,7 @@ namespace ItemEditor
 			id = 0;
 			size = 0;
 			dump = null;
+			useAlpha = false;
 		}
 
 		#endregion
@@ -70,6 +72,7 @@ namespace ItemEditor
 			UInt32 x = 0;
 			UInt32 y = 0;
 			Int32 chunkSize;
+			byte channels = (byte)(useAlpha ? 4 : 3);
 
 			if (dump == null || dump.Length != size)
 			{
@@ -104,11 +107,12 @@ namespace ItemEditor
 					byte red = dump[bytes + 0];
 					byte green = dump[bytes + 1];
 					byte blue = dump[bytes + 2];
+
 					rgb32x32x3[96 * y + x * 3 + 0] = red;
 					rgb32x32x3[96 * y + x * 3 + 1] = green;
 					rgb32x32x3[96 * y + x * 3 + 2] = blue;
 
-					bytes += 3;
+					bytes += channels;
 
 					x++;
 					if (x >= 32)
@@ -170,7 +174,7 @@ namespace ItemEditor
 			}
 		}
 
-		public static bool LoadSprites(string filename, ref Dictionary<UInt32, Sprite> sprites, SupportedClient client, bool extended)
+		public static bool LoadSprites(string filename, ref Dictionary<UInt32, Sprite> sprites, SupportedClient client, bool extended, bool transparency)
 		{
 			FileStream fileStream = new FileStream(filename, FileMode.Open);
 			try
@@ -223,6 +227,7 @@ namespace ItemEditor
 									sprite.id = id;
 									sprite.size = size;
 									sprite.dump = reader.ReadBytes(size);
+									sprite.useAlpha = transparency;
 
 									sprites[id] = sprite;
 								}

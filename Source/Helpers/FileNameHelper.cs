@@ -20,43 +20,19 @@
 
 using System;
 using System.IO;
-using System.Windows.Forms;
 
 namespace ItemEditor.Helpers
 {
-	class PathHelper
+	public class FileNameHelper
 	{
 		/// <summary>
-		/// Path to the application directory
+		/// Path to the setting file
 		/// </summary>
-		public static String ApplicationDirectory
+		public static String SettingData
 		{
 			get
 			{
-				return Path.GetDirectoryName(Application.ExecutablePath);
-			}
-		}
-
-		/// <summary>
-		/// Path to the user's application directory
-		/// </summary>
-		public static String ApplicationData
-		{
-			get
-			{
-				string folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-				return Path.Combine(folder, "ItemEditor");
-			}
-		}
-
-		/// <summary>
-		/// Path to the plug-ins directory
-		/// </summary>
-		public static String Plugins
-		{
-			get
-			{
-				return Path.Combine(ApplicationDirectory, "Plug-ins");
+				return Path.Combine(PathHelper.ApplicationData, "setting.xml");
 			}
 		}
 	}

@@ -20,9 +20,7 @@
 
 using Host.Types;
 using ItemEditor.Settings;
-using PluginInterface;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 

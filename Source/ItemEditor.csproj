@@ -82,6 +82,7 @@
     <Compile Include="Dialogs\PreferencesForm.Designer.cs">
       <DependentUpon>PreferencesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FileNameHelper.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

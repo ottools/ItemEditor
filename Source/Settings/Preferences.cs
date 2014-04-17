@@ -21,6 +21,7 @@
 using ItemEditor.Helpers;
 using System;
 using System.IO;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace ItemEditor.Settings
@@ -36,12 +37,11 @@ namespace ItemEditor.Settings
 
 		public void Load()
 		{
-			string path = Path.Combine(PathHelper.ApplicationData, "preferences.xml");
-
-			if(File.Exists(path))
+			string fileName = FileNameHelper.SettingData;
+			if (File.Exists(fileName))
 			{
 				XmlSerializer deserializer = new XmlSerializer(typeof(Preferences));
-				TextReader reader = new StreamReader(path);
+				TextReader reader = new StreamReader(fileName);
 				object obj = deserializer.Deserialize(reader);
 				Program.preferences = (Preferences)obj;
 				reader.Close();
@@ -50,10 +50,27 @@ namespace ItemEditor.Settings
 
 		public void Save()
 		{
-			XmlSerializer serializer = new XmlSerializer(typeof(Preferences));
-			using (TextWriter writer = new StreamWriter(Path.Combine(PathHelper.ApplicationData, "preferences.xml")))
+			try
 			{
-				serializer.Serialize(writer, this);
+				string fileName = FileNameHelper.SettingData;
+				if (!File.Exists(fileName))
+				{
+					String folder = Path.GetDirectoryName(fileName);
+					if (!Directory.Exists(folder))
+					{
+						Directory.CreateDirectory(folder);
+					}
+
+					XmlSerializer serializer = new XmlSerializer(typeof(Preferences));
+					using (TextWriter writer = new StreamWriter(fileName))
+					{
+						serializer.Serialize(writer, this);
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				MessageBox.Show(e.Message);
 			}
 		}
 	}

@@ -873,7 +873,7 @@ namespace ItemEditor
 				if (datSignature == 0 || sprSignature == 0)
 					message = "No client is selected. Please navigate to the client folder.";
 				else
-					message = "The selected client is not compatible with this otb. Please navigate to the folder of a compatible client.";
+					message = String.Format("The selected client is not compatible with this otb. Please navigate to the folder of a compatible client {0}.", client.Version);
 				MessageBox.Show(message);
 				PreferencesForm form = new PreferencesForm();
 				form.ShowDialog();
@@ -899,6 +899,8 @@ namespace ItemEditor
 				MessageBox.Show("Client files not found.");
 				return false;
 			}
+
+			Trace.WriteLine(String.Format("OTB version {0}.", otbVersion));
 
 			bool result;
 

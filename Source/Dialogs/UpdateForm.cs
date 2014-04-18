@@ -18,6 +18,7 @@
 */
 #endregion
 
+using ItemEditor.Host;
 using PluginInterface;
 using System;
 using System.Collections;
@@ -32,7 +33,7 @@ namespace ItemEditor.Dialogs
 		#region Properties
 
 		public MainForm mainForm = null;
-		public Host.Types.Plugin selectedPlugin = null;
+		public Plugin selectedPlugin = null;
 		public SupportedClient updateClient = null;
 
 		#endregion
@@ -52,7 +53,7 @@ namespace ItemEditor.Dialogs
 		{
 			List<SupportedClient> list = new List<SupportedClient>();
 
-			foreach (Host.Types.Plugin plugin in Program.plugins.AvailablePlugins)
+			foreach (Plugin plugin in Program.plugins.AvailablePlugins)
 			{
 				foreach (SupportedClient client in plugin.Instance.SupportedClients)
 				{

@@ -21,6 +21,7 @@
 using ImageSimilarity;
 using ItemEditor.Dialogs;
 using ItemEditor.Helpers;
+using ItemEditor.Host;
 using ItemEditor.Settings;
 using PluginInterface;
 using System;
@@ -52,12 +53,12 @@ namespace ItemEditor
 		private ServerItem currentItem = null;
 
 		//The plugin that is used to compare, sync and display sprite/dat data
-		public Host.Types.Plugin currentPlugin;
+		public Plugin currentPlugin;
 		public UInt32 currentOtbVersion = 0;
 		string currentOtbFullPath = "";
 
 		//The original plugin that was used to open the currently loaded OTB
-		public Host.Types.Plugin previousPlugin;
+		public Plugin previousPlugin;
 
 		private bool loaded = false;
 		private bool saved = true;
@@ -850,7 +851,7 @@ namespace ItemEditor
 			return copy;
 		}
 
-		private bool LoadClient(Host.Types.Plugin plugin, UInt32 otbVersion)
+		private bool LoadClient(Plugin plugin, UInt32 otbVersion)
 		{
 			SupportedClient client = plugin.Instance.SupportedClients.Find(
 				delegate(SupportedClient sc)
@@ -1179,7 +1180,7 @@ namespace ItemEditor
 			if (result == DialogResult.OK)
 			{
 				//Update OTB
-				Host.Types.Plugin updatePlugin = form.selectedPlugin;
+				Plugin updatePlugin = form.selectedPlugin;
 				SupportedClient updateClient = form.updateClient;
 
 				if (updatePlugin == null)

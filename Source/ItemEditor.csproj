@@ -84,6 +84,9 @@
     </Compile>
     <Compile Include="Helpers\FileNameHelper.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
+    <Compile Include="Host\Plugin.cs" />
+    <Compile Include="Host\PluginCollection.cs" />
+    <Compile Include="Host\PluginServices.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,7 +105,6 @@
     <Compile Include="Dialogs\UpdateForm.Designer.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PluginServices.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Dialogs\ProgressForm.cs">
       <SubType>Form</SubType>

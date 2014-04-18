@@ -18,7 +18,7 @@
 */
 #endregion
 
-using Host.Types;
+using ItemEditor.Host;
 using ItemEditor.Settings;
 using System;
 using System.IO;

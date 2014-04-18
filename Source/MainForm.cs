@@ -1412,15 +1412,8 @@ namespace ItemEditor
 
 		private void helpAboutMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show(String.Format("{0} {1} \n\n{2}",
-				applicationName,
-				versionString,
-				"https://github.com/Mignari/ItemEditor"),
-				"About " + applicationName,
-				MessageBoxButtons.OK,
-				MessageBoxIcon.None,
-				MessageBoxDefaultButton.Button1,
-				0);
+			AboutForm form = new AboutForm();
+			form.ShowDialog();
 		}
 
 		private void editCreateItemMenuItem_Click(object sender, EventArgs e)

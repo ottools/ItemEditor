@@ -87,6 +87,8 @@
 			this.fileOpenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.fileSaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.fileSaveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.filePreferencesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.separatorMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.fileExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.editMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -126,8 +128,6 @@
 			this.candidatesPictureBox4 = new System.Windows.Forms.PictureBox();
 			this.candidatesPictureBox5 = new System.Windows.Forms.PictureBox();
 			this.candidatesDropDown = new System.Windows.Forms.ToolStripDropDown();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.filePreferencesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.appearanceGroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.previousPictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -738,6 +738,19 @@
 			this.fileSaveAsMenuItem.Text = "S&ave as...";
 			this.fileSaveAsMenuItem.Click += new System.EventHandler(this.fileSaveAsMenuItem_Click);
 			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(190, 6);
+			// 
+			// filePreferencesMenuItem
+			// 
+			this.filePreferencesMenuItem.Name = "filePreferencesMenuItem";
+			this.filePreferencesMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+			this.filePreferencesMenuItem.Size = new System.Drawing.Size(193, 22);
+			this.filePreferencesMenuItem.Text = "Preferences";
+			this.filePreferencesMenuItem.Click += new System.EventHandler(this.filePreferencesMenuItem_Click);
+			// 
 			// separatorMenuItem1
 			// 
 			this.separatorMenuItem1.Name = "separatorMenuItem1";
@@ -895,8 +908,8 @@
 			// 
 			this.helpAboutMenuItem.Image = global::ItemEditor.Properties.Resources.help;
 			this.helpAboutMenuItem.Name = "helpAboutMenuItem";
-			this.helpAboutMenuItem.Size = new System.Drawing.Size(116, 22);
-			this.helpAboutMenuItem.Text = "&About...";
+			this.helpAboutMenuItem.Size = new System.Drawing.Size(165, 22);
+			this.helpAboutMenuItem.Text = "&About ItemEditor";
 			this.helpAboutMenuItem.Click += new System.EventHandler(this.helpAboutMenuItem_Click);
 			// 
 			// outputTextBox
@@ -1124,19 +1137,6 @@
 			this.candidatesDropDown.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
 			this.candidatesDropDown.Name = "candidatesDropDown";
 			this.candidatesDropDown.Size = new System.Drawing.Size(2, 4);
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(190, 6);
-			// 
-			// filePreferencesMenuItem
-			// 
-			this.filePreferencesMenuItem.Name = "filePreferencesMenuItem";
-			this.filePreferencesMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-			this.filePreferencesMenuItem.Size = new System.Drawing.Size(193, 22);
-			this.filePreferencesMenuItem.Text = "Preferences";
-			this.filePreferencesMenuItem.Click += new System.EventHandler(this.filePreferencesMenuItem_Click);
 			// 
 			// MainForm
 			// 

@@ -64,6 +64,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\CompareOtbForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,9 @@
       <DependentUpon>UpdateSettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Utils.cs" />
+    <EmbeddedResource Include="Dialogs\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\CompareOtbForm.resx">
       <DependentUpon>CompareOtbForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -144,7 +153,7 @@
       <DependentUpon>ProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -213,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ItemEditor.ico" />
+    <None Include="Resources\about_background.png" />
     <None Include="Resources\reload.png" />
     <None Include="Resources\find.png" />
     <None Include="Resources\application_form.png" />

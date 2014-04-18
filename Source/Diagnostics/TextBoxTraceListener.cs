@@ -22,7 +22,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace ItemEditor
+namespace ItemEditor.Diagnostics
 {
 	public class TextBoxTraceListener : TraceListener
 	{
@@ -64,11 +64,11 @@ namespace ItemEditor
 		}
 
 		private delegate void StringSendDelegate(string message);
+
 		private void SendString(string message)
 		{
 			// No need to lock text box as this function will only 
 			// ever be executed from the UI thread
-
 			_target.AppendText(message);
 
 			++updateCounter;

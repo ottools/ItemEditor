@@ -114,7 +114,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\Preferences.cs" />
-    <Compile Include="TextBoxTraceListener.cs" />
+    <Compile Include="Diagnostics\TextBoxTraceListener.cs" />
     <Compile Include="Dialogs\UpdateSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>

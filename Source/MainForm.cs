@@ -19,6 +19,7 @@
 #endregion
 
 using ImageSimilarity;
+using ItemEditor.Diagnostics;
 using ItemEditor.Dialogs;
 using ItemEditor.Helpers;
 using ItemEditor.Host;

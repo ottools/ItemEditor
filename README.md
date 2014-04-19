@@ -8,7 +8,7 @@ ItemEditor is a program used to edit the OTB data files. It is a fork of the [OT
 
 ### Download
 
-[ItemEditor 0.3](http://www.4shared.com/file/xzTgV2pLba/ItemEditor03.html)
+[ItemEditor 0.3.1](http://www.4shared.com/file/Tp93z5Gpba/ItemEditor031.html)
 
 ### Compiling
 

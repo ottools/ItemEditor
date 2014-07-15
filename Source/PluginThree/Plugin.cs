@@ -155,6 +155,7 @@ namespace PluginThree
 
 					UInt16 minclientID = 100; //items starts at 100
 					UInt16 maxclientID = itemCount;
+                    bool skipFrameDuration = (client.Version >= 1050);
 
 					UInt16 id = minclientID;
 					while (id <= maxclientID)
@@ -356,6 +357,11 @@ namespace PluginThree
 						item.frames = reader.ReadByte();
 						item.isAnimation = item.frames > 1;
 						item.numSprites = (UInt32)item.width * item.height * item.layers * item.patternX * item.patternY * item.patternZ * item.frames;
+
+                        if (item.isAnimation && skipFrameDuration)
+                        {
+                            reader.ReadBytes(6 + 8 * item.frames);
+                        }
 
 						// Read the sprite ids
 						for (UInt32 i = 0; i < item.numSprites; ++i)

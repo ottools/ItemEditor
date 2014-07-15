@@ -6,5 +6,6 @@
 		<client version="1030" description="Client 10.30" otbversion="53" datsignature="52A59036" sprsignature="52A5905F"/>
 		<client version="1031" description="Client 10.31" otbversion="54" datsignature="52AED581" sprsignature="52AED5A7"/>
 		<client version="1037" description="Client 10.37" otbversion="55" datsignature="531EA82E" sprsignature="531EA856"/>
+		<client version="1050" description="Client 10.50" otbversion="56" datsignature="53B6460E" sprsignature="53B64639"/>
 	</clients>
 </settings>

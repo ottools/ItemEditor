@@ -89,7 +89,7 @@ namespace ItemEditor.Dialogs
 
 					foreach (PropertyInfo property in item1.GetType().GetProperties())
 					{
-						if (property.Name != "spriteHash" && property.Name != "spriteId")
+						if (property.Name != "SpriteHash" && property.Name != "spriteId")
 						{
 							object value1 = property.GetValue(item1, null);
 							object value2 = item2.GetType().GetProperty(property.Name).GetValue(item2, null);

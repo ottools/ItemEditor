@@ -107,7 +107,7 @@ namespace ItemEditor
 			if (String.IsNullOrEmpty(fileName))
 			{
 				FileDialog dialog = new OpenFileDialog();
-				dialog.Filter = "OTB files (*.otb)|*.otb|All files (*.*)|*.*";
+				dialog.Filter = "OTB files (*.otb)|*.otb";
 				dialog.Title = "Open OTB File";
 
 				if (dialog.ShowDialog() != DialogResult.OK || dialog.FileName.Length == 0)

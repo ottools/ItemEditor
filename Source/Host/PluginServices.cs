@@ -72,18 +72,19 @@ namespace ItemEditor.Host
 			string path = PathHelper.Plugins;
 			if (!Directory.Exists(path))
 			{
-				MessageBox.Show("Plug-ins were not found. Please reinstall the program.");
+				MessageBox.Show("Plugins were not found. Please reinstall the program.");
 				return;
 			}
 
 			_collection.Clear();
 
-			foreach (string fileOn in Directory.GetFiles(path))
+			foreach (string file in Directory.GetFiles(path, "*.dll"))
 			{
-				FileInfo file = new FileInfo(fileOn);
-				if (file.Extension.Equals(".dll"))
+				string name = Path.GetFileNameWithoutExtension(file);
+
+				if (name != "PluginInterface")
 				{
-					this.AddPlugin(fileOn);
+					AddPlugin(file);
 				}
 			}
 		}

@@ -50,13 +50,13 @@ namespace ItemEditor.Helpers
 		}
 
 		/// <summary>
-		/// Path to the plug-ins directory
+		/// Path to the Plugins directory
 		/// </summary>
 		public static String Plugins
 		{
 			get
 			{
-				return Path.Combine(ApplicationDirectory, "Plug-ins");
+				return Path.Combine(ApplicationDirectory, "Plugins");
 			}
 		}
 	}

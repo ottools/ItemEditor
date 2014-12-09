@@ -35,7 +35,7 @@ namespace PluginInterface
 
 		public bool Load(string filename)
 		{
-			string path = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Plug-ins");
+			string path = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Plugins");
 			try
 			{
 				SettingFilename = System.IO.Path.Combine(path, filename);

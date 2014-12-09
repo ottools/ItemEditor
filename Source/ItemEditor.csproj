@@ -2,7 +2,7 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9A90BE1A-4A8F-4BFE-92E7-2C0EF64D850C}</ProjectGuid>
@@ -30,8 +30,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -42,8 +42,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -177,50 +177,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="ImageSimilarity\ImageSimilarity.csproj">
-      <Project>{2FBAC16E-457D-472B-880D-8D393F8A7827}</Project>
-      <Name>ImageSimilarity</Name>
-    </ProjectReference>
-    <ProjectReference Include="PluginOne\PluginOne.csproj">
-      <Project>{4624E915-FB86-4DDB-ACA6-A2313F70BA9C}</Project>
-      <Name>PluginOne</Name>
-    </ProjectReference>
-    <ProjectReference Include="PluginTwo\PluginTwo.csproj">
-      <Project>{3624E915-FB86-4DDB-ACA6-A2313F70BA9C}</Project>
-      <Name>PluginTwo</Name>
-    </ProjectReference>
-    <ProjectReference Include="PluginThree\PluginThree.csproj">
-      <Project>{C43F73B7-D5D6-40D9-AD17-BA95FFDD7769}</Project>
-      <Name>PluginThree</Name>
-    </ProjectReference>
-    <ProjectReference Include="PluginInterface\PluginInterface.csproj">
-      <Project>{CEF21172-258C-4D0D-B024-ED7EF99612A2}</Project>
-      <Name>PluginInterface</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="ItemEditor.ico" />
     <None Include="Resources\about_background.png" />
     <None Include="Resources\reload.png" />
@@ -236,7 +192,16 @@
     <None Include="Resources\disk.png" />
     <None Include="Resources\folder_page.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="ImageSimilarity\ImageSimilarity.csproj">
+      <Project>{2fbac16e-457d-472b-880d-8d393f8a7827}</Project>
+      <Name>ImageSimilarity</Name>
+    </ProjectReference>
+    <ProjectReference Include="PluginInterface\PluginInterface.csproj">
+      <Project>{cef21172-258c-4d0d-b024-ed7ef99612a2}</Project>
+      <Name>PluginInterface</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

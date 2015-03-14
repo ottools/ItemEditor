@@ -1,9 +1,3 @@
-----
-
-**Development Status**: _Suspended_  
-
-----
-
 What is ItemEditor?
 ----
 

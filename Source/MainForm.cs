@@ -1,6 +1,6 @@
 ﻿#region Licence
 /**
-* Copyright (C) 2014 <https://github.com/Mignari/ItemEditor>
+* Copyright (C) 2015 Nailson S. <nailsonnego@gmail.com>
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ namespace ItemEditor
 		#region Private Properties
 
 		public const string applicationName = "ItemEditor";
-		public const string versionString = "0.3.2";
+		public const string versionString = "0.3.3";
 		private const int itemMargin = 5;
 		private const int spritePixels = 32;
 

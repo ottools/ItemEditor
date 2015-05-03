@@ -80,7 +80,7 @@ namespace PluginThree
     {
         #region Private Properties
 
-        private Dictionary<UInt32, Sprite> sprites = new Dictionary<UInt32, Sprite>();
+        private Dictionary<uint, Sprite> sprites = new Dictionary<uint, Sprite>();
         private ClientItems items = new ClientItems();
         private List<SupportedClient> supportedClients = new List<SupportedClient>();
         private IPluginHost myHost = null;
@@ -89,10 +89,10 @@ namespace PluginThree
 
         #region Public Properties
 
-        //internal implementation
+        // internal implementation
         public Settings settings = new Settings();
 
-        //IPlugin implementation
+        // IPlugin implementation
         public IPluginHost Host { get { return myHost; } set { myHost = value; } }
         public List<SupportedClient> SupportedClients { get { return supportedClients; } }
         public ClientItems Items { get { return items; } set { items = value; } }
@@ -144,21 +144,21 @@ namespace PluginThree
                 if (client.DatSignature != datSignature)
                 {
                     string message = "PluginThree: Bad dat signature. Expected signature is {0:X} and loaded signature is {1:X}.";
-                    Trace.WriteLine(String.Format(message, client.DatSignature, datSignature));
+                    Trace.WriteLine(string.Format(message, client.DatSignature, datSignature));
                     return false;
                 }
 
-                //get max id
-                UInt16 itemCount = reader.ReadUInt16();
-                UInt16 creatureCount = reader.ReadUInt16();
-                UInt16 effectCount = reader.ReadUInt16();
-                UInt16 distanceCount = reader.ReadUInt16();
+                // get max id
+                ushort itemCount = reader.ReadUInt16();
+                ushort creatureCount = reader.ReadUInt16();
+                ushort effectCount = reader.ReadUInt16();
+                ushort distanceCount = reader.ReadUInt16();
 
-                UInt16 minclientID = 100; //items starts at 100
-                UInt16 maxclientID = itemCount;
+                ushort minclientID = 100; // items starts at 100
+                ushort maxclientID = itemCount;
                 bool skipFrameDuration = (client.Version >= 1050);
 
-                UInt16 id = minclientID;
+                ushort id = minclientID;
                 while (id <= maxclientID)
                 {
                     ClientItem item = new ClientItem();
@@ -298,7 +298,7 @@ namespace PluginThree
                                 break;
 
                             case ItemFlag.LensHelp:
-                                UInt16 opt = reader.ReadUInt16();
+                                ushort opt = reader.ReadUInt16();
                                 if (opt == 1112)
                                 {
                                     item.isReadable = true;
@@ -338,7 +338,7 @@ namespace PluginThree
                                 break;
 
                             default:
-                                Trace.WriteLine(String.Format("PluginThree: Error while parsing, unknown flag 0x{0:X} at id {1}.", flag, id));
+                                Trace.WriteLine(string.Format("PluginThree: Error while parsing, unknown flag 0x{0:X} at id {1}.", flag, id));
                                 return false;
                         }
 
@@ -357,7 +357,7 @@ namespace PluginThree
                     item.patternZ = reader.ReadByte();
                     item.frames = reader.ReadByte();
                     item.isAnimation = item.frames > 1;
-                    item.numSprites = (UInt32)item.width * item.height * item.layers * item.patternX * item.patternY * item.patternZ * item.frames;
+                    item.numSprites = (uint)item.width * item.height * item.layers * item.patternX * item.patternY * item.patternZ * item.frames;
 
                     if (item.isAnimation && skipFrameDuration)
                     {
@@ -365,7 +365,7 @@ namespace PluginThree
                     }
 
                     // Read the sprite ids
-                    for (UInt32 i = 0; i < item.numSprites; ++i)
+                    for (uint i = 0; i < item.numSprites; ++i)
                     {
                         uint spriteId = reader.ReadUInt32();
                         Sprite sprite;

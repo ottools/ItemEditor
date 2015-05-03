@@ -30,8 +30,8 @@ namespace ItemEditor.Settings
     public class Preferences
     {
         public String ClientDirectory { get; set; }
-        public UInt32 DatSignature { get; set; }
-        public UInt32 SprSignature { get; set; }
+        public uint DatSignature { get; set; }
+        public uint SprSignature { get; set; }
         public Boolean Extended { get; set; }
         public Boolean Transparency { get; set; }
 

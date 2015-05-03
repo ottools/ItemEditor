@@ -30,8 +30,8 @@ namespace ItemEditor
     {
         #region Properties
 
-        public UInt32 id;
-        public UInt32 size;
+        public uint id;
+        public uint size;
         public byte[] dump;
         public bool useAlpha;
 
@@ -68,9 +68,9 @@ namespace ItemEditor
         private byte[] GetRGBData(byte transparentColor)
         {
             byte[] rgb32x32x3 = new byte[32 * 32 * 3];
-            UInt32 bytes = 0;
-            UInt32 x = 0;
-            UInt32 y = 0;
+            uint bytes = 0;
+            uint x = 0;
+            uint y = 0;
             Int32 chunkSize;
             byte channels = (byte)(useAlpha ? 4 : 3);
 
@@ -174,14 +174,14 @@ namespace ItemEditor
             }
         }
 
-        public static bool LoadSprites(string filename, ref Dictionary<UInt32, Sprite> sprites, SupportedClient client, bool extended, bool transparency)
+        public static bool LoadSprites(string filename, ref Dictionary<uint, Sprite> sprites, SupportedClient client, bool extended, bool transparency)
         {
             FileStream fileStream = new FileStream(filename, FileMode.Open);
             try
             {
                 using (BinaryReader reader = new BinaryReader(fileStream))
                 {
-                    UInt32 sprSignature = reader.ReadUInt32();
+                    uint sprSignature = reader.ReadUInt32();
                     if (client.SprSignature != sprSignature)
                     {
                         string message = "Bad spr signature. Expected signature is {0:X} and loaded signature is {1:X}.";
@@ -189,7 +189,7 @@ namespace ItemEditor
                         return false;
                     }
 
-                    UInt32 totalPics;
+                    uint totalPics;
                     if (extended)
                     {
                         totalPics = reader.ReadUInt32();
@@ -199,19 +199,19 @@ namespace ItemEditor
                         totalPics = reader.ReadUInt16();
                     }
 
-                    List<UInt32> spriteIndexes = new List<UInt32>();
+                    List<uint> spriteIndexes = new List<uint>();
                     for (uint i = 0; i < totalPics; ++i)
                     {
-                        UInt32 index = reader.ReadUInt32();
+                        uint index = reader.ReadUInt32();
                         spriteIndexes.Add(index);
                     }
 
-                    UInt32 id = 1;
-                    foreach (UInt32 element in spriteIndexes)
+                    uint id = 1;
+                    foreach (uint element in spriteIndexes)
                     {
-                        UInt32 index = element + 3;
+                        uint index = element + 3;
                         reader.BaseStream.Seek(index, SeekOrigin.Begin);
-                        UInt16 size = reader.ReadUInt16();
+                        ushort size = reader.ReadUInt16();
 
                         Sprite sprite;
                         if (sprites.TryGetValue(id, out sprite))

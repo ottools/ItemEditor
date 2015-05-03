@@ -60,11 +60,11 @@ namespace PluginInterface
                 {
                     try
                     {
-                        UInt32 version = UInt32.Parse(node.Attributes["version"].Value);
+                        uint version = uint.Parse(node.Attributes["version"].Value);
                         string description = node.Attributes["description"].Value;
-                        UInt32 otbVersion = UInt32.Parse(node.Attributes["otbversion"].Value);
-                        UInt32 datSignature = (UInt32)System.Int32.Parse(node.Attributes["datsignature"].Value, System.Globalization.NumberStyles.HexNumber);
-                        UInt32 sprSignature = (UInt32)System.Int32.Parse(node.Attributes["sprsignature"].Value, System.Globalization.NumberStyles.HexNumber);
+                        uint otbVersion = uint.Parse(node.Attributes["otbversion"].Value);
+                        uint datSignature = (uint)System.Int32.Parse(node.Attributes["datsignature"].Value, System.Globalization.NumberStyles.HexNumber);
+                        uint sprSignature = (uint)System.Int32.Parse(node.Attributes["sprsignature"].Value, System.Globalization.NumberStyles.HexNumber);
 
                         SupportedClient client = new SupportedClient(version, description, otbVersion, datSignature, sprSignature);
                         list.Add(client);

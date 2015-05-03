@@ -55,7 +55,7 @@ namespace ItemEditor
 
         //The plugin that is used to compare, sync and display sprite/dat data
         public Plugin currentPlugin;
-        public UInt32 currentOtbVersion = 0;
+        public uint currentOtbVersion = 0;
         string currentOtbFullPath = "";
 
         //The original plugin that was used to open the currently loaded OTB
@@ -79,12 +79,12 @@ namespace ItemEditor
             get { return this.saved; }
         }
 
-        public UInt16 MinItemId
+        public ushort MinItemId
         {
             get { return items.minId; }
         }
 
-        public UInt16 MaxItemId
+        public ushort MaxItemId
         {
             get { return items.maxId; }
         }
@@ -222,7 +222,7 @@ namespace ItemEditor
             }
         }
 
-        public bool SelectItem(UInt16 sid)
+        public bool SelectItem(ushort sid)
         {
             if (!this.Loaded)
             {
@@ -276,7 +276,7 @@ namespace ItemEditor
             }
 
             ServerItem item = this.CreateItem();
-            item.id = (UInt16)(items.maxId + 1);
+            item.id = (ushort)(items.maxId + 1);
             items.Add(item);
             itemsListBox.Items.Add(item);
             SelectItem(item);
@@ -298,7 +298,7 @@ namespace ItemEditor
             }
 
             ServerItem copyItem = this.CopyItem(item);
-            copyItem.id = (UInt16)(items.maxId + 1);
+            copyItem.id = (ushort)(items.maxId + 1);
             items.Add(copyItem);
             itemsListBox.Items.Add(copyItem);
             SelectItem(copyItem);
@@ -589,7 +589,7 @@ namespace ItemEditor
             {
                 Trace.WriteLine(String.Format("Reloading item id: {0}.", item.id));
 
-                UInt16 tmpId = item.id;
+                ushort tmpId = item.id;
                 item.itemImpl = (ItemImpl)clientItem.itemImpl.Clone();
                 item.id = tmpId;
                 Buffer.BlockCopy(clientItem.SpriteHash, 0, item.SpriteHash, 0, clientItem.SpriteHash.Length);
@@ -821,7 +821,7 @@ namespace ItemEditor
         {
             //create a new otb item
             ServerItem newItem = new ServerItem(item);
-            newItem.id = (UInt16)(items.maxId + 1);
+            newItem.id = (ushort)(items.maxId + 1);
             newItem.SpriteHash = new byte[16];
 
             if (item != null)
@@ -852,7 +852,7 @@ namespace ItemEditor
             return copy;
         }
 
-        private bool LoadClient(Plugin plugin, UInt32 otbVersion)
+        private bool LoadClient(Plugin plugin, uint otbVersion)
         {
             SupportedClient client = plugin.Instance.SupportedClients.Find(
                 delegate(SupportedClient sc)
@@ -866,8 +866,8 @@ namespace ItemEditor
                 return false;
             }
 
-            UInt32 datSignature = Program.preferences.DatSignature;
-            UInt32 sprSignature = Program.preferences.SprSignature;
+            uint datSignature = Program.preferences.DatSignature;
+            uint sprSignature = Program.preferences.SprSignature;
 
             if (client.DatSignature != datSignature || client.SprSignature != sprSignature)
             {
@@ -1215,7 +1215,7 @@ namespace ItemEditor
 
                 ClientItems currentItems = currentPlugin.Instance.Items;
                 ClientItems updateItems = updatePlugin.Instance.Items;
-                List<UInt16> assignedSpriteIdList = new List<UInt16>();
+                List<ushort> assignedSpriteIdList = new List<ushort>();
 
                 //store the previous plugin (so we can display previous sprite, and do other comparisions)
                 previousPlugin = currentPlugin;
@@ -1230,7 +1230,7 @@ namespace ItemEditor
                 currentOtbVersion = items.dwMinorVersion;
 
                 //Most items does have the same sprite after an update, so lets try that first
-                UInt32 foundItemCounter = 0;
+                uint foundItemCounter = 0;
                 foreach (ServerItem item in items)
                 {
                     item.spriteAssigned = false;
@@ -1309,7 +1309,7 @@ namespace ItemEditor
 
                 if (updateSettingsForm.reloadItemAttributesCheck.Checked)
                 {
-                    UInt32 reloadedItemCounter = 0;
+                    uint reloadedItemCounter = 0;
                     foreach (ServerItem item in items)
                     {
                         if (item.type == ItemType.Deprecated)
@@ -1339,7 +1339,7 @@ namespace ItemEditor
 
                 if (updateSettingsForm.createNewItemsCheck.Checked)
                 {
-                    UInt32 newItemCounter = 0;
+                    uint newItemCounter = 0;
                     foreach (Item updateItem in updateItems.Values)
                     {
                         if (!assignedSpriteIdList.Contains(updateItem.id))
@@ -1401,7 +1401,7 @@ namespace ItemEditor
             if (currentItem != null)
             {
                 ClientItem newClientItem;
-                if (currentPlugin.Instance.Items.TryGetValue((UInt16)clientIdUpDown.Value, out newClientItem))
+                if (currentPlugin.Instance.Items.TryGetValue((ushort)clientIdUpDown.Value, out newClientItem))
                 {
                     currentItem.prevSpriteId = currentItem.spriteId;
                     currentItem.spriteId = newClientItem.id;

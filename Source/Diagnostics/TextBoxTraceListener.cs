@@ -28,8 +28,8 @@ namespace ItemEditor.Diagnostics
     {
         #region Properties
 
-        const UInt32 updateFrequency = 10;
-        UInt32 updateCounter = 0;
+        const uint updateFrequency = 10;
+        uint updateCounter = 0;
 
         private TextBox _target;
         private StringSendDelegate _invokeWrite;

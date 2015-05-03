@@ -211,25 +211,25 @@ namespace ItemEditor
             WriteBytes(bytes, unescape);
         }
 
-        public void WriteUInt16(UInt16 value)
+        public void WriteUInt16(ushort value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
             WriteBytes(bytes, true);
         }
 
-        public void WriteUInt16(UInt16 value, bool unescape)
+        public void WriteUInt16(ushort value, bool unescape)
         {
             byte[] bytes = BitConverter.GetBytes(value);
             WriteBytes(bytes, unescape);
         }
 
-        public void WriteUInt32(UInt32 value)
+        public void WriteUInt32(uint value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
             WriteBytes(bytes, true);
         }
 
-        public void WriteUInt32(UInt32 value, bool unescape)
+        public void WriteUInt32(uint value, bool unescape)
         {
             byte[] bytes = BitConverter.GetBytes(value);
             WriteBytes(bytes, unescape);
@@ -260,7 +260,7 @@ namespace ItemEditor
         private void WriteProp(byte attr, byte[] bytes)
         {
             writeByte((byte)attr);
-            WriteUInt16((UInt16)bytes.Length);
+            WriteUInt16((ushort)bytes.Length);
             WriteBytes(bytes, true);
         }
 
@@ -278,7 +278,7 @@ namespace ItemEditor
         }
 
         public Int64 currentNodePos = 0;
-        public UInt32 currentNodeSize = 0;
+        public uint currentNodeSize = 0;
     };
 
     public class ServerItem : Item
@@ -298,8 +298,8 @@ namespace ItemEditor
             }
         }
 
-        public UInt16 spriteId;
-        public UInt16 prevSpriteId;
+        public ushort spriteId;
+        public ushort prevSpriteId;
 
         //Used during an update to indicate if this item has been updated
         public bool spriteAssigned = false;
@@ -310,12 +310,12 @@ namespace ItemEditor
 
     public class ServerItemList : List<ServerItem>
     {
-        public UInt16 minId = 100;
-        public UInt16 maxId { get { return (UInt16)(minId + Count - 1); } }
-        public UInt32 dwMajorVersion;
-        public UInt32 dwMinorVersion;
-        public UInt32 dwBuildNumber;
-        public UInt32 clientVersion;
+        public ushort minId = 100;
+        public ushort maxId { get { return (ushort)(minId + Count - 1); } }
+        public uint dwMajorVersion;
+        public uint dwMinorVersion;
+        public uint dwBuildNumber;
+        public uint clientVersion;
     }
 
     public class Otb
@@ -361,9 +361,9 @@ namespace ItemEditor
 
         public class VersionInfo
         {
-            public UInt32 dwMajorVersion;
-            public UInt32 dwMinorVersion;
-            public UInt32 dwBuildNumber;
+            public uint dwMajorVersion;
+            public uint dwMinorVersion;
+            public uint dwBuildNumber;
             public string CSDVersion;
         };
 
@@ -415,7 +415,7 @@ namespace ItemEditor
                     byte attr = nodeReader.ReadByte();
                     if ((RootAttribute)attr == RootAttribute.ROOT_ATTR_VERSION)
                     {
-                        UInt16 datalen = nodeReader.ReadUInt16();
+                        ushort datalen = nodeReader.ReadUInt16();
                         if (datalen != 140) // 4 + 4 + 4 + 1 * 128
                         {
                             Trace.WriteLine(String.Format("Size of version header is invalid, updated .otb version?"));
@@ -475,7 +475,7 @@ namespace ItemEditor
                         while (nodeReader.PeekChar() != -1)
                         {
                             ItemAttribute attribute = (ItemAttribute)nodeReader.ReadByte();
-                            UInt16 datalen = nodeReader.ReadUInt16();
+                            ushort datalen = nodeReader.ReadUInt16();
 
                             switch (attribute)
                             {
@@ -644,25 +644,25 @@ namespace ItemEditor
                             default: writer.CreateNode((byte)ItemGroup.NONE); break;
                         }
 
-                        UInt32 flags = 0;
-                        if (item.isUnpassable) { flags |= (UInt32)ItemFlag.BLOCK_SOLID; }
-                        if (item.blockMissiles) { flags |= (UInt32)ItemFlag.BLOCK_MISSILE; }
-                        if (item.blockPathfinder) { flags |= (UInt32)ItemFlag.BLOCK_PATHFINDER; }
-                        if (item.hasElevation) { flags |= (UInt32)ItemFlag.HAS_ELEVATION; }
-                        if (item.multiUse) { flags |= (UInt32)ItemFlag.USEABLE; }
-                        if (item.isPickupable) { flags |= (UInt32)ItemFlag.PICKUPABLE; }
-                        if (item.isMoveable) { flags |= (UInt32)ItemFlag.MOVEABLE; }
-                        if (item.isStackable) { flags |= (UInt32)ItemFlag.STACKABLE; }
-                        if (item.alwaysOnTop) { flags |= (UInt32)ItemFlag.ALWAYS_ON_TOP; }
-                        if (item.isReadable) { flags |= (UInt32)ItemFlag.READABLE; }
-                        if (item.isRotatable) { flags |= (UInt32)ItemFlag.ROTABLE; }
-                        if (item.isHangable) { flags |= (UInt32)ItemFlag.HANGABLE; }
-                        if (item.isVertical) { flags |= (UInt32)ItemFlag.VERTICAL_WALL; }
-                        if (item.isHorizontal) { flags |= (UInt32)ItemFlag.HORIZONTAL_WALL; }
-                        if (item.ignoreLook) { flags |= (UInt32)ItemFlag.IGNORE_LOOK; }
-                        if (item.allowDistRead) { flags |= (UInt32)ItemFlag.ALLOW_DISTANCE_READ; }
-                        if (item.isAnimation) { flags |= (UInt32)ItemFlag.ANIMATION; }
-                        if (item.fullGround) { flags |= (UInt32)ItemFlag.FULL_GROUND; }
+                        uint flags = 0;
+                        if (item.isUnpassable) { flags |= (uint)ItemFlag.BLOCK_SOLID; }
+                        if (item.blockMissiles) { flags |= (uint)ItemFlag.BLOCK_MISSILE; }
+                        if (item.blockPathfinder) { flags |= (uint)ItemFlag.BLOCK_PATHFINDER; }
+                        if (item.hasElevation) { flags |= (uint)ItemFlag.HAS_ELEVATION; }
+                        if (item.multiUse) { flags |= (uint)ItemFlag.USEABLE; }
+                        if (item.isPickupable) { flags |= (uint)ItemFlag.PICKUPABLE; }
+                        if (item.isMoveable) { flags |= (uint)ItemFlag.MOVEABLE; }
+                        if (item.isStackable) { flags |= (uint)ItemFlag.STACKABLE; }
+                        if (item.alwaysOnTop) { flags |= (uint)ItemFlag.ALWAYS_ON_TOP; }
+                        if (item.isReadable) { flags |= (uint)ItemFlag.READABLE; }
+                        if (item.isRotatable) { flags |= (uint)ItemFlag.ROTABLE; }
+                        if (item.isHangable) { flags |= (uint)ItemFlag.HANGABLE; }
+                        if (item.isVertical) { flags |= (uint)ItemFlag.VERTICAL_WALL; }
+                        if (item.isHorizontal) { flags |= (uint)ItemFlag.HORIZONTAL_WALL; }
+                        if (item.ignoreLook) { flags |= (uint)ItemFlag.IGNORE_LOOK; }
+                        if (item.allowDistRead) { flags |= (uint)ItemFlag.ALLOW_DISTANCE_READ; }
+                        if (item.isAnimation) { flags |= (uint)ItemFlag.ANIMATION; }
+                        if (item.fullGround) { flags |= (uint)ItemFlag.FULL_GROUND; }
 
                         writer.WriteUInt32(flags, true);
 
@@ -671,28 +671,28 @@ namespace ItemEditor
                             switch (attribute)
                             {
                                 case ItemAttribute.SERVER_ID:
-                                    property.Write((UInt16)item.id);
+                                    property.Write((ushort)item.id);
                                     writer.WriteProp(ItemAttribute.SERVER_ID, property);
 
                                     break;
 
                                 case ItemAttribute.TRADE_AS:
-                                    property.Write((UInt16)item.tradeAs);
+                                    property.Write((ushort)item.tradeAs);
                                     writer.WriteProp(ItemAttribute.TRADE_AS, property);
                                     break;
 
                                 case ItemAttribute.CLIENT_ID:
-                                    property.Write((UInt16)item.spriteId);
+                                    property.Write((ushort)item.spriteId);
                                     writer.WriteProp(ItemAttribute.CLIENT_ID, property);
                                     break;
 
                                 case ItemAttribute.GROUND_SPEED:
-                                    property.Write((UInt16)item.groundSpeed);
+                                    property.Write((ushort)item.groundSpeed);
                                     writer.WriteProp(ItemAttribute.GROUND_SPEED, property);
                                     break;
 
                                 case ItemAttribute.NAME:
-                                    for (UInt16 i = 0; i < item.name.Length; ++i)
+                                    for (ushort i = 0; i < item.name.Length; ++i)
                                     {
                                         property.Write((char)item.name[i]);
                                     }
@@ -705,23 +705,23 @@ namespace ItemEditor
                                     break;
 
                                 case ItemAttribute.MINIMAP_COLOR:
-                                    property.Write((UInt16)item.minimapColor);
+                                    property.Write((ushort)item.minimapColor);
                                     writer.WriteProp(ItemAttribute.MINIMAP_COLOR, property);
                                     break;
 
                                 case ItemAttribute.MAX_READ_WRITE_CHARS:
-                                    property.Write((UInt16)item.maxReadWriteChars);
+                                    property.Write((ushort)item.maxReadWriteChars);
                                     writer.WriteProp(ItemAttribute.MAX_READ_WRITE_CHARS, property);
                                     break;
 
                                 case ItemAttribute.MAX_READ_CHARS:
-                                    property.Write((UInt16)item.maxReadChars);
+                                    property.Write((ushort)item.maxReadChars);
                                     writer.WriteProp(ItemAttribute.MAX_READ_CHARS, property);
                                     break;
 
                                 case ItemAttribute.LIGHT:
-                                    property.Write((UInt16)item.lightLevel);
-                                    property.Write((UInt16)item.lightColor);
+                                    property.Write((ushort)item.lightLevel);
+                                    property.Write((ushort)item.lightColor);
                                     writer.WriteProp(ItemAttribute.LIGHT, property);
                                     break;
 

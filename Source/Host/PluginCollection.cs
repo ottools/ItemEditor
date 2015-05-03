@@ -80,7 +80,7 @@ namespace ItemEditor.Host
         /// </summary>
         /// <param name="version">The otb version</param>
         /// <returns>a plugin, or null if the plugin is not found</returns>
-        public Plugin Find(UInt32 otbVersion)
+        public Plugin Find(uint otbVersion)
         {
             foreach (Plugin plugin in this.List)
             {
@@ -102,7 +102,7 @@ namespace ItemEditor.Host
         /// <param name="datSignature">The dat file signature</param>
         /// <param name="sprSignature">The spr file signature</param>
         /// <returns>a plugin, or null if the plugin is not found</returns>
-        public Plugin Find(UInt32 datSignature, UInt32 sprSignature)
+        public Plugin Find(uint datSignature, uint sprSignature)
         {
             foreach (Plugin plugin in this.List)
             {

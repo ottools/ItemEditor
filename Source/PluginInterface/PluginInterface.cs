@@ -24,7 +24,7 @@ using System.Collections.Generic;
 
 namespace PluginInterface
 {
-    public class ClientItems : Dictionary<UInt16, ClientItem>
+    public class ClientItems : Dictionary<ushort, ClientItem>
     {
         public bool signatureCalculated = false;
     }
@@ -33,22 +33,22 @@ namespace PluginInterface
     {
         #region Private Properties
 
-        private UInt32 _version;
+        private uint _version;
         private string _description;
-        private UInt32 _otbVersion;
-        private UInt32 _datSignature;
-        private UInt32 _sprSignature;
+        private uint _otbVersion;
+        private uint _datSignature;
+        private uint _sprSignature;
 
         #endregion
 
         #region Constructor
 
         public SupportedClient(
-            UInt32 version,
+            uint version,
             string description,
-            UInt32 otbVersion,
-            UInt32 datSignature,
-            UInt32 sprSignature)
+            uint otbVersion,
+            uint datSignature,
+            uint sprSignature)
         {
             this._version = version;
             this._description = description;
@@ -61,7 +61,7 @@ namespace PluginInterface
 
         #region Public Properties
 
-        public UInt32 Version
+        public uint Version
         {
             get { return _version; }
         }
@@ -71,17 +71,17 @@ namespace PluginInterface
             get { return _description; }
         }
 
-        public UInt32 OtbVersion
+        public uint OtbVersion
         {
             get { return _otbVersion; }
         }
 
-        public UInt32 DatSignature
+        public uint DatSignature
         {
             get { return _datSignature; }
         }
 
-        public UInt32 SprSignature
+        public uint SprSignature
         {
             get { return _sprSignature; }
         }

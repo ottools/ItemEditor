@@ -60,7 +60,7 @@ namespace ItemEditor.Dialogs
 
         #region General Methods
 
-        private void OnFind(UInt16 sid)
+        private void OnFind(ushort sid)
         {
             if (mainForm != null)
             {
@@ -77,14 +77,14 @@ namespace ItemEditor.Dialogs
 
         private void findItemButton_Click(object sender, EventArgs e)
         {
-            this.OnFind((UInt16)findItemNumericUpDown.Value);
+            this.OnFind((ushort)findItemNumericUpDown.Value);
         }
 
         private void findItemNumericUpDown_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                this.OnFind((UInt16)findItemNumericUpDown.Value);
+                this.OnFind((ushort)findItemNumericUpDown.Value);
             }
         }
 

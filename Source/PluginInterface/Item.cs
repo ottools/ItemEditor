@@ -42,19 +42,19 @@ namespace ItemEditor
             return clone;
         }
 
-        public UInt16 id;
-        public UInt16 groundSpeed;
+        public ushort id;
+        public ushort groundSpeed;
         public ItemType type;
         public bool alwaysOnTop;
-        public UInt16 alwaysOnTopOrder;
+        public ushort alwaysOnTopOrder;
         public bool multiUse;
-        public UInt16 maxReadChars;
-        public UInt16 maxReadWriteChars;
+        public ushort maxReadChars;
+        public ushort maxReadWriteChars;
         public bool hasElevation;
-        public UInt16 minimapColor;
+        public ushort minimapColor;
         public bool ignoreLook;
-        public UInt16 lightLevel;
-        public UInt16 lightColor;
+        public ushort lightLevel;
+        public ushort lightColor;
         public bool isStackable;
         public bool isReadable;
         public bool isMoveable;
@@ -69,7 +69,7 @@ namespace ItemEditor
         public bool allowDistRead;
         public bool isAnimation;
         public bool fullGround;
-        public UInt16 tradeAs;
+        public ushort tradeAs;
         public string name;
     }
 
@@ -116,19 +116,19 @@ namespace ItemEditor
             return true;
         }
 
-        public UInt16 id { get { return itemImpl.id; } set { itemImpl.id = value; } }
-        public UInt16 groundSpeed { get { return itemImpl.groundSpeed; } set { itemImpl.groundSpeed = value; } }
+        public ushort id { get { return itemImpl.id; } set { itemImpl.id = value; } }
+        public ushort groundSpeed { get { return itemImpl.groundSpeed; } set { itemImpl.groundSpeed = value; } }
         public ItemType type { get { return itemImpl.type; } set { itemImpl.type = value; } }
         public bool alwaysOnTop { get { return itemImpl.alwaysOnTop; } set { itemImpl.alwaysOnTop = value; } }
-        public UInt16 alwaysOnTopOrder { get { return itemImpl.alwaysOnTopOrder; } set { itemImpl.alwaysOnTopOrder = value; } }
+        public ushort alwaysOnTopOrder { get { return itemImpl.alwaysOnTopOrder; } set { itemImpl.alwaysOnTopOrder = value; } }
         public bool multiUse { get { return itemImpl.multiUse; } set { itemImpl.multiUse = value; } }
-        public UInt16 maxReadChars { get { return itemImpl.maxReadChars; } set { itemImpl.maxReadChars = value; } }
-        public UInt16 maxReadWriteChars { get { return itemImpl.maxReadWriteChars; } set { itemImpl.maxReadWriteChars = value; } }
+        public ushort maxReadChars { get { return itemImpl.maxReadChars; } set { itemImpl.maxReadChars = value; } }
+        public ushort maxReadWriteChars { get { return itemImpl.maxReadWriteChars; } set { itemImpl.maxReadWriteChars = value; } }
         public bool hasElevation { get { return itemImpl.hasElevation; } set { itemImpl.hasElevation = value; } }
-        public UInt16 minimapColor { get { return itemImpl.minimapColor; } set { itemImpl.minimapColor = value; } }
+        public ushort minimapColor { get { return itemImpl.minimapColor; } set { itemImpl.minimapColor = value; } }
         public bool ignoreLook { get { return itemImpl.ignoreLook; } set { itemImpl.ignoreLook = value; } }
-        public UInt16 lightLevel { get { return itemImpl.lightLevel; } set { itemImpl.lightLevel = value; } }
-        public UInt16 lightColor { get { return itemImpl.lightColor; } set { itemImpl.lightColor = value; } }
+        public ushort lightLevel { get { return itemImpl.lightLevel; } set { itemImpl.lightLevel = value; } }
+        public ushort lightColor { get { return itemImpl.lightColor; } set { itemImpl.lightColor = value; } }
         public bool isStackable { get { return itemImpl.isStackable; } set { itemImpl.isStackable = value; } }
         public bool isReadable { get { return itemImpl.isReadable; } set { itemImpl.isReadable = value; } }
         public bool isMoveable { get { return itemImpl.isMoveable; } set { itemImpl.isMoveable = value; } }
@@ -144,7 +144,7 @@ namespace ItemEditor
         public bool isAnimation { get { return itemImpl.isAnimation; } set { itemImpl.isAnimation = value; } }
         public bool fullGround { get { return itemImpl.fullGround; } set { itemImpl.fullGround = value; } }
         public string name { get { return itemImpl.name; } set { itemImpl.name = value; } }
-        public UInt16 tradeAs { get { return itemImpl.tradeAs; } set { itemImpl.tradeAs = value; } }
+        public ushort tradeAs { get { return itemImpl.tradeAs; } set { itemImpl.tradeAs = value; } }
 
         //used to find sprites during updates
         protected byte[] _spriteHash = null;
@@ -165,7 +165,7 @@ namespace ItemEditor
         public byte patternY;
         public byte patternZ;
         public byte frames;
-        public UInt32 numSprites;
+        public uint numSprites;
         public List<Sprite> spriteList = new List<Sprite>();
 
         public override byte[] SpriteHash

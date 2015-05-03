@@ -31,8 +31,8 @@ namespace ItemEditor.Dialogs
         #region Private Properties
 
         private Preferences _preferences;
-        private UInt32 _datSignature;
-        private UInt32 _sprSignature;
+        private uint _datSignature;
+        private uint _sprSignature;
 
         #endregion
 
@@ -73,8 +73,8 @@ namespace ItemEditor.Dialogs
                 }
             }
 
-            UInt32 datSignature = GetSignature(datPath);
-            UInt32 sprSignature = GetSignature(sprPath);
+            uint datSignature = GetSignature(datPath);
+            uint sprSignature = GetSignature(sprPath);
 
             Plugin plugin = Program.plugins.AvailablePlugins.Find(datSignature, sprSignature);
             if (plugin == null)
@@ -89,9 +89,9 @@ namespace ItemEditor.Dialogs
             directoryPathTextBox.Text = directory;
         }
 
-        private UInt32 GetSignature(string fileName)
+        private uint GetSignature(string fileName)
         {
-            UInt32 signature = 0;
+            uint signature = 0;
             FileStream fileStream = new FileStream(fileName, FileMode.Open);
 
             try

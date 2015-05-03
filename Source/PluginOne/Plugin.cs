@@ -76,7 +76,7 @@ namespace PluginOne
     {
         #region Private Properties
 
-        private Dictionary<UInt32, Sprite> sprites = new Dictionary<UInt32, Sprite>();
+        private Dictionary<uint, Sprite> sprites = new Dictionary<uint, Sprite>();
         private ClientItems items = new ClientItems();
         private List<SupportedClient> supportedClients = new List<SupportedClient>();
         private IPluginHost myHost = null;
@@ -135,7 +135,7 @@ namespace PluginOne
             using (FileStream fileStream = new FileStream(filename, FileMode.Open))
             {
                 BinaryReader reader = new BinaryReader(fileStream);
-                UInt32 datSignature = reader.ReadUInt32();
+                uint datSignature = reader.ReadUInt32();
                 if (client.DatSignature != datSignature)
                 {
                     string message = "PluginOne: Bad dat signature. Expected signature is {0:X} and loaded signature is {1:X}.";
@@ -144,15 +144,15 @@ namespace PluginOne
                 }
 
                 // get max id
-                UInt16 itemCount = reader.ReadUInt16();
-                UInt16 creatureCount = reader.ReadUInt16();
-                UInt16 effectCount = reader.ReadUInt16();
-                UInt16 distanceCount = reader.ReadUInt16();
+                ushort itemCount = reader.ReadUInt16();
+                ushort creatureCount = reader.ReadUInt16();
+                ushort effectCount = reader.ReadUInt16();
+                ushort distanceCount = reader.ReadUInt16();
 
-                UInt16 minclientID = 100; //items starts at 100
-                UInt16 maxclientID = itemCount;
+                ushort minclientID = 100; //items starts at 100
+                ushort maxclientID = itemCount;
 
-                UInt16 id = minclientID;
+                ushort id = minclientID;
                 while (id <= maxclientID)
                 {
                     ClientItem item = new ClientItem();
@@ -291,7 +291,7 @@ namespace PluginOne
                                 break;
 
                             case ItemFlag.LensHelp:
-                                UInt16 opt = reader.ReadUInt16();
+                                ushort opt = reader.ReadUInt16();
                                 if (opt == 1112)
                                 {
                                     item.isReadable = true;
@@ -329,10 +329,10 @@ namespace PluginOne
                     item.patternZ = reader.ReadByte();
                     item.frames = reader.ReadByte();
                     item.isAnimation = item.frames > 1;
-                    item.numSprites = (UInt32)item.width * item.height * item.layers * item.patternX * item.patternY * item.patternZ * item.frames;
+                    item.numSprites = (uint)item.width * item.height * item.layers * item.patternX * item.patternY * item.patternZ * item.frames;
 
                     // Read the sprite ids
-                    for (UInt32 i = 0; i < item.numSprites; ++i)
+                    for (uint i = 0; i < item.numSprites; ++i)
                     {
                         uint spriteId;
                         if (extended)

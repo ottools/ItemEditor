@@ -24,20 +24,20 @@ using System.Windows.Forms;
 
 namespace ItemEditor
 {
-	static class Program
-	{
-		public static Host.PluginServices plugins = new Host.PluginServices();
-		public static Preferences preferences = new Preferences(); 
+    static class Program
+    {
+        public static Host.PluginServices plugins = new Host.PluginServices();
+        public static Preferences preferences = new Preferences();
 
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		[STAThread]
-		static void Main()
-		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
-		}
-	}
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
+        }
+    }
 }

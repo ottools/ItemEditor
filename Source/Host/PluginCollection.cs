@@ -24,99 +24,99 @@ using System.Collections;
 
 namespace ItemEditor.Host
 {
-	/// <summary>
-	/// Collection of AvailablePlugin Type
-	/// </summary>
-	public class PluginCollection : CollectionBase
-	{
-		#region Methods
+    /// <summary>
+    /// Collection of AvailablePlugin Type
+    /// </summary>
+    public class PluginCollection : CollectionBase
+    {
+        #region Methods
 
-		/// <summary>
-		/// Add a plugin
-		/// </summary>
-		/// <param name="plugin">The Plugin to Add</param>
-		public void Add(Plugin plugin)
-		{
-			this.List.Add(plugin);
-		}
+        /// <summary>
+        /// Add a plugin
+        /// </summary>
+        /// <param name="plugin">The Plugin to Add</param>
+        public void Add(Plugin plugin)
+        {
+            this.List.Add(plugin);
+        }
 
-		/// <summary>
-		/// Removes a plugin
-		/// </summary>
-		/// <param name="plugin">The Plugin to Remove</param>
-		public void Remove(Plugin plugin)
-		{
-			this.List.Remove(plugin);
-		}
+        /// <summary>
+        /// Removes a plugin
+        /// </summary>
+        /// <param name="plugin">The Plugin to Remove</param>
+        public void Remove(Plugin plugin)
+        {
+            this.List.Remove(plugin);
+        }
 
-		/// <summary>
-		/// Search for a plugin by name
-		/// </summary>
-		/// <param name="pluginNameOrPath">The name or File path of the plugin to find</param>
-		/// <returns>a plugin, or null if the plugin is not found</returns>
-		public Plugin Find(string pluginNameOrPath)
-		{
-			foreach (Plugin plugin in this.List)
-			{
-				foreach (SupportedClient client in plugin.Instance.SupportedClients)
-				{
-					if ((client.Description.Equals(pluginNameOrPath)))
-					{
-						return plugin;
-					}
-				}
+        /// <summary>
+        /// Search for a plugin by name
+        /// </summary>
+        /// <param name="pluginNameOrPath">The name or File path of the plugin to find</param>
+        /// <returns>a plugin, or null if the plugin is not found</returns>
+        public Plugin Find(string pluginNameOrPath)
+        {
+            foreach (Plugin plugin in this.List)
+            {
+                foreach (SupportedClient client in plugin.Instance.SupportedClients)
+                {
+                    if ((client.Description.Equals(pluginNameOrPath)))
+                    {
+                        return plugin;
+                    }
+                }
 
-				if (plugin.AssemblyPath.Equals(pluginNameOrPath))
-				{
-					return plugin;
-				}
-			}
+                if (plugin.AssemblyPath.Equals(pluginNameOrPath))
+                {
+                    return plugin;
+                }
+            }
 
-			return null;
-		}
+            return null;
+        }
 
-		/// <summary>
-		/// Search for a plugin by compatibility
-		/// </summary>
-		/// <param name="version">The otb version</param>
-		/// <returns>a plugin, or null if the plugin is not found</returns>
-		public Plugin Find(UInt32 otbVersion)
-		{
-			foreach (Plugin plugin in this.List)
-			{
-				foreach (SupportedClient client in plugin.Instance.SupportedClients)
-				{
-					if (client.OtbVersion == otbVersion)
-					{
-						return plugin;
-					}
-				}
-			}
+        /// <summary>
+        /// Search for a plugin by compatibility
+        /// </summary>
+        /// <param name="version">The otb version</param>
+        /// <returns>a plugin, or null if the plugin is not found</returns>
+        public Plugin Find(UInt32 otbVersion)
+        {
+            foreach (Plugin plugin in this.List)
+            {
+                foreach (SupportedClient client in plugin.Instance.SupportedClients)
+                {
+                    if (client.OtbVersion == otbVersion)
+                    {
+                        return plugin;
+                    }
+                }
+            }
 
-			return null;
-		}
+            return null;
+        }
 
-		/// <summary>
-		/// Search for a plugin by signatures
-		/// </summary>
-		/// <param name="datSignature">The dat file signature</param>
-		/// <param name="sprSignature">The spr file signature</param>
-		/// <returns>a plugin, or null if the plugin is not found</returns>
-		public Plugin Find(UInt32 datSignature, UInt32 sprSignature)
-		{
-			foreach (Plugin plugin in this.List)
-			{
-				foreach (SupportedClient client in plugin.Instance.SupportedClients)
-				{
-					if (client.DatSignature == datSignature && client.SprSignature == sprSignature)
-					{
-						return plugin;
-					}
-				}
-			}
-			return null;
-		}
+        /// <summary>
+        /// Search for a plugin by signatures
+        /// </summary>
+        /// <param name="datSignature">The dat file signature</param>
+        /// <param name="sprSignature">The spr file signature</param>
+        /// <returns>a plugin, or null if the plugin is not found</returns>
+        public Plugin Find(UInt32 datSignature, UInt32 sprSignature)
+        {
+            foreach (Plugin plugin in this.List)
+            {
+                foreach (SupportedClient client in plugin.Instance.SupportedClients)
+                {
+                    if (client.DatSignature == datSignature && client.SprSignature == sprSignature)
+                    {
+                        return plugin;
+                    }
+                }
+            }
+            return null;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

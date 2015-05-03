@@ -26,32 +26,32 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Dialogs
 {
-	public partial class AboutForm : Form
-	{
-		public AboutForm()
-		{
-			InitializeComponent();
-			InitializeGraphics();
-		}
+    public partial class AboutForm : Form
+    {
+        public AboutForm()
+        {
+            InitializeComponent();
+            InitializeGraphics();
+        }
 
-		#region Methods
+        #region Methods
 
-		/// <summary>
-		/// Attaches the image to the imagebox
-		/// </summary>
-		private void InitializeGraphics()
-		{
-			this.pictureBox.Image = ItemEditor.Properties.Resources.about_background;
-			this.versionLabel.Text = MainForm.VersionString;
-			this.copyLabel.Text = "Development: EdMignari and all contributors of the original project.";
-			this.linkLabel.Text = "https://github.com/ottools/ItemEditor";
-		}
+        /// <summary>
+        /// Attaches the image to the imagebox
+        /// </summary>
+        private void InitializeGraphics()
+        {
+            this.pictureBox.Image = ItemEditor.Properties.Resources.about_background;
+            this.versionLabel.Text = MainForm.VersionString;
+            this.copyLabel.Text = "Development: EdMignari and all contributors of the original project.";
+            this.linkLabel.Text = "https://github.com/ottools/ItemEditor";
+        }
 
-		#endregion
+        #endregion
 
-		private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			System.Diagnostics.Process.Start("https://github.com/ottools/ItemEditor");
-		}
-	}
+        private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/ottools/ItemEditor");
+        }
+    }
 }

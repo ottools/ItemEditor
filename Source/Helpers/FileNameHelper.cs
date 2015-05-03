@@ -23,17 +23,17 @@ using System.IO;
 
 namespace ItemEditor.Helpers
 {
-	public class FileNameHelper
-	{
-		/// <summary>
-		/// Path to the setting file
-		/// </summary>
-		public static String SettingData
-		{
-			get
-			{
-				return Path.Combine(PathHelper.ApplicationData, "setting.xml");
-			}
-		}
-	}
+    public class FileNameHelper
+    {
+        /// <summary>
+        /// Path to the setting file
+        /// </summary>
+        public static String SettingData
+        {
+            get
+            {
+                return Path.Combine(PathHelper.ApplicationData, "setting.xml");
+            }
+        }
+    }
 }

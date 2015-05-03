@@ -24,61 +24,61 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Diagnostics
 {
-	public class TextBoxTraceListener : TraceListener
-	{
-		#region Properties
+    public class TextBoxTraceListener : TraceListener
+    {
+        #region Properties
 
-		const UInt32 updateFrequency = 10;
-		UInt32 updateCounter = 0;
+        const UInt32 updateFrequency = 10;
+        UInt32 updateCounter = 0;
 
-		private TextBox _target;
-		private StringSendDelegate _invokeWrite;
+        private TextBox _target;
+        private StringSendDelegate _invokeWrite;
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		public TextBoxTraceListener(TextBox target)
-		{
-			_target = target;
-			_invokeWrite = new StringSendDelegate(SendString);
-		}
+        public TextBoxTraceListener(TextBox target)
+        {
+            _target = target;
+            _invokeWrite = new StringSendDelegate(SendString);
+        }
 
-		#endregion
+        #endregion
 
-		#region General Methods
+        #region General Methods
 
-		public void Clear()
-		{
-			_target.Clear();
-		}
+        public void Clear()
+        {
+            _target.Clear();
+        }
 
-		public override void Write(string message)
-		{
-			_target.Invoke(_invokeWrite, new object[] { ">> " + message });
-		}
+        public override void Write(string message)
+        {
+            _target.Invoke(_invokeWrite, new object[] { ">> " + message });
+        }
 
-		public override void WriteLine(string message)
-		{
-			_target.Invoke(_invokeWrite, new object[] { ">> " + message + Environment.NewLine });
-		}
+        public override void WriteLine(string message)
+        {
+            _target.Invoke(_invokeWrite, new object[] { ">> " + message + Environment.NewLine });
+        }
 
-		private delegate void StringSendDelegate(string message);
+        private delegate void StringSendDelegate(string message);
 
-		private void SendString(string message)
-		{
-			// No need to lock text box as this function will only 
-			// ever be executed from the UI thread
-			_target.AppendText(message);
+        private void SendString(string message)
+        {
+            // No need to lock text box as this function will only 
+            // ever be executed from the UI thread
+            _target.AppendText(message);
 
-			++updateCounter;
-			if (updateCounter >= updateFrequency)
-			{
-				updateCounter = 0;
-				Application.DoEvents();
-			}
-		}
+            ++updateCounter;
+            if (updateCounter >= updateFrequency)
+            {
+                updateCounter = 0;
+                Application.DoEvents();
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

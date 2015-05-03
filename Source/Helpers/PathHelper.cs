@@ -24,40 +24,40 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Helpers
 {
-	class PathHelper
-	{
-		/// <summary>
-		/// Path to the application directory
-		/// </summary>
-		public static String ApplicationDirectory
-		{
-			get
-			{
-				return Path.GetDirectoryName(Application.ExecutablePath);
-			}
-		}
+    class PathHelper
+    {
+        /// <summary>
+        /// Path to the application directory
+        /// </summary>
+        public static String ApplicationDirectory
+        {
+            get
+            {
+                return Path.GetDirectoryName(Application.ExecutablePath);
+            }
+        }
 
-		/// <summary>
-		/// Path to the user's application directory
-		/// </summary>
-		public static String ApplicationData
-		{
-			get
-			{
-				string folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-				return Path.Combine(folder, "ItemEditor");
-			}
-		}
+        /// <summary>
+        /// Path to the user's application directory
+        /// </summary>
+        public static String ApplicationData
+        {
+            get
+            {
+                string folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                return Path.Combine(folder, "ItemEditor");
+            }
+        }
 
-		/// <summary>
-		/// Path to the Plugins directory
-		/// </summary>
-		public static String Plugins
-		{
-			get
-			{
-				return Path.Combine(ApplicationDirectory, "Plugins");
-			}
-		}
-	}
+        /// <summary>
+        /// Path to the Plugins directory
+        /// </summary>
+        public static String Plugins
+        {
+            get
+            {
+                return Path.Combine(ApplicationDirectory, "Plugins");
+            }
+        }
+    }
 }

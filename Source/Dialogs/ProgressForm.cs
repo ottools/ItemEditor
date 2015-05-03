@@ -22,15 +22,15 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Dialogs
 {
-	public partial class ProgressForm : Form
-	{
-		#region Constructor
+    public partial class ProgressForm : Form
+    {
+        #region Constructor
 
-		public ProgressForm()
-		{
-			InitializeComponent();
-		}
+        public ProgressForm()
+        {
+            InitializeComponent();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

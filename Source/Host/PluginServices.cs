@@ -27,113 +27,113 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Host
 {
-	/// <summary>
-	/// Summary description for PluginServices.
-	/// </summary>
-	public class PluginServices : IPluginHost
-	{
-		#region Private Properties
+    /// <summary>
+    /// Summary description for PluginServices.
+    /// </summary>
+    public class PluginServices : IPluginHost
+    {
+        #region Private Properties
 
-		private PluginCollection _collection = new PluginCollection();
+        private PluginCollection _collection = new PluginCollection();
 
-		#endregion
+        #endregion
 
-		#region Public Properties
+        #region Public Properties
 
-		/// <summary>
-		/// A collection of all plugins found by FindPlugins()
-		/// </summary>
-		public PluginCollection AvailablePlugins
-		{
-			get { return _collection; }
-			set { _collection = value; }
-		}
+        /// <summary>
+        /// A collection of all plugins found by FindPlugins()
+        /// </summary>
+        public PluginCollection AvailablePlugins
+        {
+            get { return _collection; }
+            set { _collection = value; }
+        }
 
-		#endregion
+        #endregion
 
-		#region Contructor
+        #region Contructor
 
-		/// <summary>
-		/// Constructor of PluginServices
-		/// </summary>
-		public PluginServices()
-		{
-		}
+        /// <summary>
+        /// Constructor of PluginServices
+        /// </summary>
+        public PluginServices()
+        {
+        }
 
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		/// <summary>
-		/// Searches the Path for plugins
-		/// </summary>
-		public void FindPlugins()
-		{
-			string path = PathHelper.Plugins;
-			if (!Directory.Exists(path))
-			{
-				MessageBox.Show("Plugins were not found. Please reinstall the program.");
-				return;
-			}
+        /// <summary>
+        /// Searches the Path for plugins
+        /// </summary>
+        public void FindPlugins()
+        {
+            string path = PathHelper.Plugins;
+            if (!Directory.Exists(path))
+            {
+                MessageBox.Show("Plugins were not found. Please reinstall the program.");
+                return;
+            }
 
-			_collection.Clear();
+            _collection.Clear();
 
-			foreach (string file in Directory.GetFiles(path, "*.dll"))
-			{
-				string name = Path.GetFileNameWithoutExtension(file);
+            foreach (string file in Directory.GetFiles(path, "*.dll"))
+            {
+                string name = Path.GetFileNameWithoutExtension(file);
 
-				if (name != "PluginInterface")
-				{
-					AddPlugin(file);
-				}
-			}
-		}
+                if (name != "PluginInterface")
+                {
+                    AddPlugin(file);
+                }
+            }
+        }
 
-		/// <summary>
-		/// Unloads all plugins
-		/// </summary>
-		public void ClosePlugins()
-		{
-			foreach (Plugin pluginOn in _collection)
-			{
-				pluginOn.Instance.Dispose();
-				pluginOn.Instance = null;
-			}
+        /// <summary>
+        /// Unloads all plugins
+        /// </summary>
+        public void ClosePlugins()
+        {
+            foreach (Plugin pluginOn in _collection)
+            {
+                pluginOn.Instance.Dispose();
+                pluginOn.Instance = null;
+            }
 
-			_collection.Clear();
-		}
+            _collection.Clear();
+        }
 
-		private void AddPlugin(string FileName)
-		{
-			Assembly pluginAssembly = Assembly.LoadFrom(FileName);
+        private void AddPlugin(string FileName)
+        {
+            Assembly pluginAssembly = Assembly.LoadFrom(FileName);
 
-			foreach (Type pluginType in pluginAssembly.GetTypes())
-			{
-				if (pluginType.IsPublic)
-				{
-					if (!pluginType.IsAbstract)
-					{
-						Type typeInterface = pluginType.GetInterface("PluginInterface.IPlugin", true);
-						if (typeInterface != null)
-						{
-							Plugin newPlugin = new Plugin();
-							newPlugin.AssemblyPath = FileName;
-							newPlugin.Instance = (IPlugin)Activator.CreateInstance(pluginAssembly.GetType(pluginType.ToString()));
-							newPlugin.Instance.Host = this;
-							newPlugin.Instance.Initialize();
-							_collection.Add(newPlugin);
+            foreach (Type pluginType in pluginAssembly.GetTypes())
+            {
+                if (pluginType.IsPublic)
+                {
+                    if (!pluginType.IsAbstract)
+                    {
+                        Type typeInterface = pluginType.GetInterface("PluginInterface.IPlugin", true);
+                        if (typeInterface != null)
+                        {
+                            Plugin newPlugin = new Plugin();
+                            newPlugin.AssemblyPath = FileName;
+                            newPlugin.Instance = (IPlugin)Activator.CreateInstance(pluginAssembly.GetType(pluginType.ToString()));
+                            newPlugin.Instance.Host = this;
+                            newPlugin.Instance.Initialize();
+                            _collection.Add(newPlugin);
 
-							newPlugin = null;
-						}
+                            newPlugin = null;
+                        }
 
-						typeInterface = null;
-					}
-				}
-			}
+                        typeInterface = null;
+                    }
+                }
+            }
 
-			pluginAssembly = null;
-		}
+            pluginAssembly = null;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

@@ -28,68 +28,68 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Dialogs
 {
-	public partial class UpdateForm : Form
-	{
-		#region Properties
+    public partial class UpdateForm : Form
+    {
+        #region Properties
 
-		public MainForm mainForm = null;
-		public Plugin selectedPlugin = null;
-		public SupportedClient updateClient = null;
+        public MainForm mainForm = null;
+        public Plugin selectedPlugin = null;
+        public SupportedClient updateClient = null;
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		public UpdateForm()
-		{
-			InitializeComponent();
-		}
+        public UpdateForm()
+        {
+            InitializeComponent();
+        }
 
-		#endregion
+        #endregion
 
-		#region Event Handlers
+        #region Event Handlers
 
-		private void PluginForm_Load(object sender, EventArgs e)
-		{
-			List<SupportedClient> list = new List<SupportedClient>();
+        private void PluginForm_Load(object sender, EventArgs e)
+        {
+            List<SupportedClient> list = new List<SupportedClient>();
 
-			foreach (Plugin plugin in Program.plugins.AvailablePlugins)
-			{
-				foreach (SupportedClient client in plugin.Instance.SupportedClients)
-				{
-					list.Add(client);
-				}
-			}
+            foreach (Plugin plugin in Program.plugins.AvailablePlugins)
+            {
+                foreach (SupportedClient client in plugin.Instance.SupportedClients)
+                {
+                    list.Add(client);
+                }
+            }
 
-			if (list.Count > 0)
-			{
-				list = list.OrderBy(i => i.OtbVersion).ToList();
+            if (list.Count > 0)
+            {
+                list = list.OrderBy(i => i.OtbVersion).ToList();
 
-				pluginsListBox.DataSource = list;
-				pluginsListBox.SelectedIndex = list.Count - 1;
-			}
-		}
+                pluginsListBox.DataSource = list;
+                pluginsListBox.SelectedIndex = list.Count - 1;
+            }
+        }
 
-		private void selectBtn_Click(object sender, EventArgs e)
-		{
-			if (pluginsListBox.SelectedItem != null)
-			{
-				selectedPlugin = Program.plugins.AvailablePlugins.Find(pluginsListBox.SelectedItem.ToString());
-				updateClient = pluginsListBox.SelectedItem as SupportedClient;
+        private void selectBtn_Click(object sender, EventArgs e)
+        {
+            if (pluginsListBox.SelectedItem != null)
+            {
+                selectedPlugin = Program.plugins.AvailablePlugins.Find(pluginsListBox.SelectedItem.ToString());
+                updateClient = pluginsListBox.SelectedItem as SupportedClient;
 
-				this.DialogResult = DialogResult.OK;
-				Close();
-			}
-		}
+                this.DialogResult = DialogResult.OK;
+                Close();
+            }
+        }
 
-		private void pluginsListBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (pluginsListBox.SelectedItem != null && mainForm.currentPlugin != null)
-			{
-				selectBtn.Enabled = true;
-			}
-		}
+        private void pluginsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (pluginsListBox.SelectedItem != null && mainForm.currentPlugin != null)
+            {
+                selectBtn.Enabled = true;
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

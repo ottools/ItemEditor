@@ -28,84 +28,84 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Dialogs
 {
-	public partial class NewOtbFileForm : Form
-	{
-		#region Private Properties
+    public partial class NewOtbFileForm : Form
+    {
+        #region Private Properties
 
-		private string filePath;
-		private SupportedClient selectedClient;
+        private string filePath;
+        private SupportedClient selectedClient;
 
-		#endregion
+        #endregion
 
-		#region Public Properties
+        #region Public Properties
 
-		public string FilePath
-		{
-			get { return filePath; }
-		}
+        public string FilePath
+        {
+            get { return filePath; }
+        }
 
-		public SupportedClient SelectedClient
-		{
-			get { return selectedClient; }
-		}
+        public SupportedClient SelectedClient
+        {
+            get { return selectedClient; }
+        }
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		public NewOtbFileForm()
-		{
-			InitializeComponent();
-		}
+        public NewOtbFileForm()
+        {
+            InitializeComponent();
+        }
 
-		#endregion
+        #endregion
 
-		#region Event Handlers
+        #region Event Handlers
 
-		private void NewOtbFileForm_Load(object sender, System.EventArgs e)
-		{
-			filePath = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+        private void NewOtbFileForm_Load(object sender, System.EventArgs e)
+        {
+            filePath = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
 
-			List<SupportedClient> list = new List<SupportedClient>();
+            List<SupportedClient> list = new List<SupportedClient>();
 
-			foreach (Plugin plugin in Program.plugins.AvailablePlugins)
-			{
-				foreach (SupportedClient client in plugin.Instance.SupportedClients)
-				{
-					list.Add(client);
-				}
-			}
+            foreach (Plugin plugin in Program.plugins.AvailablePlugins)
+            {
+                foreach (SupportedClient client in plugin.Instance.SupportedClients)
+                {
+                    list.Add(client);
+                }
+            }
 
-			if (list.Count > 0)
-			{
-				list = list.OrderBy(i => i.OtbVersion).ToList();
+            if (list.Count > 0)
+            {
+                list = list.OrderBy(i => i.OtbVersion).ToList();
 
-				clientVersionComboBox.DataSource = list;
-				clientVersionComboBox.SelectedIndex = list.Count - 1;
-			}
-		}
+                clientVersionComboBox.DataSource = list;
+                clientVersionComboBox.SelectedIndex = list.Count - 1;
+            }
+        }
 
-		private void ClientVersionComboBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			this.createButton.Enabled = (!String.IsNullOrEmpty(filePath) && clientVersionComboBox.SelectedItem != null);
-		}
+        private void ClientVersionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.createButton.Enabled = (!String.IsNullOrEmpty(filePath) && clientVersionComboBox.SelectedItem != null);
+        }
 
-		private void CreateButton_Click(object sender, EventArgs e)
-		{
-			if (clientVersionComboBox.SelectedItem != null)
-			{
-				this.selectedClient = clientVersionComboBox.SelectedItem as SupportedClient;
-				this.DialogResult = DialogResult.OK;
-				Close();
-			}
-		}
+        private void CreateButton_Click(object sender, EventArgs e)
+        {
+            if (clientVersionComboBox.SelectedItem != null)
+            {
+                this.selectedClient = clientVersionComboBox.SelectedItem as SupportedClient;
+                this.DialogResult = DialogResult.OK;
+                Close();
+            }
+        }
 
-		private void CancelButton_Click(object sender, EventArgs e)
-		{
-			this.Close();
-		}
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
-		#endregion
+        #endregion
 
-	}
+    }
 }

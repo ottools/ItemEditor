@@ -23,33 +23,33 @@ using System;
 
 namespace ItemEditor.Host
 {
-	/// <summary>
-	/// Data class for plugins.
-	/// Holds and instance of the loaded plugin, as well as the plugins assembly path
-	/// </summary>
-	public class Plugin
-	{
-		#region Private Properties
+    /// <summary>
+    /// Data class for plugins.
+    /// Holds and instance of the loaded plugin, as well as the plugins assembly path
+    /// </summary>
+    public class Plugin
+    {
+        #region Private Properties
 
-		private IPlugin _instance;
-		private String _assemblyPath;
+        private IPlugin _instance;
+        private String _assemblyPath;
 
-		#endregion
+        #endregion
 
-		#region Public Properties
+        #region Public Properties
 
-		public IPlugin Instance
-		{
-			get { return _instance; }
-			set { _instance = value; }
-		}
+        public IPlugin Instance
+        {
+            get { return _instance; }
+            set { _instance = value; }
+        }
 
-		public string AssemblyPath
-		{
-			get { return _assemblyPath; }
-			set { _assemblyPath = value; }
-		}
+        public string AssemblyPath
+        {
+            get { return _assemblyPath; }
+            set { _assemblyPath = value; }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

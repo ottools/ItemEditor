@@ -24,93 +24,93 @@ using System.Collections.Generic;
 
 namespace PluginInterface
 {
-	public class ClientItems : Dictionary<UInt16, ClientItem>
-	{
-		public bool signatureCalculated = false;
-	}
+    public class ClientItems : Dictionary<UInt16, ClientItem>
+    {
+        public bool signatureCalculated = false;
+    }
 
-	public class SupportedClient
-	{
-		#region Private Properties
+    public class SupportedClient
+    {
+        #region Private Properties
 
-		private UInt32 _version;
-		private string _description;
-		private UInt32 _otbVersion;
-		private UInt32 _datSignature;
-		private UInt32 _sprSignature;
+        private UInt32 _version;
+        private string _description;
+        private UInt32 _otbVersion;
+        private UInt32 _datSignature;
+        private UInt32 _sprSignature;
 
-		#endregion
+        #endregion
 
-		#region Constructor
+        #region Constructor
 
-		public SupportedClient(
-			UInt32 version,
-			string description,
-			UInt32 otbVersion,
-			UInt32 datSignature,
-			UInt32 sprSignature)
-		{
-			this._version = version;
-			this._description = description;
-			this._otbVersion = otbVersion;
-			this._datSignature = datSignature;
-			this._sprSignature = sprSignature;
-		}
+        public SupportedClient(
+            UInt32 version,
+            string description,
+            UInt32 otbVersion,
+            UInt32 datSignature,
+            UInt32 sprSignature)
+        {
+            this._version = version;
+            this._description = description;
+            this._otbVersion = otbVersion;
+            this._datSignature = datSignature;
+            this._sprSignature = sprSignature;
+        }
 
-		#endregion
+        #endregion
 
-		#region Public Properties
+        #region Public Properties
 
-		public UInt32 Version
-		{
-			get { return _version; }
-		}
+        public UInt32 Version
+        {
+            get { return _version; }
+        }
 
-		public string Description
-		{
-			get { return _description; }
-		}
+        public string Description
+        {
+            get { return _description; }
+        }
 
-		public UInt32 OtbVersion
-		{
-			get { return _otbVersion; }
-		}
+        public UInt32 OtbVersion
+        {
+            get { return _otbVersion; }
+        }
 
-		public UInt32 DatSignature
-		{
-			get { return _datSignature; }
-		}
+        public UInt32 DatSignature
+        {
+            get { return _datSignature; }
+        }
 
-		public UInt32 SprSignature
-		{
-			get { return _sprSignature; }
-		}
+        public UInt32 SprSignature
+        {
+            get { return _sprSignature; }
+        }
 
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		public override string ToString()
-		{
-			return this._description;
-		}
+        public override string ToString()
+        {
+            return this._description;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 
-	public interface IPlugin
-	{
-		IPluginHost Host { get; set; }
+    public interface IPlugin
+    {
+        IPluginHost Host { get; set; }
 
-		ClientItems Items { get; }
-		List<SupportedClient> SupportedClients { get; }
-		bool LoadClient(SupportedClient client, bool extended, bool transparency, string datFullPath, string sprFullPath);
+        ClientItems Items { get; }
+        List<SupportedClient> SupportedClients { get; }
+        bool LoadClient(SupportedClient client, bool extended, bool transparency, string datFullPath, string sprFullPath);
 
-		void Initialize();
-		void Dispose();
-	}
+        void Initialize();
+        void Dispose();
+    }
 
-	public interface IPluginHost
-	{
-	}
+    public interface IPluginHost
+    {
+    }
 }

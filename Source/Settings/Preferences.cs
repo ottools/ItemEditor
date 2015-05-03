@@ -26,52 +26,52 @@ using System.Xml.Serialization;
 
 namespace ItemEditor.Settings
 {
-	[Serializable]
-	public class Preferences
-	{
-		public String ClientDirectory { get; set; }
-		public UInt32 DatSignature { get; set; }
-		public UInt32 SprSignature { get; set; }
-		public Boolean Extended { get; set; }
-		public Boolean Transparency { get; set; }
+    [Serializable]
+    public class Preferences
+    {
+        public String ClientDirectory { get; set; }
+        public UInt32 DatSignature { get; set; }
+        public UInt32 SprSignature { get; set; }
+        public Boolean Extended { get; set; }
+        public Boolean Transparency { get; set; }
 
-		public void Load()
-		{
-			string fileName = FileNameHelper.SettingData;
-			if (File.Exists(fileName))
-			{
-				XmlSerializer deserializer = new XmlSerializer(typeof(Preferences));
-				TextReader reader = new StreamReader(fileName);
-				object obj = deserializer.Deserialize(reader);
-				Program.preferences = (Preferences)obj;
-				reader.Close();
-			}
-		}
+        public void Load()
+        {
+            string fileName = FileNameHelper.SettingData;
+            if (File.Exists(fileName))
+            {
+                XmlSerializer deserializer = new XmlSerializer(typeof(Preferences));
+                TextReader reader = new StreamReader(fileName);
+                object obj = deserializer.Deserialize(reader);
+                Program.preferences = (Preferences)obj;
+                reader.Close();
+            }
+        }
 
-		public void Save()
-		{
-			try
-			{
-				string fileName = FileNameHelper.SettingData;
-				if (!File.Exists(fileName))
-				{
-					String folder = Path.GetDirectoryName(fileName);
-					if (!Directory.Exists(folder))
-					{
-						Directory.CreateDirectory(folder);
-					}
+        public void Save()
+        {
+            try
+            {
+                string fileName = FileNameHelper.SettingData;
+                if (!File.Exists(fileName))
+                {
+                    String folder = Path.GetDirectoryName(fileName);
+                    if (!Directory.Exists(folder))
+                    {
+                        Directory.CreateDirectory(folder);
+                    }
 
-					XmlSerializer serializer = new XmlSerializer(typeof(Preferences));
-					using (TextWriter writer = new StreamWriter(fileName))
-					{
-						serializer.Serialize(writer, this);
-					}
-				}
-			}
-			catch (Exception e)
-			{
-				MessageBox.Show(e.Message);
-			}
-		}
-	}
+                    XmlSerializer serializer = new XmlSerializer(typeof(Preferences));
+                    using (TextWriter writer = new StreamWriter(fileName))
+                    {
+                        serializer.Serialize(writer, this);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+    }
 }

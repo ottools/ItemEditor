@@ -23,34 +23,34 @@ using System.IO;
 
 namespace ItemEditor
 {
-	public class Utils
-	{
-		public static bool ByteArrayCompare(byte[] a1, byte[] a2)
-		{
-			if (a1.Length != a2.Length)
-				return false;
+    public class Utils
+    {
+        public static bool ByteArrayCompare(byte[] a1, byte[] a2)
+        {
+            if (a1.Length != a2.Length)
+                return false;
 
-			for (int i = 0; i < a1.Length; i++)
-				if (a1[i] != a2[i])
-					return false;
+            for (int i = 0; i < a1.Length; i++)
+                if (a1[i] != a2[i])
+                    return false;
 
-			return true;
-		}
+            return true;
+        }
 
-		public static string FindClientFile(string directory, string extension)
-		{
-			if (Directory.Exists(directory))
-			{
-				foreach (string fileOn in Directory.GetFiles(directory))
-				{
-					FileInfo file = new FileInfo(fileOn);
-					if (file.Extension.Equals(extension))
-					{
-						return file.FullName;
-					}
-				}
-			}
-			return String.Empty;
-		}
-	}
+        public static string FindClientFile(string directory, string extension)
+        {
+            if (Directory.Exists(directory))
+            {
+                foreach (string fileOn in Directory.GetFiles(directory))
+                {
+                    FileInfo file = new FileInfo(fileOn);
+                    if (file.Extension.Equals(extension))
+                    {
+                        return file.FullName;
+                    }
+                }
+            }
+            return String.Empty;
+        }
+    }
 }

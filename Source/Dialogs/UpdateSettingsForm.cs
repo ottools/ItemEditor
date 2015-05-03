@@ -22,15 +22,15 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Dialogs
 {
-	public partial class UpdateSettingsForm : Form
-	{
-		#region Constructor
+    public partial class UpdateSettingsForm : Form
+    {
+        #region Constructor
 
-		public UpdateSettingsForm()
-		{
-			InitializeComponent();
-		}
+        public UpdateSettingsForm()
+        {
+            InitializeComponent();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

@@ -41,8 +41,8 @@ namespace ItemEditor
 	{
 		#region Private Properties
 
-		public const string applicationName = "ItemEditor";
-		public const string versionString = "0.3.3";
+		public const string ApplicationName = "Item Editor";
+		public const string VersionString = "0.3.3";
 		private const int itemMargin = 5;
 		private const int spritePixels = 32;
 
@@ -197,7 +197,7 @@ namespace ItemEditor
 			}
 
 			SaveFileDialog dialog = new SaveFileDialog();
-			dialog.Filter = "OTB files (*.otb)|*.otb|All files (*.*)|*.*";
+			dialog.Filter = "OTB files (*.otb)|*.otb";
 			dialog.Title = "Save OTB File";
 
 			if (dialog.ShowDialog() == DialogResult.OK)
@@ -985,7 +985,7 @@ namespace ItemEditor
 
 		private void MainForm_Load(object sender, EventArgs e)
 		{
-			this.Text = applicationName;
+			this.Text = ApplicationName + " " + VersionString;
 			typeCombo.DataSource = Enum.GetNames(typeof(ItemType));
 
 			this.candidatesDropDown.Items.Add(new ToolStripControlHost(this.candidatesTableLayoutPanel));

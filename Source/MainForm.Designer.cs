@@ -732,8 +732,8 @@
 			this.fileSaveAsMenuItem.Enabled = false;
 			this.fileSaveAsMenuItem.Image = global::ItemEditor.Properties.Resources.disk_multiple;
 			this.fileSaveAsMenuItem.Name = "fileSaveAsMenuItem";
-			this.fileSaveAsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
+			this.fileSaveAsMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+			| System.Windows.Forms.Keys.S)));
 			this.fileSaveAsMenuItem.Size = new System.Drawing.Size(193, 22);
 			this.fileSaveAsMenuItem.Text = "S&ave as...";
 			this.fileSaveAsMenuItem.Click += new System.EventHandler(this.fileSaveAsMenuItem_Click);
@@ -1162,7 +1162,7 @@
 			this.Name = "MainForm";
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "ItemEditor";
+			this.Text = "Item Editor";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.appearanceGroupBox.ResumeLayout(false);
@@ -1257,7 +1257,7 @@
 		private System.Windows.Forms.TextBox nameText;
 		private System.Windows.Forms.Label nameLabel;
 		private System.Windows.Forms.ContextMenuStrip itemsListBoxContextMenu;
-		private System.Windows.Forms.ListBox itemsListBox;		
+		private System.Windows.Forms.ListBox itemsListBox;
 		private System.Windows.Forms.GroupBox appearanceGroupBox;
 		private System.Windows.Forms.ProgressBar loadingItemsProgressBar;
 		private System.Windows.Forms.Label itemsCountLabel;
@@ -1289,4 +1289,3 @@
 		private System.Windows.Forms.ToolStripMenuItem filePreferencesMenuItem;
 	}
 }
-

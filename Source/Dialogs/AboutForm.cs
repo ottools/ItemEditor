@@ -42,16 +42,16 @@ namespace ItemEditor.Dialogs
 		private void InitializeGraphics()
 		{
 			this.pictureBox.Image = ItemEditor.Properties.Resources.about_background;
-			this.versionLabel.Text = MainForm.versionString;
+			this.versionLabel.Text = MainForm.VersionString;
 			this.copyLabel.Text = "Development: EdMignari and all contributors of the original project.";
-			this.linkLabel.Text = "https://github.com/Mignari/ItemEditor";
+			this.linkLabel.Text = "https://github.com/ottools/ItemEditor";
 		}
 
 		#endregion
 
 		private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			System.Diagnostics.Process.Start("https://github.com/Mignari/ItemEditor");
+			System.Diagnostics.Process.Start("https://github.com/ottools/ItemEditor");
 		}
 	}
 }

@@ -63,7 +63,7 @@ namespace ItemEditor
 
         private bool loaded = false;
         private bool saved = true;
-        private bool isTemp = false;
+        private bool isTemporary = false;
 
         #endregion
 
@@ -116,7 +116,7 @@ namespace ItemEditor
                 }
 
                 fileName = dialog.FileName;
-                isTemp = false;
+                isTemporary = false;
                 saved = true;
             }
 
@@ -145,7 +145,6 @@ namespace ItemEditor
                     return;
                 }
 
-                this.BuildItemsListBox();
                 this.fileSaveAsMenuItem.Enabled = true;
                 this.fileSaveMenuItem.Enabled = true;
                 this.editCreateItemMenuItem.Enabled = true;
@@ -161,12 +160,13 @@ namespace ItemEditor
                 this.serverItemListBox.Plugin = currentPlugin.Instance;
                 this.serverItemListBox.Enabled = true;
                 this.loaded = true;
+                this.BuildItemsListBox();
             }
         }
 
         public void Save()
         {
-            if (isTemp)
+            if (isTemporary)
             {
                 this.SaveAs();
                 return;
@@ -212,7 +212,7 @@ namespace ItemEditor
                     Otb.Save(dialog.FileName, ref items);
                     currentOtbFullPath = dialog.FileName;
                     Trace.WriteLine("Saved.");
-                    this.isTemp = false;
+                    this.isTemporary = false;
                     this.saved = true;
                 }
                 catch (UnauthorizedAccessException exception)
@@ -308,7 +308,7 @@ namespace ItemEditor
             return true;
         }
 
-        public void CreateEmptyOTB(string filePath, SupportedClient client, bool isTemp = true)
+        public void CreateEmptyOTB(string filePath, SupportedClient client, bool isTemporary = true)
         {
             ServerItem item = new ServerItem();
             item.SpriteHash = new byte[16];
@@ -330,8 +330,8 @@ namespace ItemEditor
             if (Otb.Save(filePath, ref items))
             {
                 this.Open(filePath);
-                this.isTemp = isTemp;
-                this.saved = !isTemp;
+                this.isTemporary = isTemporary;
+                this.saved = !isTemporary;
             }
         }
 
@@ -481,8 +481,8 @@ namespace ItemEditor
 
         private void BuildItemsListBox()
         {
-            ClearItemsListBox();
-            ResetControls();
+            this.ClearItemsListBox();
+            this.ResetControls();
 
             this.loadingItemsProgressBar.Visible = true;
             this.loadingItemsProgressBar.Minimum = 0;
@@ -491,18 +491,17 @@ namespace ItemEditor
 
             foreach (ServerItem item in items)
             {
-                if (showOnlyMismatchedItems && CompareItem(item, true))
+                if (this.showOnlyMismatchedItems && CompareItem(item, true))
                 {
                     continue;
                 }
 
-                if ((showOnlyDeprecatedItems && item.type != ItemType.Deprecated) ||
-                    (!showOnlyDeprecatedItems && item.type == ItemType.Deprecated))
+                if (this.showOnlyDeprecatedItems && item.type != ItemType.Deprecated)
                 {
                     continue;
                 }
 
-                serverItemListBox.Add(item);
+                this.serverItemListBox.Add(item);
                 this.loadingItemsProgressBar.Value = index;
                 index++;
             }
@@ -848,9 +847,14 @@ namespace ItemEditor
             {
                 string message;
                 if (datSignature == 0 || sprSignature == 0)
+                {
                     message = "No client is selected. Please navigate to the client folder.";
+                }
                 else
+                {
                     message = String.Format("The selected client is not compatible with this otb. Please navigate to the folder of a compatible client {0}.", client.Version);
+                }
+                
                 MessageBox.Show(message);
                 PreferencesForm form = new PreferencesForm();
                 form.ShowDialog();
@@ -987,9 +991,8 @@ namespace ItemEditor
         private void fileNewMenuItem_Click(object sender, EventArgs e)
         {
             NewOtbFileForm newOtbForm = new NewOtbFileForm();
-            DialogResult result = newOtbForm.ShowDialog();
 
-            if (result == DialogResult.OK)
+            if (newOtbForm.ShowDialog() == DialogResult.OK)
             {
                 this.CreateEmptyOTB(newOtbForm.FilePath, newOtbForm.SelectedClient);
             }

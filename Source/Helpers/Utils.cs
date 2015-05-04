@@ -41,6 +41,12 @@ namespace ItemEditor
         {
             if (Directory.Exists(directory))
             {
+                string path = Path.Combine(directory, "Tibia" + extension);
+                if (File.Exists(path))
+                {
+                    return path;
+                }
+
                 foreach (string fileOn in Directory.GetFiles(directory))
                 {
                     FileInfo file = new FileInfo(fileOn);
@@ -50,6 +56,7 @@ namespace ItemEditor
                     }
                 }
             }
+
             return String.Empty;
         }
     }

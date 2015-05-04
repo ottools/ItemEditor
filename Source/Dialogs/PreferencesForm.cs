@@ -22,6 +22,7 @@
 using ItemEditor.Host;
 using PluginInterface;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 #endregion
@@ -46,7 +47,14 @@ namespace ItemEditor.Dialogs
 
         #endregion
 
-        #region Methods
+        #region Public Properties
+
+        public Plugin Plugin { get; private set; }
+        public SupportedClient Client { get; private set; }
+
+        #endregion
+
+        #region Private Methods
 
         private void OnSelectFiles(string directory)
         {
@@ -54,7 +62,7 @@ namespace ItemEditor.Dialogs
 
             if (string.IsNullOrEmpty(directory) || !Directory.Exists(directory))
             {
-                this.Clear();
+                this.alertLabel.Text = "Directory not found";
                 return;
             }
 
@@ -63,26 +71,23 @@ namespace ItemEditor.Dialogs
 
             if (!File.Exists(datPath) || !File.Exists(sprPath))
             {
-                this.Clear();
-                this.alertLabel.Text = "Client files not found.";
+                this.alertLabel.Text = "Client files not found";
                 return;
             }
 
             uint datSignature = this.GetSignature(datPath);
             uint sprSignature = this.GetSignature(sprPath);
 
-            Plugin plugin = Program.plugins.AvailablePlugins.Find(datSignature, sprSignature);
-            if (plugin == null)
+            this.Plugin = Program.plugins.AvailablePlugins.Find(datSignature, sprSignature);
+            if (this.Plugin == null)
             {
-                this.Clear();
-                alertLabel.Text = "Unsupported version.";
+                alertLabel.Text = string.Format("Unsupported version\nDat Signature: {0:X}\nSpr Signature: {1:X}", datSignature, sprSignature);
                 return;
             }
 
-            SupportedClient client = plugin.Instance.GetClientBySignatures(datSignature, sprSignature);
-
-            this.extendedCheckBox.Checked = (this.extendedCheckBox.Checked || client.Version >= 960);
-            this.extendedCheckBox.Enabled = (client.Version < 960);
+            this.Client = this.Plugin.Instance.GetClientBySignatures(datSignature, sprSignature);
+            this.extendedCheckBox.Checked = (this.extendedCheckBox.Checked || this.Client.Version >= 960);
+            this.extendedCheckBox.Enabled = (this.Client.Version < 960);
             this.datSignature = datSignature;
             this.sprSignature = sprSignature;
             this.directoryPathTextBox.Text = directory;
@@ -133,6 +138,11 @@ namespace ItemEditor.Dialogs
             this.datSignature = (uint)Properties.Settings.Default["DatSignature"];
             this.sprSignature = (uint)Properties.Settings.Default["SprSignature"];
 
+            this.OnSelectFiles(this.directoryPathTextBox.Text);
+        }
+
+        private void DirectoryPathTextBox_TextChanged(object sender, System.EventArgs e)
+        {
             this.OnSelectFiles(this.directoryPathTextBox.Text);
         }
 

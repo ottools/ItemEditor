@@ -495,7 +495,7 @@ namespace ItemEditor
                     continue;
                 }
 
-                if (this.showOnlyDeprecatedItems && item.type != ItemType.Deprecated)
+                if ((this.showOnlyDeprecatedItems && item.type != ItemType.Deprecated) || (!this.showOnlyDeprecatedItems && item.type == ItemType.Deprecated))
                 {
                     continue;
                 }
@@ -856,8 +856,15 @@ namespace ItemEditor
                 
                 MessageBox.Show(message);
                 PreferencesForm form = new PreferencesForm();
-                form.ShowDialog();
-                return false;
+                
+                if (form.ShowDialog() == DialogResult.OK && form.Plugin != null)
+                {
+                    return this.LoadClient(form.Plugin, otbVersion);
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             string clientFolder = (string)Properties.Settings.Default["ClientDirectory"];

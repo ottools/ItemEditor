@@ -50,6 +50,7 @@ namespace ItemEditor.Dialogs
         #region Public Properties
 
         public Plugin Plugin { get; private set; }
+
         public SupportedClient Client { get; private set; }
 
         #endregion
@@ -86,8 +87,8 @@ namespace ItemEditor.Dialogs
             }
 
             this.Client = this.Plugin.Instance.GetClientBySignatures(datSignature, sprSignature);
-            this.extendedCheckBox.Checked = (this.extendedCheckBox.Checked || this.Client.Version >= 960);
-            this.extendedCheckBox.Enabled = (this.Client.Version < 960);
+            this.extendedCheckBox.Checked = this.extendedCheckBox.Checked || this.Client.Version >= 960;
+            this.extendedCheckBox.Enabled = this.Client.Version < 960;
             this.datSignature = datSignature;
             this.sprSignature = sprSignature;
             this.directoryPathTextBox.Text = directory;

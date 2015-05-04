@@ -95,11 +95,12 @@ namespace ItemEditor
         public MainForm()
         {
             InitializeComponent();
+            InitializeTooltips();
         }
 
         #endregion
 
-        #region General Methods
+        #region Public Methods
 
         public void Open(string fileName = null)
         {
@@ -158,6 +159,10 @@ namespace ItemEditor
                 this.toolStripFindItemButton.Enabled = true;
                 this.serverItemListBox.Plugin = currentPlugin.Instance;
                 this.serverItemListBox.Enabled = true;
+                this.newItemButton.Enabled = true;
+                this.duplicateItemButton.Enabled = true;
+                this.reloadItemButton.Enabled = true;
+                this.findItemButton.Enabled = true;
                 this.loaded = true;
                 this.BuildItemsListBox();
             }
@@ -303,7 +308,7 @@ namespace ItemEditor
             SelectItem(copyItem);
             this.itemsCountLabel.Text = serverItemListBox.Count + " Items";
 
-            Trace.WriteLine(String.Format("Duplicate item id {0} to new item id {1}", item.id, copyItem.id));
+            Trace.WriteLine(String.Format("Duplicated item id {0} to new item id {1}", item.id, copyItem.id));
             return true;
         }
 
@@ -364,12 +369,28 @@ namespace ItemEditor
             this.toolStripSaveButton.Enabled = false;
             this.toolStripSaveAsButton.Enabled = false;
             this.toolStripFindItemButton.Enabled = false;
+            this.newItemButton.Enabled = false;
+            this.duplicateItemButton.Enabled = false;
+            this.reloadItemButton.Enabled = false;
+            this.findItemButton.Enabled = false;
             this.loaded = false;
             
             if (clearLog)
             {
                 this.textBoxListener.Clear();
             }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void InitializeTooltips()
+        {
+            this.toolTip.SetToolTip(newItemButton, "Create Item");
+            this.toolTip.SetToolTip(duplicateItemButton, "Duplicate Item");
+            this.toolTip.SetToolTip(reloadItemButton, "Reaload Item");
+            this.toolTip.SetToolTip(findItemButton, "Find Item");
         }
 
         private Bitmap GetBitmap(ClientItem clientItem)
@@ -855,8 +876,8 @@ namespace ItemEditor
                 }
                 
                 MessageBox.Show(message);
+
                 PreferencesForm form = new PreferencesForm();
-                
                 if (form.ShowDialog() == DialogResult.OK && form.Plugin != null)
                 {
                     return this.LoadClient(form.Plugin, otbVersion);
@@ -993,7 +1014,7 @@ namespace ItemEditor
             }
         }
 
-        private void fileNewMenuItem_Click(object sender, EventArgs e)
+        private void FileNewMenuItem_Click(object sender, EventArgs e)
         {
             NewOtbFileForm newOtbForm = new NewOtbFileForm();
 
@@ -1003,33 +1024,33 @@ namespace ItemEditor
             }
         }
 
-        private void fileOpenMenuItem_Click(object sender, EventArgs e)
+        private void FileOpenMenuItem_Click(object sender, EventArgs e)
         {
             this.Open();
         }
 
-        private void fileSaveMenuItem_Click(object sender, EventArgs e)
+        private void FileSaveMenuItem_Click(object sender, EventArgs e)
         {
             this.Save();
         }
 
-        private void fileSaveAsMenuItem_Click(object sender, EventArgs e)
+        private void FileSaveAsMenuItem_Click(object sender, EventArgs e)
         {
             this.SaveAs();
         }
 
-        private void fileExitMenuItem_Click(object sender, EventArgs e)
+        private void FileExitMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void filePreferencesMenuItem_Click(object sender, EventArgs e)
+        private void FilePreferencesMenuItem_Click(object sender, EventArgs e)
         {
             PreferencesForm form = new PreferencesForm();
             form.ShowDialog();
         }
 
-        private void itemsListBoxContextMenu_Opening(object sender, CancelEventArgs e)
+        private void ItemsListBoxContextMenu_Opening(object sender, CancelEventArgs e)
         {
             this.itemsListBoxContextMenu.Items.Clear();
             if (this.Loaded)
@@ -1039,26 +1060,27 @@ namespace ItemEditor
             }
         }
 
-        private void itemsListBoxContextMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void ItemsListBoxContextMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             ToolStripItem menuItem = e.ClickedItem;
             switch (menuItem.Text)
             {
                 case "Duplicate":
-                    DuplicateItem(currentItem);
+                    this.DuplicateItem(currentItem);
                     break;
+
                 case "Reload":
-                    ReloadSelectedItem();
+                    this.ReloadSelectedItem();
                     break;
             }
         }
 
-        private void itemsListBox_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void ItemsListBox_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             SelectItem(serverItemListBox.SelectedItem as ServerItem);
         }
 
-        private void itemsListBox_MouseDown(object sender, MouseEventArgs e)
+        private void ItemsListBox_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -1067,7 +1089,7 @@ namespace ItemEditor
             }
         }
 
-        private void textBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!Char.IsDigit(e.KeyChar) && e.KeyChar != '\b')
             {
@@ -1075,32 +1097,32 @@ namespace ItemEditor
             }
         }
 
-        private void toolsCompareOtbFilesMenuItem_Click(object sender, EventArgs e)
+        private void ToolsCompareOtbFilesMenuItem_Click(object sender, EventArgs e)
         {
             CompareOtbForm form = new CompareOtbForm();
             form.ShowDialog();
         }
 
-        private void showOnlyUnmatchedToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ShowOnlyUnmatchedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             showOnlyMismatchedItems = !showOnlyMismatchedItems;
             BuildItemsListBox();
         }
 
-        private void viewShowDecaptedItemsMenuItem_Click(object sender, EventArgs e)
+        private void ViewShowDecaptedItemsMenuItem_Click(object sender, EventArgs e)
         {
             showOnlyDeprecatedItems = !showOnlyDeprecatedItems;
             BuildItemsListBox();
         }
 
-        private void toolsReloadItemAttributesMenuItem_Click(object sender, EventArgs e)
+        private void ToolsReloadItemAttributesMenuItem_Click(object sender, EventArgs e)
         {
             ReloadItems();
             EditItem(currentItem);
             BuildItemsListBox();
         }
 
-        private void toolsUpdateVersionMenuItem_Click(object sender, EventArgs e)
+        private void ToolsUpdateVersionMenuItem_Click(object sender, EventArgs e)
         {
             UpdateForm form = new UpdateForm();
             form.mainForm = this;
@@ -1287,7 +1309,7 @@ namespace ItemEditor
             }
         }
 
-        private void candidatePictureBox_Click(object sender, EventArgs e)
+        private void CandidatePictureBox_Click(object sender, EventArgs e)
         {
             if (currentItem != null)
             {
@@ -1324,7 +1346,7 @@ namespace ItemEditor
             }
         }
 
-        private void clientIdUpDown_ValueChanged(object sender, EventArgs e)
+        private void ClientIdUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (currentItem != null)
             {
@@ -1338,28 +1360,28 @@ namespace ItemEditor
             }
         }
 
-        private void helpAboutMenuItem_Click(object sender, EventArgs e)
+        private void HelpAboutMenuItem_Click(object sender, EventArgs e)
         {
             AboutForm form = new AboutForm();
             form.ShowDialog();
         }
 
-        private void editCreateItemMenuItem_Click(object sender, EventArgs e)
+        private void EditCreateItemMenuItem_Click(object sender, EventArgs e)
         {
             this.AddNewItem();
         }
 
-        private void editDuplicateItemMenuItem_Click(object sender, EventArgs e)
+        private void EditDuplicateItemMenuItem_Click(object sender, EventArgs e)
         {
-            this.DuplicateItem(currentItem);
+            this.DuplicateItem(this.currentItem);
         }
 
-        private void editReloadItemMenuItem_Click(object sender, EventArgs e)
+        private void EditReloadItemMenuItem_Click(object sender, EventArgs e)
         {
             this.ReloadSelectedItem();
         }
 
-        private void typeCombo_SelectedIndexChanged(object sender, EventArgs e)
+        private void TypeCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (currentItem != null)
             {
@@ -1367,22 +1389,44 @@ namespace ItemEditor
             }
         }
 
-        private void viewUpdateItemsListMenuItem_Click(object sender, EventArgs e)
+        private void ViewUpdateItemsListMenuItem_Click(object sender, EventArgs e)
         {
             this.ResetControls();
             this.BuildItemsListBox();
         }
 
-        private void editFindItemMenuItem_Click(object sender, EventArgs e)
+        private void EditFindItemMenuItem_Click(object sender, EventArgs e)
         {
             FindItemForm form = new FindItemForm();
             form.MainForm = this;
             form.Show(this);
         }
 
-        private void candidatesButton_Click(object sender, EventArgs e)
+        private void CandidatesButton_Click(object sender, EventArgs e)
         {
             this.candidatesDropDown.Show(this, new Point(192, 355));
+        }
+
+        private void NewItemButton_Click(object sender, EventArgs e)
+        {
+            this.AddNewItem();
+        }
+
+        private void DuplicateItemButton_Click(object sender, EventArgs e)
+        {
+            this.DuplicateItem(this.currentItem);
+        }
+
+        private void ReloadItemButton_Click(object sender, EventArgs e)
+        {
+            this.ReloadSelectedItem();
+        }
+
+        private void FindItemButton_Click(object sender, EventArgs e)
+        {
+            FindItemForm form = new FindItemForm();
+            form.MainForm = this;
+            form.Show(this);
         }
 
         #endregion

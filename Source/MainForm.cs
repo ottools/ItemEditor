@@ -80,12 +80,12 @@ namespace ItemEditor
 
         public ushort MinItemId
         {
-            get { return items.minId; }
+            get { return items.MinId; }
         }
 
         public ushort MaxItemId
         {
-            get { return items.maxId; }
+            get { return items.MaxId; }
         }
 
         #endregion
@@ -127,7 +127,7 @@ namespace ItemEditor
             if (Otb.Open(fileName, ref items))
             {
                 currentOtbFullPath = fileName;
-                currentOtbVersion = items.dwMinorVersion;
+                currentOtbVersion = items.MinorVersion;
 
                 //try find a plugin that can handle this version of otb
                 currentPlugin = Program.plugins.AvailablePlugins.Find(currentOtbVersion);
@@ -228,7 +228,7 @@ namespace ItemEditor
                 return false;
             }
 
-            if (sid >= items.minId && sid <= items.maxId)
+            if (sid >= items.MinId && sid <= items.MaxId)
             {
                 ServerItem item = items.Find(i => i.id == sid);
                 if (item != null)
@@ -275,7 +275,7 @@ namespace ItemEditor
             }
 
             ServerItem item = this.CreateItem();
-            item.id = (ushort)(items.maxId + 1);
+            item.id = (ushort)(items.MaxId + 1);
             items.Add(item);
             serverItemListBox.Add(item);
             SelectItem(item);
@@ -297,7 +297,7 @@ namespace ItemEditor
             }
 
             ServerItem copyItem = this.CopyItem(item);
-            copyItem.id = (ushort)(items.maxId + 1);
+            copyItem.id = (ushort)(items.MaxId + 1);
             items.Add(copyItem);
             serverItemListBox.Add(copyItem);
             SelectItem(copyItem);
@@ -315,10 +315,10 @@ namespace ItemEditor
             item.id = 100;
 
             ServerItemList items = new ServerItemList();
-            items.dwMajorVersion = 3;
-            items.dwMinorVersion = client.OtbVersion;
-            items.dwBuildNumber = 1;
-            items.clientVersion = client.Version;
+            items.MajorVersion = 3;
+            items.MinorVersion = client.OtbVersion;
+            items.BuildNumber = 1;
+            items.ClientVersion = client.Version;
             items.Add(item);
 
             if (!File.Exists(filePath))
@@ -607,8 +607,8 @@ namespace ItemEditor
 
             //
             serverIdLbl.DataBindings.Add("Text", item, "id");
-            clientIdUpDown.Minimum = items.minId;
-            clientIdUpDown.Maximum = (currentPlugin.Instance.Items.Count + items.minId) - 1;
+            clientIdUpDown.Minimum = items.MinId;
+            clientIdUpDown.Maximum = (currentPlugin.Instance.Items.Count + items.MinId) - 1;
             clientIdUpDown.DataBindings.Add("Value", clientItem, "id");
 
             // Attributes
@@ -794,7 +794,7 @@ namespace ItemEditor
         {
             //create a new otb item
             ServerItem newItem = new ServerItem(item);
-            newItem.id = (ushort)(items.maxId + 1);
+            newItem.id = (ushort)(items.MaxId + 1);
             newItem.SpriteHash = new byte[16];
 
             if (item != null)
@@ -804,7 +804,7 @@ namespace ItemEditor
             }
             else
             {
-                newItem.ClientId = items.minId;
+                newItem.ClientId = items.MinId;
                 newItem.IsCustomCreated = true;
             }
 
@@ -900,7 +900,7 @@ namespace ItemEditor
                 MessageBox.Show(String.Format("The plugin could not load dat or spr."));
             }
 
-            items.clientVersion = client.Version;
+            items.ClientVersion = client.Version;
             Trace.WriteLine(String.Format("Client version {0}.", client.Version));
             return result;
         }
@@ -1145,10 +1145,10 @@ namespace ItemEditor
                 currentPlugin = updatePlugin;
 
                 //update version information
-                items.clientVersion = updateClient.Version;
-                items.dwMinorVersion = updateClient.OtbVersion;
-                items.dwBuildNumber = items.dwBuildNumber + 1;
-                currentOtbVersion = items.dwMinorVersion;
+                items.ClientVersion = updateClient.Version;
+                items.MinorVersion = updateClient.OtbVersion;
+                items.BuildNumber = items.BuildNumber + 1;
+                currentOtbVersion = items.MinorVersion;
 
                 //Most items does have the same sprite after an update, so lets try that first
                 uint foundItemCounter = 0;
@@ -1226,7 +1226,7 @@ namespace ItemEditor
                     }
                 }
 
-                Trace.WriteLine(String.Format("Found {0} of {1}.", foundItemCounter, items.maxId));
+                Trace.WriteLine(String.Format("Found {0} of {1}.", foundItemCounter, items.MaxId));
 
                 if (updateSettingsForm.reloadItemAttributesCheck.Checked)
                 {
@@ -1255,7 +1255,7 @@ namespace ItemEditor
                         }
                     }
 
-                    Trace.WriteLine(String.Format("Reloaded {0} of {1} items.", reloadedItemCounter, items.maxId));
+                    Trace.WriteLine(String.Format("Reloaded {0} of {1} items.", reloadedItemCounter, items.MaxId));
                 }
 
                 if (updateSettingsForm.createNewItemsCheck.Checked)

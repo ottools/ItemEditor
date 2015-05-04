@@ -283,12 +283,33 @@ namespace ItemEditor
 
     public class ServerItemList : List<ServerItem>
     {
-        public ushort minId = 100;
-        public ushort maxId { get { return (ushort)(minId + Count - 1); } }
-        public uint dwMajorVersion;
-        public uint dwMinorVersion;
-        public uint dwBuildNumber;
-        public uint clientVersion;
+        #region Contructor
+        
+        public ServerItemList()
+        {
+            this.MinId = 100;
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        public ushort MinId { get; set; }
+
+        public ushort MaxId
+        { 
+            get { return (ushort)(MinId + Count - 1); }
+        }
+
+        public uint MajorVersion { get; set; }
+
+        public uint MinorVersion { get; set; }
+
+        public uint BuildNumber { get; set; }
+
+        public uint ClientVersion { get; set; }
+
+        #endregion
     }
 
     public class Otb
@@ -334,10 +355,17 @@ namespace ItemEditor
 
         public class VersionInfo
         {
-            public uint dwMajorVersion;
-            public uint dwMinorVersion;
-            public uint dwBuildNumber;
-            public string CSDVersion;
+            #region Public Properties
+
+            public uint MajorVersion { get; set; }
+
+            public uint MinorVersion { get; set; }
+
+            public uint BuildNumber { get; set; }
+
+            public string CSDVersion { get; set; }
+
+            #endregion
         };
 
         [FlagsAttribute]
@@ -395,9 +423,9 @@ namespace ItemEditor
                             return false;
                         }
 
-                        items.dwMajorVersion = nodeReader.ReadUInt32(); //major, file version
-                        items.dwMinorVersion = nodeReader.ReadUInt32(); //minor, client version
-                        items.dwBuildNumber = nodeReader.ReadUInt32();  //build number, revision
+                        items.MajorVersion = nodeReader.ReadUInt32(); //major, file version
+                        items.MinorVersion = nodeReader.ReadUInt32(); //minor, client version
+                        items.BuildNumber = nodeReader.ReadUInt32();  //build number, revision
                         nodeReader.BaseStream.Seek(128, SeekOrigin.Current);
                     }
 
@@ -536,16 +564,16 @@ namespace ItemEditor
 
                     VersionInfo vi = new VersionInfo();
 
-                    vi.dwMajorVersion = items.dwMajorVersion;
-                    vi.dwMinorVersion = items.dwMinorVersion;
-                    vi.dwBuildNumber = items.dwBuildNumber;
-                    vi.CSDVersion = String.Format("OTB {0}.{1}.{2}-{3}.{4}", vi.dwMajorVersion, vi.dwMinorVersion, vi.dwBuildNumber, items.clientVersion / 100, items.clientVersion % 100);
+                    vi.MajorVersion = items.MajorVersion;
+                    vi.MinorVersion = items.MinorVersion;
+                    vi.BuildNumber = items.BuildNumber;
+                    vi.CSDVersion = String.Format("OTB {0}.{1}.{2}-{3}.{4}", vi.MajorVersion, vi.MinorVersion, vi.BuildNumber, items.ClientVersion / 100, items.ClientVersion % 100);
 
                     MemoryStream ms = new MemoryStream();
                     BinaryWriter property = new BinaryWriter(ms);
-                    property.Write(vi.dwMajorVersion);
-                    property.Write(vi.dwMinorVersion);
-                    property.Write(vi.dwBuildNumber);
+                    property.Write(vi.MajorVersion);
+                    property.Write(vi.MinorVersion);
+                    property.Write(vi.BuildNumber);
                     byte[] CSDVersion = System.Text.Encoding.ASCII.GetBytes(vi.CSDVersion);
                     Array.Resize(ref CSDVersion, 128);
                     property.Write(CSDVersion);

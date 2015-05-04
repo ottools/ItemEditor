@@ -23,7 +23,6 @@ using ItemEditor.Diagnostics;
 using ItemEditor.Dialogs;
 using ItemEditor.Helpers;
 using ItemEditor.Host;
-using ItemEditor.Settings;
 using PluginInterface;
 using System;
 using System.Collections.Generic;
@@ -840,8 +839,8 @@ namespace ItemEditor
                 return false;
             }
 
-            uint datSignature = Program.preferences.DatSignature;
-            uint sprSignature = Program.preferences.SprSignature;
+            uint datSignature = (uint)Properties.Settings.Default["DatSignature"];
+            uint sprSignature = (uint)Properties.Settings.Default["SprSignature"];
 
             if (client.DatSignature != datSignature || client.SprSignature != sprSignature)
             {
@@ -861,7 +860,7 @@ namespace ItemEditor
                 return false;
             }
 
-            string clientFolder = Program.preferences.ClientDirectory;
+            string clientFolder = (string)Properties.Settings.Default["ClientDirectory"];
 
             if (String.IsNullOrEmpty(clientFolder))
             {
@@ -870,8 +869,8 @@ namespace ItemEditor
 
             string datPath = Utils.FindClientFile(clientFolder, ".dat");
             string sprPath = Utils.FindClientFile(clientFolder, ".spr");
-            bool extended = Program.preferences.Extended;
-            bool transparency = Program.preferences.Transparency;
+            bool extended = (bool)Properties.Settings.Default["Extended"];
+            bool transparency = (bool)Properties.Settings.Default["Transparency"];
 
             extended = (extended || client.Version >= 960);
 
@@ -975,7 +974,6 @@ namespace ItemEditor
 
             SelectItem(null);
 
-            Program.preferences.Load();
             Program.plugins.FindPlugins();
             Sprite.CreateBlankSprite();
         }

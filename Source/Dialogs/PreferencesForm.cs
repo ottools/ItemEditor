@@ -18,11 +18,13 @@
 */
 #endregion
 
+#region Using Statements
 using ItemEditor.Host;
-using ItemEditor.Settings;
+using PluginInterface;
 using System;
 using System.IO;
 using System.Windows.Forms;
+#endregion
 
 namespace ItemEditor.Dialogs
 {
@@ -30,9 +32,8 @@ namespace ItemEditor.Dialogs
     {
         #region Private Properties
 
-        private Preferences _preferences;
-        private uint _datSignature;
-        private uint _sprSignature;
+        private uint datSignature;
+        private uint sprSignature;
 
         #endregion
 
@@ -40,16 +41,16 @@ namespace ItemEditor.Dialogs
 
         public PreferencesForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         #endregion
 
         #region Methods
 
-        private void onSelectFiles(string directory)
+        private void OnSelectFiles(string directory)
         {
-            alertLabel.Text = string.Empty;
+            this.alertLabel.Text = string.Empty;
 
             if (string.IsNullOrEmpty(directory) || !Directory.Exists(directory))
             {
@@ -57,24 +58,18 @@ namespace ItemEditor.Dialogs
                 return;
             }
 
-            string datPath = Path.Combine(directory, "Tibia.dat");
-            string sprPath = Path.Combine(directory, "Tibia.spr");
+            string datPath = Utils.FindClientFile(directory, ".dat");
+            string sprPath = Utils.FindClientFile(directory, ".spr");
 
             if (!File.Exists(datPath) || !File.Exists(sprPath))
             {
-                datPath = Utils.FindClientFile(directory, ".dat");
-                sprPath = Utils.FindClientFile(directory, ".spr");
-
-                if (!File.Exists(datPath) || !File.Exists(sprPath))
-                {
-                    this.Clear();
-                    alertLabel.Text = "Client files not found.";
-                    return;
-                }
+                this.Clear();
+                this.alertLabel.Text = "Client files not found.";
+                return;
             }
 
-            uint datSignature = GetSignature(datPath);
-            uint sprSignature = GetSignature(sprPath);
+            uint datSignature = this.GetSignature(datPath);
+            uint sprSignature = this.GetSignature(sprPath);
 
             Plugin plugin = Program.plugins.AvailablePlugins.Find(datSignature, sprSignature);
             if (plugin == null)
@@ -84,18 +79,23 @@ namespace ItemEditor.Dialogs
                 return;
             }
 
-            _datSignature = datSignature;
-            _sprSignature = sprSignature;
-            directoryPathTextBox.Text = directory;
+            SupportedClient client = plugin.Instance.GetClientBySignatures(datSignature, sprSignature);
+
+            this.extendedCheckBox.Checked = (this.extendedCheckBox.Checked || client.Version >= 960);
+            this.extendedCheckBox.Enabled = (client.Version < 960);
+            this.datSignature = datSignature;
+            this.sprSignature = sprSignature;
+            this.directoryPathTextBox.Text = directory;
         }
 
         private uint GetSignature(string fileName)
         {
             uint signature = 0;
-            FileStream fileStream = new FileStream(fileName, FileMode.Open);
+            FileStream fileStream = null;
 
             try
             {
+                fileStream = new FileStream(fileName, FileMode.Open);
                 using (BinaryReader reader = new BinaryReader(fileStream))
                 {
                     signature = reader.ReadUInt32();
@@ -103,7 +103,10 @@ namespace ItemEditor.Dialogs
             }
             finally
             {
-                fileStream.Close();
+                if (fileStream != null)
+                {
+                    fileStream.Dispose();
+                }
             }
 
             return signature;
@@ -111,51 +114,52 @@ namespace ItemEditor.Dialogs
 
         private void Clear()
         {
-            directoryPathTextBox.Text = string.Empty;
-            extendedCheckBox.Checked = false;
-            transparencyCheckBox.Checked = false;
-            _datSignature = 0;
-            _sprSignature = 0;
+            this.directoryPathTextBox.Text = string.Empty;
+            this.extendedCheckBox.Checked = false;
+            this.transparencyCheckBox.Checked = false;
+            this.datSignature = 0;
+            this.sprSignature = 0;
         }
 
         #endregion
 
         #region Event Handlers
 
-        private void preferencesForm_Load(object sender, EventArgs e)
+        private void PreferencesForm_Load(object sender, EventArgs e)
         {
-            _preferences = Program.preferences;
-            directoryPathTextBox.Text = _preferences.ClientDirectory;
-            extendedCheckBox.Checked = _preferences.Extended;
-            transparencyCheckBox.Checked = _preferences.Transparency;
+            this.directoryPathTextBox.Text = (string)Properties.Settings.Default["ClientDirectory"];
+            this.extendedCheckBox.Checked = (bool)Properties.Settings.Default["Extended"];
+            this.transparencyCheckBox.Checked = (bool)Properties.Settings.Default["Transparency"];
+            this.datSignature = (uint)Properties.Settings.Default["DatSignature"];
+            this.sprSignature = (uint)Properties.Settings.Default["SprSignature"];
 
-            onSelectFiles(_preferences.ClientDirectory);
+            this.OnSelectFiles(this.directoryPathTextBox.Text);
         }
 
-        private void browseButton_Click(object sender, EventArgs e)
+        private void BrowseButton_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
 
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                onSelectFiles(dialog.SelectedPath);
+                this.OnSelectFiles(dialog.SelectedPath);
             }
         }
 
-        private void confirmButton_Click(object sender, EventArgs e)
+        private void ConfirmButton_Click(object sender, EventArgs e)
         {
-            _preferences.ClientDirectory = directoryPathTextBox.Text;
-            _preferences.Extended = extendedCheckBox.Checked;
-            _preferences.Transparency = transparencyCheckBox.Checked;
-            _preferences.DatSignature = _datSignature;
-            _preferences.SprSignature = _sprSignature;
-            _preferences.Save();
+            Properties.Settings.Default["ClientDirectory"] = this.directoryPathTextBox.Text;
+            Properties.Settings.Default["Extended"] = this.extendedCheckBox.Checked;
+            Properties.Settings.Default["Transparency"] = this.transparencyCheckBox.Checked;
+            Properties.Settings.Default["DatSignature"] = this.datSignature;
+            Properties.Settings.Default["SprSignature"] = this.sprSignature;
+            Properties.Settings.Default.Save();
 
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
-        private void cancelButton_Click(object sender, EventArgs e)
+        private void CancelButton_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();

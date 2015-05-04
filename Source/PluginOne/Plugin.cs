@@ -127,6 +127,19 @@ namespace PluginOne
             this.SupportedClients = settings.GetSupportedClientList();
         }
 
+        public SupportedClient GetClientBySignatures(uint datSignature, uint sprSignature)
+        {
+            foreach (SupportedClient client in this.SupportedClients)
+            {
+                if (client.DatSignature == datSignature && client.SprSignature == sprSignature)
+                {
+                    return client;
+                }
+            }
+
+            return null;
+        }
+
         public void Dispose()
         {
             this.sprites.Clear();

@@ -18,16 +18,16 @@
 */
 #endregion
 
-using ItemEditor.Settings;
+#region Using Statements
 using System;
 using System.Windows.Forms;
+#endregion
 
 namespace ItemEditor
 {
     static class Program
     {
         public static Host.PluginServices plugins = new Host.PluginServices();
-        public static Preferences preferences = new Preferences();
 
         /// <summary>
         /// The main entry point for the application.

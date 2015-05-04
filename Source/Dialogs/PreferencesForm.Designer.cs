@@ -47,7 +47,7 @@
             this.cancelButton.TabIndex = 0;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // confirmButton
             // 
@@ -57,7 +57,7 @@
             this.confirmButton.TabIndex = 1;
             this.confirmButton.Text = "Confirm";
             this.confirmButton.UseVisualStyleBackColor = true;
-            this.confirmButton.Click += new System.EventHandler(this.confirmButton_Click);
+            this.confirmButton.Click += new System.EventHandler(this.ConfirmButton_Click);
             // 
             // groupBox1
             // 
@@ -88,7 +88,7 @@
             this.browseButton.TabIndex = 2;
             this.browseButton.Text = "Browse";
             this.browseButton.UseVisualStyleBackColor = true;
-            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
+            this.browseButton.Click += new System.EventHandler(this.BrowseButton_Click);
             // 
             // transparencyCheckBox
             // 
@@ -134,7 +134,7 @@
             this.Name = "PreferencesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Preferences";
-            this.Load += new System.EventHandler(this.preferencesForm_Load);
+            this.Load += new System.EventHandler(this.PreferencesForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

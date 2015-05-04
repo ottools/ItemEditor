@@ -22,5 +22,65 @@ namespace ItemEditor.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ClientDirectory {
+            get {
+                return ((string)(this["ClientDirectory"]));
+            }
+            set {
+                this["ClientDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Extended {
+            get {
+                return ((bool)(this["Extended"]));
+            }
+            set {
+                this["Extended"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Transparency {
+            get {
+                return ((bool)(this["Transparency"]));
+            }
+            set {
+                this["Transparency"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public uint DatSignature {
+            get {
+                return ((uint)(this["DatSignature"]));
+            }
+            set {
+                this["DatSignature"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public uint SprSignature {
+            get {
+                return ((uint)(this["SprSignature"]));
+            }
+            set {
+                this["SprSignature"] = value;
+            }
+        }
     }
 }

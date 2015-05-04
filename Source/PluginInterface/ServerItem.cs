@@ -63,7 +63,7 @@ namespace ItemEditor
 
         #region Public Methods
         
-        public string ToString()
+        override public string ToString()
         {
             if (!string.IsNullOrEmpty(name))
             {

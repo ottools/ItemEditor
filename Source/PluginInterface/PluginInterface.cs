@@ -37,6 +37,8 @@ namespace PluginInterface
 
         void Initialize();
 
+        SupportedClient GetClientBySignatures(uint datSignature, uint sprSignature);
+
         void Dispose();
     }
 

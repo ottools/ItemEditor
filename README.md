@@ -6,12 +6,12 @@ ItemEditor is a program used to edit the OTB data files.
 Supported versions:
 ----
 
-* 8.00 - 10.76
+* 8.00 - 10.77
 
 Download
 ----
 
-[ItemEditor 0.3.3](https://github.com/Mignari/ItemEditor/releases/tag/v0.3.3)
+[ItemEditor 0.3.4](https://github.com/ottools/ItemEditor/releases/tag/v0.3.4)
 
 Compiling
 ----

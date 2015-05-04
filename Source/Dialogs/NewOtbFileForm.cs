@@ -87,7 +87,7 @@ namespace ItemEditor.Dialogs
 
         private void ClientVersionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.createButton.Enabled = (!String.IsNullOrEmpty(filePath) && clientVersionComboBox.SelectedItem != null);
+            this.createButton.Enabled = (!string.IsNullOrEmpty(filePath) && clientVersionComboBox.SelectedItem != null);
         }
 
         private void CreateButton_Click(object sender, EventArgs e)

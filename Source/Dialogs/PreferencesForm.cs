@@ -49,9 +49,9 @@ namespace ItemEditor.Dialogs
 
         private void onSelectFiles(string directory)
         {
-            alertLabel.Text = String.Empty;
+            alertLabel.Text = string.Empty;
 
-            if (String.IsNullOrEmpty(directory) || !Directory.Exists(directory))
+            if (string.IsNullOrEmpty(directory) || !Directory.Exists(directory))
             {
                 this.Clear();
                 return;
@@ -111,7 +111,7 @@ namespace ItemEditor.Dialogs
 
         private void Clear()
         {
-            directoryPathTextBox.Text = String.Empty;
+            directoryPathTextBox.Text = string.Empty;
             extendedCheckBox.Checked = false;
             transparencyCheckBox.Checked = false;
             _datSignature = 0;

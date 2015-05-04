@@ -18,73 +18,68 @@
 */
 #endregion
 
+#region Using Statements
 using ItemEditor;
-using System;
 using System.Collections.Generic;
+#endregion
 
 namespace PluginInterface
 {
+    public interface IPlugin
+    {
+        IPluginHost Host { get; set; }
+
+        ClientItems Items { get; }
+
+        List<SupportedClient> SupportedClients { get; }
+
+        bool LoadClient(SupportedClient client, bool extended, bool transparency, string datFullPath, string sprFullPath);
+
+        void Initialize();
+
+        void Dispose();
+    }
+
+    public interface IPluginHost
+    {
+        ////
+    }
+
     public class ClientItems : Dictionary<ushort, ClientItem>
     {
-        public bool signatureCalculated = false;
+        #region Public Properties
+
+        public bool SignatureCalculated { get; set; }
+
+        #endregion
     }
 
     public class SupportedClient
     {
-        #region Private Properties
-
-        private uint _version;
-        private string _description;
-        private uint _otbVersion;
-        private uint _datSignature;
-        private uint _sprSignature;
-
-        #endregion
-
         #region Constructor
 
-        public SupportedClient(
-            uint version,
-            string description,
-            uint otbVersion,
-            uint datSignature,
-            uint sprSignature)
+        public SupportedClient(uint version, string description, uint otbVersion, uint datSignature, uint sprSignature)
         {
-            this._version = version;
-            this._description = description;
-            this._otbVersion = otbVersion;
-            this._datSignature = datSignature;
-            this._sprSignature = sprSignature;
+            this.Version = version;
+            this.Description = description;
+            this.OtbVersion = otbVersion;
+            this.DatSignature = datSignature;
+            this.SprSignature = sprSignature;
         }
 
         #endregion
 
         #region Public Properties
 
-        public uint Version
-        {
-            get { return _version; }
-        }
+        public uint Version { get; private set; }
 
-        public string Description
-        {
-            get { return _description; }
-        }
+        public string Description { get; private set; }
 
-        public uint OtbVersion
-        {
-            get { return _otbVersion; }
-        }
+        public uint OtbVersion { get; private set; }
 
-        public uint DatSignature
-        {
-            get { return _datSignature; }
-        }
+        public uint DatSignature { get; private set; }
 
-        public uint SprSignature
-        {
-            get { return _sprSignature; }
-        }
+        public uint SprSignature { get; private set; }
 
         #endregion
 
@@ -92,25 +87,9 @@ namespace PluginInterface
 
         public override string ToString()
         {
-            return this._description;
+            return this.Description;
         }
 
         #endregion
-    }
-
-    public interface IPlugin
-    {
-        IPluginHost Host { get; set; }
-
-        ClientItems Items { get; }
-        List<SupportedClient> SupportedClients { get; }
-        bool LoadClient(SupportedClient client, bool extended, bool transparency, string datFullPath, string sprFullPath);
-
-        void Initialize();
-        void Dispose();
-    }
-
-    public interface IPluginHost
-    {
     }
 }

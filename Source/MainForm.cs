@@ -929,7 +929,7 @@ namespace ItemEditor
 
         private bool GenerateSpriteSignatures(ref ClientItems items)
         {
-            if (items.signatureCalculated)
+            if (items.SignatureCalculated)
             {
                 return true;
             }
@@ -956,7 +956,7 @@ namespace ItemEditor
                 ++progress.bar.Value;
             }
 
-            items.signatureCalculated = true;
+            items.SignatureCalculated = true;
             progress.Close();
             return true;
         }

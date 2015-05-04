@@ -80,10 +80,18 @@ namespace PluginThree
     {
         #region Private Properties
 
-        private Dictionary<uint, Sprite> sprites = new Dictionary<uint, Sprite>();
-        private ClientItems items = new ClientItems();
-        private List<SupportedClient> supportedClients = new List<SupportedClient>();
-        private IPluginHost myHost = null;
+        private Dictionary<uint, Sprite> sprites;
+
+        #endregion
+
+        #region Constructor
+
+        public Plugin()
+        {
+            this.sprites = new Dictionary<uint, Sprite>();
+            this.Items = new ClientItems();
+            this.SupportedClients = new List<SupportedClient>();
+        }
 
         #endregion
 
@@ -93,9 +101,9 @@ namespace PluginThree
         public Settings settings = new Settings();
 
         // IPlugin implementation
-        public IPluginHost Host { get { return myHost; } set { myHost = value; } }
-        public List<SupportedClient> SupportedClients { get { return supportedClients; } }
-        public ClientItems Items { get { return items; } set { items = value; } }
+        public IPluginHost Host { get; set; }
+        public List<SupportedClient> SupportedClients { get; private set; }
+        public ClientItems Items { get; set; }
 
         #endregion
 
@@ -119,14 +127,14 @@ namespace PluginThree
 
         public void Initialize()
         {
-            settings.Load("PluginThree.xml");
-            supportedClients = settings.GetSupportedClientList();
+            this.settings.Load("PluginThree.xml");
+            this.SupportedClients = settings.GetSupportedClientList();
         }
 
         public void Dispose()
         {
-            sprites.Clear();
-            items.Clear();
+            this.sprites.Clear();
+            this.Items.Clear();
         }
 
         public bool LoadSprites(string filename, SupportedClient client, bool extended, bool transparency)
@@ -163,7 +171,7 @@ namespace PluginThree
                 {
                     ClientItem item = new ClientItem();
                     item.id = id;
-                    items[id] = item;
+                    this.Items[id] = item;
 
                     // read the options until we find 0xff
                     ItemFlag flag;

@@ -66,7 +66,7 @@ namespace ItemEditor.Dialogs
             {
                 if (!mainForm.SelectItem(sid))
                 {
-                    MessageBox.Show(String.Format("Item id {0} not found.", sid), "Find Item");
+                    MessageBox.Show(string.Format("Item id {0} not found.", sid), "Find Item");
                 }
             }
         }

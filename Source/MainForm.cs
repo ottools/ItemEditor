@@ -41,7 +41,7 @@ namespace ItemEditor
         #region Private Properties
 
         public const string ApplicationName = "Item Editor";
-        public const string VersionString = "0.3.3";
+        public const string VersionString = "0.3.4";
         private const int itemMargin = 5;
         private const int spritePixels = 32;
 

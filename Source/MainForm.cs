@@ -141,8 +141,7 @@ namespace ItemEditor
 
                 if (!LoadClient(currentPlugin, currentOtbVersion))
                 {
-                    currentPlugin = null;
-                    items.Clear();
+                    this.Clear(false);
                     return;
                 }
 
@@ -159,7 +158,8 @@ namespace ItemEditor
                 this.toolStripSaveButton.Enabled = true;
                 this.toolStripSaveAsButton.Enabled = true;
                 this.toolStripFindItemButton.Enabled = true;
-                this.itemsListBox.Enabled = true;
+                this.serverItemListBox.Plugin = currentPlugin.Instance;
+                this.serverItemListBox.Enabled = true;
                 this.loaded = true;
             }
         }
@@ -253,7 +253,7 @@ namespace ItemEditor
             }
 
             int index;
-            if (item == null || (index = itemsListBox.Items.IndexOf(item)) == -1)
+            if (item == null || (index = serverItemListBox.Items.IndexOf(item)) == -1)
             {
                 this.ResetControls();
                 return false;
@@ -264,7 +264,7 @@ namespace ItemEditor
             editReloadItemMenuItem.Enabled = true;
             optionsGroupBox.Enabled = true;
             appearanceGroupBox.Enabled = true;
-            itemsListBox.SelectedIndex = index;
+            serverItemListBox.SelectedIndex = index;
             return true;
         }
 
@@ -278,9 +278,9 @@ namespace ItemEditor
             ServerItem item = this.CreateItem();
             item.id = (ushort)(items.maxId + 1);
             items.Add(item);
-            itemsListBox.Items.Add(item);
+            serverItemListBox.Add(item);
             SelectItem(item);
-            this.itemsCountLabel.Text = itemsListBox.Items.Count + " Items";
+            this.itemsCountLabel.Text = serverItemListBox.Count + " Items";
             Trace.WriteLine(String.Format("Create item id {0}", item.id));
             return item;
         }
@@ -300,9 +300,9 @@ namespace ItemEditor
             ServerItem copyItem = this.CopyItem(item);
             copyItem.id = (ushort)(items.maxId + 1);
             items.Add(copyItem);
-            itemsListBox.Items.Add(copyItem);
+            serverItemListBox.Add(copyItem);
             SelectItem(copyItem);
-            this.itemsCountLabel.Text = itemsListBox.Items.Count + " Items";
+            this.itemsCountLabel.Text = serverItemListBox.Count + " Items";
 
             Trace.WriteLine(String.Format("Duplicate item id {0} to new item id {1}", item.id, copyItem.id));
             return true;
@@ -312,7 +312,7 @@ namespace ItemEditor
         {
             ServerItem item = new ServerItem();
             item.SpriteHash = new byte[16];
-            item.spriteId = 100;
+            item.ClientId = 100;
             item.id = 100;
 
             ServerItemList items = new ServerItemList();
@@ -337,6 +337,11 @@ namespace ItemEditor
 
         public void Clear()
         {
+            this.Clear(true);
+        }
+
+        public void Clear(bool clearLog)
+        {
             this.SelectItem(null);
             this.currentItem = null;
             this.currentPlugin = null;
@@ -344,8 +349,8 @@ namespace ItemEditor
             this.currentOtbVersion = 0;
             this.currentOtbFullPath = "";
             this.items.Clear();
-            this.itemsListBox.Items.Clear();
-            this.itemsListBox.Enabled = false;
+            this.serverItemListBox.Plugin = null;
+            this.serverItemListBox.Enabled = false;
             this.fileSaveMenuItem.Enabled = false;
             this.fileSaveAsMenuItem.Enabled = false;
             this.editCreateItemMenuItem.Enabled = false;
@@ -361,7 +366,11 @@ namespace ItemEditor
             this.toolStripSaveAsButton.Enabled = false;
             this.toolStripFindItemButton.Enabled = false;
             this.loaded = false;
-            this.textBoxListener.Clear();
+            
+            if (clearLog)
+            {
+                this.textBoxListener.Clear();
+            }
         }
 
         private Bitmap GetBitmap(ClientItem clientItem)
@@ -409,37 +418,6 @@ namespace ItemEditor
 
             g.Save();
             return canvas;
-        }
-
-        private Bitmap GetSpriteBitmap(ClientItem clientItem)
-        {
-            int Width = spritePixels;
-            int Height = spritePixels;
-
-            if (clientItem.width > 1 || clientItem.height > 1)
-            {
-                Width = spritePixels * 2;
-                Height = spritePixels * 2;
-            }
-
-            Bitmap canvas = new Bitmap(Width, Height, PixelFormat.Format24bppRgb);
-            using (Graphics g = Graphics.FromImage(canvas))
-            {
-                g.FillRectangle(new SolidBrush(Color.FromArgb(0x11, 0x11, 0x11)), 0, 0, canvas.Width, canvas.Height);
-                g.Save();
-            }
-
-            DrawSprite(ref canvas, clientItem);
-
-            Bitmap newImage = new Bitmap(Width, Height, PixelFormat.Format24bppRgb);
-            using (Graphics g = Graphics.FromImage(newImage))
-            {
-                g.DrawImage(canvas, new Point(0, 0));
-                g.Save();
-            }
-
-            newImage.MakeTransparent(Color.FromArgb(0x11, 0x11, 0x11));
-            return newImage;
         }
 
         private void DrawSprite(ref Bitmap canvas, ClientItem clientItem)
@@ -506,9 +484,6 @@ namespace ItemEditor
             ClearItemsListBox();
             ResetControls();
 
-            // Make the itemsListBox owner drawn.
-            this.itemsListBox.DrawMode = DrawMode.OwnerDrawVariable;
-
             this.loadingItemsProgressBar.Visible = true;
             this.loadingItemsProgressBar.Minimum = 0;
             this.loadingItemsProgressBar.Maximum = items.Count + 1;
@@ -527,18 +502,18 @@ namespace ItemEditor
                     continue;
                 }
 
-                itemsListBox.Items.Add(item);
+                serverItemListBox.Add(item);
                 this.loadingItemsProgressBar.Value = index;
                 index++;
             }
 
             this.loadingItemsProgressBar.Visible = false;
-            this.itemsCountLabel.Text = itemsListBox.Items.Count + " Items";
+            this.itemsCountLabel.Text = serverItemListBox.Count + " Items";
         }
 
         private void ClearItemsListBox()
         {
-            itemsListBox.Items.Clear();
+            serverItemListBox.Clear();
         }
 
         private bool CompareItem(ServerItem item, bool compareHash)
@@ -549,7 +524,7 @@ namespace ItemEditor
             }
 
             ClientItem clientItem;
-            if (currentPlugin.Instance.Items.TryGetValue(item.spriteId, out clientItem))
+            if (currentPlugin.Instance.Items.TryGetValue(item.ClientId, out clientItem))
             {
                 if (compareHash && !Utils.ByteArrayCompare(item.SpriteHash, clientItem.SpriteHash))
                 {
@@ -585,7 +560,7 @@ namespace ItemEditor
             currentItem = null;
 
             ClientItem clientItem;
-            if (currentPlugin.Instance.Items.TryGetValue(item.spriteId, out clientItem))
+            if (currentPlugin.Instance.Items.TryGetValue(item.ClientId, out clientItem))
             {
                 Trace.WriteLine(String.Format("Reloading item id: {0}.", item.id));
 
@@ -618,13 +593,13 @@ namespace ItemEditor
             }
 
             ClientItem clientItem;
-            if (!currentPlugin.Instance.Items.TryGetValue(item.spriteId, out clientItem))
+            if (!currentPlugin.Instance.Items.TryGetValue(item.ClientId, out clientItem))
             {
                 return false;
             }
 
             DrawSprite(pictureBox, clientItem);
-            if (!item.isCustomCreated && item.SpriteHash != null && clientItem.SpriteHash != null)
+            if (!item.IsCustomCreated && item.SpriteHash != null && clientItem.SpriteHash != null)
             {
                 pictureBox.BackColor = ((Utils.ByteArrayCompare(item.SpriteHash, clientItem.SpriteHash) ? Color.White : Color.Red));
             }
@@ -675,7 +650,7 @@ namespace ItemEditor
             if (previousPlugin != null)
             {
                 ClientItem prevClientItem;
-                if (previousPlugin.Instance.Items.TryGetValue(item.prevSpriteId, out prevClientItem))
+                if (previousPlugin.Instance.Items.TryGetValue(item.PreviousClientId, out prevClientItem))
                 {
                     DrawSprite(previousPictureBox, prevClientItem);
                     if (prevClientItem.SpriteSignature != null)
@@ -770,7 +745,7 @@ namespace ItemEditor
                 }
 
                 ClientItem cmpClientItem;
-                if (!currentPlugin.Instance.Items.TryGetValue(cmpItem.spriteId, out cmpClientItem))
+                if (!currentPlugin.Instance.Items.TryGetValue(cmpItem.ClientId, out cmpClientItem))
                 {
                     continue;
                 }
@@ -805,11 +780,11 @@ namespace ItemEditor
             foreach (KeyValuePair<double, ServerItem> kvp in signatureList)
             {
                 PictureBox box = (PictureBox)candidatesTableLayoutPanel.GetControlFromPosition(index, 0);
-                toolTip.SetToolTip(box, kvp.Value.spriteId.ToString());
+                toolTip.SetToolTip(box, kvp.Value.ClientId.ToString());
                 box.Tag = kvp.Value;
 
                 ClientItem spriteCandidateItem;
-                if (currentPlugin.Instance.Items.TryGetValue(kvp.Value.spriteId, out spriteCandidateItem))
+                if (currentPlugin.Instance.Items.TryGetValue(kvp.Value.ClientId, out spriteCandidateItem))
                 {
                     DrawSprite(box, spriteCandidateItem);
                 }
@@ -826,13 +801,13 @@ namespace ItemEditor
 
             if (item != null)
             {
-                newItem.spriteId = item.id;
+                newItem.ClientId = item.id;
                 Buffer.BlockCopy(item.SpriteHash, 0, newItem.SpriteHash, 0, newItem.SpriteHash.Length);
             }
             else
             {
-                newItem.spriteId = items.minId;
-                newItem.isCustomCreated = true;
+                newItem.ClientId = items.minId;
+                newItem.IsCustomCreated = true;
             }
 
             return newItem;
@@ -847,7 +822,7 @@ namespace ItemEditor
 
             ServerItem copy = new ServerItem(item);
             copy.SpriteHash = new byte[16];
-            copy.spriteId = item.spriteId;
+            copy.ClientId = item.ClientId;
             Buffer.BlockCopy(item.SpriteHash, 0, copy.SpriteHash, 0, copy.SpriteHash.Length);
             return copy;
         }
@@ -1070,71 +1045,16 @@ namespace ItemEditor
             }
         }
 
-        private void itemsListBox_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            ListBox list = sender as ListBox;
-
-            if (e.Index == -1 || e.Index >= list.Items.Count)
-            {
-                return;
-            }
-
-            ServerItem item = (ServerItem)list.Items[e.Index];
-
-            e.DrawBackground();
-            e.Graphics.DrawRectangle(Pens.Gray, e.Bounds); // Border.
-
-            Brush brush;
-            if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-            {
-                brush = SystemBrushes.HighlightText;
-            }
-            else
-            {
-                brush = new SolidBrush(e.ForeColor);
-            }
-
-            // Find the area in which to put the text and draw.
-            int x = e.Bounds.Left + spritePixels + 3 * itemMargin;
-            int y = e.Bounds.Top + itemMargin * 2;
-            int width = e.Bounds.Right - itemMargin - x;
-            int height = e.Bounds.Bottom - itemMargin - y;
-            Rectangle layoutRect = new Rectangle(x, y, width, height);
-            string text = item.id.ToString();
-            e.Graphics.DrawString(text, this.Font, brush, layoutRect);
-
-            Rectangle destRect = new Rectangle(e.Bounds.Left + itemMargin, e.Bounds.Top + itemMargin, spritePixels, spritePixels);
-
-            ClientItem clientItem;
-            if (currentPlugin.Instance.Items.TryGetValue(item.spriteId, out clientItem))
-            {
-                Bitmap bitmap = GetSpriteBitmap(clientItem);
-                if (bitmap != null)
-                {
-                    Rectangle sourceRect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
-                    e.Graphics.DrawImage(bitmap, destRect, sourceRect, GraphicsUnit.Pixel);
-                }
-            }
-
-            e.Graphics.DrawRectangle(new Pen(brush), destRect);
-            e.DrawFocusRectangle();
-        }
-
-        private void itemsListBox_MeasureItem(object sender, MeasureItemEventArgs e)
-        {
-            e.ItemHeight = (int)(spritePixels + 2 * itemMargin);
-        }
-
         private void itemsListBox_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            SelectItem(itemsListBox.SelectedItem as ServerItem);
+            SelectItem(serverItemListBox.SelectedItem as ServerItem);
         }
 
         private void itemsListBox_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                itemsListBox.SelectedIndex = itemsListBox.IndexFromPoint(e.Location);
+                serverItemListBox.SelectedIndex = serverItemListBox.IndexFromPoint(e.Location);
                 itemsListBoxContextMenu.Show();
             }
         }
@@ -1233,7 +1153,7 @@ namespace ItemEditor
                 uint foundItemCounter = 0;
                 foreach (ServerItem item in items)
                 {
-                    item.spriteAssigned = false;
+                    item.SpriteAssigned = false;
 
                     if (item.type == ItemType.Deprecated)
                     {
@@ -1241,7 +1161,7 @@ namespace ItemEditor
                     }
 
                     ClientItem updateClientItem;
-                    if (updateItems.TryGetValue(item.spriteId, out updateClientItem))
+                    if (updateItems.TryGetValue(item.ClientId, out updateClientItem))
                     {
                         bool compareResult = updateClientItem.IsEqual(item);
 
@@ -1249,9 +1169,9 @@ namespace ItemEditor
                         {
                             if (compareResult)
                             {
-                                item.prevSpriteId = item.spriteId;
-                                item.spriteId = updateClientItem.id;
-                                item.spriteAssigned = true;
+                                item.PreviousClientId = item.ClientId;
+                                item.ClientId = updateClientItem.id;
+                                item.SpriteAssigned = true;
 
                                 assignedSpriteIdList.Add(updateClientItem.id);
                                 ++foundItemCounter;
@@ -1278,7 +1198,7 @@ namespace ItemEditor
                                 continue;
                             }
 
-                            if (item.spriteAssigned)
+                            if (item.SpriteAssigned)
                             {
                                 continue;
                             }
@@ -1287,14 +1207,14 @@ namespace ItemEditor
                             {
                                 if (updateItem.IsEqual(item))
                                 {
-                                    if (updateItem.id != item.spriteId)
+                                    if (updateItem.id != item.ClientId)
                                     {
-                                        Trace.WriteLine(String.Format("New sprite found id: {0}, old: {1}, new: {2}.", item.id, item.spriteId, updateItem.id));
+                                        Trace.WriteLine(String.Format("New sprite found id: {0}, old: {1}, new: {2}.", item.id, item.ClientId, updateItem.id));
                                     }
 
-                                    item.prevSpriteId = item.spriteId;
-                                    item.spriteId = updateItem.id;
-                                    item.spriteAssigned = true;
+                                    item.PreviousClientId = item.ClientId;
+                                    item.ClientId = updateItem.id;
+                                    item.SpriteAssigned = true;
 
                                     assignedSpriteIdList.Add(updateItem.id);
                                     ++foundItemCounter;
@@ -1318,12 +1238,12 @@ namespace ItemEditor
                         }
 
                         //implicit assigned
-                        item.prevSpriteId = item.spriteId;
-                        item.spriteAssigned = true;
+                        item.PreviousClientId = item.ClientId;
+                        item.SpriteAssigned = true;
 
-                        if (!assignedSpriteIdList.Contains(item.spriteId))
+                        if (!assignedSpriteIdList.Contains(item.ClientId))
                         {
-                            assignedSpriteIdList.Add(item.spriteId);
+                            assignedSpriteIdList.Add(item.ClientId);
                         }
 
                         if (!CompareItem(item, true))
@@ -1369,7 +1289,7 @@ namespace ItemEditor
                     ServerItem newItem = (ServerItem)box.Tag;
 
                     ClientItem clientItem;
-                    if (!currentPlugin.Instance.Items.TryGetValue(newItem.spriteId, out clientItem))
+                    if (!currentPlugin.Instance.Items.TryGetValue(newItem.ClientId, out clientItem))
                     {
                         return;
                     }
@@ -1389,8 +1309,8 @@ namespace ItemEditor
                         }
                     }
 
-                    currentItem.prevSpriteId = currentItem.spriteId;
-                    currentItem.spriteId = clientItem.id;
+                    currentItem.PreviousClientId = currentItem.ClientId;
+                    currentItem.ClientId = clientItem.id;
                     EditItem(currentItem);
                 }
             }
@@ -1403,8 +1323,8 @@ namespace ItemEditor
                 ClientItem newClientItem;
                 if (currentPlugin.Instance.Items.TryGetValue((ushort)clientIdUpDown.Value, out newClientItem))
                 {
-                    currentItem.prevSpriteId = currentItem.spriteId;
-                    currentItem.spriteId = newClientItem.id;
+                    currentItem.PreviousClientId = currentItem.ClientId;
+                    currentItem.ClientId = newClientItem.id;
                     EditItem(currentItem);
                 }
             }

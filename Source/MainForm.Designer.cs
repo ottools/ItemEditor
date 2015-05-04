@@ -127,7 +127,7 @@
             this.candidatesPictureBox4 = new System.Windows.Forms.PictureBox();
             this.candidatesPictureBox5 = new System.Windows.Forms.PictureBox();
             this.candidatesDropDown = new System.Windows.Forms.ToolStripDropDown();
-            this.itemsListBox = new System.Windows.Forms.ListBox();
+            this.serverItemListBox = new ItemEditor.Controls.ServerItemListBox();
             this.appearanceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previousPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -1126,17 +1126,15 @@
             // 
             // itemsListBox
             // 
-            this.itemsListBox.ContextMenuStrip = this.itemsListBoxContextMenu;
-            this.itemsListBox.Enabled = false;
-            this.itemsListBox.FormattingEnabled = true;
-            this.itemsListBox.Location = new System.Drawing.Point(10, 59);
-            this.itemsListBox.Name = "itemsListBox";
-            this.itemsListBox.Size = new System.Drawing.Size(160, 303);
-            this.itemsListBox.TabIndex = 0;
-            this.itemsListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.itemsListBox_DrawItem);
-            this.itemsListBox.MeasureItem += new System.Windows.Forms.MeasureItemEventHandler(this.itemsListBox_MeasureItem);
-            this.itemsListBox.SelectedIndexChanged += new System.EventHandler(this.itemsListBox_SelectedIndexChanged);
-            this.itemsListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.itemsListBox_MouseDown);
+            this.serverItemListBox.ContextMenuStrip = this.itemsListBoxContextMenu;
+            this.serverItemListBox.Enabled = false;
+            this.serverItemListBox.FormattingEnabled = true;
+            this.serverItemListBox.Location = new System.Drawing.Point(10, 59);
+            this.serverItemListBox.Name = "itemsListBox";
+            this.serverItemListBox.Size = new System.Drawing.Size(160, 303);
+            this.serverItemListBox.TabIndex = 0;
+            this.serverItemListBox.SelectedIndexChanged += new System.EventHandler(this.itemsListBox_SelectedIndexChanged);
+            this.serverItemListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.itemsListBox_MouseDown);
             // 
             // MainForm
             // 
@@ -1146,7 +1144,7 @@
             this.ClientSize = new System.Drawing.Size(671, 537);
             this.Controls.Add(this.optionsGroupBox);
             this.Controls.Add(this.appearanceGroupBox);
-            this.Controls.Add(this.itemsListBox);
+            this.Controls.Add(this.serverItemListBox);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.separatorLabel2);
             this.Controls.Add(this.separatorLabel1);
@@ -1286,6 +1284,6 @@
         private System.Windows.Forms.Button candidatesButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem filePreferencesMenuItem;
-        private System.Windows.Forms.ListBox itemsListBox;
+        private ItemEditor.Controls.ServerItemListBox serverItemListBox;
     }
 }

@@ -281,33 +281,6 @@ namespace ItemEditor
         public uint currentNodeSize = 0;
     };
 
-    public class ServerItem : Item
-    {
-        public ServerItem()
-            : base()
-        {
-            //
-        }
-
-        public ServerItem(Item item)
-            : base()
-        {
-            if (item != null)
-            {
-                this.itemImpl = (ItemImpl)item.itemImpl.Clone();
-            }
-        }
-
-        public ushort spriteId;
-        public ushort prevSpriteId;
-
-        //Used during an update to indicate if this item has been updated
-        public bool spriteAssigned = false;
-
-        //An custom created item id
-        public bool isCustomCreated = false;
-    }
-
     public class ServerItemList : List<ServerItem>
     {
         public ushort minId = 100;
@@ -484,7 +457,7 @@ namespace ItemEditor
                                     break;
 
                                 case ItemAttribute.CLIENT_ID:
-                                    item.spriteId = nodeReader.ReadUInt16();
+                                    item.ClientId = nodeReader.ReadUInt16();
                                     break;
 
                                 case ItemAttribute.GROUND_SPEED:
@@ -682,7 +655,7 @@ namespace ItemEditor
                                     break;
 
                                 case ItemAttribute.CLIENT_ID:
-                                    property.Write((ushort)item.spriteId);
+                                    property.Write((ushort)item.ClientId);
                                     writer.WriteProp(ItemAttribute.CLIENT_ID, property);
                                     break;
 

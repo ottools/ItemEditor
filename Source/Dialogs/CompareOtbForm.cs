@@ -76,9 +76,9 @@ namespace ItemEditor.Dialogs
                     ServerItem item1 = enumerator1.Current;
                     ServerItem item2 = enumerator2.Current;
 
-                    if (item1.spriteId != item2.spriteId)
+                    if (item1.ClientId != item2.ClientId)
                     {
-                        resultTextBox.AppendText(string.Format("Id: {0}  -  Sprite changed  -  [ {1} / {2} ]" + Environment.NewLine, item1.id, item1.spriteId, item2.spriteId));
+                        resultTextBox.AppendText(string.Format("Id: {0}  -  Sprite changed  -  [ {1} / {2} ]" + Environment.NewLine, item1.id, item1.ClientId, item2.ClientId));
                         continue;
                     }
 
@@ -89,7 +89,7 @@ namespace ItemEditor.Dialogs
 
                     foreach (PropertyInfo property in item1.GetType().GetProperties())
                     {
-                        if (property.Name != "SpriteHash" && property.Name != "spriteId")
+                        if (property.Name != "SpriteHash" && property.Name != "ClientId")
                         {
                             object value1 = property.GetValue(item1, null);
                             object value2 = item2.GetType().GetProperty(property.Name).GetValue(item2, null);
@@ -128,7 +128,7 @@ namespace ItemEditor.Dialogs
             FileDialog dialog = new OpenFileDialog();
 
             //Now set the file type
-            dialog.Filter = "OTB files (*.otb)|*.otb|All files (*.*)|*.*";
+            dialog.Filter = "OTB files (*.otb)|*.otb";
             dialog.Title = "Open OTB File";
 
             if (dialog.ShowDialog() != DialogResult.OK || dialog.FileName.Length == 0)
@@ -144,7 +144,7 @@ namespace ItemEditor.Dialogs
             FileDialog dialog = new OpenFileDialog();
 
             //Now set the file type
-            dialog.Filter = "OTB files (*.otb)|*.otb|All files (*.*)|*.*";
+            dialog.Filter = "OTB files (*.otb)|*.otb";
             dialog.Title = "Open OTB File";
 
             if (dialog.ShowDialog() != DialogResult.OK || dialog.FileName.Length == 0)

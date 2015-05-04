@@ -81,6 +81,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ServerItem.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Sprite.cs" />
   </ItemGroup>

@@ -74,7 +74,7 @@ namespace OTLib.OTB
                     writer.CreateNode(0); // root node
                     writer.WriteUInt32(0, true); // flags, unused for root node
 
-                    VersionInfo vi = new VersionInfo();
+                    OtbVersionInfo vi = new OtbVersionInfo();
 
                     vi.MajorVersion = this.Items.MajorVersion;
                     vi.MinorVersion = this.Items.MinorVersion;

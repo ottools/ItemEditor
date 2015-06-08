@@ -19,18 +19,12 @@
 #endregion
 
 #region Using Statements
-using OTLib.Collections;
-using OTLib.Server.Items;
-using OTLib.Utils;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 #endregion
 
-namespace ItemEditor
+namespace OTLib.OTB
 {
-    public class VersionInfo
+    public class OtbVersionInfo
     {
         #region Public Properties
 

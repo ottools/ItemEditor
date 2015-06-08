@@ -73,9 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Item.cs" />
-    <Compile Include="OtbLoader.cs" />
     <Compile Include="OTLib\Collections\ServerItemList.cs" />
     <Compile Include="OTLib\OTB\OtbReader.cs" />
+    <Compile Include="OTLib\OTB\OtbVersionInfo.cs" />
     <Compile Include="OTLib\OTB\OtbWriter.cs" />
     <Compile Include="OTLib\Server\Items\ServerItemAttribute.cs" />
     <Compile Include="OTLib\Server\Items\ServerItemFlag.cs" />

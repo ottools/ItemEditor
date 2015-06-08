@@ -29,7 +29,7 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Controls
 {
-    public partial class ServerItemListBox : ListBox
+    public class ServerItemListBox : ListBox
     {
         #region Private Properties
 
@@ -47,7 +47,6 @@ namespace ItemEditor.Controls
 
         public ServerItemListBox()
         {
-            this.InitializeComponent();
             this.layoutRect = new Rectangle();
             this.destRect = new Rectangle(ItemMargin, 0, 32, 32);
             this.sourceRect = new Rectangle();

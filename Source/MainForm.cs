@@ -18,10 +18,10 @@
 */
 #endregion
 
+#region Using Statements
 using ImageSimilarity;
 using ItemEditor.Diagnostics;
 using ItemEditor.Dialogs;
-using ItemEditor.Helpers;
 using ItemEditor.Host;
 using PluginInterface;
 using System;
@@ -31,8 +31,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Reflection;
 using System.Windows.Forms;
+#endregion
 
 namespace ItemEditor
 {
@@ -42,51 +42,14 @@ namespace ItemEditor
 
         public const string ApplicationName = "Item Editor";
         public const string VersionString = "0.3.4";
-        private const int itemMargin = 5;
-        private const int spritePixels = 32;
+        
+        private const int SpritePixels = 32;
 
         private bool showOnlyMismatchedItems = false;
         private bool showOnlyDeprecatedItems = false;
         private TextBoxTraceListener textBoxListener;
 
-        private ServerItemList items = new ServerItemList();
-        private ServerItem currentItem = null;
-
-        //The plugin that is used to compare, sync and display sprite/dat data
-        public Plugin currentPlugin;
-        public uint currentOtbVersion = 0;
-        string currentOtbFullPath = "";
-
-        //The original plugin that was used to open the currently loaded OTB
-        public Plugin previousPlugin;
-
-        private bool loaded = false;
-        private bool saved = true;
-        private bool isTemporary = false;
-
-        #endregion
-
-        #region Public Properties
-
-        public bool Loaded
-        {
-            get { return this.loaded; }
-        }
-
-        public bool Saved
-        {
-            get { return this.saved; }
-        }
-
-        public ushort MinItemId
-        {
-            get { return items.MinId; }
-        }
-
-        public ushort MaxItemId
-        {
-            get { return items.MaxId; }
-        }
+        private ServerItemList serverItems;
 
         #endregion
 
@@ -94,8 +57,46 @@ namespace ItemEditor
 
         public MainForm()
         {
-            InitializeComponent();
-            InitializeTooltips();
+            this.InitializeComponent();
+            this.InitializeTooltips();
+            this.CurrentOtbFullPath = string.Empty;
+            this.serverItems = new ServerItemList();
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// The original plugin that was used to open the currently loaded OTB
+        /// </summary>
+        public Plugin PreviousPlugin { get; private set; }
+
+        /// <summary>
+        /// The plugin that is used to compare, sync and display sprite/dat data
+        /// </summary>
+        public Plugin CurrentPlugin { get; private set; }
+
+        public uint CurrentOtbVersion { get; private set; }
+
+        public string CurrentOtbFullPath { get; private set; }
+
+        public ServerItem CurrentServerItem { get; private set; }
+
+        public bool Loaded { get; private set; }
+
+        public bool IsTemporary { get; private set; }
+
+        public bool Saved { get; private set; }
+
+        public ushort MinItemId
+        {
+            get { return this.serverItems.MinId; }
+        }
+
+        public ushort MaxItemId
+        {
+            get { return this.serverItems.MaxId; }
         }
 
         #endregion
@@ -104,7 +105,7 @@ namespace ItemEditor
 
         public void Open(string fileName = null)
         {
-            if (String.IsNullOrEmpty(fileName))
+            if (string.IsNullOrEmpty(fileName))
             {
                 FileDialog dialog = new OpenFileDialog();
                 dialog.Filter = "OTB files (*.otb)|*.otb";
@@ -116,8 +117,8 @@ namespace ItemEditor
                 }
 
                 fileName = dialog.FileName;
-                isTemporary = false;
-                saved = true;
+                this.IsTemporary = false;
+                this.Saved = true;
             }
 
             if (this.Loaded)
@@ -125,21 +126,21 @@ namespace ItemEditor
                 this.Clear();
             }
 
-            if (Otb.Open(fileName, ref items))
+            if (Otb.Open(fileName, ref this.serverItems))
             {
-                currentOtbFullPath = fileName;
-                currentOtbVersion = items.MinorVersion;
+                this.CurrentOtbFullPath = fileName;
+                this.CurrentOtbVersion = this.serverItems.MinorVersion;
 
-                //try find a plugin that can handle this version of otb
-                currentPlugin = Program.plugins.AvailablePlugins.Find(currentOtbVersion);
-                if (currentPlugin == null)
+                // try find a plugin that can handle this version of otb
+                this.CurrentPlugin = Program.plugins.AvailablePlugins.Find(this.CurrentOtbVersion);
+                if (this.CurrentPlugin == null)
                 {
-                    items.Clear();
-                    MessageBox.Show(String.Format("Could not find a plugin that could handle client version {0}", currentOtbVersion));
+                    this.serverItems.Clear();
+                    MessageBox.Show(string.Format("Could not find a plugin that could handle client version {0}", this.CurrentOtbVersion));
                     return;
                 }
 
-                if (!LoadClient(currentPlugin, currentOtbVersion))
+                if (!this.LoadClient(this.CurrentPlugin, this.CurrentOtbVersion))
                 {
                     this.Clear(false);
                     return;
@@ -157,20 +158,20 @@ namespace ItemEditor
                 this.toolStripSaveButton.Enabled = true;
                 this.toolStripSaveAsButton.Enabled = true;
                 this.toolStripFindItemButton.Enabled = true;
-                this.serverItemListBox.Plugin = currentPlugin.Instance;
+                this.serverItemListBox.Plugin = this.CurrentPlugin.Instance;
                 this.serverItemListBox.Enabled = true;
                 this.newItemButton.Enabled = true;
                 this.duplicateItemButton.Enabled = true;
                 this.reloadItemButton.Enabled = true;
                 this.findItemButton.Enabled = true;
-                this.loaded = true;
+                this.Loaded = true;
                 this.BuildItemsListBox();
             }
         }
 
         public void Save()
         {
-            if (isTemporary)
+            if (this.IsTemporary)
             {
                 this.SaveAs();
                 return;
@@ -183,8 +184,8 @@ namespace ItemEditor
 
             try
             {
-                Otb.Save(currentOtbFullPath, ref items);
-                saved = true;
+                Otb.Save(this.CurrentOtbFullPath, ref this.serverItems);
+                this.Saved = true;
                 Trace.WriteLine("Saved.");
             }
             catch (UnauthorizedAccessException exception)
@@ -213,11 +214,11 @@ namespace ItemEditor
 
                 try
                 {
-                    Otb.Save(dialog.FileName, ref items);
-                    currentOtbFullPath = dialog.FileName;
+                    Otb.Save(dialog.FileName, ref this.serverItems);
+                    this.CurrentOtbFullPath = dialog.FileName;
                     Trace.WriteLine("Saved.");
-                    this.isTemporary = false;
-                    this.saved = true;
+                    this.IsTemporary = false;
+                    this.Saved = true;
                 }
                 catch (UnauthorizedAccessException exception)
                 {
@@ -233,14 +234,15 @@ namespace ItemEditor
                 return false;
             }
 
-            if (sid >= items.MinId && sid <= items.MaxId)
+            if (sid >= this.serverItems.MinId && sid <= this.serverItems.MaxId)
             {
-                ServerItem item = items.Find(i => i.id == sid);
+                ServerItem item = this.serverItems.Find(i => i.id == sid);
                 if (item != null)
                 {
-                    return SelectItem(item);
+                    return this.SelectItem(item);
                 }
             }
+
             return false;
         }
 
@@ -251,24 +253,24 @@ namespace ItemEditor
                 return false;
             }
 
-            if (currentItem == item)
+            if (this.CurrentServerItem == item)
             {
                 return true;
             }
 
             int index;
-            if (item == null || (index = serverItemListBox.Items.IndexOf(item)) == -1)
+            if (item == null || (index = this.serverItemListBox.Items.IndexOf(item)) == -1)
             {
                 this.ResetControls();
                 return false;
             }
 
-            EditItem(item);
-            editDuplicateItemMenuItem.Enabled = true;
-            editReloadItemMenuItem.Enabled = true;
-            optionsGroupBox.Enabled = true;
-            appearanceGroupBox.Enabled = true;
-            serverItemListBox.SelectedIndex = index;
+            this.EditItem(item);
+            this.editDuplicateItemMenuItem.Enabled = true;
+            this.editReloadItemMenuItem.Enabled = true;
+            this.optionsGroupBox.Enabled = true;
+            this.appearanceGroupBox.Enabled = true;
+            this.serverItemListBox.SelectedIndex = index;
             return true;
         }
 
@@ -280,12 +282,12 @@ namespace ItemEditor
             }
 
             ServerItem item = this.CreateItem();
-            item.id = (ushort)(items.MaxId + 1);
-            items.Add(item);
-            serverItemListBox.Add(item);
-            SelectItem(item);
-            this.itemsCountLabel.Text = serverItemListBox.Count + " Items";
-            Trace.WriteLine(String.Format("Create item id {0}", item.id));
+            item.id = (ushort)(this.serverItems.MaxId + 1);
+            this.serverItems.Add(item);
+            this.serverItemListBox.Add(item);
+            this.SelectItem(item);
+            this.itemsCountLabel.Text = this.serverItemListBox.Count + " Items";
+            Trace.WriteLine(string.Format("Create item id {0}", item.id));
             return item;
         }
 
@@ -302,13 +304,13 @@ namespace ItemEditor
             }
 
             ServerItem copyItem = this.CopyItem(item);
-            copyItem.id = (ushort)(items.MaxId + 1);
-            items.Add(copyItem);
-            serverItemListBox.Add(copyItem);
-            SelectItem(copyItem);
-            this.itemsCountLabel.Text = serverItemListBox.Count + " Items";
+            copyItem.id = (ushort)(this.serverItems.MaxId + 1);
+            this.serverItems.Add(copyItem);
+            this.serverItemListBox.Add(copyItem);
+            this.SelectItem(copyItem);
+            this.itemsCountLabel.Text = this.serverItemListBox.Count + " Items";
 
-            Trace.WriteLine(String.Format("Duplicated item id {0} to new item id {1}", item.id, copyItem.id));
+            Trace.WriteLine(string.Format("Duplicated item id {0} to new item id {1}", item.id, copyItem.id));
             return true;
         }
 
@@ -328,14 +330,17 @@ namespace ItemEditor
 
             if (!File.Exists(filePath))
             {
-                using (File.Create(filePath)) { }
+                using (File.Create(filePath))
+                {
+                    ////
+                }
             }
 
             if (Otb.Save(filePath, ref items))
             {
                 this.Open(filePath);
-                this.isTemporary = isTemporary;
-                this.saved = !isTemporary;
+                this.IsTemporary = isTemporary;
+                this.Saved = !isTemporary;
             }
         }
 
@@ -347,12 +352,12 @@ namespace ItemEditor
         public void Clear(bool clearLog)
         {
             this.SelectItem(null);
-            this.currentItem = null;
-            this.currentPlugin = null;
-            this.previousPlugin = null;
-            this.currentOtbVersion = 0;
-            this.currentOtbFullPath = "";
-            this.items.Clear();
+            this.CurrentServerItem = null;
+            this.CurrentPlugin = null;
+            this.PreviousPlugin = null;
+            this.CurrentOtbVersion = 0;
+            this.CurrentOtbFullPath = string.Empty;
+            this.serverItems.Clear();
             this.serverItemListBox.Plugin = null;
             this.serverItemListBox.Enabled = false;
             this.fileSaveMenuItem.Enabled = false;
@@ -373,7 +378,7 @@ namespace ItemEditor
             this.duplicateItemButton.Enabled = false;
             this.reloadItemButton.Enabled = false;
             this.findItemButton.Enabled = false;
-            this.loaded = false;
+            this.Loaded = false;
             
             if (clearLog)
             {
@@ -387,27 +392,28 @@ namespace ItemEditor
 
         private void InitializeTooltips()
         {
-            this.toolTip.SetToolTip(newItemButton, "Create Item");
-            this.toolTip.SetToolTip(duplicateItemButton, "Duplicate Item");
-            this.toolTip.SetToolTip(reloadItemButton, "Reaload Item");
-            this.toolTip.SetToolTip(findItemButton, "Find Item");
+            this.toolTip.SetToolTip(this.newItemButton, "Create Item");
+            this.toolTip.SetToolTip(this.duplicateItemButton, "Duplicate Item");
+            this.toolTip.SetToolTip(this.reloadItemButton, "Reaload Item");
+            this.toolTip.SetToolTip(this.findItemButton, "Find Item");
         }
 
         private Bitmap GetBitmap(ClientItem clientItem)
         {
-            int Width = spritePixels;
-            int Height = spritePixels;
+            int width = SpritePixels;
+            int height = SpritePixels;
 
             if (clientItem.width > 1 || clientItem.height > 1)
             {
-                Width = spritePixels * 2;
-                Height = spritePixels * 2;
+                width = SpritePixels * 2;
+                height = SpritePixels * 2;
             }
 
-            Bitmap canvas = new Bitmap(Width, Height, PixelFormat.Format24bppRgb);
+            Bitmap canvas = new Bitmap(width, height, PixelFormat.Format24bppRgb);
             Graphics g = Graphics.FromImage(canvas);
             Rectangle rect = new Rectangle();
-            //draw sprite
+            
+            // draw sprite
             for (int l = 0; l < clientItem.layers; l++)
             {
                 for (int h = 0; h < clientItem.height; ++h)
@@ -415,9 +421,9 @@ namespace ItemEditor
                     for (int w = 0; w < clientItem.width; ++w)
                     {
                         int frameIndex = w + h * clientItem.width + l * clientItem.width * clientItem.height;
-                        Bitmap bmp = ImageUtils.GetBitmap(clientItem.GetRGBData(frameIndex), PixelFormat.Format24bppRgb, spritePixels, spritePixels);
+                        Bitmap bmp = ImageUtils.GetBitmap(clientItem.GetRGBData(frameIndex), PixelFormat.Format24bppRgb, SpritePixels, SpritePixels);
 
-                        if (canvas.Width == spritePixels)
+                        if (canvas.Width == SpritePixels)
                         {
                             rect.X = 0;
                             rect.Y = 0;
@@ -426,11 +432,12 @@ namespace ItemEditor
                         }
                         else
                         {
-                            rect.X = Math.Max(spritePixels - w * spritePixels, 0);
-                            rect.Y = Math.Max(spritePixels - h * spritePixels, 0);
+                            rect.X = Math.Max(SpritePixels - w * SpritePixels, 0);
+                            rect.Y = Math.Max(SpritePixels - h * SpritePixels, 0);
                             rect.Width = bmp.Width;
                             rect.Height = bmp.Height;
                         }
+
                         g.DrawImage(bmp, rect);
                     }
                 }
@@ -445,7 +452,7 @@ namespace ItemEditor
             Graphics g = Graphics.FromImage(canvas);
             Rectangle rect = new Rectangle();
 
-            //draw sprite
+            // draw sprite
             for (int l = 0; l < clientItem.layers; l++)
             {
                 for (int h = 0; h < clientItem.height; ++h)
@@ -453,9 +460,9 @@ namespace ItemEditor
                     for (int w = 0; w < clientItem.width; ++w)
                     {
                         int frameIndex = w + h * clientItem.width + l * clientItem.width * clientItem.height;
-                        Bitmap bmp = ImageUtils.GetBitmap(clientItem.GetRGBData(frameIndex), PixelFormat.Format24bppRgb, spritePixels, spritePixels);
+                        Bitmap bmp = ImageUtils.GetBitmap(clientItem.GetRGBData(frameIndex), PixelFormat.Format24bppRgb, SpritePixels, SpritePixels);
 
-                        if (canvas.Width == spritePixels)
+                        if (canvas.Width == SpritePixels)
                         {
                             rect.X = 0;
                             rect.Y = 0;
@@ -464,11 +471,12 @@ namespace ItemEditor
                         }
                         else
                         {
-                            rect.X = Math.Max(spritePixels - w * spritePixels, 0);
-                            rect.Y = Math.Max(spritePixels - h * spritePixels, 0);
+                            rect.X = Math.Max(SpritePixels - w * SpritePixels, 0);
+                            rect.Y = Math.Max(SpritePixels - h * SpritePixels, 0);
                             rect.Width = bmp.Width;
                             rect.Height = bmp.Height;
                         }
+
                         g.DrawImage(bmp, rect);
                     }
                 }
@@ -486,12 +494,12 @@ namespace ItemEditor
                 g.Save();
             }
 
-            DrawSprite(ref canvas, clientItem);
+            this.DrawSprite(ref canvas, clientItem);
 
             Bitmap newImage = new Bitmap(64, 64, PixelFormat.Format24bppRgb);
             using (Graphics g = Graphics.FromImage(newImage))
             {
-                g.DrawImage(canvas, new Point((canvas.Width > spritePixels ? 0 : spritePixels), (canvas.Height > spritePixels ? 0 : spritePixels)));
+                g.DrawImage(canvas, new Point(canvas.Width > SpritePixels ? 0 : SpritePixels, canvas.Height > SpritePixels ? 0 : SpritePixels));
                 g.Save();
             }
 
@@ -506,12 +514,12 @@ namespace ItemEditor
 
             this.loadingItemsProgressBar.Visible = true;
             this.loadingItemsProgressBar.Minimum = 0;
-            this.loadingItemsProgressBar.Maximum = items.Count + 1;
+            this.loadingItemsProgressBar.Maximum = this.serverItems.Count + 1;
             ushort index = 0;
 
-            foreach (ServerItem item in items)
+            foreach (ServerItem item in this.serverItems)
             {
-                if (this.showOnlyMismatchedItems && CompareItem(item, true))
+                if (this.showOnlyMismatchedItems && this.CompareItem(item, true))
                 {
                     continue;
                 }
@@ -543,7 +551,7 @@ namespace ItemEditor
             }
 
             ClientItem clientItem;
-            if (currentPlugin.Instance.Items.TryGetValue(item.ClientId, out clientItem))
+            if (this.CurrentPlugin.Instance.Items.TryGetValue(item.ClientId, out clientItem))
             {
                 if (compareHash && !Utils.ByteArrayCompare(item.SpriteHash, clientItem.SpriteHash))
                 {
@@ -558,53 +566,53 @@ namespace ItemEditor
 
         private void ReloadItems()
         {
-            foreach (ServerItem item in items)
+            foreach (ServerItem item in this.serverItems)
             {
-                if (!CompareItem(item, true))
+                if (!this.CompareItem(item, true))
                 {
-                    ReloadItem(item);
+                    this.ReloadItem(item);
                 }
             }
         }
 
         private void ReloadItem(ServerItem item)
         {
-            if (!Loaded || item == null)
+            if (!this.Loaded || item == null)
             {
                 return;
             }
 
-            //to avoid problems with events
-            ServerItem tmpItem = currentItem;
-            currentItem = null;
+            // to avoid problems with events
+            ServerItem tmpItem = this.CurrentServerItem;
+            this.CurrentServerItem = null;
 
             ClientItem clientItem;
-            if (currentPlugin.Instance.Items.TryGetValue(item.ClientId, out clientItem))
+            if (this.CurrentPlugin.Instance.Items.TryGetValue(item.ClientId, out clientItem))
             {
-                Trace.WriteLine(String.Format("Reloading item id: {0}.", item.id));
+                Trace.WriteLine(string.Format("Reloading item id: {0}.", item.id));
 
                 ushort tmpId = item.id;
                 item.itemImpl = (ItemImpl)clientItem.itemImpl.Clone();
                 item.id = tmpId;
                 Buffer.BlockCopy(clientItem.SpriteHash, 0, item.SpriteHash, 0, clientItem.SpriteHash.Length);
 
-                currentItem = tmpItem;
+                this.CurrentServerItem = tmpItem;
             }
         }
 
         private void ReloadSelectedItem()
         {
-            ServerItem item = currentItem;
-            ReloadItem(item);
-            SelectItem(null);
-            SelectItem(item);
+            ServerItem item = this.CurrentServerItem;
+            this.ReloadItem(item);
+            this.SelectItem(null);
+            this.SelectItem(item);
         }
 
         private bool EditItem(ServerItem item)
         {
-            currentItem = null;
-            ResetDataBindings(this);
-            ResetToolTips();
+            this.CurrentServerItem = null;
+            this.ResetDataBindings(this);
+            this.ResetToolTips();
 
             if (item == null)
             {
@@ -612,79 +620,78 @@ namespace ItemEditor
             }
 
             ClientItem clientItem;
-            if (!currentPlugin.Instance.Items.TryGetValue(item.ClientId, out clientItem))
+            if (!this.CurrentPlugin.Instance.Items.TryGetValue(item.ClientId, out clientItem))
             {
                 return false;
             }
 
-            DrawSprite(pictureBox, clientItem);
+            this.DrawSprite(this.pictureBox, clientItem);
             if (!item.IsCustomCreated && item.SpriteHash != null && clientItem.SpriteHash != null)
             {
-                pictureBox.BackColor = ((Utils.ByteArrayCompare(item.SpriteHash, clientItem.SpriteHash) ? Color.White : Color.Red));
+                this.pictureBox.BackColor = Utils.ByteArrayCompare(item.SpriteHash, clientItem.SpriteHash) ? Color.White : Color.Red;
             }
 
-            typeCombo.Text = item.type.ToString();
-            typeCombo.ForeColor = (item.type == clientItem.type ? Color.Black : Color.Red);
+            this.typeCombo.Text = item.type.ToString();
+            this.typeCombo.ForeColor = item.type == clientItem.type ? Color.Black : Color.Red;
 
-            //
-            serverIdLbl.DataBindings.Add("Text", item, "id");
-            clientIdUpDown.Minimum = items.MinId;
-            clientIdUpDown.Maximum = (currentPlugin.Instance.Items.Count + items.MinId) - 1;
-            clientIdUpDown.DataBindings.Add("Value", clientItem, "id");
+            this.serverIdLbl.DataBindings.Add("Text", item, "id");
+            this.clientIdUpDown.Minimum = this.serverItems.MinId;
+            this.clientIdUpDown.Maximum = (this.CurrentPlugin.Instance.Items.Count + this.serverItems.MinId) - 1;
+            this.clientIdUpDown.DataBindings.Add("Value", clientItem, "id");
 
             // Attributes
-            AddBinding(unpassableCheck, "Checked", item, "isUnpassable", item.isUnpassable, clientItem.isUnpassable);
-            AddBinding(blockMissilesCheck, "Checked", item, "blockMissiles", item.blockMissiles, clientItem.blockMissiles);
-            AddBinding(blockPathfinderCheck, "Checked", item, "blockPathfinder", item.blockPathfinder, clientItem.blockPathfinder);
-            AddBinding(moveableCheck, "Checked", item, "isMoveable", item.isMoveable, clientItem.isMoveable);
-            AddBinding(hasElevationCheck, "Checked", item, "hasElevation", item.hasElevation, clientItem.hasElevation);
-            AddBinding(pickupableCheck, "Checked", item, "isPickupable", item.isPickupable, clientItem.isPickupable);
-            AddBinding(hangableCheck, "Checked", item, "isHangable", item.isHangable, clientItem.isHangable);
-            AddBinding(useableCheck, "Checked", item, "multiUse", item.multiUse, clientItem.multiUse);
-            AddBinding(rotatableCheck, "Checked", item, "isRotatable", item.isRotatable, clientItem.isRotatable);
-            AddBinding(stackableCheck, "Checked", item, "isStackable", item.isStackable, clientItem.isStackable);
-            AddBinding(verticalCheck, "Checked", item, "isVertical", item.isVertical, clientItem.isVertical);
-            AddBinding(fullGroundCheck, "Checked", item, "fullGround", item.fullGround, clientItem.fullGround);
-            AddBinding(horizontalCheck, "Checked", item, "isHorizontal", item.isHorizontal, clientItem.isHorizontal);
-            AddBinding(alwaysOnTopCheck, "Checked", item, "alwaysOnTop", item.alwaysOnTop, clientItem.alwaysOnTop);
-            AddBinding(readableCheck, "Checked", item, "isReadable", item.isReadable, clientItem.isReadable);
-            AddBinding(ignoreLookCheck, "Checked", item, "ignoreLook", item.ignoreLook, clientItem.ignoreLook);
-            AddBinding(groundSpeedText, "Text", item, "groundSpeed", item.groundSpeed, clientItem.groundSpeed, true);
-            AddBinding(topOrderText, "Text", item, "alwaysOnTopOrder", item.alwaysOnTopOrder, clientItem.alwaysOnTopOrder, true);
-            AddBinding(lightLevelText, "Text", item, "lightLevel", item.lightLevel, clientItem.lightLevel, true);
-            AddBinding(lightColorText, "Text", item, "lightColor", item.lightColor, clientItem.lightColor, true);
-            AddBinding(maxReadCharsText, "Text", item, "maxReadChars", item.maxReadChars, clientItem.maxReadChars, true);
-            AddBinding(maxReadWriteCharsText, "Text", item, "maxReadWriteChars", item.maxReadWriteChars, clientItem.maxReadWriteChars, true);
-            AddBinding(minimapColorText, "Text", item, "minimapColor", item.minimapColor, clientItem.minimapColor, true);
-            AddBinding(wareIdText, "Text", item, "tradeAs", item.tradeAs, clientItem.tradeAs, true);
-            AddBinding(nameText, "Text", item, "name", item.name, clientItem.name, true);
+            this.AddBinding(this.unpassableCheck, "Checked", item, "isUnpassable", item.isUnpassable, clientItem.isUnpassable);
+            this.AddBinding(this.blockMissilesCheck, "Checked", item, "blockMissiles", item.blockMissiles, clientItem.blockMissiles);
+            this.AddBinding(this.blockPathfinderCheck, "Checked", item, "blockPathfinder", item.blockPathfinder, clientItem.blockPathfinder);
+            this.AddBinding(this.moveableCheck, "Checked", item, "isMoveable", item.isMoveable, clientItem.isMoveable);
+            this.AddBinding(this.hasElevationCheck, "Checked", item, "hasElevation", item.hasElevation, clientItem.hasElevation);
+            this.AddBinding(this.pickupableCheck, "Checked", item, "isPickupable", item.isPickupable, clientItem.isPickupable);
+            this.AddBinding(this.hangableCheck, "Checked", item, "isHangable", item.isHangable, clientItem.isHangable);
+            this.AddBinding(this.useableCheck, "Checked", item, "multiUse", item.multiUse, clientItem.multiUse);
+            this.AddBinding(this.rotatableCheck, "Checked", item, "isRotatable", item.isRotatable, clientItem.isRotatable);
+            this.AddBinding(this.stackableCheck, "Checked", item, "isStackable", item.isStackable, clientItem.isStackable);
+            this.AddBinding(this.verticalCheck, "Checked", item, "isVertical", item.isVertical, clientItem.isVertical);
+            this.AddBinding(this.fullGroundCheck, "Checked", item, "fullGround", item.fullGround, clientItem.fullGround);
+            this.AddBinding(this.horizontalCheck, "Checked", item, "isHorizontal", item.isHorizontal, clientItem.isHorizontal);
+            this.AddBinding(this.alwaysOnTopCheck, "Checked", item, "alwaysOnTop", item.alwaysOnTop, clientItem.alwaysOnTop);
+            this.AddBinding(this.readableCheck, "Checked", item, "isReadable", item.isReadable, clientItem.isReadable);
+            this.AddBinding(this.ignoreLookCheck, "Checked", item, "ignoreLook", item.ignoreLook, clientItem.ignoreLook);
+            this.AddBinding(this.groundSpeedText, "Text", item, "groundSpeed", item.groundSpeed, clientItem.groundSpeed, true);
+            this.AddBinding(this.topOrderText, "Text", item, "alwaysOnTopOrder", item.alwaysOnTopOrder, clientItem.alwaysOnTopOrder, true);
+            this.AddBinding(this.lightLevelText, "Text", item, "lightLevel", item.lightLevel, clientItem.lightLevel, true);
+            this.AddBinding(this.lightColorText, "Text", item, "lightColor", item.lightColor, clientItem.lightColor, true);
+            this.AddBinding(this.maxReadCharsText, "Text", item, "maxReadChars", item.maxReadChars, clientItem.maxReadChars, true);
+            this.AddBinding(this.maxReadWriteCharsText, "Text", item, "maxReadWriteChars", item.maxReadWriteChars, clientItem.maxReadWriteChars, true);
+            this.AddBinding(this.minimapColorText, "Text", item, "minimapColor", item.minimapColor, clientItem.minimapColor, true);
+            this.AddBinding(this.wareIdText, "Text", item, "tradeAs", item.tradeAs, clientItem.tradeAs, true);
+            this.AddBinding(this.nameText, "Text", item, "name", item.name, clientItem.name, true);
 
-            candidatesButton.Enabled = false;
-            for (int i = 0; i < candidatesTableLayoutPanel.ColumnCount; ++i)
+            this.candidatesButton.Enabled = false;
+            for (int i = 0; i < this.candidatesTableLayoutPanel.ColumnCount; ++i)
             {
-                PictureBox box = (PictureBox)candidatesTableLayoutPanel.GetControlFromPosition(i, 0);
+                PictureBox box = (PictureBox)this.candidatesTableLayoutPanel.GetControlFromPosition(i, 0);
                 box.Image = null;
             }
 
-            if (previousPlugin != null)
+            if (this.PreviousPlugin != null)
             {
                 ClientItem prevClientItem;
-                if (previousPlugin.Instance.Items.TryGetValue(item.PreviousClientId, out prevClientItem))
+                if (this.PreviousPlugin.Instance.Items.TryGetValue(item.PreviousClientId, out prevClientItem))
                 {
-                    DrawSprite(previousPictureBox, prevClientItem);
+                    this.DrawSprite(this.previousPictureBox, prevClientItem);
                     if (prevClientItem.SpriteSignature != null)
                     {
-                        //Sprite does not match, use the sprite signature to find possible candidates
-                        ShowSpriteCandidates(prevClientItem);
+                        // Sprite does not match, use the sprite signature to find possible candidates
+                        this.ShowSpriteCandidates(prevClientItem);
                     }
                 }
                 else
                 {
-                    previousPictureBox.Image = null;
+                    this.previousPictureBox.Image = null;
                 }
             }
 
-            currentItem = item;
+            this.CurrentServerItem = item;
             return true;
         }
 
@@ -707,34 +714,34 @@ namespace ItemEditor
             {
                 foreach (Control childControl in control.Controls)
                 {
-                    ResetDataBindings(childControl);
+                    this.ResetDataBindings(childControl);
                 }
             }
         }
 
         private void ResetToolTips()
         {
-            toolTip.RemoveAll();
+            this.toolTip.RemoveAll();
         }
 
         private void ResetControls()
         {
-            currentItem = null;
-            editDuplicateItemMenuItem.Enabled = false;
-            optionsGroupBox.Enabled = false;
-            appearanceGroupBox.Enabled = false;
-            pictureBox.Image = null;
-            pictureBox.BackColor = Color.White;
-            previousPictureBox.Image = null;
-            previousPictureBox.BackColor = Color.White;
-            clientIdUpDown.Value = clientIdUpDown.Minimum;
-            serverIdLbl.Text = "0";
-            typeCombo.Text = "";
-            typeCombo.ForeColor = Color.Black;
-            editDuplicateItemMenuItem.Enabled = false;
-            candidatesButton.Enabled = false;
+            this.CurrentServerItem = null;
+            this.editDuplicateItemMenuItem.Enabled = false;
+            this.optionsGroupBox.Enabled = false;
+            this.appearanceGroupBox.Enabled = false;
+            this.pictureBox.Image = null;
+            this.pictureBox.BackColor = Color.White;
+            this.previousPictureBox.Image = null;
+            this.previousPictureBox.BackColor = Color.White;
+            this.clientIdUpDown.Value = clientIdUpDown.Minimum;
+            this.serverIdLbl.Text = "0";
+            this.typeCombo.Text = string.Empty;
+            this.typeCombo.ForeColor = Color.Black;
+            this.editDuplicateItemMenuItem.Enabled = false;
+            this.candidatesButton.Enabled = false;
 
-            foreach (Control control in optionsGroupBox.Controls)
+            foreach (Control control in this.optionsGroupBox.Controls)
             {
                 if (control is CheckBox)
                 {
@@ -743,7 +750,7 @@ namespace ItemEditor
                 }
                 else if (control is TextBox)
                 {
-                    ((TextBox)control).Text = "";
+                    ((TextBox)control).Text = string.Empty;
                     control.ForeColor = Color.Black;
                 }
             }
@@ -751,12 +758,12 @@ namespace ItemEditor
 
         private void ShowSpriteCandidates(ClientItem clientItem)
         {
-            candidatesButton.Enabled = true;
+            this.candidatesButton.Enabled = true;
 
-            //list with the top 5 results
+            // list with the top 5 results
             List<KeyValuePair<double, ServerItem>> signatureList = new List<KeyValuePair<double, ServerItem>>();
 
-            foreach (ServerItem cmpItem in items)
+            foreach (ServerItem cmpItem in this.serverItems)
             {
                 if (cmpItem.type == ItemType.Deprecated)
                 {
@@ -764,7 +771,7 @@ namespace ItemEditor
                 }
 
                 ClientItem cmpClientItem;
-                if (!currentPlugin.Instance.Items.TryGetValue(cmpItem.ClientId, out cmpClientItem))
+                if (!this.CurrentPlugin.Instance.Items.TryGetValue(cmpItem.ClientId, out cmpClientItem))
                 {
                     continue;
                 }
@@ -775,7 +782,7 @@ namespace ItemEditor
                 {
                     if (similarity < kvp.Key)
                     {
-                        //TODO: Use isEqual aswell to match against attributes.
+                        // TODO: Use isEqual aswell to match against attributes.
                         signatureList.Remove(kvp);
                         break;
                     }
@@ -794,7 +801,7 @@ namespace ItemEditor
                     return item1.Key.CompareTo(item2.Key);
                 });
 
-            //those with lowest value are the closest match
+            // those with lowest value are the closest match
             int index = 0;
             foreach (KeyValuePair<double, ServerItem> kvp in signatureList)
             {
@@ -803,19 +810,20 @@ namespace ItemEditor
                 box.Tag = kvp.Value;
 
                 ClientItem spriteCandidateItem;
-                if (currentPlugin.Instance.Items.TryGetValue(kvp.Value.ClientId, out spriteCandidateItem))
+                if (this.CurrentPlugin.Instance.Items.TryGetValue(kvp.Value.ClientId, out spriteCandidateItem))
                 {
-                    DrawSprite(box, spriteCandidateItem);
+                    this.DrawSprite(box, spriteCandidateItem);
                 }
+
                 ++index;
             }
         }
 
         private ServerItem CreateItem(Item item = null)
         {
-            //create a new otb item
+            // create a new otb item
             ServerItem newItem = new ServerItem(item);
-            newItem.id = (ushort)(items.MaxId + 1);
+            newItem.id = (ushort)(this.serverItems.MaxId + 1);
             newItem.SpriteHash = new byte[16];
 
             if (item != null)
@@ -825,7 +833,7 @@ namespace ItemEditor
             }
             else
             {
-                newItem.ClientId = items.MinId;
+                newItem.ClientId = this.serverItems.MinId;
                 newItem.IsCustomCreated = true;
             }
 
@@ -872,7 +880,7 @@ namespace ItemEditor
                 }
                 else
                 {
-                    message = String.Format("The selected client is not compatible with this otb. Please navigate to the folder of a compatible client {0}.", client.Version);
+                    message = string.Format("The selected client is not compatible with this otb. Please navigate to the folder of a compatible client {0}.", client.Version);
                 }
                 
                 MessageBox.Show(message);
@@ -890,7 +898,7 @@ namespace ItemEditor
 
             string clientFolder = (string)Properties.Settings.Default["ClientDirectory"];
 
-            if (String.IsNullOrEmpty(clientFolder))
+            if (string.IsNullOrEmpty(clientFolder))
             {
                 return false;
             }
@@ -900,7 +908,7 @@ namespace ItemEditor
             bool extended = (bool)Properties.Settings.Default["Extended"];
             bool transparency = (bool)Properties.Settings.Default["Transparency"];
 
-            extended = (extended || client.Version >= 960);
+            extended = extended || client.Version >= 960;
 
             if (!File.Exists(datPath) || !File.Exists(sprPath))
             {
@@ -908,7 +916,7 @@ namespace ItemEditor
                 return false;
             }
 
-            Trace.WriteLine(String.Format("OTB version {0}.", otbVersion));
+            Trace.WriteLine(string.Format("OTB version {0}.", otbVersion));
 
             bool result;
 
@@ -925,11 +933,11 @@ namespace ItemEditor
             Trace.WriteLine("Loading client files.");
             if (!result)
             {
-                MessageBox.Show(String.Format("The plugin could not load dat or spr."));
+                MessageBox.Show(string.Format("The plugin could not load dat or spr."));
             }
 
-            items.ClientVersion = client.Version;
-            Trace.WriteLine(String.Format("Client version {0}.", client.Version));
+            this.serverItems.ClientVersion = client.Version;
+            Trace.WriteLine(string.Format("Client version {0}.", client.Version));
             return result;
         }
 
@@ -942,15 +950,14 @@ namespace ItemEditor
 
             ProgressForm progress = new ProgressForm();
             progress.StartPosition = FormStartPosition.Manual;
-            progress.Location = new Point(Location.X + ((Width - progress.Width) / 2),
-                                          Location.Y + ((Height - progress.Height) / 2));
+            progress.Location = new Point(Location.X + ((Width - progress.Width) / 2), Location.Y + ((Height - progress.Height) / 2));
             progress.bar.Minimum = 0;
             progress.bar.Maximum = items.Count;
             progress.Show(this);
 
             foreach (ClientItem clientItem in items.Values)
             {
-                Bitmap spriteBmp = GetBitmap(clientItem);
+                Bitmap spriteBmp = this.GetBitmap(clientItem);
                 Bitmap ff2dBmp = Fourier.fft2dRGB(spriteBmp, false);
                 clientItem.SpriteSignature = ImageUtils.CalculateEuclideanDistance(ff2dBmp, 1);
 
@@ -958,7 +965,8 @@ namespace ItemEditor
                 {
                     Application.DoEvents();
                 }
-                progress.progressLbl.Text = String.Format("Calculating image signature for item {0}.", clientItem.id);
+
+                progress.progressLbl.Text = string.Format("Calculating image signature for item {0}.", clientItem.id);
                 ++progress.bar.Value;
             }
 
@@ -982,6 +990,7 @@ namespace ItemEditor
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -992,15 +1001,15 @@ namespace ItemEditor
         private void MainForm_Load(object sender, EventArgs e)
         {
             this.Text = ApplicationName + " " + VersionString;
-            typeCombo.DataSource = Enum.GetNames(typeof(ItemType));
+            this.typeCombo.DataSource = Enum.GetNames(typeof(ItemType));
 
             this.candidatesDropDown.Items.Add(new ToolStripControlHost(this.candidatesTableLayoutPanel));
 
             Trace.Listeners.Clear();
-            textBoxListener = new TextBoxTraceListener(outputTextBox);
-            Trace.Listeners.Add(textBoxListener);
+            this.textBoxListener = new TextBoxTraceListener(this.outputTextBox);
+            Trace.Listeners.Add(this.textBoxListener);
 
-            SelectItem(null);
+            this.SelectItem(null);
 
             Program.plugins.FindPlugins();
             Sprite.CreateBlankSprite();
@@ -1008,7 +1017,7 @@ namespace ItemEditor
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!CheckSave())
+            if (!this.CheckSave())
             {
                 e.Cancel = true;
             }
@@ -1066,7 +1075,7 @@ namespace ItemEditor
             switch (menuItem.Text)
             {
                 case "Duplicate":
-                    this.DuplicateItem(currentItem);
+                    this.DuplicateItem(this.CurrentServerItem);
                     break;
 
                 case "Reload":
@@ -1077,21 +1086,21 @@ namespace ItemEditor
 
         private void ItemsListBox_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            SelectItem(serverItemListBox.SelectedItem as ServerItem);
+            this.SelectItem(this.serverItemListBox.SelectedItem as ServerItem);
         }
 
         private void ItemsListBox_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                serverItemListBox.SelectedIndex = serverItemListBox.IndexFromPoint(e.Location);
-                itemsListBoxContextMenu.Show();
+                this.serverItemListBox.SelectedIndex = this.serverItemListBox.IndexFromPoint(e.Location);
+                this.itemsListBoxContextMenu.Show();
             }
         }
 
         private void TextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!Char.IsDigit(e.KeyChar) && e.KeyChar != '\b')
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != '\b')
             {
                 e.Handled = true;
             }
@@ -1105,21 +1114,21 @@ namespace ItemEditor
 
         private void ShowOnlyUnmatchedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showOnlyMismatchedItems = !showOnlyMismatchedItems;
-            BuildItemsListBox();
+            this.showOnlyMismatchedItems = !this.showOnlyMismatchedItems;
+            this.BuildItemsListBox();
         }
 
         private void ViewShowDecaptedItemsMenuItem_Click(object sender, EventArgs e)
         {
-            showOnlyDeprecatedItems = !showOnlyDeprecatedItems;
-            BuildItemsListBox();
+            this.showOnlyDeprecatedItems = !this.showOnlyDeprecatedItems;
+            this.BuildItemsListBox();
         }
 
         private void ToolsReloadItemAttributesMenuItem_Click(object sender, EventArgs e)
         {
-            ReloadItems();
-            EditItem(currentItem);
-            BuildItemsListBox();
+            this.ReloadItems();
+            this.EditItem(this.CurrentServerItem);
+            this.BuildItemsListBox();
         }
 
         private void ToolsUpdateVersionMenuItem_Click(object sender, EventArgs e)
@@ -1130,7 +1139,7 @@ namespace ItemEditor
             DialogResult result = form.ShowDialog();
             if (result == DialogResult.OK)
             {
-                //Update OTB
+                // Update OTB
                 Plugin updatePlugin = form.selectedPlugin;
                 SupportedClient updateClient = form.updateClient;
 
@@ -1139,7 +1148,7 @@ namespace ItemEditor
                     return;
                 }
 
-                if (!LoadClient(updatePlugin, updateClient.OtbVersion))
+                if (!this.LoadClient(updatePlugin, updateClient.OtbVersion))
                 {
                     return;
                 }
@@ -1153,35 +1162,35 @@ namespace ItemEditor
 
                 if (updateSettingsForm.generateSignatureCheck.Checked)
                 {
-                    //Calculate an image signature using fourier transformation and calculate a signature we can
-                    //use to compare it to other images (kinda similar to md5 hash) except this
-                    //can also be used to find images with some variation.
-                    ClientItems currentClientItems = currentPlugin.Instance.Items;
-                    GenerateSpriteSignatures(ref currentClientItems);
+                    // Calculate an image signature using fourier transformation and calculate a signature we can
+                    // use to compare it to other images (kinda similar to md5 hash) except this
+                    // can also be used to find images with some variation.
+                    ClientItems currentClientItems = this.CurrentPlugin.Instance.Items;
+                    this.GenerateSpriteSignatures(ref currentClientItems);
 
                     ClientItems updateClientItems = updatePlugin.Instance.Items;
-                    GenerateSpriteSignatures(ref updateClientItems);
+                    this.GenerateSpriteSignatures(ref updateClientItems);
                 }
 
-                ClientItems currentItems = currentPlugin.Instance.Items;
+                ClientItems currentItems = this.CurrentPlugin.Instance.Items;
                 ClientItems updateItems = updatePlugin.Instance.Items;
                 List<ushort> assignedSpriteIdList = new List<ushort>();
 
-                //store the previous plugin (so we can display previous sprite, and do other comparisions)
-                previousPlugin = currentPlugin;
+                // store the previous plugin (so we can display previous sprite, and do other comparisions)
+                this.PreviousPlugin = this.CurrentPlugin;
 
-                //update the current plugin the one we are updating to
-                currentPlugin = updatePlugin;
+                // update the current plugin the one we are updating to
+                this.CurrentPlugin = updatePlugin;
 
-                //update version information
-                items.ClientVersion = updateClient.Version;
-                items.MinorVersion = updateClient.OtbVersion;
-                items.BuildNumber = items.BuildNumber + 1;
-                currentOtbVersion = items.MinorVersion;
+                // update version information
+                this.serverItems.ClientVersion = updateClient.Version;
+                this.serverItems.MinorVersion = updateClient.OtbVersion;
+                this.serverItems.BuildNumber = this.serverItems.BuildNumber + 1;
+                this.CurrentOtbVersion = this.serverItems.MinorVersion;
 
-                //Most items does have the same sprite after an update, so lets try that first
+                // Most items does have the same sprite after an update, so lets try that first
                 uint foundItemCounter = 0;
-                foreach (ServerItem item in items)
+                foreach (ServerItem item in this.serverItems)
                 {
                     item.SpriteAssigned = false;
 
@@ -1206,12 +1215,12 @@ namespace ItemEditor
                                 assignedSpriteIdList.Add(updateClientItem.id);
                                 ++foundItemCounter;
 
-                                //Trace.WriteLine(String.Format("Match found id: {0}, clientid: {1}", item.otb.id, item.dat.id));
+                                // Trace.WriteLine(String.Format("Match found id: {0}, clientid: {1}", item.otb.id, item.dat.id));
                             }
                             else
                             {
-                                //Sprite matches, but not the other attributes.
-                                //Trace.WriteLine(String.Format("Attribute changes found id: {0}.", item.id));
+                                // Sprite matches, but not the other attributes.
+                                // Trace.WriteLine(String.Format("Attribute changes found id: {0}.", item.id));
                             }
                         }
                     }
@@ -1221,7 +1230,7 @@ namespace ItemEditor
                 {
                     foreach (Item updateItem in updateItems.Values)
                     {
-                        foreach (ServerItem item in items)
+                        foreach (ServerItem item in this.serverItems)
                         {
                             if (item.type == ItemType.Deprecated)
                             {
@@ -1239,7 +1248,7 @@ namespace ItemEditor
                                 {
                                     if (updateItem.id != item.ClientId)
                                     {
-                                        Trace.WriteLine(String.Format("New sprite found id: {0}, old: {1}, new: {2}.", item.id, item.ClientId, updateItem.id));
+                                        Trace.WriteLine(string.Format("New sprite found id: {0}, old: {1}, new: {2}.", item.id, item.ClientId, updateItem.id));
                                     }
 
                                     item.PreviousClientId = item.ClientId;
@@ -1255,19 +1264,19 @@ namespace ItemEditor
                     }
                 }
 
-                Trace.WriteLine(String.Format("Found {0} of {1}.", foundItemCounter, items.MaxId));
+                Trace.WriteLine(string.Format("Found {0} of {1}.", foundItemCounter, this.serverItems.MaxId));
 
                 if (updateSettingsForm.reloadItemAttributesCheck.Checked)
                 {
                     uint reloadedItemCounter = 0;
-                    foreach (ServerItem item in items)
+                    foreach (ServerItem item in this.serverItems)
                     {
                         if (item.type == ItemType.Deprecated)
                         {
                             continue;
                         }
 
-                        //implicit assigned
+                        // implicit assigned
                         item.PreviousClientId = item.ClientId;
                         item.SpriteAssigned = true;
 
@@ -1276,15 +1285,15 @@ namespace ItemEditor
                             assignedSpriteIdList.Add(item.ClientId);
                         }
 
-                        if (!CompareItem(item, true))
+                        if (!this.CompareItem(item, true))
                         {
-                            //sync with dat info
-                            ReloadItem(item);
+                            // sync with dat info
+                            this.ReloadItem(item);
                             ++reloadedItemCounter;
                         }
                     }
 
-                    Trace.WriteLine(String.Format("Reloaded {0} of {1} items.", reloadedItemCounter, items.MaxId));
+                    Trace.WriteLine(string.Format("Reloaded {0} of {1} items.", reloadedItemCounter, this.serverItems.MaxId));
                 }
 
                 if (updateSettingsForm.createNewItemsCheck.Checked)
@@ -1295,23 +1304,23 @@ namespace ItemEditor
                         if (!assignedSpriteIdList.Contains(updateItem.id))
                         {
                             ++newItemCounter;
-                            ServerItem newItem = CreateItem(updateItem);
-                            items.Add(newItem);
-                            Trace.WriteLine(String.Format("Creating item id {0}", newItem.id));
+                            ServerItem newItem = this.CreateItem(updateItem);
+                            this.serverItems.Add(newItem);
+                            Trace.WriteLine(string.Format("Creating item id {0}", newItem.id));
                         }
                     }
 
-                    Trace.WriteLine(String.Format("Created {0} new items.", newItemCounter));
+                    Trace.WriteLine(string.Format("Created {0} new items.", newItemCounter));
                 }
 
-                //done
-                BuildItemsListBox();
+                // done
+                this.BuildItemsListBox();
             }
         }
 
         private void CandidatePictureBox_Click(object sender, EventArgs e)
         {
-            if (currentItem != null)
+            if (this.CurrentServerItem != null)
             {
                 PictureBox box = (PictureBox)sender;
                 if (box.Tag is ServerItem)
@@ -1319,12 +1328,12 @@ namespace ItemEditor
                     ServerItem newItem = (ServerItem)box.Tag;
 
                     ClientItem clientItem;
-                    if (!currentPlugin.Instance.Items.TryGetValue(newItem.ClientId, out clientItem))
+                    if (!this.CurrentPlugin.Instance.Items.TryGetValue(newItem.ClientId, out clientItem))
                     {
                         return;
                     }
 
-                    if (!clientItem.IsEqual(currentItem))
+                    if (!clientItem.IsEqual(this.CurrentServerItem))
                     {
                         DialogResult result = MessageBox.Show(
                             "The item attributes does not match the current information, would you like to continue anyway?",
@@ -1339,23 +1348,23 @@ namespace ItemEditor
                         }
                     }
 
-                    currentItem.PreviousClientId = currentItem.ClientId;
-                    currentItem.ClientId = clientItem.id;
-                    EditItem(currentItem);
+                    this.CurrentServerItem.PreviousClientId = this.CurrentServerItem.ClientId;
+                    this.CurrentServerItem.ClientId = clientItem.id;
+                    this.EditItem(this.CurrentServerItem);
                 }
             }
         }
 
         private void ClientIdUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (currentItem != null)
+            if (this.CurrentServerItem != null)
             {
                 ClientItem newClientItem;
-                if (currentPlugin.Instance.Items.TryGetValue((ushort)clientIdUpDown.Value, out newClientItem))
+                if (this.CurrentPlugin.Instance.Items.TryGetValue((ushort)clientIdUpDown.Value, out newClientItem))
                 {
-                    currentItem.PreviousClientId = currentItem.ClientId;
-                    currentItem.ClientId = newClientItem.id;
-                    EditItem(currentItem);
+                    this.CurrentServerItem.PreviousClientId = this.CurrentServerItem.ClientId;
+                    this.CurrentServerItem.ClientId = newClientItem.id;
+                    this.EditItem(this.CurrentServerItem);
                 }
             }
         }
@@ -1373,7 +1382,7 @@ namespace ItemEditor
 
         private void EditDuplicateItemMenuItem_Click(object sender, EventArgs e)
         {
-            this.DuplicateItem(this.currentItem);
+            this.DuplicateItem(this.CurrentServerItem);
         }
 
         private void EditReloadItemMenuItem_Click(object sender, EventArgs e)
@@ -1383,9 +1392,9 @@ namespace ItemEditor
 
         private void TypeCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (currentItem != null)
+            if (this.CurrentServerItem != null)
             {
-                currentItem.type = (ItemType)Enum.Parse(typeof(ItemType), typeCombo.SelectedValue.ToString());
+                this.CurrentServerItem.type = (ItemType)Enum.Parse(typeof(ItemType), typeCombo.SelectedValue.ToString());
             }
         }
 
@@ -1414,7 +1423,7 @@ namespace ItemEditor
 
         private void DuplicateItemButton_Click(object sender, EventArgs e)
         {
-            this.DuplicateItem(this.currentItem);
+            this.DuplicateItem(this.CurrentServerItem);
         }
 
         private void ReloadItemButton_Click(object sender, EventArgs e)

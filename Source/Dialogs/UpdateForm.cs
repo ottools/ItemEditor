@@ -84,7 +84,7 @@ namespace ItemEditor.Dialogs
 
         private void pluginsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (pluginsListBox.SelectedItem != null && mainForm.currentPlugin != null)
+            if (pluginsListBox.SelectedItem != null && mainForm.CurrentPlugin != null)
             {
                 selectBtn.Enabled = true;
             }

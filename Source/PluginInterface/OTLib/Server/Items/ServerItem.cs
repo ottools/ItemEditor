@@ -54,6 +54,14 @@ namespace OTLib.Server.Items
         Deprecated  = 5
     }
 
+    public enum TileStackOrder : byte
+    {
+        None    = 0,
+        Border  = 1,
+        Bottom  = 2,
+        Top     = 3
+    }
+
     public class ServerItem : Item
     {
         #region Contructors
@@ -95,12 +103,12 @@ namespace OTLib.Server.Items
         
         override public string ToString()
         {
-            if (!string.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(Name))
             {
-                return this.id.ToString() + " - " + this.name;
+                return this.ID.ToString() + " - " + this.Name;
             }
 
-            return this.id.ToString();
+            return this.ID.ToString();
         }
 
         #endregion

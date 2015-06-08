@@ -80,13 +80,13 @@ namespace ItemEditor.Dialogs
 
                 if (item1.ClientId != item2.ClientId)
                 {
-                    resultTextBox.AppendText(string.Format("ID: {0}  -  Sprite changed  -  [ {1} / {2} ]" + Environment.NewLine, item1.id, item1.ClientId, item2.ClientId));
+                    resultTextBox.AppendText(string.Format("ID: {0}  -  Sprite changed  -  [ {1} / {2} ]" + Environment.NewLine, item1.ID, item1.ClientId, item2.ClientId));
                     continue;
                 }
 
                 if (item1.SpriteHash != null && item2.SpriteHash != null && !Utils.ByteArrayCompare(item1.SpriteHash, item2.SpriteHash))
                 {
-                    resultTextBox.AppendText(string.Format("ID: {0}  -  Sprite updated." + Environment.NewLine, item1.id));
+                    resultTextBox.AppendText(string.Format("ID: {0}  -  Sprite updated." + Environment.NewLine, item1.ID));
                 }
 
                 foreach (PropertyInfo property in item1.GetType().GetProperties())
@@ -98,7 +98,7 @@ namespace ItemEditor.Dialogs
 
                         if (!value1.Equals(value2))
                         {
-                            resultTextBox.AppendText(string.Format("ID: {0}  -  {1}  -  [ {2} / {3} ]{4}", item1.id, property.Name, value1, value2, Environment.NewLine));
+                            resultTextBox.AppendText(string.Format("ID: {0}  -  {1}  -  [ {2} / {3} ]{4}", item1.ID, property.Name, value1, value2, Environment.NewLine));
                         }
                     }
                 }

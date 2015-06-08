@@ -178,7 +178,7 @@ namespace PluginOne
                 while (id <= maxclientID)
                 {
                     ClientItem item = new ClientItem();
-                    item.id = id;
+                    item.ID = id;
                     this.Items[id] = item;
 
                     // read the options until we find 0xff
@@ -190,100 +190,100 @@ namespace PluginOne
                         switch (flag)
                         {
                             case ItemFlag.Ground:
-                                item.type = ServerItemType.Ground;
-                                item.groundSpeed = reader.ReadUInt16();
+                                item.Type = ServerItemType.Ground;
+                                item.GroundSpeed = reader.ReadUInt16();
                                 break;
 
                             case ItemFlag.GroundBorder:
-                                item.alwaysOnTop = true;
-                                item.alwaysOnTopOrder = 1;
+                                item.HasStackOrder = true;
+                                item.StackOrder = TileStackOrder.Border;
                                 break;
 
                             case ItemFlag.OnBottom:
-                                item.alwaysOnTop = true;
-                                item.alwaysOnTopOrder = 2;
+                                item.HasStackOrder = true;
+                                item.StackOrder = TileStackOrder.Bottom;
                                 break;
 
                             case ItemFlag.OnTop:
-                                item.alwaysOnTop = true;
-                                item.alwaysOnTopOrder = 3;
+                                item.HasStackOrder = true;
+                                item.StackOrder = TileStackOrder.Top;
                                 break;
 
                             case ItemFlag.Container:
-                                item.type = ServerItemType.Container;
+                                item.Type = ServerItemType.Container;
                                 break;
 
                             case ItemFlag.Stackable:
-                                item.isStackable = true;
+                                item.Stackable = true;
                                 break;
 
                             case ItemFlag.ForceUse:
                                 break;
 
                             case ItemFlag.MultiUse:
-                                item.multiUse = true;
+                                item.MultiUse = true;
                                 break;
 
                             case ItemFlag.HasCharges:
                                 break;
 
                             case ItemFlag.Writable:
-                                item.isReadable = true;
-                                item.maxReadWriteChars = reader.ReadUInt16();
+                                item.Readable = true;
+                                item.MaxReadWriteChars = reader.ReadUInt16();
                                 break;
 
                             case ItemFlag.WritableOnce:
-                                item.isReadable = true;
-                                item.maxReadChars = reader.ReadUInt16();
+                                item.Readable = true;
+                                item.MaxReadChars = reader.ReadUInt16();
                                 break;
 
                             case ItemFlag.FluidContainer:
-                                item.type = ServerItemType.Fluid;
+                                item.Type = ServerItemType.Fluid;
                                 break;
 
                             case ItemFlag.Fluid:
-                                item.type = ServerItemType.Splash;
+                                item.Type = ServerItemType.Splash;
                                 break;
 
                             case ItemFlag.IsUnpassable:
-                                item.isUnpassable = true;
+                                item.Unpassable = true;
                                 break;
 
                             case ItemFlag.IsUnmoveable:
-                                item.isMoveable = false;
+                                item.Movable = false;
                                 break;
 
                             case ItemFlag.BlockMissiles:
-                                item.blockMissiles = true;
+                                item.BlockMissiles = true;
                                 break;
 
                             case ItemFlag.BlockPathfinder:
-                                item.blockPathfinder = true;
+                                item.BlockPathfinder = true;
                                 break;
 
                             case ItemFlag.Pickupable:
-                                item.isPickupable = true;
+                                item.Pickupable = true;
                                 break;
 
                             case ItemFlag.Hangable:
-                                item.isHangable = true;
+                                item.Hangable = true;
                                 break;
 
                             case ItemFlag.IsHorizontal:
-                                item.isHorizontal = true;
+                                item.HookEast = true;
                                 break;
 
                             case ItemFlag.IsVertical:
-                                item.isVertical = true;
+                                item.HookSouth = true;
                                 break;
 
                             case ItemFlag.Rotatable:
-                                item.isRotatable = true;
+                                item.Rotatable = true;
                                 break;
 
                             case ItemFlag.HasLight:
-                                item.lightLevel = reader.ReadUInt16();
-                                item.lightColor = reader.ReadUInt16();
+                                item.LightLevel = reader.ReadUInt16();
+                                item.LightColor = reader.ReadUInt16();
                                 break;
 
                             case ItemFlag.DontHide:
@@ -298,7 +298,7 @@ namespace PluginOne
                                 break;
 
                             case ItemFlag.HasElevation:
-                                item.hasElevation = true;
+                                item.HasElevation = true;
                                 reader.ReadUInt16(); // Height
                                 break;
 
@@ -309,23 +309,23 @@ namespace PluginOne
                                 break;
 
                             case ItemFlag.Minimap:
-                                item.minimapColor = reader.ReadUInt16();
+                                item.MinimapColor = reader.ReadUInt16();
                                 break;
 
                             case ItemFlag.LensHelp:
                                 ushort opt = reader.ReadUInt16();
                                 if (opt == 1112)
                                 {
-                                    item.isReadable = true;
+                                    item.Readable = true;
                                 }
                                 break;
 
                             case ItemFlag.FullGround:
-                                item.fullGround = true;
+                                item.FullGround = true;
                                 break;
 
                             case ItemFlag.IgnoreLook:
-                                item.ignoreLook = true;
+                                item.IgnoreLook = true;
                                 break;
 
                             case ItemFlag.LastFlag:
@@ -350,7 +350,7 @@ namespace PluginOne
                     item.patternY = reader.ReadByte();
                     item.patternZ = reader.ReadByte();
                     item.frames = reader.ReadByte();
-                    item.isAnimation = item.frames > 1;
+                    item.IsAnimation = item.frames > 1;
                     item.numSprites = (uint)item.width * item.height * item.layers * item.patternX * item.patternY * item.patternZ * item.frames;
 
                     // Read the sprite ids

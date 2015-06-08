@@ -45,6 +45,8 @@
             this.typeCombo = new System.Windows.Forms.ComboBox();
             this.typeLabel = new System.Windows.Forms.Label();
             this.optionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.stackOrderComboBox = new System.Windows.Forms.ComboBox();
+            this.stackOrderLabel = new System.Windows.Forms.Label();
             this.wareIdText = new System.Windows.Forms.TextBox();
             this.wareIdLabel = new System.Windows.Forms.Label();
             this.nameText = new System.Windows.Forms.TextBox();
@@ -59,22 +61,19 @@
             this.lightColorText = new System.Windows.Forms.TextBox();
             this.lightLevelLabel = new System.Windows.Forms.Label();
             this.lightLevelText = new System.Windows.Forms.TextBox();
-            this.topOrderLabel = new System.Windows.Forms.Label();
-            this.topOrderText = new System.Windows.Forms.TextBox();
             this.groundSpeedLabel = new System.Windows.Forms.Label();
             this.groundSpeedText = new System.Windows.Forms.TextBox();
-            this.alwaysOnTopCheck = new System.Windows.Forms.CheckBox();
             this.ignoreLookCheck = new System.Windows.Forms.CheckBox();
             this.readableCheck = new System.Windows.Forms.CheckBox();
             this.stackableCheck = new System.Windows.Forms.CheckBox();
-            this.horizontalCheck = new System.Windows.Forms.CheckBox();
+            this.hookEastCheck = new System.Windows.Forms.CheckBox();
             this.rotatableCheck = new System.Windows.Forms.CheckBox();
             this.useableCheck = new System.Windows.Forms.CheckBox();
             this.hangableCheck = new System.Windows.Forms.CheckBox();
             this.hasElevationCheck = new System.Windows.Forms.CheckBox();
-            this.moveableCheck = new System.Windows.Forms.CheckBox();
+            this.movableCheck = new System.Windows.Forms.CheckBox();
             this.blockPathfinderCheck = new System.Windows.Forms.CheckBox();
-            this.verticalCheck = new System.Windows.Forms.CheckBox();
+            this.hookSouthCheck = new System.Windows.Forms.CheckBox();
             this.fullGroundCheck = new System.Windows.Forms.CheckBox();
             this.pickupableCheck = new System.Windows.Forms.CheckBox();
             this.blockMissilesCheck = new System.Windows.Forms.CheckBox();
@@ -295,6 +294,8 @@
             // 
             // optionsGroupBox
             // 
+            this.optionsGroupBox.Controls.Add(this.stackOrderComboBox);
+            this.optionsGroupBox.Controls.Add(this.stackOrderLabel);
             this.optionsGroupBox.Controls.Add(this.wareIdText);
             this.optionsGroupBox.Controls.Add(this.typeCombo);
             this.optionsGroupBox.Controls.Add(this.wareIdLabel);
@@ -311,22 +312,19 @@
             this.optionsGroupBox.Controls.Add(this.lightColorText);
             this.optionsGroupBox.Controls.Add(this.lightLevelLabel);
             this.optionsGroupBox.Controls.Add(this.lightLevelText);
-            this.optionsGroupBox.Controls.Add(this.topOrderLabel);
-            this.optionsGroupBox.Controls.Add(this.topOrderText);
             this.optionsGroupBox.Controls.Add(this.groundSpeedLabel);
             this.optionsGroupBox.Controls.Add(this.groundSpeedText);
-            this.optionsGroupBox.Controls.Add(this.alwaysOnTopCheck);
             this.optionsGroupBox.Controls.Add(this.ignoreLookCheck);
             this.optionsGroupBox.Controls.Add(this.readableCheck);
             this.optionsGroupBox.Controls.Add(this.stackableCheck);
-            this.optionsGroupBox.Controls.Add(this.horizontalCheck);
+            this.optionsGroupBox.Controls.Add(this.hookEastCheck);
             this.optionsGroupBox.Controls.Add(this.rotatableCheck);
             this.optionsGroupBox.Controls.Add(this.useableCheck);
             this.optionsGroupBox.Controls.Add(this.hangableCheck);
             this.optionsGroupBox.Controls.Add(this.hasElevationCheck);
-            this.optionsGroupBox.Controls.Add(this.moveableCheck);
+            this.optionsGroupBox.Controls.Add(this.movableCheck);
             this.optionsGroupBox.Controls.Add(this.blockPathfinderCheck);
-            this.optionsGroupBox.Controls.Add(this.verticalCheck);
+            this.optionsGroupBox.Controls.Add(this.hookSouthCheck);
             this.optionsGroupBox.Controls.Add(this.fullGroundCheck);
             this.optionsGroupBox.Controls.Add(this.pickupableCheck);
             this.optionsGroupBox.Controls.Add(this.blockMissilesCheck);
@@ -339,9 +337,29 @@
             this.optionsGroupBox.TabStop = false;
             this.optionsGroupBox.Text = "Attributes";
             // 
+            // stackOrderComboBox
+            // 
+            this.stackOrderComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.stackOrderComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.stackOrderComboBox.FormattingEnabled = true;
+            this.stackOrderComboBox.Location = new System.Drawing.Point(268, 219);
+            this.stackOrderComboBox.Name = "stackOrderComboBox";
+            this.stackOrderComboBox.Size = new System.Drawing.Size(147, 21);
+            this.stackOrderComboBox.TabIndex = 49;
+            this.stackOrderComboBox.SelectedIndexChanged += new System.EventHandler(this.StackOrderComboBox_SelectedIndexChanged);
+            // 
+            // stackOrderLabel
+            // 
+            this.stackOrderLabel.AutoSize = true;
+            this.stackOrderLabel.Location = new System.Drawing.Point(195, 222);
+            this.stackOrderLabel.Name = "stackOrderLabel";
+            this.stackOrderLabel.Size = new System.Drawing.Size(67, 13);
+            this.stackOrderLabel.TabIndex = 50;
+            this.stackOrderLabel.Text = "Stack Order:";
+            // 
             // wareIdText
             // 
-            this.wareIdText.Location = new System.Drawing.Point(360, 162);
+            this.wareIdText.Location = new System.Drawing.Point(360, 133);
             this.wareIdText.Name = "wareIdText";
             this.wareIdText.Size = new System.Drawing.Size(55, 20);
             this.wareIdText.TabIndex = 48;
@@ -350,7 +368,7 @@
             // wareIdLabel
             // 
             this.wareIdLabel.AutoSize = true;
-            this.wareIdLabel.Location = new System.Drawing.Point(306, 166);
+            this.wareIdLabel.Location = new System.Drawing.Point(306, 137);
             this.wareIdLabel.Name = "wareIdLabel";
             this.wareIdLabel.Size = new System.Drawing.Size(50, 13);
             this.wareIdLabel.TabIndex = 47;
@@ -358,7 +376,7 @@
             // 
             // nameText
             // 
-            this.nameText.Location = new System.Drawing.Point(268, 248);
+            this.nameText.Location = new System.Drawing.Point(268, 249);
             this.nameText.Name = "nameText";
             this.nameText.Size = new System.Drawing.Size(147, 20);
             this.nameText.TabIndex = 46;
@@ -366,7 +384,7 @@
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(224, 251);
+            this.nameLabel.Location = new System.Drawing.Point(224, 252);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(38, 13);
             this.nameLabel.TabIndex = 45;
@@ -375,7 +393,7 @@
             // maxReadWriteCharsLabel
             // 
             this.maxReadWriteCharsLabel.AutoSize = true;
-            this.maxReadWriteCharsLabel.Location = new System.Drawing.Point(248, 223);
+            this.maxReadWriteCharsLabel.Location = new System.Drawing.Point(248, 192);
             this.maxReadWriteCharsLabel.Name = "maxReadWriteCharsLabel";
             this.maxReadWriteCharsLabel.Size = new System.Drawing.Size(108, 13);
             this.maxReadWriteCharsLabel.TabIndex = 44;
@@ -383,7 +401,7 @@
             // 
             // maxReadWriteCharsText
             // 
-            this.maxReadWriteCharsText.Location = new System.Drawing.Point(360, 219);
+            this.maxReadWriteCharsText.Location = new System.Drawing.Point(360, 188);
             this.maxReadWriteCharsText.Name = "maxReadWriteCharsText";
             this.maxReadWriteCharsText.Size = new System.Drawing.Size(55, 20);
             this.maxReadWriteCharsText.TabIndex = 42;
@@ -392,7 +410,7 @@
             // maxReadCharsLabel
             // 
             this.maxReadCharsLabel.AutoSize = true;
-            this.maxReadCharsLabel.Location = new System.Drawing.Point(284, 194);
+            this.maxReadCharsLabel.Location = new System.Drawing.Point(284, 164);
             this.maxReadCharsLabel.Name = "maxReadCharsLabel";
             this.maxReadCharsLabel.Size = new System.Drawing.Size(72, 13);
             this.maxReadCharsLabel.TabIndex = 43;
@@ -400,7 +418,7 @@
             // 
             // maxReadCharsText
             // 
-            this.maxReadCharsText.Location = new System.Drawing.Point(360, 190);
+            this.maxReadCharsText.Location = new System.Drawing.Point(360, 160);
             this.maxReadCharsText.Name = "maxReadCharsText";
             this.maxReadCharsText.Size = new System.Drawing.Size(55, 20);
             this.maxReadCharsText.TabIndex = 41;
@@ -409,7 +427,7 @@
             // minimapColorLabel
             // 
             this.minimapColorLabel.AutoSize = true;
-            this.minimapColorLabel.Location = new System.Drawing.Point(280, 85);
+            this.minimapColorLabel.Location = new System.Drawing.Point(280, 57);
             this.minimapColorLabel.Name = "minimapColorLabel";
             this.minimapColorLabel.Size = new System.Drawing.Size(76, 13);
             this.minimapColorLabel.TabIndex = 40;
@@ -417,7 +435,7 @@
             // 
             // minimapColorText
             // 
-            this.minimapColorText.Location = new System.Drawing.Point(359, 81);
+            this.minimapColorText.Location = new System.Drawing.Point(359, 53);
             this.minimapColorText.Name = "minimapColorText";
             this.minimapColorText.Size = new System.Drawing.Size(56, 20);
             this.minimapColorText.TabIndex = 21;
@@ -426,7 +444,7 @@
             // lightColorLabel
             // 
             this.lightColorLabel.AutoSize = true;
-            this.lightColorLabel.Location = new System.Drawing.Point(296, 139);
+            this.lightColorLabel.Location = new System.Drawing.Point(296, 111);
             this.lightColorLabel.Name = "lightColorLabel";
             this.lightColorLabel.Size = new System.Drawing.Size(60, 13);
             this.lightColorLabel.TabIndex = 38;
@@ -434,7 +452,7 @@
             // 
             // lightColorText
             // 
-            this.lightColorText.Location = new System.Drawing.Point(359, 135);
+            this.lightColorText.Location = new System.Drawing.Point(359, 107);
             this.lightColorText.Name = "lightColorText";
             this.lightColorText.Size = new System.Drawing.Size(56, 20);
             this.lightColorText.TabIndex = 23;
@@ -443,7 +461,7 @@
             // lightLevelLabel
             // 
             this.lightLevelLabel.AutoSize = true;
-            this.lightLevelLabel.Location = new System.Drawing.Point(294, 113);
+            this.lightLevelLabel.Location = new System.Drawing.Point(294, 84);
             this.lightLevelLabel.Name = "lightLevelLabel";
             this.lightLevelLabel.Size = new System.Drawing.Size(62, 13);
             this.lightLevelLabel.TabIndex = 36;
@@ -451,28 +469,11 @@
             // 
             // lightLevelText
             // 
-            this.lightLevelText.Location = new System.Drawing.Point(359, 109);
+            this.lightLevelText.Location = new System.Drawing.Point(359, 80);
             this.lightLevelText.Name = "lightLevelText";
             this.lightLevelText.Size = new System.Drawing.Size(56, 20);
             this.lightLevelText.TabIndex = 22;
             this.lightLevelText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress);
-            // 
-            // topOrderLabel
-            // 
-            this.topOrderLabel.AutoSize = true;
-            this.topOrderLabel.Location = new System.Drawing.Point(298, 58);
-            this.topOrderLabel.Name = "topOrderLabel";
-            this.topOrderLabel.Size = new System.Drawing.Size(58, 13);
-            this.topOrderLabel.TabIndex = 30;
-            this.topOrderLabel.Text = "Top Order:";
-            // 
-            // topOrderText
-            // 
-            this.topOrderText.Location = new System.Drawing.Point(359, 54);
-            this.topOrderText.Name = "topOrderText";
-            this.topOrderText.Size = new System.Drawing.Size(56, 20);
-            this.topOrderText.TabIndex = 20;
-            this.topOrderText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress);
             // 
             // groundSpeedLabel
             // 
@@ -491,16 +492,6 @@
             this.groundSpeedText.TabIndex = 19;
             this.groundSpeedText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_KeyPress);
             // 
-            // alwaysOnTopCheck
-            // 
-            this.alwaysOnTopCheck.AutoSize = true;
-            this.alwaysOnTopCheck.Location = new System.Drawing.Point(134, 49);
-            this.alwaysOnTopCheck.Name = "alwaysOnTopCheck";
-            this.alwaysOnTopCheck.Size = new System.Drawing.Size(96, 17);
-            this.alwaysOnTopCheck.TabIndex = 17;
-            this.alwaysOnTopCheck.Text = "Always on Top";
-            this.alwaysOnTopCheck.UseVisualStyleBackColor = true;
-            // 
             // ignoreLookCheck
             // 
             this.ignoreLookCheck.AutoSize = true;
@@ -514,7 +505,7 @@
             // readableCheck
             // 
             this.readableCheck.AutoSize = true;
-            this.readableCheck.Location = new System.Drawing.Point(134, 72);
+            this.readableCheck.Location = new System.Drawing.Point(134, 49);
             this.readableCheck.Name = "readableCheck";
             this.readableCheck.Size = new System.Drawing.Size(72, 17);
             this.readableCheck.TabIndex = 18;
@@ -531,15 +522,15 @@
             this.stackableCheck.Text = "Stackable";
             this.stackableCheck.UseVisualStyleBackColor = true;
             // 
-            // horizontalCheck
+            // hookEastCheck
             // 
-            this.horizontalCheck.AutoSize = true;
-            this.horizontalCheck.Location = new System.Drawing.Point(14, 279);
-            this.horizontalCheck.Name = "horizontalCheck";
-            this.horizontalCheck.Size = new System.Drawing.Size(73, 17);
-            this.horizontalCheck.TabIndex = 15;
-            this.horizontalCheck.Text = "Horizontal";
-            this.horizontalCheck.UseVisualStyleBackColor = true;
+            this.hookEastCheck.AutoSize = true;
+            this.hookEastCheck.Location = new System.Drawing.Point(14, 279);
+            this.hookEastCheck.Name = "hookEastCheck";
+            this.hookEastCheck.Size = new System.Drawing.Size(76, 17);
+            this.hookEastCheck.TabIndex = 15;
+            this.hookEastCheck.Text = "Hook East";
+            this.hookEastCheck.UseVisualStyleBackColor = true;
             // 
             // rotatableCheck
             // 
@@ -581,15 +572,15 @@
             this.hasElevationCheck.Text = "Has Elevation";
             this.hasElevationCheck.UseVisualStyleBackColor = true;
             // 
-            // moveableCheck
+            // movableCheck
             // 
-            this.moveableCheck.AutoSize = true;
-            this.moveableCheck.Location = new System.Drawing.Point(14, 49);
-            this.moveableCheck.Name = "moveableCheck";
-            this.moveableCheck.Size = new System.Drawing.Size(73, 17);
-            this.moveableCheck.TabIndex = 7;
-            this.moveableCheck.Text = "Moveable";
-            this.moveableCheck.UseVisualStyleBackColor = true;
+            this.movableCheck.AutoSize = true;
+            this.movableCheck.Location = new System.Drawing.Point(14, 49);
+            this.movableCheck.Name = "movableCheck";
+            this.movableCheck.Size = new System.Drawing.Size(67, 17);
+            this.movableCheck.TabIndex = 7;
+            this.movableCheck.Text = "Movable";
+            this.movableCheck.UseVisualStyleBackColor = true;
             // 
             // blockPathfinderCheck
             // 
@@ -601,20 +592,20 @@
             this.blockPathfinderCheck.Text = "Block Pathfinder";
             this.blockPathfinderCheck.UseVisualStyleBackColor = true;
             // 
-            // verticalCheck
+            // hookSouthCheck
             // 
-            this.verticalCheck.AutoSize = true;
-            this.verticalCheck.Location = new System.Drawing.Point(14, 256);
-            this.verticalCheck.Name = "verticalCheck";
-            this.verticalCheck.Size = new System.Drawing.Size(61, 17);
-            this.verticalCheck.TabIndex = 14;
-            this.verticalCheck.Text = "Vertical";
-            this.verticalCheck.UseVisualStyleBackColor = true;
+            this.hookSouthCheck.AutoSize = true;
+            this.hookSouthCheck.Location = new System.Drawing.Point(14, 256);
+            this.hookSouthCheck.Name = "hookSouthCheck";
+            this.hookSouthCheck.Size = new System.Drawing.Size(83, 17);
+            this.hookSouthCheck.TabIndex = 14;
+            this.hookSouthCheck.Text = "Hook South";
+            this.hookSouthCheck.UseVisualStyleBackColor = true;
             // 
             // fullGroundCheck
             // 
             this.fullGroundCheck.AutoSize = true;
-            this.fullGroundCheck.Location = new System.Drawing.Point(134, 95);
+            this.fullGroundCheck.Location = new System.Drawing.Point(134, 72);
             this.fullGroundCheck.Name = "fullGroundCheck";
             this.fullGroundCheck.Size = new System.Drawing.Size(80, 17);
             this.fullGroundCheck.TabIndex = 14;
@@ -1289,19 +1280,18 @@
         private System.Windows.Forms.GroupBox optionsGroupBox;
         private System.Windows.Forms.CheckBox ignoreLookCheck;
         private System.Windows.Forms.CheckBox stackableCheck;
-        private System.Windows.Forms.CheckBox horizontalCheck;
+        private System.Windows.Forms.CheckBox hookEastCheck;
         private System.Windows.Forms.CheckBox rotatableCheck;
         private System.Windows.Forms.CheckBox useableCheck;
         private System.Windows.Forms.CheckBox hangableCheck;
         private System.Windows.Forms.CheckBox hasElevationCheck;
-        private System.Windows.Forms.CheckBox moveableCheck;
+        private System.Windows.Forms.CheckBox movableCheck;
         private System.Windows.Forms.CheckBox blockPathfinderCheck;
-        private System.Windows.Forms.CheckBox verticalCheck;
+        private System.Windows.Forms.CheckBox hookSouthCheck;
         private System.Windows.Forms.CheckBox fullGroundCheck;
         private System.Windows.Forms.CheckBox pickupableCheck;
         private System.Windows.Forms.CheckBox blockMissilesCheck;
         private System.Windows.Forms.CheckBox unpassableCheck;
-        private System.Windows.Forms.CheckBox alwaysOnTopCheck;
         private System.Windows.Forms.ToolStripMenuItem toolsCompareOtbFilesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewShowOnlyMismatchedMenuItem;
@@ -1313,8 +1303,6 @@
         private System.Windows.Forms.TextBox lightColorText;
         private System.Windows.Forms.Label lightLevelLabel;
         private System.Windows.Forms.TextBox lightLevelText;
-        private System.Windows.Forms.Label topOrderLabel;
-        private System.Windows.Forms.TextBox topOrderText;
         private System.Windows.Forms.Label groundSpeedLabel;
         private System.Windows.Forms.TextBox groundSpeedText;
         private System.Windows.Forms.Label typeLabel;
@@ -1369,5 +1357,7 @@
         private System.Windows.Forms.Button reloadItemButton;
         private System.Windows.Forms.Button findItemButton;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox stackOrderComboBox;
+        private System.Windows.Forms.Label stackOrderLabel;
     }
 }

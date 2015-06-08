@@ -246,7 +246,7 @@ namespace ItemEditor
 
             if (sid >= this.serverItems.MinId && sid <= this.serverItems.MaxId)
             {
-                ServerItem item = this.serverItems.Find(i => i.id == sid);
+                ServerItem item = this.serverItems.Find(i => i.ID == sid);
                 if (item != null)
                 {
                     return this.SelectItem(item);
@@ -292,12 +292,12 @@ namespace ItemEditor
             }
 
             ServerItem item = this.CreateItem();
-            item.id = (ushort)(this.serverItems.MaxId + 1);
+            item.ID = (ushort)(this.serverItems.MaxId + 1);
             this.serverItems.Add(item);
             this.serverItemListBox.Add(item);
             this.SelectItem(item);
             this.itemsCountLabel.Text = this.serverItemListBox.Count + " Items";
-            Trace.WriteLine(string.Format("Create item id {0}", item.id));
+            Trace.WriteLine(string.Format("Create item id {0}", item.ID));
             return item;
         }
 
@@ -314,13 +314,13 @@ namespace ItemEditor
             }
 
             ServerItem copyItem = this.CopyItem(item);
-            copyItem.id = (ushort)(this.serverItems.MaxId + 1);
+            copyItem.ID = (ushort)(this.serverItems.MaxId + 1);
             this.serverItems.Add(copyItem);
             this.serverItemListBox.Add(copyItem);
             this.SelectItem(copyItem);
             this.itemsCountLabel.Text = this.serverItemListBox.Count + " Items";
 
-            Trace.WriteLine(string.Format("Duplicated item id {0} to new item id {1}", item.id, copyItem.id));
+            Trace.WriteLine(string.Format("Duplicated item id {0} to new item id {1}", item.ID, copyItem.ID));
             return true;
         }
 
@@ -329,7 +329,7 @@ namespace ItemEditor
             ServerItem item = new ServerItem();
             item.SpriteHash = new byte[16];
             item.ClientId = 100;
-            item.id = 100;
+            item.ID = 100;
 
             ServerItemList items = new ServerItemList();
             items.MajorVersion = 3;
@@ -537,7 +537,7 @@ namespace ItemEditor
                     continue;
                 }
 
-                if ((this.showOnlyDeprecatedItems && item.type != ServerItemType.Deprecated) || (!this.showOnlyDeprecatedItems && item.type == ServerItemType.Deprecated))
+                if ((this.showOnlyDeprecatedItems && item.Type != ServerItemType.Deprecated) || (!this.showOnlyDeprecatedItems && item.Type == ServerItemType.Deprecated))
                 {
                     continue;
                 }
@@ -559,7 +559,7 @@ namespace ItemEditor
 
         private bool CompareItem(ServerItem item, bool compareHash)
         {
-            if (item.type == ServerItemType.Deprecated)
+            if (item.Type == ServerItemType.Deprecated)
             {
                 return true;
             }
@@ -603,11 +603,11 @@ namespace ItemEditor
             ClientItem clientItem;
             if (this.CurrentPlugin.Instance.Items.TryGetValue(item.ClientId, out clientItem))
             {
-                Trace.WriteLine(string.Format("Reloading item id: {0}.", item.id));
+                Trace.WriteLine(string.Format("Reloading item id: {0}.", item.ID));
 
-                ushort tmpId = item.id;
+                ushort tmpId = item.ID;
                 item.itemImpl = (ItemImpl)clientItem.itemImpl.Clone();
-                item.id = tmpId;
+                item.ID = tmpId;
                 Buffer.BlockCopy(clientItem.SpriteHash, 0, item.SpriteHash, 0, clientItem.SpriteHash.Length);
 
                 this.CurrentServerItem = tmpItem;
@@ -645,40 +645,41 @@ namespace ItemEditor
                 this.pictureBox.BackColor = Utils.ByteArrayCompare(item.SpriteHash, clientItem.SpriteHash) ? Color.White : Color.Red;
             }
 
-            this.typeCombo.Text = item.type.ToString();
-            this.typeCombo.ForeColor = item.type == clientItem.type ? Color.Black : Color.Red;
+            this.typeCombo.Text = item.Type.ToString();
+            this.typeCombo.ForeColor = item.Type == clientItem.Type ? Color.Black : Color.Red;
 
-            this.serverIdLbl.DataBindings.Add("Text", item, "id");
+            this.stackOrderComboBox.Text = item.StackOrder.ToString();
+            this.stackOrderComboBox.ForeColor = item.StackOrder == clientItem.StackOrder ? Color.Black : Color.Red;
+
+            this.serverIdLbl.DataBindings.Add("Text", item, "ID");
             this.clientIdUpDown.Minimum = this.serverItems.MinId;
             this.clientIdUpDown.Maximum = (this.CurrentPlugin.Instance.Items.Count + this.serverItems.MinId) - 1;
-            this.clientIdUpDown.DataBindings.Add("Value", clientItem, "id");
+            this.clientIdUpDown.DataBindings.Add("Value", clientItem, "ID");
 
             // Attributes
-            this.AddBinding(this.unpassableCheck, "Checked", item, "isUnpassable", item.isUnpassable, clientItem.isUnpassable);
-            this.AddBinding(this.blockMissilesCheck, "Checked", item, "blockMissiles", item.blockMissiles, clientItem.blockMissiles);
-            this.AddBinding(this.blockPathfinderCheck, "Checked", item, "blockPathfinder", item.blockPathfinder, clientItem.blockPathfinder);
-            this.AddBinding(this.moveableCheck, "Checked", item, "isMoveable", item.isMoveable, clientItem.isMoveable);
-            this.AddBinding(this.hasElevationCheck, "Checked", item, "hasElevation", item.hasElevation, clientItem.hasElevation);
-            this.AddBinding(this.pickupableCheck, "Checked", item, "isPickupable", item.isPickupable, clientItem.isPickupable);
-            this.AddBinding(this.hangableCheck, "Checked", item, "isHangable", item.isHangable, clientItem.isHangable);
-            this.AddBinding(this.useableCheck, "Checked", item, "multiUse", item.multiUse, clientItem.multiUse);
-            this.AddBinding(this.rotatableCheck, "Checked", item, "isRotatable", item.isRotatable, clientItem.isRotatable);
-            this.AddBinding(this.stackableCheck, "Checked", item, "isStackable", item.isStackable, clientItem.isStackable);
-            this.AddBinding(this.verticalCheck, "Checked", item, "isVertical", item.isVertical, clientItem.isVertical);
-            this.AddBinding(this.fullGroundCheck, "Checked", item, "fullGround", item.fullGround, clientItem.fullGround);
-            this.AddBinding(this.horizontalCheck, "Checked", item, "isHorizontal", item.isHorizontal, clientItem.isHorizontal);
-            this.AddBinding(this.alwaysOnTopCheck, "Checked", item, "alwaysOnTop", item.alwaysOnTop, clientItem.alwaysOnTop);
-            this.AddBinding(this.readableCheck, "Checked", item, "isReadable", item.isReadable, clientItem.isReadable);
-            this.AddBinding(this.ignoreLookCheck, "Checked", item, "ignoreLook", item.ignoreLook, clientItem.ignoreLook);
-            this.AddBinding(this.groundSpeedText, "Text", item, "groundSpeed", item.groundSpeed, clientItem.groundSpeed, true);
-            this.AddBinding(this.topOrderText, "Text", item, "alwaysOnTopOrder", item.alwaysOnTopOrder, clientItem.alwaysOnTopOrder, true);
-            this.AddBinding(this.lightLevelText, "Text", item, "lightLevel", item.lightLevel, clientItem.lightLevel, true);
-            this.AddBinding(this.lightColorText, "Text", item, "lightColor", item.lightColor, clientItem.lightColor, true);
-            this.AddBinding(this.maxReadCharsText, "Text", item, "maxReadChars", item.maxReadChars, clientItem.maxReadChars, true);
-            this.AddBinding(this.maxReadWriteCharsText, "Text", item, "maxReadWriteChars", item.maxReadWriteChars, clientItem.maxReadWriteChars, true);
-            this.AddBinding(this.minimapColorText, "Text", item, "minimapColor", item.minimapColor, clientItem.minimapColor, true);
-            this.AddBinding(this.wareIdText, "Text", item, "tradeAs", item.tradeAs, clientItem.tradeAs, true);
-            this.AddBinding(this.nameText, "Text", item, "name", item.name, clientItem.name, true);
+            this.AddBinding(this.unpassableCheck, "Checked", item, "Unpassable", item.Unpassable, clientItem.Unpassable);
+            this.AddBinding(this.blockMissilesCheck, "Checked", item, "BlockMissiles", item.BlockMissiles, clientItem.BlockMissiles);
+            this.AddBinding(this.blockPathfinderCheck, "Checked", item, "BlockPathfinder", item.BlockPathfinder, clientItem.BlockPathfinder);
+            this.AddBinding(this.hasElevationCheck, "Checked", item, "HasElevation", item.HasElevation, clientItem.HasElevation);
+            this.AddBinding(this.useableCheck, "Checked", item, "MultiUse", item.MultiUse, clientItem.MultiUse);
+            this.AddBinding(this.pickupableCheck, "Checked", item, "Pickupable", item.Pickupable, clientItem.Pickupable);
+            this.AddBinding(this.movableCheck, "Checked", item, "Movable", item.Movable, clientItem.Movable);
+            this.AddBinding(this.stackableCheck, "Checked", item, "Stackable", item.Stackable, clientItem.Stackable);
+            this.AddBinding(this.readableCheck, "Checked", item, "Readable", item.Readable, clientItem.Readable);
+            this.AddBinding(this.rotatableCheck, "Checked", item, "Rotatable", item.Rotatable, clientItem.Rotatable);
+            this.AddBinding(this.hangableCheck, "Checked", item, "Hangable", item.Hangable, clientItem.Hangable);
+            this.AddBinding(this.hookSouthCheck, "Checked", item, "HookSouth", item.HookSouth, clientItem.HookSouth);
+            this.AddBinding(this.hookEastCheck, "Checked", item, "HookEast", item.HookEast, clientItem.HookEast);
+            this.AddBinding(this.ignoreLookCheck, "Checked", item, "IgnoreLook", item.IgnoreLook, clientItem.IgnoreLook);
+            this.AddBinding(this.fullGroundCheck, "Checked", item, "FullGround", item.FullGround, clientItem.FullGround);
+            this.AddBinding(this.groundSpeedText, "Text", item, "GroundSpeed", item.GroundSpeed, clientItem.GroundSpeed, true);
+            this.AddBinding(this.lightLevelText, "Text", item, "LightLevel", item.LightLevel, clientItem.LightLevel, true);
+            this.AddBinding(this.lightColorText, "Text", item, "LightColor", item.LightColor, clientItem.LightColor, true);
+            this.AddBinding(this.maxReadCharsText, "Text", item, "MaxReadChars", item.MaxReadChars, clientItem.MaxReadChars, true);
+            this.AddBinding(this.maxReadWriteCharsText, "Text", item, "MaxReadWriteChars", item.MaxReadWriteChars, clientItem.MaxReadWriteChars, true);
+            this.AddBinding(this.minimapColorText, "Text", item, "MinimapColor", item.MinimapColor, clientItem.MinimapColor, true);
+            this.AddBinding(this.wareIdText, "Text", item, "TradeAs", item.TradeAs, clientItem.TradeAs, true);
+            this.AddBinding(this.nameText, "Text", item, "Name", item.Name, clientItem.Name, true);
 
             this.candidatesButton.Enabled = false;
             for (int i = 0; i < this.candidatesTableLayoutPanel.ColumnCount; ++i)
@@ -752,6 +753,8 @@ namespace ItemEditor
             this.serverIdLbl.Text = "0";
             this.typeCombo.Text = string.Empty;
             this.typeCombo.ForeColor = Color.Black;
+            this.stackOrderComboBox.Text = string.Empty;
+            this.stackOrderComboBox.ForeColor = Color.Black;
             this.editDuplicateItemMenuItem.Enabled = false;
             this.candidatesButton.Enabled = false;
 
@@ -779,7 +782,7 @@ namespace ItemEditor
 
             foreach (ServerItem cmpItem in this.serverItems)
             {
-                if (cmpItem.type == ServerItemType.Deprecated)
+                if (cmpItem.Type == ServerItemType.Deprecated)
                 {
                     continue;
                 }
@@ -837,12 +840,12 @@ namespace ItemEditor
         {
             // create a new otb item
             ServerItem newItem = new ServerItem(item);
-            newItem.id = (ushort)(this.serverItems.MaxId + 1);
+            newItem.ID = (ushort)(this.serverItems.MaxId + 1);
             newItem.SpriteHash = new byte[16];
 
             if (item != null)
             {
-                newItem.ClientId = item.id;
+                newItem.ClientId = item.ID;
                 Buffer.BlockCopy(item.SpriteHash, 0, newItem.SpriteHash, 0, newItem.SpriteHash.Length);
             }
             else
@@ -980,7 +983,7 @@ namespace ItemEditor
                     Application.DoEvents();
                 }
 
-                progress.progressLbl.Text = string.Format("Calculating image signature for item {0}.", clientItem.id);
+                progress.progressLbl.Text = string.Format("Calculating image signature for item {0}.", clientItem.ID);
                 ++progress.bar.Value;
             }
 
@@ -1016,6 +1019,7 @@ namespace ItemEditor
         {
             this.Text = ApplicationName + " " + VersionString;
             this.typeCombo.DataSource = Enum.GetNames(typeof(ServerItemType));
+            this.stackOrderComboBox.DataSource = Enum.GetNames(typeof(TileStackOrder));
 
             this.candidatesDropDown.Items.Add(new ToolStripControlHost(this.candidatesTableLayoutPanel));
 
@@ -1208,7 +1212,7 @@ namespace ItemEditor
                 {
                     item.SpriteAssigned = false;
 
-                    if (item.type == ServerItemType.Deprecated)
+                    if (item.Type == ServerItemType.Deprecated)
                     {
                         continue;
                     }
@@ -1223,10 +1227,10 @@ namespace ItemEditor
                             if (compareResult)
                             {
                                 item.PreviousClientId = item.ClientId;
-                                item.ClientId = updateClientItem.id;
+                                item.ClientId = updateClientItem.ID;
                                 item.SpriteAssigned = true;
 
-                                assignedSpriteIdList.Add(updateClientItem.id);
+                                assignedSpriteIdList.Add(updateClientItem.ID);
                                 ++foundItemCounter;
 
                                 // Trace.WriteLine(String.Format("Match found id: {0}, clientid: {1}", item.otb.id, item.dat.id));
@@ -1246,7 +1250,7 @@ namespace ItemEditor
                     {
                         foreach (ServerItem item in this.serverItems)
                         {
-                            if (item.type == ServerItemType.Deprecated)
+                            if (item.Type == ServerItemType.Deprecated)
                             {
                                 continue;
                             }
@@ -1260,16 +1264,16 @@ namespace ItemEditor
                             {
                                 if (updateItem.IsEqual(item))
                                 {
-                                    if (updateItem.id != item.ClientId)
+                                    if (updateItem.ID != item.ClientId)
                                     {
-                                        Trace.WriteLine(string.Format("New sprite found id: {0}, old: {1}, new: {2}.", item.id, item.ClientId, updateItem.id));
+                                        Trace.WriteLine(string.Format("New sprite found id: {0}, old: {1}, new: {2}.", item.ID, item.ClientId, updateItem.ID));
                                     }
 
                                     item.PreviousClientId = item.ClientId;
-                                    item.ClientId = updateItem.id;
+                                    item.ClientId = updateItem.ID;
                                     item.SpriteAssigned = true;
 
-                                    assignedSpriteIdList.Add(updateItem.id);
+                                    assignedSpriteIdList.Add(updateItem.ID);
                                     ++foundItemCounter;
                                     break;
                                 }
@@ -1285,7 +1289,7 @@ namespace ItemEditor
                     uint reloadedItemCounter = 0;
                     foreach (ServerItem item in this.serverItems)
                     {
-                        if (item.type == ServerItemType.Deprecated)
+                        if (item.Type == ServerItemType.Deprecated)
                         {
                             continue;
                         }
@@ -1315,12 +1319,12 @@ namespace ItemEditor
                     uint newItemCounter = 0;
                     foreach (Item updateItem in updateItems.Values)
                     {
-                        if (!assignedSpriteIdList.Contains(updateItem.id))
+                        if (!assignedSpriteIdList.Contains(updateItem.ID))
                         {
                             ++newItemCounter;
                             ServerItem newItem = this.CreateItem(updateItem);
                             this.serverItems.Add(newItem);
-                            Trace.WriteLine(string.Format("Creating item id {0}", newItem.id));
+                            Trace.WriteLine(string.Format("Creating item id {0}", newItem.ID));
                         }
                     }
 
@@ -1363,7 +1367,7 @@ namespace ItemEditor
                     }
 
                     this.CurrentServerItem.PreviousClientId = this.CurrentServerItem.ClientId;
-                    this.CurrentServerItem.ClientId = clientItem.id;
+                    this.CurrentServerItem.ClientId = clientItem.ID;
                     this.EditItem(this.CurrentServerItem);
                 }
             }
@@ -1377,7 +1381,7 @@ namespace ItemEditor
                 if (this.CurrentPlugin.Instance.Items.TryGetValue((ushort)clientIdUpDown.Value, out newClientItem))
                 {
                     this.CurrentServerItem.PreviousClientId = this.CurrentServerItem.ClientId;
-                    this.CurrentServerItem.ClientId = newClientItem.id;
+                    this.CurrentServerItem.ClientId = newClientItem.ID;
                     this.EditItem(this.CurrentServerItem);
                 }
             }
@@ -1408,7 +1412,16 @@ namespace ItemEditor
         {
             if (this.CurrentServerItem != null)
             {
-                this.CurrentServerItem.type = (ServerItemType)Enum.Parse(typeof(ServerItemType), typeCombo.SelectedValue.ToString());
+                this.CurrentServerItem.Type = (ServerItemType)Enum.Parse(typeof(ServerItemType), this.typeCombo.SelectedValue.ToString());
+            }
+        }
+
+        private void StackOrderComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.CurrentServerItem != null)
+            {
+                this.CurrentServerItem.StackOrder = (TileStackOrder)Enum.Parse(typeof(TileStackOrder), this.stackOrderComboBox.SelectedValue.ToString());
+                this.CurrentServerItem.HasStackOrder = this.CurrentServerItem.StackOrder != TileStackOrder.None;
             }
         }
 

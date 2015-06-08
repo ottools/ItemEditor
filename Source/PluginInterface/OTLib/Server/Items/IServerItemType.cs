@@ -24,18 +24,14 @@ using System;
 
 namespace OTLib.Server.Items
 {
-    public enum ServerItemAttribute : byte
+    public interface IServerItemType
     {
-        ServerID = 0x10,
-        ClientID = 0x11,
-        Name = 0x12,
-        GroundSpeed = 0x14,
-        SpriteHash = 0x20,
-        MinimaColor = 0x21,
-        MaxReadWriteChars = 0x22,
-        MaxReadChars = 0x23,
-        Light = 0x2A,
-        StackOrder = 0x2B,
-        TradeAs = 0x2D
+        ushort ID { get; set; }
+        bool HasStackOrder { get; }
+        TileStackOrder StackOrder { get; set; }
+        bool Unpassable { get; set; }
+        bool BlockMissiles { get; set; }
+        bool BlockPathfinder { get; set; }
+        bool HasElevation { get; set; }
     }
 }

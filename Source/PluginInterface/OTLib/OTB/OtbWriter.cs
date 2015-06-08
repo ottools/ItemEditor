@@ -97,53 +97,53 @@ namespace OTLib.OTB
                         List<ServerItemAttribute> saveAttributeList = new List<ServerItemAttribute>();
                         saveAttributeList.Add(ServerItemAttribute.ServerID);
 
-                        if (item.type != ServerItemType.Deprecated)
+                        if (item.Type != ServerItemType.Deprecated)
                         {
                             saveAttributeList.Add(ServerItemAttribute.ClientID);
                             saveAttributeList.Add(ServerItemAttribute.SpriteHash);
 
-                            if (item.minimapColor != 0)
+                            if (item.MinimapColor != 0)
                             {
                                 saveAttributeList.Add(ServerItemAttribute.MinimaColor);
                             }
 
-                            if (item.maxReadWriteChars != 0)
+                            if (item.MaxReadWriteChars != 0)
                             {
                                 saveAttributeList.Add(ServerItemAttribute.MaxReadWriteChars);
                             }
 
-                            if (item.maxReadChars != 0)
+                            if (item.MaxReadChars != 0)
                             {
                                 saveAttributeList.Add(ServerItemAttribute.MaxReadChars);
                             }
 
-                            if (item.lightLevel != 0 || item.lightColor != 0)
+                            if (item.LightLevel != 0 || item.LightColor != 0)
                             {
                                 saveAttributeList.Add(ServerItemAttribute.Light);
                             }
 
-                            if (item.type == ServerItemType.Ground)
+                            if (item.Type == ServerItemType.Ground)
                             {
                                 saveAttributeList.Add(ServerItemAttribute.GroundSpeed);
                             }
 
-                            if (item.alwaysOnTop)
+                            if (item.StackOrder != TileStackOrder.None)
                             {
-                                saveAttributeList.Add(ServerItemAttribute.TopOrder);
+                                saveAttributeList.Add(ServerItemAttribute.StackOrder);
                             }
 
-                            if (item.tradeAs != 0)
+                            if (item.TradeAs != 0)
                             {
                                 saveAttributeList.Add(ServerItemAttribute.TradeAs);
                             }
 
-                            if (!string.IsNullOrEmpty(item.name))
+                            if (!string.IsNullOrEmpty(item.Name))
                             {
                                 saveAttributeList.Add(ServerItemAttribute.Name);
                             }
                         }
 
-                        switch (item.type)
+                        switch (item.Type)
                         {
                             case ServerItemType.Container:
                                 writer.CreateNode((byte)ServerItemGroup.Container);
@@ -171,92 +171,92 @@ namespace OTLib.OTB
 
                         uint flags = 0;
 
-                        if (item.isUnpassable)
+                        if (item.Unpassable)
                         {
                             flags |= (uint)ServerItemFlag.Unpassable;
                         }
 
-                        if (item.blockMissiles)
+                        if (item.BlockMissiles)
                         {
                             flags |= (uint)ServerItemFlag.BlockMissiles;
                         }
 
-                        if (item.blockPathfinder)
+                        if (item.BlockPathfinder)
                         {
                             flags |= (uint)ServerItemFlag.BlockPathfinder;
                         }
 
-                        if (item.hasElevation)
+                        if (item.HasElevation)
                         {
                             flags |= (uint)ServerItemFlag.HasElevation;
                         }
 
-                        if (item.multiUse)
+                        if (item.MultiUse)
                         {
                             flags |= (uint)ServerItemFlag.Useable;
                         }
 
-                        if (item.isPickupable)
+                        if (item.Pickupable)
                         {
                             flags |= (uint)ServerItemFlag.Pickupable;
                         }
 
-                        if (item.isMoveable)
+                        if (item.Movable)
                         {
                             flags |= (uint)ServerItemFlag.Movable;
                         }
 
-                        if (item.isStackable)
+                        if (item.Stackable)
                         {
                             flags |= (uint)ServerItemFlag.Stackable;
                         }
 
-                        if (item.alwaysOnTop)
+                        if (item.StackOrder != TileStackOrder.None)
                         {
                             flags |= (uint)ServerItemFlag.StackOrder;
                         }
 
-                        if (item.isReadable)
+                        if (item.Readable)
                         {
                             flags |= (uint)ServerItemFlag.Readable;
                         }
 
-                        if (item.isRotatable)
+                        if (item.Rotatable)
                         {
                             flags |= (uint)ServerItemFlag.Rotatable;
                         }
 
-                        if (item.isHangable)
+                        if (item.Hangable)
                         {
                             flags |= (uint)ServerItemFlag.Hangable;
                         }
 
-                        if (item.isVertical)
+                        if (item.HookSouth)
                         {
                             flags |= (uint)ServerItemFlag.HookSouth;
                         }
 
-                        if (item.isHorizontal)
+                        if (item.HookEast)
                         {
                             flags |= (uint)ServerItemFlag.HookEast;
                         }
 
-                        if (item.ignoreLook)
+                        if (item.IgnoreLook)
                         {
                             flags |= (uint)ServerItemFlag.IgnoreLook;
                         }
 
-                        if (item.allowDistRead)
+                        if (item.AllowDistanceRead)
                         {
                             flags |= (uint)ServerItemFlag.AllowDistanceRead;
                         }
 
-                        if (item.isAnimation)
+                        if (item.IsAnimation)
                         {
                             flags |= (uint)ServerItemFlag.IsAnimation;
                         }
 
-                        if (item.fullGround)
+                        if (item.FullGround)
                         {
                             flags |= (uint)ServerItemFlag.FullGround;
                         }
@@ -268,12 +268,12 @@ namespace OTLib.OTB
                             switch (attribute)
                             {
                                 case ServerItemAttribute.ServerID:
-                                    property.Write((ushort)item.id);
+                                    property.Write((ushort)item.ID);
                                     writer.WriteProp(ServerItemAttribute.ServerID, property);
                                     break;
 
                                 case ServerItemAttribute.TradeAs:
-                                    property.Write((ushort)item.tradeAs);
+                                    property.Write((ushort)item.TradeAs);
                                     writer.WriteProp(ServerItemAttribute.TradeAs, property);
                                     break;
 
@@ -283,14 +283,14 @@ namespace OTLib.OTB
                                     break;
 
                                 case ServerItemAttribute.GroundSpeed:
-                                    property.Write((ushort)item.groundSpeed);
+                                    property.Write((ushort)item.GroundSpeed);
                                     writer.WriteProp(ServerItemAttribute.GroundSpeed, property);
                                     break;
 
                                 case ServerItemAttribute.Name:
-                                    for (ushort i = 0; i < item.name.Length; ++i)
+                                    for (ushort i = 0; i < item.Name.Length; ++i)
                                     {
-                                        property.Write((char)item.name[i]);
+                                        property.Write((char)item.Name[i]);
                                     }
 
                                     writer.WriteProp(ServerItemAttribute.Name, property);
@@ -302,29 +302,29 @@ namespace OTLib.OTB
                                     break;
 
                                 case ServerItemAttribute.MinimaColor:
-                                    property.Write((ushort)item.minimapColor);
+                                    property.Write((ushort)item.MinimapColor);
                                     writer.WriteProp(ServerItemAttribute.MinimaColor, property);
                                     break;
 
                                 case ServerItemAttribute.MaxReadWriteChars:
-                                    property.Write((ushort)item.maxReadWriteChars);
+                                    property.Write((ushort)item.MaxReadWriteChars);
                                     writer.WriteProp(ServerItemAttribute.MaxReadWriteChars, property);
                                     break;
 
                                 case ServerItemAttribute.MaxReadChars:
-                                    property.Write((ushort)item.maxReadChars);
+                                    property.Write((ushort)item.MaxReadChars);
                                     writer.WriteProp(ServerItemAttribute.MaxReadChars, property);
                                     break;
 
                                 case ServerItemAttribute.Light:
-                                    property.Write((ushort)item.lightLevel);
-                                    property.Write((ushort)item.lightColor);
+                                    property.Write((ushort)item.LightLevel);
+                                    property.Write((ushort)item.LightColor);
                                     writer.WriteProp(ServerItemAttribute.Light, property);
                                     break;
 
-                                case ServerItemAttribute.TopOrder:
-                                    property.Write((byte)item.alwaysOnTopOrder);
-                                    writer.WriteProp(ServerItemAttribute.TopOrder, property);
+                                case ServerItemAttribute.StackOrder:
+                                    property.Write((byte)item.StackOrder);
+                                    writer.WriteProp(ServerItemAttribute.StackOrder, property);
                                     break;
                             }
                         }

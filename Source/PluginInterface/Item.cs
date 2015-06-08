@@ -36,10 +36,10 @@ namespace ItemEditor
         }
 
         public ushort id;
-        public ushort groundSpeed;
         public ServerItemType type;
-        public bool alwaysOnTop;
-        public ushort alwaysOnTopOrder;
+        public bool HasStackOrder;
+        public TileStackOrder StackOrder;
+        public ushort groundSpeed;
         public bool multiUse;
         public ushort maxReadChars;
         public ushort maxReadWriteChars;
@@ -59,85 +59,84 @@ namespace ItemEditor
         public bool isUnpassable;
         public bool blockMissiles;
         public bool blockPathfinder;
-        public bool allowDistRead;
+        public bool allowDistanceRead;
         public bool isAnimation;
         public bool fullGround;
         public ushort tradeAs;
         public string name;
     }
 
-    public class Item
+    public class Item : IServerItemType
     {
         public ItemImpl itemImpl = new ItemImpl();
 
         public Item()
         {
-            this.name = "";
-            this.isMoveable = true;
+            this.Name = "";
+            this.Movable = true;
         }
 
         public virtual bool IsEqual(Item item)
         {
-            if (type != item.type) { return false; }
+            if (Type != item.Type) { return false; }
 
-            if (name.CompareTo(item.name) != 0) { return false; }
-            if (tradeAs != item.tradeAs) { return false; }
-            if (fullGround != item.fullGround) { return false; }
-            if (isAnimation != item.isAnimation) { return false; }
-            if (alwaysOnTop != item.alwaysOnTop) { return false; }
-            if (alwaysOnTopOrder != item.alwaysOnTopOrder) { return false; }
-            if (isUnpassable != item.isUnpassable) { return false; }
-            if (blockPathfinder != item.blockPathfinder) { return false; }
-            if (blockMissiles != item.blockMissiles) { return false; }
-            if (groundSpeed != item.groundSpeed) { return false; }
-            if (hasElevation != item.hasElevation) { return false; }
-            if (multiUse != item.multiUse) { return false; }
-            if (isHangable != item.isHangable) { return false; }
-            if (isHorizontal != item.isHorizontal) { return false; }
-            if (isVertical != item.isVertical) { return false; }
-            if (isMoveable != item.isMoveable) { return false; }
-            if (isPickupable != item.isPickupable) { return false; }
-            if (isReadable != item.isReadable) { return false; }
-            if (isRotatable != item.isRotatable) { return false; }
-            if (isStackable != item.isStackable) { return false; }
-            if (lightColor != item.lightColor) { return false; }
-            if (lightLevel != item.lightLevel) { return false; }
-            if (ignoreLook != item.ignoreLook) { return false; }
-            if (maxReadChars != item.maxReadChars) { return false; }
-            if (maxReadWriteChars != item.maxReadWriteChars) { return false; }
-            if (minimapColor != item.minimapColor) { return false; }
+            if (Name.CompareTo(item.Name) != 0) { return false; }
+            if (TradeAs != item.TradeAs) { return false; }
+            if (FullGround != item.FullGround) { return false; }
+            if (IsAnimation != item.IsAnimation) { return false; }
+            if (StackOrder != item.StackOrder) { return false; }
+            if (Unpassable != item.Unpassable) { return false; }
+            if (BlockPathfinder != item.BlockPathfinder) { return false; }
+            if (BlockMissiles != item.BlockMissiles) { return false; }
+            if (GroundSpeed != item.GroundSpeed) { return false; }
+            if (HasElevation != item.HasElevation) { return false; }
+            if (MultiUse != item.MultiUse) { return false; }
+            if (Hangable != item.Hangable) { return false; }
+            if (HookEast != item.HookEast) { return false; }
+            if (HookSouth != item.HookSouth) { return false; }
+            if (Movable != item.Movable) { return false; }
+            if (Pickupable != item.Pickupable) { return false; }
+            if (Readable != item.Readable) { return false; }
+            if (Rotatable != item.Rotatable) { return false; }
+            if (Stackable != item.Stackable) { return false; }
+            if (LightColor != item.LightColor) { return false; }
+            if (LightLevel != item.LightLevel) { return false; }
+            if (IgnoreLook != item.IgnoreLook) { return false; }
+            if (MaxReadChars != item.MaxReadChars) { return false; }
+            if (MaxReadWriteChars != item.MaxReadWriteChars) { return false; }
+            if (MinimapColor != item.MinimapColor) { return false; }
             return true;
         }
 
-        public ushort id { get { return itemImpl.id; } set { itemImpl.id = value; } }
-        public ushort groundSpeed { get { return itemImpl.groundSpeed; } set { itemImpl.groundSpeed = value; } }
-        public ServerItemType type { get { return itemImpl.type; } set { itemImpl.type = value; } }
-        public bool alwaysOnTop { get { return itemImpl.alwaysOnTop; } set { itemImpl.alwaysOnTop = value; } }
-        public ushort alwaysOnTopOrder { get { return itemImpl.alwaysOnTopOrder; } set { itemImpl.alwaysOnTopOrder = value; } }
-        public bool multiUse { get { return itemImpl.multiUse; } set { itemImpl.multiUse = value; } }
-        public ushort maxReadChars { get { return itemImpl.maxReadChars; } set { itemImpl.maxReadChars = value; } }
-        public ushort maxReadWriteChars { get { return itemImpl.maxReadWriteChars; } set { itemImpl.maxReadWriteChars = value; } }
-        public bool hasElevation { get { return itemImpl.hasElevation; } set { itemImpl.hasElevation = value; } }
-        public ushort minimapColor { get { return itemImpl.minimapColor; } set { itemImpl.minimapColor = value; } }
-        public bool ignoreLook { get { return itemImpl.ignoreLook; } set { itemImpl.ignoreLook = value; } }
-        public ushort lightLevel { get { return itemImpl.lightLevel; } set { itemImpl.lightLevel = value; } }
-        public ushort lightColor { get { return itemImpl.lightColor; } set { itemImpl.lightColor = value; } }
-        public bool isStackable { get { return itemImpl.isStackable; } set { itemImpl.isStackable = value; } }
-        public bool isReadable { get { return itemImpl.isReadable; } set { itemImpl.isReadable = value; } }
-        public bool isMoveable { get { return itemImpl.isMoveable; } set { itemImpl.isMoveable = value; } }
-        public bool isPickupable { get { return itemImpl.isPickupable; } set { itemImpl.isPickupable = value; } }
-        public bool isHangable { get { return itemImpl.isHangable; } set { itemImpl.isHangable = value; } }
-        public bool isHorizontal { get { return itemImpl.isHorizontal; } set { itemImpl.isHorizontal = value; } }
-        public bool isVertical { get { return itemImpl.isVertical; } set { itemImpl.isVertical = value; } }
-        public bool isRotatable { get { return itemImpl.isRotatable; } set { itemImpl.isRotatable = value; } }
-        public bool isUnpassable { get { return itemImpl.isUnpassable; } set { itemImpl.isUnpassable = value; } }
-        public bool blockMissiles { get { return itemImpl.blockMissiles; } set { itemImpl.blockMissiles = value; } }
-        public bool blockPathfinder { get { return itemImpl.blockPathfinder; } set { itemImpl.blockPathfinder = value; } }
-        public bool allowDistRead { get { return itemImpl.allowDistRead; } set { itemImpl.allowDistRead = value; } }
-        public bool isAnimation { get { return itemImpl.isAnimation; } set { itemImpl.isAnimation = value; } }
-        public bool fullGround { get { return itemImpl.fullGround; } set { itemImpl.fullGround = value; } }
-        public string name { get { return itemImpl.name; } set { itemImpl.name = value; } }
-        public ushort tradeAs { get { return itemImpl.tradeAs; } set { itemImpl.tradeAs = value; } }
+        public ushort ID { get { return itemImpl.id; } set { itemImpl.id = value; } }
+        public ServerItemType Type { get { return itemImpl.type; } set { itemImpl.type = value; } }
+        public bool HasStackOrder { get { return itemImpl.HasStackOrder; } set { itemImpl.HasStackOrder = value; } }
+        public TileStackOrder StackOrder { get { return itemImpl.StackOrder; } set { itemImpl.StackOrder = value; } }
+        public bool Unpassable { get { return itemImpl.isUnpassable; } set { itemImpl.isUnpassable = value; } }
+        public bool BlockMissiles { get { return itemImpl.blockMissiles; } set { itemImpl.blockMissiles = value; } }
+        public bool BlockPathfinder { get { return itemImpl.blockPathfinder; } set { itemImpl.blockPathfinder = value; } }
+        public bool HasElevation { get { return itemImpl.hasElevation; } set { itemImpl.hasElevation = value; } }
+        public bool MultiUse { get { return itemImpl.multiUse; } set { itemImpl.multiUse = value; } }
+        public bool Pickupable { get { return itemImpl.isPickupable; } set { itemImpl.isPickupable = value; } }
+        public bool Movable { get { return itemImpl.isMoveable; } set { itemImpl.isMoveable = value; } }
+        public bool Stackable { get { return itemImpl.isStackable; } set { itemImpl.isStackable = value; } }
+        public bool Readable { get { return itemImpl.isReadable; } set { itemImpl.isReadable = value; } }
+        public bool Rotatable { get { return itemImpl.isRotatable; } set { itemImpl.isRotatable = value; } }
+        public bool Hangable { get { return itemImpl.isHangable; } set { itemImpl.isHangable = value; } }
+        public bool HookSouth { get { return itemImpl.isVertical; } set { itemImpl.isVertical = value; } }
+        public bool HookEast { get { return itemImpl.isHorizontal; } set { itemImpl.isHorizontal = value; } }
+        public bool IgnoreLook { get { return itemImpl.ignoreLook; } set { itemImpl.ignoreLook = value; } }
+        public bool FullGround { get { return itemImpl.fullGround; } set { itemImpl.fullGround = value; } }
+        public ushort GroundSpeed { get { return itemImpl.groundSpeed; } set { itemImpl.groundSpeed = value; } }
+        public ushort LightLevel { get { return itemImpl.lightLevel; } set { itemImpl.lightLevel = value; } }
+        public ushort LightColor { get { return itemImpl.lightColor; } set { itemImpl.lightColor = value; } }
+        public ushort MaxReadChars { get { return itemImpl.maxReadChars; } set { itemImpl.maxReadChars = value; } }
+        public ushort MaxReadWriteChars { get { return itemImpl.maxReadWriteChars; } set { itemImpl.maxReadWriteChars = value; } }
+        public ushort MinimapColor { get { return itemImpl.minimapColor; } set { itemImpl.minimapColor = value; } }
+        public ushort TradeAs { get { return itemImpl.tradeAs; } set { itemImpl.tradeAs = value; } }
+        public string Name { get { return itemImpl.name; } set { itemImpl.name = value; } }
+        public bool AllowDistanceRead { get { return itemImpl.allowDistanceRead; } set { itemImpl.allowDistanceRead = value; } }
+        public bool IsAnimation { get { return itemImpl.isAnimation; } set { itemImpl.isAnimation = value; } }
 
         // used to find sprites during updates
         protected byte[] _spriteHash = null;

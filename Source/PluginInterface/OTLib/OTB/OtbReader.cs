@@ -107,50 +107,50 @@ namespace OTLib.OTB
                         switch (itemGroup)
                         {
                             case ServerItemGroup.None:
-                                item.type = ServerItemType.None;
+                                item.Type = ServerItemType.None;
                                 break;
 
                             case ServerItemGroup.Ground:
-                                item.type = ServerItemType.Ground;
-                                break;
-
-                            case ServerItemGroup.Splash:
-                                item.type = ServerItemType.Splash;
-                                break;
-
-                            case ServerItemGroup.Fluid:
-                                item.type = ServerItemType.Fluid;
+                                item.Type = ServerItemType.Ground;
                                 break;
 
                             case ServerItemGroup.Container:
-                                item.type = ServerItemType.Container;
+                                item.Type = ServerItemType.Container;
+                                break;
+
+                            case ServerItemGroup.Splash:
+                                item.Type = ServerItemType.Splash;
+                                break;
+
+                            case ServerItemGroup.Fluid:
+                                item.Type = ServerItemType.Fluid;
                                 break;
 
                             case ServerItemGroup.Deprecated:
-                                item.type = ServerItemType.Deprecated;
+                                item.Type = ServerItemType.Deprecated;
                                 break;
                         }
 
                         ServerItemFlag flags = (ServerItemFlag)node.ReadUInt32();
 
-                        item.isUnpassable = ((flags & ServerItemFlag.Unpassable) == ServerItemFlag.Unpassable);
-                        item.blockMissiles = ((flags & ServerItemFlag.BlockMissiles) == ServerItemFlag.BlockMissiles);
-                        item.blockPathfinder = ((flags & ServerItemFlag.BlockPathfinder) == ServerItemFlag.BlockPathfinder);
-                        item.isPickupable = ((flags & ServerItemFlag.Pickupable) == ServerItemFlag.Pickupable);
-                        item.isMoveable = ((flags & ServerItemFlag.Movable) == ServerItemFlag.Movable);
-                        item.isStackable = ((flags & ServerItemFlag.Stackable) == ServerItemFlag.Stackable);
-                        item.alwaysOnTop = ((flags & ServerItemFlag.StackOrder) == ServerItemFlag.StackOrder);
-                        item.isVertical = ((flags & ServerItemFlag.HookSouth) == ServerItemFlag.HookSouth);
-                        item.isHorizontal = ((flags & ServerItemFlag.HookEast) == ServerItemFlag.HookEast);
-                        item.isHangable = ((flags & ServerItemFlag.Hangable) == ServerItemFlag.Hangable);
-                        item.isRotatable = ((flags & ServerItemFlag.Rotatable) == ServerItemFlag.Rotatable);
-                        item.isReadable = ((flags & ServerItemFlag.Readable) == ServerItemFlag.Readable);
-                        item.multiUse = ((flags & ServerItemFlag.Useable) == ServerItemFlag.Useable);
-                        item.hasElevation = ((flags & ServerItemFlag.HasElevation) == ServerItemFlag.HasElevation);
-                        item.ignoreLook = ((flags & ServerItemFlag.IgnoreLook) == ServerItemFlag.IgnoreLook);
-                        item.allowDistRead = ((flags & ServerItemFlag.AllowDistanceRead) == ServerItemFlag.AllowDistanceRead);
-                        item.isAnimation = ((flags & ServerItemFlag.IsAnimation) == ServerItemFlag.IsAnimation);
-                        item.fullGround = ((flags & ServerItemFlag.FullGround) == ServerItemFlag.FullGround);
+                        item.Unpassable = ((flags & ServerItemFlag.Unpassable) == ServerItemFlag.Unpassable);
+                        item.BlockMissiles = ((flags & ServerItemFlag.BlockMissiles) == ServerItemFlag.BlockMissiles);
+                        item.BlockPathfinder = ((flags & ServerItemFlag.BlockPathfinder) == ServerItemFlag.BlockPathfinder);
+                        item.HasElevation = ((flags & ServerItemFlag.HasElevation) == ServerItemFlag.HasElevation);
+                        item.MultiUse = ((flags & ServerItemFlag.Useable) == ServerItemFlag.Useable);
+                        item.Pickupable = ((flags & ServerItemFlag.Pickupable) == ServerItemFlag.Pickupable);
+                        item.Movable = ((flags & ServerItemFlag.Movable) == ServerItemFlag.Movable);
+                        item.Stackable = ((flags & ServerItemFlag.Stackable) == ServerItemFlag.Stackable);
+                        item.HasStackOrder = ((flags & ServerItemFlag.StackOrder) == ServerItemFlag.StackOrder);
+                        item.Readable = ((flags & ServerItemFlag.Readable) == ServerItemFlag.Readable);
+                        item.Rotatable = ((flags & ServerItemFlag.Rotatable) == ServerItemFlag.Rotatable);
+                        item.Hangable = ((flags & ServerItemFlag.Hangable) == ServerItemFlag.Hangable);
+                        item.HookSouth = ((flags & ServerItemFlag.HookSouth) == ServerItemFlag.HookSouth);
+                        item.HookEast = ((flags & ServerItemFlag.HookEast) == ServerItemFlag.HookEast);
+                        item.AllowDistanceRead = ((flags & ServerItemFlag.AllowDistanceRead) == ServerItemFlag.AllowDistanceRead);
+                        item.IgnoreLook = ((flags & ServerItemFlag.IgnoreLook) == ServerItemFlag.IgnoreLook);
+                        item.FullGround = ((flags & ServerItemFlag.FullGround) == ServerItemFlag.FullGround);
+                        item.IsAnimation = ((flags & ServerItemFlag.IsAnimation) == ServerItemFlag.IsAnimation);
 
                         while (node.PeekChar() != -1)
                         {
@@ -160,7 +160,7 @@ namespace OTLib.OTB
                             switch (attribute)
                             {
                                 case ServerItemAttribute.ServerID:
-                                    item.id = node.ReadUInt16();
+                                    item.ID = node.ReadUInt16();
                                     break;
 
                                 case ServerItemAttribute.ClientID:
@@ -168,11 +168,11 @@ namespace OTLib.OTB
                                     break;
 
                                 case ServerItemAttribute.GroundSpeed:
-                                    item.groundSpeed = node.ReadUInt16();
+                                    item.GroundSpeed = node.ReadUInt16();
                                     break;
 
                                 case ServerItemAttribute.Name:
-                                    item.name = new string(node.ReadChars(datalen));
+                                    item.Name = new string(node.ReadChars(datalen));
                                     break;
 
                                 case ServerItemAttribute.SpriteHash:
@@ -180,28 +180,28 @@ namespace OTLib.OTB
                                     break;
 
                                 case ServerItemAttribute.MinimaColor:
-                                    item.minimapColor = node.ReadUInt16();
+                                    item.MinimapColor = node.ReadUInt16();
                                     break;
 
                                 case ServerItemAttribute.MaxReadWriteChars:
-                                    item.maxReadWriteChars = node.ReadUInt16();
+                                    item.MaxReadWriteChars = node.ReadUInt16();
                                     break;
 
                                 case ServerItemAttribute.MaxReadChars:
-                                    item.maxReadChars = node.ReadUInt16();
+                                    item.MaxReadChars = node.ReadUInt16();
                                     break;
 
                                 case ServerItemAttribute.Light:
-                                    item.lightLevel = node.ReadUInt16();
-                                    item.lightColor = node.ReadUInt16();
+                                    item.LightLevel = node.ReadUInt16();
+                                    item.LightColor = node.ReadUInt16();
                                     break;
 
-                                case ServerItemAttribute.TopOrder:
-                                    item.alwaysOnTopOrder = node.ReadByte();
+                                case ServerItemAttribute.StackOrder:
+                                    item.StackOrder = (TileStackOrder)node.ReadByte();
                                     break;
 
                                 case ServerItemAttribute.TradeAs:
-                                    item.tradeAs = node.ReadUInt16();
+                                    item.TradeAs = node.ReadUInt16();
                                     break;
 
                                 default:
@@ -210,7 +210,7 @@ namespace OTLib.OTB
                             }
                         }
 
-                        if (item.SpriteHash == null && item.type != ServerItemType.Deprecated)
+                        if (item.SpriteHash == null && item.Type != ServerItemType.Deprecated)
                         {
                             item.SpriteHash = new byte[16];
                         }

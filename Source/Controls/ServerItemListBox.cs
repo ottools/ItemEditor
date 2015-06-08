@@ -22,6 +22,7 @@
 using ImageSimilarity;
 using PluginInterface;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
@@ -89,6 +90,11 @@ namespace ItemEditor.Controls
         public void Add(ServerItem item)
         {
             Items.Add(item);
+        }
+
+        public void Add(List<ServerItem> items)
+        {
+            Items.AddRange(items.ToArray());
         }
 
         public void Clear()

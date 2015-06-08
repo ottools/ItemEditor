@@ -515,6 +515,8 @@ namespace ItemEditor
             this.loadingItemsProgressBar.Visible = true;
             this.loadingItemsProgressBar.Minimum = 0;
             this.loadingItemsProgressBar.Maximum = this.serverItems.Count + 1;
+            
+            List<ServerItem> items = new List<ServerItem>();
             ushort index = 0;
 
             foreach (ServerItem item in this.serverItems)
@@ -529,18 +531,19 @@ namespace ItemEditor
                     continue;
                 }
 
-                this.serverItemListBox.Add(item);
-                this.loadingItemsProgressBar.Value = index;
+                items.Add(item);
                 index++;
+                this.loadingItemsProgressBar.Value = index;
             }
 
+            this.serverItemListBox.Add(items);
             this.loadingItemsProgressBar.Visible = false;
-            this.itemsCountLabel.Text = serverItemListBox.Count + " Items";
+            this.itemsCountLabel.Text = this.serverItemListBox.Count + " Items";
         }
 
         private void ClearItemsListBox()
         {
-            serverItemListBox.Clear();
+            this.serverItemListBox.Clear();
         }
 
         private bool CompareItem(ServerItem item, bool compareHash)

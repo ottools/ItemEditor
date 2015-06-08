@@ -18,9 +18,11 @@
 */
 #endregion
 
+#region Using Statements
 using System;
 using System.Collections.Generic;
 using System.IO;
+#endregion
 
 namespace ItemEditor
 {
@@ -146,7 +148,7 @@ namespace ItemEditor
         public string name { get { return itemImpl.name; } set { itemImpl.name = value; } }
         public ushort tradeAs { get { return itemImpl.tradeAs; } set { itemImpl.tradeAs = value; } }
 
-        //used to find sprites during updates
+        // used to find sprites during updates
         protected byte[] _spriteHash = null;
         public virtual byte[] SpriteHash
         {
@@ -157,7 +159,7 @@ namespace ItemEditor
 
     public class ClientItem : Item
     {
-        //sprite meta-data
+        // sprite meta-data
         public byte width;
         public byte height;
         public byte layers;
@@ -208,7 +210,7 @@ namespace ItemEditor
             }
         }
 
-        //contains sprite signatures using Euclidean distance (4x4 blocks) on a ff2d generated image of the sprite
+        // contains sprite signatures using Euclidean distance (4x4 blocks) on a ff2d generated image of the sprite
         private double[,] _spriteSignature = null;
         public double[,] SpriteSignature
         {
@@ -216,7 +218,7 @@ namespace ItemEditor
             set { _spriteSignature = value; }
         }
 
-        //Used to calculate fourier transformation
+        // used to calculate fourier transformation
         public byte[] GetRGBData()
         {
             return spriteList[0].GetRGBData();
@@ -227,7 +229,7 @@ namespace ItemEditor
             return spriteList[frameIndex].GetRGBData();
         }
 
-        //used for drawing and calculating MD5
+        // used for drawing and calculating MD5
         public byte[] GetRGBAData()
         {
             return spriteList[0].GetRGBAData();

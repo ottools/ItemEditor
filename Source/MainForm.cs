@@ -415,7 +415,7 @@ namespace ItemEditor
                     for (int w = 0; w < clientItem.width; ++w)
                     {
                         int frameIndex = w + h * clientItem.width + l * clientItem.width * clientItem.height;
-                        Bitmap bmp = ImageUtils.getBitmap(clientItem.GetRGBData(frameIndex), PixelFormat.Format24bppRgb, spritePixels, spritePixels);
+                        Bitmap bmp = ImageUtils.GetBitmap(clientItem.GetRGBData(frameIndex), PixelFormat.Format24bppRgb, spritePixels, spritePixels);
 
                         if (canvas.Width == spritePixels)
                         {
@@ -453,7 +453,7 @@ namespace ItemEditor
                     for (int w = 0; w < clientItem.width; ++w)
                     {
                         int frameIndex = w + h * clientItem.width + l * clientItem.width * clientItem.height;
-                        Bitmap bmp = ImageUtils.getBitmap(clientItem.GetRGBData(frameIndex), PixelFormat.Format24bppRgb, spritePixels, spritePixels);
+                        Bitmap bmp = ImageUtils.GetBitmap(clientItem.GetRGBData(frameIndex), PixelFormat.Format24bppRgb, spritePixels, spritePixels);
 
                         if (canvas.Width == spritePixels)
                         {

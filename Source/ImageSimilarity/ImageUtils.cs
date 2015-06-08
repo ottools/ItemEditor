@@ -18,22 +18,17 @@
 */
 #endregion
 
+#region Using Statements
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
+#endregion
 
 namespace ImageSimilarity
 {
     public class ImageUtils
     {
-        public struct RGB
-        {
-            public byte r;
-            public byte g;
-            public byte b;
-        }
+        #region Static Methods
 
         public static double CompareSignature(double[,] signature1, double[,] signature2)
         {
@@ -60,9 +55,7 @@ namespace ImageSimilarity
         public static double[,] CalculateEuclideanDistance(Bitmap input, int blockSize)
         {
             int bitPerPixel = Image.GetPixelFormatSize(input.PixelFormat);
-            BitmapData bmpData = input.LockBits(
-                             new Rectangle(0, 0, input.Width, input.Height),
-                             ImageLockMode.WriteOnly, input.PixelFormat);
+            BitmapData bmpData = input.LockBits(new Rectangle(0, 0, input.Width, input.Height), ImageLockMode.WriteOnly, input.PixelFormat);
 
             // Declare an array to hold the bytes of the bitmap.
             int bytes = bmpData.Stride * input.Height;
@@ -123,7 +116,7 @@ namespace ImageSimilarity
             return lSignature;
         }
 
-        public static byte[] greyScale(Bitmap input)
+        public static byte[] GreyScale(Bitmap input)
         {
             BitmapData bmpData = input.LockBits(new Rectangle(0, 0, input.Width, input.Height), ImageLockMode.ReadWrite, input.PixelFormat);
             int width = input.Width;
@@ -186,16 +179,15 @@ namespace ImageSimilarity
             return rgb;
         }
 
-        public static Bitmap getBitmap(byte[] rgbData, PixelFormat pixelFormat, int Width, int Height)
+        public static Bitmap GetBitmap(byte[] rgbData, PixelFormat pixelFormat, int Width, int Height)
         {
             int bitPerPixel = Image.GetPixelFormatSize(pixelFormat);
             Bitmap bmp = new Bitmap(Width, Height, PixelFormat.Format24bppRgb);
-            BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
-                ImageLockMode.ReadWrite, bmp.PixelFormat);
+            BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite, bmp.PixelFormat);
 
             if (pixelFormat == PixelFormat.Format24bppRgb)
             {
-                //reverse rgb
+                // reverse rgb
                 for (int y = 0; y < Height; ++y)
                 {
                     for (int x = 0; x < Width; ++x)
@@ -227,7 +219,7 @@ namespace ImageSimilarity
                     }
                 }
 
-                //bmpData.Stride = -bmpData.Stride;
+                // bmpData.Stride = -bmpData.Stride;
                 System.Runtime.InteropServices.Marshal.Copy(grayscale, 0, bmpData.Scan0, grayscale.Length);
             }
 
@@ -235,5 +227,18 @@ namespace ImageSimilarity
             bmp.UnlockBits(bmpData);
             return bmp;
         }
+
+        #endregion
+
+        #region RGB Struct
+
+        public struct RGB
+        {
+            public byte r;
+            public byte g;
+            public byte b;
+        }
+
+        #endregion
     }
 }

@@ -18,16 +18,16 @@
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+#region Using Statements
 using System.Drawing;
-using System.Drawing.Imaging;
+#endregion
 
 namespace ImageSimilarity
 {
     public class ImageSimilarity
     {
+        #region Static Methods
+
         public static void CompareImage(Bitmap bitmap1, Bitmap bitmap2, int blockSize, out double similarity)
         {
             similarity = 0.0;
@@ -53,5 +53,7 @@ namespace ImageSimilarity
 
             similarity = ImageUtils.CompareSignature(keySignature, compareSignature);
         }
+
+        #endregion
     }
 }

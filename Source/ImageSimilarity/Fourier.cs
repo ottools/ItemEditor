@@ -26,10 +26,7 @@ namespace ImageSimilarity
 {
     public class Fourier
     {
-        private Fourier()
-        {
-
-        }
+        #region Static Methods
 
         public static Complex[] fft(Complex[] x)
         {
@@ -172,7 +169,7 @@ namespace ImageSimilarity
         {
             int width = input.Width;
             int height = input.Height;
-            byte[] data = ImageUtils.greyScale(input);
+            byte[] data = ImageUtils.GreyScale(input);
             Complex[,] cmplx = new Complex[height, width];
             double scale = 1.0 / (double)Math.Sqrt(width * height);
 
@@ -205,7 +202,7 @@ namespace ImageSimilarity
                 }
             }
 
-            Bitmap output = ImageUtils.getBitmap(data, PixelFormat.Format8bppIndexed, width, height);
+            Bitmap output = ImageUtils.GetBitmap(data, PixelFormat.Format8bppIndexed, width, height);
             return output;
         }
 
@@ -213,7 +210,7 @@ namespace ImageSimilarity
         {
             int width = (int)Math.Pow(2, Math.Ceiling(Math.Log(input.Width, 2)));
             int height = (int)Math.Pow(2, Math.Ceiling(Math.Log(input.Width, 2)));
-            byte[] data = ImageUtils.greyScale(input);
+            byte[] data = ImageUtils.GreyScale(input);
 
             if (width != input.Width || height != input.Height)
             {
@@ -258,7 +255,7 @@ namespace ImageSimilarity
                 data[i] = (byte)Math.Min(255, (int)(cmplx[i / width, i % width].GetModulus() * 256.0 * scale));
             }
 
-            Bitmap output = ImageUtils.getBitmap(data, PixelFormat.Format8bppIndexed, width, height);
+            Bitmap output = ImageUtils.GetBitmap(data, PixelFormat.Format8bppIndexed, width, height);
             return output;
         }
 
@@ -304,7 +301,7 @@ namespace ImageSimilarity
                     }
                 }
             }
-            Bitmap output = ImageUtils.getBitmap(ImageUtils.CombineColorChannels(data), input.PixelFormat, width, height);
+            Bitmap output = ImageUtils.GetBitmap(ImageUtils.CombineColorChannels(data), input.PixelFormat, width, height);
             return output;
         }
 
@@ -367,8 +364,10 @@ namespace ImageSimilarity
                 data[i].b = (byte)Math.Min(255, (int)(cmplxB[i / width, i % width].GetModulus() * 256.0 * scale));
             }
 
-            Bitmap output = ImageUtils.getBitmap(ImageUtils.CombineColorChannels(data), input.PixelFormat, width, height);
+            Bitmap output = ImageUtils.GetBitmap(ImageUtils.CombineColorChannels(data), input.PixelFormat, width, height);
             return output;
         }
+
+        #endregion
     }
 }

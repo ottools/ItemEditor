@@ -18,33 +18,53 @@
 */
 #endregion
 
+#region Using Statements
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
 using System.Xml;
+#endregion
 
 namespace PluginInterface
 {
     public class Settings
     {
-        public string SettingFilename = "";
-        private XmlDocument xmlDocument = new XmlDocument();
+        #region Private Properties
+
+        private XmlDocument xmlDocument;
+
+        #endregion
+
+        #region Constrctor
 
         public Settings()
         {
+            this.xmlDocument = new XmlDocument();
         }
+
+        #endregion
+
+        #region Public Properties
+
+        public string SettingsFilename { get; private set; }
+
+        #endregion
+
+        #region Public Methods
 
         public bool Load(string filename)
         {
-            string path = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Plugins");
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "Plugins");
             try
             {
-                SettingFilename = System.IO.Path.Combine(path, filename);
-                xmlDocument.Load(SettingFilename);
+                this.SettingsFilename = Path.Combine(path, filename);
+                this.xmlDocument.Load(this.SettingsFilename);
                 return true;
             }
             catch
             {
-                xmlDocument.LoadXml("<settings></settings>");
+                this.xmlDocument.LoadXml("<settings></settings>");
                 return false;
             }
         }
@@ -53,7 +73,7 @@ namespace PluginInterface
         {
             List<SupportedClient> list = new List<SupportedClient>();
 
-            XmlNodeList nodes = xmlDocument.SelectNodes("/settings/clients/client");
+            XmlNodeList nodes = this.xmlDocument.SelectNodes("/settings/clients/client");
             if (nodes != null)
             {
                 foreach (XmlNode node in nodes)
@@ -63,20 +83,22 @@ namespace PluginInterface
                         uint version = uint.Parse(node.Attributes["version"].Value);
                         string description = node.Attributes["description"].Value;
                         uint otbVersion = uint.Parse(node.Attributes["otbversion"].Value);
-                        uint datSignature = (uint)System.Int32.Parse(node.Attributes["datsignature"].Value, System.Globalization.NumberStyles.HexNumber);
-                        uint sprSignature = (uint)System.Int32.Parse(node.Attributes["sprsignature"].Value, System.Globalization.NumberStyles.HexNumber);
+                        uint datSignature = uint.Parse(node.Attributes["datsignature"].Value, System.Globalization.NumberStyles.HexNumber);
+                        uint sprSignature = uint.Parse(node.Attributes["sprsignature"].Value, System.Globalization.NumberStyles.HexNumber);
 
                         SupportedClient client = new SupportedClient(version, description, otbVersion, datSignature, sprSignature);
                         list.Add(client);
                     }
                     catch
                     {
-                        System.Windows.Forms.MessageBox.Show(String.Format("Error loading file {0}", SettingFilename));
+                        MessageBox.Show(string.Format("Error loading file {0}", this.SettingsFilename));
                     }
                 }
             }
 
             return list;
         }
+
+        #endregion
     }
 }

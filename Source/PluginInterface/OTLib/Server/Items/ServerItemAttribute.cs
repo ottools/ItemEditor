@@ -19,29 +19,23 @@
 #endregion
 
 #region Using Statements
-using OTLib.Collections;
-using OTLib.Server.Items;
-using OTLib.Utils;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 #endregion
 
-namespace ItemEditor
+namespace OTLib.Server.Items
 {
-    public class VersionInfo
+    public enum ServerItemAttribute : byte
     {
-        #region Public Properties
-
-        public uint MajorVersion { get; set; }
-
-        public uint MinorVersion { get; set; }
-
-        public uint BuildNumber { get; set; }
-
-        public string CSDVersion { get; set; }
-
-        #endregion
+        ServerID = 0x10,
+        ClientID = 0x11,
+        Name = 0x12,
+        GroundSpeed = 0x14,
+        SpriteHash = 0x20,
+        MinimaColor = 0x21,
+        MaxReadWriteChars = 0x22,
+        MaxReadChars = 0x23,
+        Light = 0x2A,
+        TopOrder = 0x2B,
+        TradeAs = 0x2D
     }
 }

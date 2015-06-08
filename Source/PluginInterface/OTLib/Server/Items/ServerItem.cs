@@ -19,11 +19,41 @@
 #endregion
 
 #region Using Statements
+using ItemEditor;
 using System;
 #endregion
 
-namespace ItemEditor
+namespace OTLib.Server.Items
 {
+    public enum ServerItemGroup
+    {
+        None = 0,
+        Ground,
+        Container,
+        Weapon,
+        Ammunition,
+        Armor,
+        Changes,
+        Teleport,
+        MagicField,
+        Writable,
+        Key,
+        Splash,
+        Fluid,
+        Door,
+        Deprecated
+    }
+
+    public enum ServerItemType
+    {
+        None,
+        Ground,
+        Container,
+        Fluid,
+        Splash,
+        Deprecated
+    }
+
     public class ServerItem : Item
     {
         #region Contructors

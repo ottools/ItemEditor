@@ -23,6 +23,9 @@ using ImageSimilarity;
 using ItemEditor.Diagnostics;
 using ItemEditor.Dialogs;
 using ItemEditor.Host;
+using OTLib.Collections;
+using OTLib.OTB;
+using OTLib.Server.Items;
 using PluginInterface;
 using System;
 using System.Collections.Generic;
@@ -60,7 +63,6 @@ namespace ItemEditor
             this.InitializeComponent();
             this.InitializeTooltips();
             this.CurrentOtbFullPath = string.Empty;
-            this.serverItems = new ServerItemList();
         }
 
         #endregion
@@ -103,9 +105,9 @@ namespace ItemEditor
 
         #region Public Methods
 
-        public void Open(string fileName = null)
+        public void Open(string path = null)
         {
-            if (string.IsNullOrEmpty(fileName))
+            if (string.IsNullOrEmpty(path))
             {
                 FileDialog dialog = new OpenFileDialog();
                 dialog.Filter = "OTB files (*.otb)|*.otb";
@@ -116,7 +118,7 @@ namespace ItemEditor
                     return;
                 }
 
-                fileName = dialog.FileName;
+                path = dialog.FileName;
                 this.IsTemporary = false;
                 this.Saved = true;
             }
@@ -126,9 +128,11 @@ namespace ItemEditor
                 this.Clear();
             }
 
-            if (Otb.Open(fileName, ref this.serverItems))
+            OtbReader reader = new OtbReader();
+            if (reader.Read(path))
             {
-                this.CurrentOtbFullPath = fileName;
+                this.serverItems = reader.Items;
+                this.CurrentOtbFullPath = path;
                 this.CurrentOtbVersion = this.serverItems.MinorVersion;
 
                 // try find a plugin that can handle this version of otb
@@ -184,9 +188,12 @@ namespace ItemEditor
 
             try
             {
-                Otb.Save(this.CurrentOtbFullPath, ref this.serverItems);
-                this.Saved = true;
-                Trace.WriteLine("Saved.");
+                OtbWriter writer = new OtbWriter(this.serverItems);
+                if (writer.Write(this.CurrentOtbFullPath))
+                {
+                    this.Saved = true;
+                    Trace.WriteLine("Saved.");
+                }
             }
             catch (UnauthorizedAccessException exception)
             {
@@ -214,11 +221,14 @@ namespace ItemEditor
 
                 try
                 {
-                    Otb.Save(dialog.FileName, ref this.serverItems);
-                    this.CurrentOtbFullPath = dialog.FileName;
-                    Trace.WriteLine("Saved.");
-                    this.IsTemporary = false;
-                    this.Saved = true;
+                    OtbWriter writer = new OtbWriter(this.serverItems);
+                    if (writer.Write(dialog.FileName))
+                    {
+                        this.CurrentOtbFullPath = dialog.FileName;
+                        this.IsTemporary = false;
+                        this.Saved = true;
+                        Trace.WriteLine("Saved.");
+                    }
                 }
                 catch (UnauthorizedAccessException exception)
                 {
@@ -336,7 +346,8 @@ namespace ItemEditor
                 }
             }
 
-            if (Otb.Save(filePath, ref items))
+            OtbWriter writer = new OtbWriter(items);
+            if (writer.Write(filePath))
             {
                 this.Open(filePath);
                 this.IsTemporary = isTemporary;
@@ -526,7 +537,7 @@ namespace ItemEditor
                     continue;
                 }
 
-                if ((this.showOnlyDeprecatedItems && item.type != ItemType.Deprecated) || (!this.showOnlyDeprecatedItems && item.type == ItemType.Deprecated))
+                if ((this.showOnlyDeprecatedItems && item.type != ServerItemType.Deprecated) || (!this.showOnlyDeprecatedItems && item.type == ServerItemType.Deprecated))
                 {
                     continue;
                 }
@@ -548,7 +559,7 @@ namespace ItemEditor
 
         private bool CompareItem(ServerItem item, bool compareHash)
         {
-            if (item.type == ItemType.Deprecated)
+            if (item.type == ServerItemType.Deprecated)
             {
                 return true;
             }
@@ -768,7 +779,7 @@ namespace ItemEditor
 
             foreach (ServerItem cmpItem in this.serverItems)
             {
-                if (cmpItem.type == ItemType.Deprecated)
+                if (cmpItem.type == ServerItemType.Deprecated)
                 {
                     continue;
                 }
@@ -1004,7 +1015,7 @@ namespace ItemEditor
         private void MainForm_Load(object sender, EventArgs e)
         {
             this.Text = ApplicationName + " " + VersionString;
-            this.typeCombo.DataSource = Enum.GetNames(typeof(ItemType));
+            this.typeCombo.DataSource = Enum.GetNames(typeof(ServerItemType));
 
             this.candidatesDropDown.Items.Add(new ToolStripControlHost(this.candidatesTableLayoutPanel));
 
@@ -1197,7 +1208,7 @@ namespace ItemEditor
                 {
                     item.SpriteAssigned = false;
 
-                    if (item.type == ItemType.Deprecated)
+                    if (item.type == ServerItemType.Deprecated)
                     {
                         continue;
                     }
@@ -1235,7 +1246,7 @@ namespace ItemEditor
                     {
                         foreach (ServerItem item in this.serverItems)
                         {
-                            if (item.type == ItemType.Deprecated)
+                            if (item.type == ServerItemType.Deprecated)
                             {
                                 continue;
                             }
@@ -1274,7 +1285,7 @@ namespace ItemEditor
                     uint reloadedItemCounter = 0;
                     foreach (ServerItem item in this.serverItems)
                     {
-                        if (item.type == ItemType.Deprecated)
+                        if (item.type == ServerItemType.Deprecated)
                         {
                             continue;
                         }
@@ -1397,7 +1408,7 @@ namespace ItemEditor
         {
             if (this.CurrentServerItem != null)
             {
-                this.CurrentServerItem.type = (ItemType)Enum.Parse(typeof(ItemType), typeCombo.SelectedValue.ToString());
+                this.CurrentServerItem.type = (ServerItemType)Enum.Parse(typeof(ServerItemType), typeCombo.SelectedValue.ToString());
             }
         }
 

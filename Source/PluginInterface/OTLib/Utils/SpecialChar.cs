@@ -19,29 +19,20 @@
 #endregion
 
 #region Using Statements
-using OTLib.Collections;
-using OTLib.Server.Items;
-using OTLib.Utils;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 #endregion
 
-namespace ItemEditor
+namespace OTLib.Utils
 {
-    public class VersionInfo
+    public enum SpecialChar : byte
     {
-        #region Public Properties
+        NodeStart = 0xFE,
+        NodeEnd = 0xFF,
+        EscapeChar = 0xFD,
+    }
 
-        public uint MajorVersion { get; set; }
-
-        public uint MinorVersion { get; set; }
-
-        public uint BuildNumber { get; set; }
-
-        public string CSDVersion { get; set; }
-
-        #endregion
+    public enum RootAttribute
+    {
+        Version = 0x01
     }
 }

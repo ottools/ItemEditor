@@ -20,6 +20,7 @@
 
 #region Using Statements
 using ImageSimilarity;
+using OTLib.Server.Items;
 using PluginInterface;
 using System;
 using System.Collections.Generic;

@@ -19,6 +19,7 @@
 #endregion
 
 #region Using Statements
+using OTLib.Server.Items;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,16 +27,6 @@ using System.IO;
 
 namespace ItemEditor
 {
-    public enum ItemType
-    {
-        None,
-        Ground,
-        Container,
-        Fluid,
-        Splash,
-        Deprecated
-    };
-
     public class ItemImpl : ICloneable
     {
         public object Clone()
@@ -46,7 +37,7 @@ namespace ItemEditor
 
         public ushort id;
         public ushort groundSpeed;
-        public ItemType type;
+        public ServerItemType type;
         public bool alwaysOnTop;
         public ushort alwaysOnTopOrder;
         public bool multiUse;
@@ -120,7 +111,7 @@ namespace ItemEditor
 
         public ushort id { get { return itemImpl.id; } set { itemImpl.id = value; } }
         public ushort groundSpeed { get { return itemImpl.groundSpeed; } set { itemImpl.groundSpeed = value; } }
-        public ItemType type { get { return itemImpl.type; } set { itemImpl.type = value; } }
+        public ServerItemType type { get { return itemImpl.type; } set { itemImpl.type = value; } }
         public bool alwaysOnTop { get { return itemImpl.alwaysOnTop; } set { itemImpl.alwaysOnTop = value; } }
         public ushort alwaysOnTopOrder { get { return itemImpl.alwaysOnTopOrder; } set { itemImpl.alwaysOnTopOrder = value; } }
         public bool multiUse { get { return itemImpl.multiUse; } set { itemImpl.multiUse = value; } }

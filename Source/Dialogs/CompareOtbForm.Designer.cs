@@ -56,7 +56,7 @@
             this.browseButton1.TabIndex = 1;
             this.browseButton1.Text = "Browse...";
             this.browseButton1.UseVisualStyleBackColor = true;
-            this.browseButton1.Click += new System.EventHandler(this.browseButton1_Click);
+            this.browseButton1.Click += new System.EventHandler(this.BrowseButton1_Click);
             // 
             // browseButton2
             // 
@@ -66,7 +66,7 @@
             this.browseButton2.TabIndex = 2;
             this.browseButton2.Text = "Browse...";
             this.browseButton2.UseVisualStyleBackColor = true;
-            this.browseButton2.Click += new System.EventHandler(this.browseButton2_Click);
+            this.browseButton2.Click += new System.EventHandler(this.BrowseButton2_Click);
             // 
             // file1Text
             // 
@@ -74,7 +74,7 @@
             this.file1Text.Name = "file1Text";
             this.file1Text.Size = new System.Drawing.Size(278, 20);
             this.file1Text.TabIndex = 3;
-            this.file1Text.TextChanged += new System.EventHandler(fileText_TextChanged);
+            this.file1Text.TextChanged += new System.EventHandler(FileText_TextChanged);
             // 
             // label1
             // 
@@ -91,7 +91,7 @@
             this.file2Text.Name = "file2Text";
             this.file2Text.Size = new System.Drawing.Size(278, 20);
             this.file2Text.TabIndex = 5;
-            this.file2Text.TextChanged += new System.EventHandler(fileText_TextChanged);
+            this.file2Text.TextChanged += new System.EventHandler(FileText_TextChanged);
             // 
             // label2
             // 
@@ -111,7 +111,7 @@
             this.compareButton.TabIndex = 7;
             this.compareButton.Text = "Compare";
             this.compareButton.UseVisualStyleBackColor = true;
-            this.compareButton.Click += new System.EventHandler(this.compareButton_Click);
+            this.compareButton.Click += new System.EventHandler(this.CompareButton_Click);
             // 
             // CompareOtbForm
             // 

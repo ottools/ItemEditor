@@ -19,29 +19,36 @@
 #endregion
 
 #region Using Statements
-using OTLib.Collections;
-using OTLib.Server.Items;
-using OTLib.Utils;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 #endregion
 
-namespace ItemEditor
+namespace OTLib.Server.Items
 {
-    public class VersionInfo
+    [Flags]
+    public enum ServerItemFlag
     {
-        #region Public Properties
-
-        public uint MajorVersion { get; set; }
-
-        public uint MinorVersion { get; set; }
-
-        public uint BuildNumber { get; set; }
-
-        public string CSDVersion { get; set; }
-
-        #endregion
+        BLOCK_SOLID = 1,
+        BLOCK_MISSILE = 2,
+        BLOCK_PATHFINDER = 4,
+        HAS_ELEVATION = 8,
+        USEABLE = 16,
+        PICKUPABLE = 32,
+        MOVEABLE = 64,
+        STACKABLE = 128,
+        FLOOR_CHANGE_DOWN = 256,
+        FLOOR_CHANGE_NORTH = 512,
+        FLOOR_CHANGE_EAST = 1024,
+        FLOOR_CHANGE_SOUTH = 2048,
+        FLOOR_CHANGE_WEST = 4096,
+        ALWAYS_ON_TOP = 8192,
+        READABLE = 16384,
+        ROTABLE = 32768,
+        HANGABLE = 65536,
+        VERTICAL_WALL = 131072,
+        HORIZONTAL_WALL = 262144,
+        ALLOW_DISTANCE_READ = 1048576,
+        IGNORE_LOOK = 8388608,
+        ANIMATION = 16777216,
+        FULL_GROUND = 33554432
     }
 }

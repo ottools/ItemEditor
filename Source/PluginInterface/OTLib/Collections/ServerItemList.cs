@@ -19,20 +19,32 @@
 #endregion
 
 #region Using Statements
-using OTLib.Collections;
 using OTLib.Server.Items;
-using OTLib.Utils;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 #endregion
 
-namespace ItemEditor
+namespace OTLib.Collections
 {
-    public class VersionInfo
+    public class ServerItemList : List<ServerItem>
     {
+        #region Contructor
+
+        public ServerItemList()
+        {
+            this.MinId = 100;
+        }
+
+        #endregion
+
         #region Public Properties
+
+        public ushort MinId { get; set; }
+
+        public ushort MaxId
+        {
+            get { return (ushort)(MinId + Count - 1); }
+        }
 
         public uint MajorVersion { get; set; }
 
@@ -40,7 +52,7 @@ namespace ItemEditor
 
         public uint BuildNumber { get; set; }
 
-        public string CSDVersion { get; set; }
+        public uint ClientVersion { get; set; }
 
         #endregion
     }

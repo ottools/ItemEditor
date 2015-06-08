@@ -74,6 +74,14 @@
   <ItemGroup>
     <Compile Include="Item.cs" />
     <Compile Include="OtbLoader.cs" />
+    <Compile Include="OTLib\Collections\ServerItemList.cs" />
+    <Compile Include="OTLib\OTB\OtbReader.cs" />
+    <Compile Include="OTLib\OTB\OtbWriter.cs" />
+    <Compile Include="OTLib\Server\Items\ServerItemAttribute.cs" />
+    <Compile Include="OTLib\Server\Items\ServerItemFlag.cs" />
+    <Compile Include="OTLib\Utils\BinaryTreeReader.cs" />
+    <Compile Include="OTLib\Utils\BinaryTreeWriter.cs" />
+    <Compile Include="OTLib\Utils\SpecialChar.cs" />
     <Compile Include="PluginInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -81,7 +89,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ServerItem.cs" />
+    <Compile Include="OTLib\Server\Items\ServerItem.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Sprite.cs" />
   </ItemGroup>
@@ -91,6 +99,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

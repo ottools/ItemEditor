@@ -20,6 +20,7 @@
 
 #region Using Statements
 using ItemEditor;
+using OTLib.Server.Items;
 using PluginInterface;
 using System;
 using System.Collections.Generic;
@@ -189,7 +190,7 @@ namespace PluginOne
                         switch (flag)
                         {
                             case ItemFlag.Ground:
-                                item.type = ItemType.Ground;
+                                item.type = ServerItemType.Ground;
                                 item.groundSpeed = reader.ReadUInt16();
                                 break;
 
@@ -209,7 +210,7 @@ namespace PluginOne
                                 break;
 
                             case ItemFlag.Container:
-                                item.type = ItemType.Container;
+                                item.type = ServerItemType.Container;
                                 break;
 
                             case ItemFlag.Stackable:
@@ -237,11 +238,11 @@ namespace PluginOne
                                 break;
 
                             case ItemFlag.FluidContainer:
-                                item.type = ItemType.Fluid;
+                                item.type = ServerItemType.Fluid;
                                 break;
 
                             case ItemFlag.Fluid:
-                                item.type = ItemType.Splash;
+                                item.type = ServerItemType.Splash;
                                 break;
 
                             case ItemFlag.IsUnpassable:

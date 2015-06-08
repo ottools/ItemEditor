@@ -133,24 +133,24 @@ namespace OTLib.OTB
 
                         ServerItemFlag flags = (ServerItemFlag)node.ReadUInt32();
 
-                        item.isUnpassable = ((flags & ServerItemFlag.BLOCK_SOLID) == ServerItemFlag.BLOCK_SOLID);
-                        item.blockMissiles = ((flags & ServerItemFlag.BLOCK_MISSILE) == ServerItemFlag.BLOCK_MISSILE);
-                        item.blockPathfinder = ((flags & ServerItemFlag.BLOCK_PATHFINDER) == ServerItemFlag.BLOCK_PATHFINDER);
-                        item.isPickupable = ((flags & ServerItemFlag.PICKUPABLE) == ServerItemFlag.PICKUPABLE);
-                        item.isMoveable = ((flags & ServerItemFlag.MOVEABLE) == ServerItemFlag.MOVEABLE);
-                        item.isStackable = ((flags & ServerItemFlag.STACKABLE) == ServerItemFlag.STACKABLE);
-                        item.alwaysOnTop = ((flags & ServerItemFlag.ALWAYS_ON_TOP) == ServerItemFlag.ALWAYS_ON_TOP);
-                        item.isVertical = ((flags & ServerItemFlag.VERTICAL_WALL) == ServerItemFlag.VERTICAL_WALL);
-                        item.isHorizontal = ((flags & ServerItemFlag.HORIZONTAL_WALL) == ServerItemFlag.HORIZONTAL_WALL);
-                        item.isHangable = ((flags & ServerItemFlag.HANGABLE) == ServerItemFlag.HANGABLE);
-                        item.isRotatable = ((flags & ServerItemFlag.ROTABLE) == ServerItemFlag.ROTABLE);
-                        item.isReadable = ((flags & ServerItemFlag.READABLE) == ServerItemFlag.READABLE);
-                        item.multiUse = ((flags & ServerItemFlag.USEABLE) == ServerItemFlag.USEABLE);
-                        item.hasElevation = ((flags & ServerItemFlag.HAS_ELEVATION) == ServerItemFlag.HAS_ELEVATION);
-                        item.ignoreLook = ((flags & ServerItemFlag.IGNORE_LOOK) == ServerItemFlag.IGNORE_LOOK);
-                        item.allowDistRead = ((flags & ServerItemFlag.ALLOW_DISTANCE_READ) == ServerItemFlag.ALLOW_DISTANCE_READ);
-                        item.isAnimation = ((flags & ServerItemFlag.ANIMATION) == ServerItemFlag.ANIMATION);
-                        item.fullGround = ((flags & ServerItemFlag.FULL_GROUND) == ServerItemFlag.FULL_GROUND);
+                        item.isUnpassable = ((flags & ServerItemFlag.Unpassable) == ServerItemFlag.Unpassable);
+                        item.blockMissiles = ((flags & ServerItemFlag.BlockMissiles) == ServerItemFlag.BlockMissiles);
+                        item.blockPathfinder = ((flags & ServerItemFlag.BlockPathfinder) == ServerItemFlag.BlockPathfinder);
+                        item.isPickupable = ((flags & ServerItemFlag.Pickupable) == ServerItemFlag.Pickupable);
+                        item.isMoveable = ((flags & ServerItemFlag.Movable) == ServerItemFlag.Movable);
+                        item.isStackable = ((flags & ServerItemFlag.Stackable) == ServerItemFlag.Stackable);
+                        item.alwaysOnTop = ((flags & ServerItemFlag.StackOrder) == ServerItemFlag.StackOrder);
+                        item.isVertical = ((flags & ServerItemFlag.HookSouth) == ServerItemFlag.HookSouth);
+                        item.isHorizontal = ((flags & ServerItemFlag.HookEast) == ServerItemFlag.HookEast);
+                        item.isHangable = ((flags & ServerItemFlag.Hangable) == ServerItemFlag.Hangable);
+                        item.isRotatable = ((flags & ServerItemFlag.Rotatable) == ServerItemFlag.Rotatable);
+                        item.isReadable = ((flags & ServerItemFlag.Readable) == ServerItemFlag.Readable);
+                        item.multiUse = ((flags & ServerItemFlag.Useable) == ServerItemFlag.Useable);
+                        item.hasElevation = ((flags & ServerItemFlag.HasElevation) == ServerItemFlag.HasElevation);
+                        item.ignoreLook = ((flags & ServerItemFlag.IgnoreLook) == ServerItemFlag.IgnoreLook);
+                        item.allowDistRead = ((flags & ServerItemFlag.AllowDistanceRead) == ServerItemFlag.AllowDistanceRead);
+                        item.isAnimation = ((flags & ServerItemFlag.IsAnimation) == ServerItemFlag.IsAnimation);
+                        item.fullGround = ((flags & ServerItemFlag.FullGround) == ServerItemFlag.FullGround);
 
                         while (node.PeekChar() != -1)
                         {

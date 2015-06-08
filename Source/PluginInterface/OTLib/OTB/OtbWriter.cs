@@ -173,92 +173,92 @@ namespace OTLib.OTB
 
                         if (item.isUnpassable)
                         {
-                            flags |= (uint)ServerItemFlag.BLOCK_SOLID;
+                            flags |= (uint)ServerItemFlag.Unpassable;
                         }
 
                         if (item.blockMissiles)
                         {
-                            flags |= (uint)ServerItemFlag.BLOCK_MISSILE;
+                            flags |= (uint)ServerItemFlag.BlockMissiles;
                         }
 
                         if (item.blockPathfinder)
                         {
-                            flags |= (uint)ServerItemFlag.BLOCK_PATHFINDER;
+                            flags |= (uint)ServerItemFlag.BlockPathfinder;
                         }
 
                         if (item.hasElevation)
                         {
-                            flags |= (uint)ServerItemFlag.HAS_ELEVATION;
+                            flags |= (uint)ServerItemFlag.HasElevation;
                         }
 
                         if (item.multiUse)
                         {
-                            flags |= (uint)ServerItemFlag.USEABLE;
+                            flags |= (uint)ServerItemFlag.Useable;
                         }
 
                         if (item.isPickupable)
                         {
-                            flags |= (uint)ServerItemFlag.PICKUPABLE;
+                            flags |= (uint)ServerItemFlag.Pickupable;
                         }
 
                         if (item.isMoveable)
                         {
-                            flags |= (uint)ServerItemFlag.MOVEABLE;
+                            flags |= (uint)ServerItemFlag.Movable;
                         }
 
                         if (item.isStackable)
                         {
-                            flags |= (uint)ServerItemFlag.STACKABLE;
+                            flags |= (uint)ServerItemFlag.Stackable;
                         }
 
                         if (item.alwaysOnTop)
                         {
-                            flags |= (uint)ServerItemFlag.ALWAYS_ON_TOP;
+                            flags |= (uint)ServerItemFlag.StackOrder;
                         }
 
                         if (item.isReadable)
                         {
-                            flags |= (uint)ServerItemFlag.READABLE;
+                            flags |= (uint)ServerItemFlag.Readable;
                         }
 
                         if (item.isRotatable)
                         {
-                            flags |= (uint)ServerItemFlag.ROTABLE;
+                            flags |= (uint)ServerItemFlag.Rotatable;
                         }
 
                         if (item.isHangable)
                         {
-                            flags |= (uint)ServerItemFlag.HANGABLE;
+                            flags |= (uint)ServerItemFlag.Hangable;
                         }
 
                         if (item.isVertical)
                         {
-                            flags |= (uint)ServerItemFlag.VERTICAL_WALL;
+                            flags |= (uint)ServerItemFlag.HookSouth;
                         }
 
                         if (item.isHorizontal)
                         {
-                            flags |= (uint)ServerItemFlag.HORIZONTAL_WALL;
+                            flags |= (uint)ServerItemFlag.HookEast;
                         }
 
                         if (item.ignoreLook)
                         {
-                            flags |= (uint)ServerItemFlag.IGNORE_LOOK;
+                            flags |= (uint)ServerItemFlag.IgnoreLook;
                         }
 
                         if (item.allowDistRead)
                         {
-                            flags |= (uint)ServerItemFlag.ALLOW_DISTANCE_READ;
+                            flags |= (uint)ServerItemFlag.AllowDistanceRead;
                         }
 
                         if (item.isAnimation)
                         {
-                            flags |= (uint)ServerItemFlag.ANIMATION;
+                            flags |= (uint)ServerItemFlag.IsAnimation;
                         }
 
                         if (item.fullGround)
                         {
-                            flags |= (uint)ServerItemFlag.FULL_GROUND;
+                            flags |= (uint)ServerItemFlag.FullGround;
                         }
 
                         writer.WriteUInt32(flags, true);

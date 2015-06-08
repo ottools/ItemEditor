@@ -167,9 +167,9 @@ namespace PluginTwo
 
                 // get max id
                 ushort itemCount = reader.ReadUInt16();
-                ushort creatureCount = reader.ReadUInt16();
-                ushort effectCount = reader.ReadUInt16();
-                ushort distanceCount = reader.ReadUInt16();
+                reader.ReadUInt16(); // skipping outfits count
+                reader.ReadUInt16(); // skipping effects count
+                reader.ReadUInt16(); // skipping missiles count
 
                 ushort minclientID = 100; // items starts at 100
                 ushort maxclientID = itemCount;

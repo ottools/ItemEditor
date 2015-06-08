@@ -177,7 +177,6 @@ namespace ItemEditor
                 if (_spriteHash == null)
                 {
                     System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
-                    Int32 spriteSize = (Int32)width * (Int32)height * (Int32)frames;
                     Int32 spriteBase = 0;
                     MemoryStream stream = new MemoryStream();
 

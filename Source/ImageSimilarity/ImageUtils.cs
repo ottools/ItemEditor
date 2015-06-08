@@ -54,7 +54,6 @@ namespace ImageSimilarity
 
         public static double[,] CalculateEuclideanDistance(Bitmap input, int blockSize)
         {
-            int bitPerPixel = Image.GetPixelFormatSize(input.PixelFormat);
             BitmapData bmpData = input.LockBits(new Rectangle(0, 0, input.Width, input.Height), ImageLockMode.WriteOnly, input.PixelFormat);
 
             // Declare an array to hold the bytes of the bitmap.

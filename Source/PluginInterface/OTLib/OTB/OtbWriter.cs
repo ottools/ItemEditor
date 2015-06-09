@@ -288,11 +288,7 @@ namespace OTLib.OTB
                                     break;
 
                                 case ServerItemAttribute.Name:
-                                    for (ushort i = 0; i < item.Name.Length; ++i)
-                                    {
-                                        property.Write((char)item.Name[i]);
-                                    }
-
+                                    property.Write(item.Name.ToCharArray());
                                     writer.WriteProp(ServerItemAttribute.Name, property);
                                     break;
 

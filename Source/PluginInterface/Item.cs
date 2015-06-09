@@ -269,6 +269,7 @@ namespace ItemEditor
                     MD5 md5 = MD5.Create();
                     int spriteBase = 0;
                     MemoryStream stream = new MemoryStream();
+                    byte[] rgbaData = new byte[Sprite.ARGBPixelsDataSize];
 
                     for (byte l = 0; l < this.Layers; l++)
                     {
@@ -278,7 +279,22 @@ namespace ItemEditor
                             {
                                 int index = spriteBase + w + h * this.Width + l * this.Width * this.Height;
                                 Sprite sprite = this.SpriteList[index];
-                                stream.Write(sprite.GetARGBData(), 0, Sprite.ARGBPixelsDataSize);
+                                
+                                byte[] rgbData = sprite.GetRGBData();
+
+                                // reverse rgb
+                                for (int y = 0; y < Sprite.DefaultSize; ++y)
+                                {
+                                    for (int x = 0; x < Sprite.DefaultSize; ++x)
+                                    {
+                                        rgbaData[128 * y + x * 4 + 0] = rgbData[(32 - y - 1) * 96 + x * 3 + 2]; // blue
+                                        rgbaData[128 * y + x * 4 + 1] = rgbData[(32 - y - 1) * 96 + x * 3 + 1]; // green
+                                        rgbaData[128 * y + x * 4 + 2] = rgbData[(32 - y - 1) * 96 + x * 3 + 0]; // red
+                                        rgbaData[128 * y + x * 4 + 3] = 0;
+                                    }
+                                }
+
+                                stream.Write(rgbaData, 0, Sprite.ARGBPixelsDataSize);
                             }
                         }
                     }

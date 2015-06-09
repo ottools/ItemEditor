@@ -156,7 +156,7 @@ namespace ItemEditor
             return rgb32x32x3;
         }
 
-        public byte[] GetARGBData()
+        public byte[] GetPixels()
         {
             if (this.CompressedPixels == null || this.CompressedPixels.Length != this.Size)
             {
@@ -214,7 +214,7 @@ namespace ItemEditor
         public Bitmap GetBitmap()
         {
             Bitmap bitmap = new Bitmap(DefaultSize, DefaultSize, PixelFormat.Format32bppArgb);
-            byte[] pixels = this.GetARGBData();
+            byte[] pixels = this.GetPixels();
 
             if (pixels != null)
             {
@@ -238,12 +238,12 @@ namespace ItemEditor
         {
             for (short i = 0; i < RGBPixelsDataSize; i++)
             {
-                BlankRGBSprite[i] = 0xFF;
+                BlankRGBSprite[i] = 0x11;
             }
 
             for (short i = 0; i < ARGBPixelsDataSize; i++)
             {
-                BlankARGBSprite[i] = 0xFF;
+                BlankARGBSprite[i] = 0x11;
             }
         }
 

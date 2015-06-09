@@ -217,8 +217,8 @@ namespace OTLib.OTB
 
                         this.Items.Add(item);
                         node = reader.GetNextNode();
-
-                    } while (node != null);
+                    }
+                    while (node != null);
                 }
             }
             catch

@@ -30,8 +30,6 @@ using System.IO;
 
 namespace PluginThree
 {
-    # region Enum
-
     internal enum ItemFlag : byte
     {
         Ground = 0x00,
@@ -75,8 +73,6 @@ namespace PluginThree
         LastFlag = 0xFF
     }
 
-    #endregion
-
     public class Plugin : IPlugin
     {
         #region Private Properties
@@ -89,6 +85,7 @@ namespace PluginThree
 
         public Plugin()
         {
+            this.Settings = new Settings();
             this.sprites = new Dictionary<uint, Sprite>();
             this.Items = new ClientItems();
             this.SupportedClients = new List<SupportedClient>();
@@ -99,7 +96,7 @@ namespace PluginThree
         #region Public Properties
 
         // internal implementation
-        public Settings settings = new Settings();
+        public Settings Settings { get; private set;}
 
         // IPlugin implementation
         public IPluginHost Host { get; set; }
@@ -128,8 +125,8 @@ namespace PluginThree
 
         public void Initialize()
         {
-            this.settings.Load("PluginThree.xml");
-            this.SupportedClients = settings.GetSupportedClientList();
+            this.Settings.Load("PluginThree.xml");
+            this.SupportedClients = Settings.GetSupportedClientList();
         }
 
         public SupportedClient GetClientBySignatures(uint datSignature, uint sprSignature)
@@ -368,6 +365,7 @@ namespace PluginThree
 
                     item.Width = reader.ReadByte();
                     item.Height = reader.ReadByte();
+
                     if ((item.Width > 1) || (item.Height > 1))
                     {
                         reader.BaseStream.Position++;
@@ -397,8 +395,10 @@ namespace PluginThree
                             sprite.ID = spriteId;
                             sprites[spriteId] = sprite;
                         }
+
                         item.SpriteList.Add(sprite);
                     }
+
                     ++id;
                 }
             }

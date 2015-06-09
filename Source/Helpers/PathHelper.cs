@@ -18,18 +18,20 @@
 */
 #endregion
 
+#region Using Statements
 using System;
 using System.IO;
 using System.Windows.Forms;
+#endregion
 
 namespace ItemEditor.Helpers
 {
-    class PathHelper
+    public class PathHelper
     {
         /// <summary>
         /// Path to the application directory
         /// </summary>
-        public static String ApplicationDirectory
+        public static string ApplicationDirectory
         {
             get
             {
@@ -40,7 +42,7 @@ namespace ItemEditor.Helpers
         /// <summary>
         /// Path to the user's application directory
         /// </summary>
-        public static String ApplicationData
+        public static string ApplicationData
         {
             get
             {
@@ -52,7 +54,7 @@ namespace ItemEditor.Helpers
         /// <summary>
         /// Path to the Plugins directory
         /// </summary>
-        public static String Plugins
+        public static string Plugins
         {
             get
             {

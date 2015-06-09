@@ -18,7 +18,9 @@
 */
 #endregion
 
+#region Using Statements
 using System.Windows.Forms;
+#endregion
 
 namespace ItemEditor.Dialogs
 {
@@ -28,7 +30,7 @@ namespace ItemEditor.Dialogs
 
         public UpdateSettingsForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         #endregion

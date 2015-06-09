@@ -18,32 +18,35 @@
 */
 #endregion
 
+#region Using Statements
 using ItemEditor.Host;
 using PluginInterface;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+#endregion
 
 namespace ItemEditor.Dialogs
 {
     public partial class UpdateForm : Form
     {
-        #region Properties
-
-        public MainForm mainForm = null;
-        public Plugin selectedPlugin = null;
-        public SupportedClient updateClient = null;
-
-        #endregion
-
         #region Constructor
 
         public UpdateForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
+
+        #endregion
+
+        #region Public Properties
+
+        public MainForm MainForm { get; set; }
+
+        public Plugin SelectedPlugin { get; set; }
+
+        public SupportedClient UpdateClient { get; set; }
 
         #endregion
 
@@ -65,28 +68,27 @@ namespace ItemEditor.Dialogs
             {
                 list = list.OrderBy(i => i.OtbVersion).ToList();
 
-                pluginsListBox.DataSource = list;
-                pluginsListBox.SelectedIndex = list.Count - 1;
+                this.pluginsListBox.DataSource = list;
+                this.pluginsListBox.SelectedIndex = list.Count - 1;
             }
         }
 
-        private void selectBtn_Click(object sender, EventArgs e)
+        private void SelectBtn_Click(object sender, EventArgs e)
         {
-            if (pluginsListBox.SelectedItem != null)
+            if (this.pluginsListBox.SelectedItem != null)
             {
-                selectedPlugin = Program.plugins.AvailablePlugins.Find(pluginsListBox.SelectedItem.ToString());
-                updateClient = pluginsListBox.SelectedItem as SupportedClient;
-
+                this.SelectedPlugin = Program.plugins.AvailablePlugins.Find(this.pluginsListBox.SelectedItem.ToString());
+                this.UpdateClient = this.pluginsListBox.SelectedItem as SupportedClient;
                 this.DialogResult = DialogResult.OK;
-                Close();
+                this.Close();
             }
         }
 
-        private void pluginsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void PluginsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (pluginsListBox.SelectedItem != null && mainForm.CurrentPlugin != null)
+            if (this.pluginsListBox.SelectedItem != null && this.MainForm.CurrentPlugin != null)
             {
-                selectBtn.Enabled = true;
+                this.selectBtn.Enabled = true;
             }
         }
 

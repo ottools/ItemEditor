@@ -18,25 +18,27 @@
 */
 #endregion
 
+#region Using Statements
 using System;
 using System.Windows.Forms;
+#endregion
 
 namespace ItemEditor.Dialogs
 {
     public partial class FindItemForm : Form
     {
+        #region Private Properties
+
+        private MainForm mainForm = null;
+
+        #endregion
+
         #region Constructor
 
         public FindItemForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
-
-        #endregion
-
-        #region Private Properties
-
-        private MainForm mainForm = null;
 
         #endregion
 
@@ -44,27 +46,32 @@ namespace ItemEditor.Dialogs
 
         public MainForm MainForm
         {
-            get { return mainForm; }
+            get
+            {
+                return this.mainForm;
+            }
+
             set
             {
-                mainForm = value;
-                if (mainForm != null)
+                this.mainForm = value;
+
+                if (this.mainForm != null)
                 {
-                    findItemNumericUpDown.Minimum = mainForm.MinItemId;
-                    findItemNumericUpDown.Maximum = mainForm.MaxItemId;
+                    this.findItemNumericUpDown.Minimum = this.mainForm.MinItemId;
+                    this.findItemNumericUpDown.Maximum = this.mainForm.MaxItemId;
                 }
             }
         }
 
         #endregion
 
-        #region General Methods
+        #region Private Methods
 
         private void OnFind(ushort sid)
         {
-            if (mainForm != null)
+            if (this.mainForm != null)
             {
-                if (!mainForm.SelectItem(sid))
+                if (!this.mainForm.SelectItem(sid))
                 {
                     MessageBox.Show(string.Format("Item id {0} not found.", sid), "Find Item");
                 }
@@ -75,16 +82,16 @@ namespace ItemEditor.Dialogs
 
         #region Event Handlers
 
-        private void findItemButton_Click(object sender, EventArgs e)
+        private void FindItemButton_Click(object sender, EventArgs e)
         {
-            this.OnFind((ushort)findItemNumericUpDown.Value);
+            this.OnFind((ushort)this.findItemNumericUpDown.Value);
         }
 
-        private void findItemNumericUpDown_KeyUp(object sender, KeyEventArgs e)
+        private void FindItemNumericUpDown_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                this.OnFind((ushort)findItemNumericUpDown.Value);
+                this.OnFind((ushort)this.findItemNumericUpDown.Value);
             }
         }
 

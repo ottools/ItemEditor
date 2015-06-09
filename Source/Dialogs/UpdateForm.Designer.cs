@@ -41,7 +41,7 @@
             this.pluginsListBox.Name = "pluginsListBox";
             this.pluginsListBox.Size = new System.Drawing.Size(168, 121);
             this.pluginsListBox.TabIndex = 0;
-            this.pluginsListBox.SelectedIndexChanged += new System.EventHandler(this.pluginsListBox_SelectedIndexChanged);
+            this.pluginsListBox.SelectedIndexChanged += new System.EventHandler(this.PluginsListBox_SelectedIndexChanged);
             // 
             // button1
             // 
@@ -61,7 +61,7 @@
             this.selectBtn.TabIndex = 1;
             this.selectBtn.Text = "&Select";
             this.selectBtn.UseVisualStyleBackColor = true;
-            this.selectBtn.Click += new System.EventHandler(this.selectBtn_Click);
+            this.selectBtn.Click += new System.EventHandler(this.SelectBtn_Click);
             // 
             // lblDescription
             // 

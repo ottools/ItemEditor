@@ -98,9 +98,9 @@ namespace OTLib.Utils
 
         public void Dispose()
         {
-            bitmap = null;
-            bitmapData = null;
-            pixels = null;
+            this.bitmap = null;
+            this.bitmapData = null;
+            this.pixels = null;
         }
 
         #endregion

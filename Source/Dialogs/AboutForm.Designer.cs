@@ -79,7 +79,7 @@
             this.linkLabel.TabIndex = 3;
             this.linkLabel.TabStop = true;
             this.linkLabel.Text = "linkLabel";
-            this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
+            this.linkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel_LinkClicked);
             // 
             // AboutForm
             // 

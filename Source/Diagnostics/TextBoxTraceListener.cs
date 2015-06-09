@@ -18,21 +18,25 @@
 */
 #endregion
 
+#region Using Statements
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+#endregion
 
 namespace ItemEditor.Diagnostics
 {
     public class TextBoxTraceListener : TraceListener
     {
-        #region Properties
+        #region Private Properties
 
-        const uint updateFrequency = 10;
-        uint updateCounter = 0;
+        private delegate void StringSendDelegate(string message);
+        
+        private const uint UpdateFrequency = 10;
+        private uint updateCounter = 0;
 
-        private TextBox _target;
-        private StringSendDelegate _invokeWrite;
+        private TextBox target;
+        private StringSendDelegate invokeWrite;
 
         #endregion
 
@@ -40,41 +44,43 @@ namespace ItemEditor.Diagnostics
 
         public TextBoxTraceListener(TextBox target)
         {
-            _target = target;
-            _invokeWrite = new StringSendDelegate(SendString);
+            this.target = target;
+            this.invokeWrite = new StringSendDelegate(this.SendString);
         }
 
         #endregion
 
-        #region General Methods
+        #region Public Methods
 
         public void Clear()
         {
-            _target.Clear();
+            this.target.Clear();
         }
 
         public override void Write(string message)
         {
-            _target.Invoke(_invokeWrite, new object[] { ">> " + message });
+            this.target.Invoke(this.invokeWrite, new object[] { ">> " + message });
         }
 
         public override void WriteLine(string message)
         {
-            _target.Invoke(_invokeWrite, new object[] { ">> " + message + Environment.NewLine });
+            this.target.Invoke(this.invokeWrite, new object[] { ">> " + message + Environment.NewLine });
         }
 
-        private delegate void StringSendDelegate(string message);
+        #endregion
+
+        #region Private Methods
 
         private void SendString(string message)
         {
             // No need to lock text box as this function will only 
             // ever be executed from the UI thread
-            _target.AppendText(message);
+            this.target.AppendText(message);
 
-            ++updateCounter;
-            if (updateCounter >= updateFrequency)
+            this.updateCounter++;
+            if (this.updateCounter >= UpdateFrequency)
             {
-                updateCounter = 0;
+                this.updateCounter = 0;
                 Application.DoEvents();
             }
         }

@@ -18,8 +18,10 @@
 */
 #endregion
 
+#region Using Statements
 using System;
 using System.IO;
+#endregion
 
 namespace ItemEditor.Helpers
 {
@@ -28,7 +30,7 @@ namespace ItemEditor.Helpers
         /// <summary>
         /// Path to the setting file
         /// </summary>
-        public static String SettingData
+        public static string SettingData
         {
             get
             {

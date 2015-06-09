@@ -30,8 +30,6 @@ using System.IO;
 
 namespace PluginTwo
 {
-    # region Enum
-
     internal enum ItemFlag : byte
     {
         Ground = 0x00,
@@ -72,8 +70,6 @@ namespace PluginTwo
         LastFlag = 0xFF
     }
 
-    #endregion
-
     public class Plugin : IPlugin
     {
         #region Private Properties
@@ -86,6 +82,7 @@ namespace PluginTwo
         
         public Plugin()
         {
+            this.Settings = new Settings();
             this.sprites = new Dictionary<uint, Sprite>();
             this.Items = new ClientItems();
             this.SupportedClients = new List<SupportedClient>();
@@ -96,7 +93,7 @@ namespace PluginTwo
         #region Public Properties
 
         // internal implementation
-        public Settings settings = new Settings();
+        public Settings Settings { get; private set; }
 
         // IPlugin implementation
         public IPluginHost Host { get; set; }
@@ -125,8 +122,8 @@ namespace PluginTwo
 
         public void Initialize()
         {
-            this.settings.Load("PluginTwo.xml");
-            this.SupportedClients = settings.GetSupportedClientList();
+            this.Settings.Load("PluginTwo.xml");
+            this.SupportedClients = Settings.GetSupportedClientList();
         }
 
         public SupportedClient GetClientBySignatures(uint datSignature, uint sprSignature)
@@ -347,12 +344,12 @@ namespace PluginTwo
                                 Trace.WriteLine(String.Format("PluginTwo: Error while parsing, unknown flag 0x{0:X} at id {1}.", flag, id));
                                 return false;
                         }
-
                     }
                     while (flag != ItemFlag.LastFlag);
 
                     item.Width = reader.ReadByte();
                     item.Height = reader.ReadByte();
+
                     if ((item.Width > 1) || (item.Height > 1))
                     {
                         reader.BaseStream.Position++;
@@ -386,8 +383,10 @@ namespace PluginTwo
                             sprite.ID = spriteId;
                             sprites[spriteId] = sprite;
                         }
+
                         item.SpriteList.Add(sprite);
                     }
+
                     ++id;
                 }
             }

@@ -18,6 +18,7 @@
 */
 #endregion
 
+#region Using Statements
 using ItemEditor.Host;
 using PluginInterface;
 using System;
@@ -25,6 +26,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+#endregion
 
 namespace ItemEditor.Dialogs
 {
@@ -37,25 +39,25 @@ namespace ItemEditor.Dialogs
 
         #endregion
 
-        #region Public Properties
-
-        public string FilePath
-        {
-            get { return filePath; }
-        }
-
-        public SupportedClient SelectedClient
-        {
-            get { return selectedClient; }
-        }
-
-        #endregion
-
         #region Constructor
 
         public NewOtbFileForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        public string FilePath
+        {
+            get { return this.filePath; }
+        }
+
+        public SupportedClient SelectedClient
+        {
+            get { return this.selectedClient; }
         }
 
         #endregion
@@ -64,7 +66,7 @@ namespace ItemEditor.Dialogs
 
         private void NewOtbFileForm_Load(object sender, System.EventArgs e)
         {
-            filePath = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+            this.filePath = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
 
             List<SupportedClient> list = new List<SupportedClient>();
 
@@ -80,23 +82,23 @@ namespace ItemEditor.Dialogs
             {
                 list = list.OrderBy(i => i.OtbVersion).ToList();
 
-                clientVersionComboBox.DataSource = list;
-                clientVersionComboBox.SelectedIndex = list.Count - 1;
+                this.clientVersionComboBox.DataSource = list;
+                this.clientVersionComboBox.SelectedIndex = list.Count - 1;
             }
         }
 
         private void ClientVersionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.createButton.Enabled = (!string.IsNullOrEmpty(filePath) && clientVersionComboBox.SelectedItem != null);
+            this.createButton.Enabled = !string.IsNullOrEmpty(this.filePath) && this.clientVersionComboBox.SelectedItem != null;
         }
 
         private void CreateButton_Click(object sender, EventArgs e)
         {
-            if (clientVersionComboBox.SelectedItem != null)
+            if (this.clientVersionComboBox.SelectedItem != null)
             {
-                this.selectedClient = clientVersionComboBox.SelectedItem as SupportedClient;
+                this.selectedClient = this.clientVersionComboBox.SelectedItem as SupportedClient;
                 this.DialogResult = DialogResult.OK;
-                Close();
+                this.Close();
             }
         }
 
@@ -106,6 +108,5 @@ namespace ItemEditor.Dialogs
         }
 
         #endregion
-
     }
 }

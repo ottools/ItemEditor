@@ -1040,14 +1040,14 @@ namespace ItemEditor
         private void ToolsUpdateVersionMenuItem_Click(object sender, EventArgs e)
         {
             UpdateForm form = new UpdateForm();
-            form.mainForm = this;
+            form.MainForm = this;
 
             DialogResult result = form.ShowDialog();
             if (result == DialogResult.OK)
             {
                 // Update OTB
-                Plugin updatePlugin = form.selectedPlugin;
-                SupportedClient updateClient = form.updateClient;
+                Plugin updatePlugin = form.SelectedPlugin;
+                SupportedClient updateClient = form.UpdateClient;
 
                 if (updatePlugin == null)
                 {

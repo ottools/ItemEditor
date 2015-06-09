@@ -18,9 +18,11 @@
 */
 #endregion
 
+#region Using Statements
 using PluginInterface;
 using System;
 using System.Collections;
+#endregion
 
 namespace ItemEditor.Host
 {
@@ -29,7 +31,7 @@ namespace ItemEditor.Host
     /// </summary>
     public class PluginCollection : CollectionBase
     {
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         /// Add a plugin
@@ -60,7 +62,7 @@ namespace ItemEditor.Host
             {
                 foreach (SupportedClient client in plugin.Instance.SupportedClients)
                 {
-                    if ((client.Description.Equals(pluginNameOrPath)))
+                    if (client.Description.Equals(pluginNameOrPath))
                     {
                         return plugin;
                     }
@@ -78,7 +80,7 @@ namespace ItemEditor.Host
         /// <summary>
         /// Search for a plugin by compatibility
         /// </summary>
-        /// <param name="version">The otb version</param>
+        /// <param name="otbVersion">The otb version</param>
         /// <returns>a plugin, or null if the plugin is not found</returns>
         public Plugin Find(uint otbVersion)
         {
@@ -114,6 +116,7 @@ namespace ItemEditor.Host
                     }
                 }
             }
+
             return null;
         }
 

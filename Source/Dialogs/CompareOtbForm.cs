@@ -126,7 +126,7 @@ namespace ItemEditor.Dialogs
         {
             FileDialog dialog = new OpenFileDialog();
 
-            //Now set the file type
+            // Now set the file type
             dialog.Filter = "OTB files (*.otb)|*.otb";
             dialog.Title = "Open OTB File";
 
@@ -142,7 +142,7 @@ namespace ItemEditor.Dialogs
         {
             FileDialog dialog = new OpenFileDialog();
 
-            //Now set the file type
+            // Now set the file type
             dialog.Filter = "OTB files (*.otb)|*.otb";
             dialog.Title = "Open OTB File";
 

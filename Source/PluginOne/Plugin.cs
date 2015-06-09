@@ -30,8 +30,6 @@ using System.IO;
 
 namespace PluginOne
 {
-    # region Enum
-
     internal enum ItemFlag : byte
     {
         Ground = 0x00,
@@ -71,8 +69,6 @@ namespace PluginOne
         LastFlag = 0xFF
     }
 
-    #endregion
-
     public class Plugin : IPlugin
     {
         #region Private Properties
@@ -85,6 +81,7 @@ namespace PluginOne
 
         public Plugin()
         {
+            this.Settings = new Settings();
             this.sprites = new Dictionary<uint, Sprite>();
             this.Items = new ClientItems();
             this.SupportedClients = new List<SupportedClient>();
@@ -95,7 +92,7 @@ namespace PluginOne
         #region Public Properties
 
         // internal implementation
-        public Settings settings = new Settings();
+        public Settings Settings { get; private set; }
 
         // IPlugin implementation
         public IPluginHost Host { get; set; }
@@ -124,8 +121,8 @@ namespace PluginOne
 
         public void Initialize()
         {
-            this.settings.Load("PluginOne.xml");
-            this.SupportedClients = settings.GetSupportedClientList();
+            this.Settings.Load("PluginOne.xml");
+            this.SupportedClients = Settings.GetSupportedClientList();
         }
 
         public SupportedClient GetClientBySignatures(uint datSignature, uint sprSignature)
@@ -171,7 +168,7 @@ namespace PluginOne
                 reader.ReadUInt16(); // skipping effects count
                 reader.ReadUInt16(); // skipping missiles count
 
-                ushort minclientID = 100; //items starts at 100
+                ushort minclientID = 100; // items starts at 100
                 ushort maxclientID = itemCount;
 
                 ushort id = minclientID;
@@ -335,11 +332,12 @@ namespace PluginOne
                                 Trace.WriteLine(String.Format("PluginOne: Error while parsing, unknown flag 0x{0:X} at id {1}.", flag, id));
                                 return false;
                         }
-
-                    } while (flag != ItemFlag.LastFlag);
+                    }
+                    while (flag != ItemFlag.LastFlag);
 
                     item.Width = reader.ReadByte();
                     item.Height = reader.ReadByte();
+
                     if ((item.Width > 1) || (item.Height > 1))
                     {
                         reader.BaseStream.Position++;
@@ -373,8 +371,10 @@ namespace PluginOne
                             sprite.ID = spriteId;
                             sprites[spriteId] = sprite;
                         }
+
                         item.SpriteList.Add(sprite);
                     }
+
                     ++id;
                 }
             }

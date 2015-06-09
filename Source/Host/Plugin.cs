@@ -18,8 +18,10 @@
 */
 #endregion
 
+#region Using Statements
 using PluginInterface;
 using System;
+#endregion
 
 namespace ItemEditor.Host
 {
@@ -29,26 +31,11 @@ namespace ItemEditor.Host
     /// </summary>
     public class Plugin
     {
-        #region Private Properties
-
-        private IPlugin _instance;
-        private String _assemblyPath;
-
-        #endregion
-
         #region Public Properties
 
-        public IPlugin Instance
-        {
-            get { return _instance; }
-            set { _instance = value; }
-        }
+        public IPlugin Instance { get; set; }
 
-        public string AssemblyPath
-        {
-            get { return _assemblyPath; }
-            set { _assemblyPath = value; }
-        }
+        public string AssemblyPath { get; set; }
 
         #endregion
     }

@@ -18,23 +18,25 @@
 */
 #endregion
 
-using ItemEditor.Helpers;
-using System;
-using System.Drawing;
-using System.IO;
+#region Using Statements
 using System.Windows.Forms;
+#endregion
 
 namespace ItemEditor.Dialogs
 {
     public partial class AboutForm : Form
     {
+        #region Constructor
+
         public AboutForm()
         {
-            InitializeComponent();
-            InitializeGraphics();
+            this.InitializeComponent();
+            this.InitializeGraphics();
         }
 
-        #region Methods
+        #endregion
+
+        #region Private Methods
 
         /// <summary>
         /// Attaches the image to the imagebox
@@ -49,9 +51,13 @@ namespace ItemEditor.Dialogs
 
         #endregion
 
-        private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        #region Event Handlers
+
+        private void LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/ottools/ItemEditor");
         }
+
+        #endregion
     }
 }

@@ -87,7 +87,7 @@ namespace ImageSimilarity
             // Cooley-Tukey FFT
             if (length % 2 != 0) throw new Exception("N is not a power of 2");
 
-            //conjugate
+            // conjugate
             for (int i = 0; i < length; i++)
             {
                 y[i] = new Complex(x[i].Re, -x[i].Im);

@@ -39,7 +39,7 @@
             this.findItemNumericUpDown.Name = "findItemNumericUpDown";
             this.findItemNumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.findItemNumericUpDown.TabIndex = 0;
-            this.findItemNumericUpDown.KeyUp += new System.Windows.Forms.KeyEventHandler(findItemNumericUpDown_KeyUp);
+            this.findItemNumericUpDown.KeyUp += new System.Windows.Forms.KeyEventHandler(FindItemNumericUpDown_KeyUp);
             // 
             // findItemButton
             // 
@@ -49,7 +49,7 @@
             this.findItemButton.TabIndex = 1;
             this.findItemButton.Text = "Find";
             this.findItemButton.UseVisualStyleBackColor = true;
-            this.findItemButton.Click += new System.EventHandler(findItemButton_Click);
+            this.findItemButton.Click += new System.EventHandler(FindItemButton_Click);
             // 
             // findItemForm
             // 

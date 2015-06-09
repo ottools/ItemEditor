@@ -18,12 +18,14 @@
 */
 #endregion
 
+#region Using Statements
 using ItemEditor.Helpers;
 using PluginInterface;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+#endregion
 
 namespace ItemEditor.Host
 {
@@ -32,9 +34,15 @@ namespace ItemEditor.Host
     /// </summary>
     public class PluginServices : IPluginHost
     {
-        #region Private Properties
+        #region Contructor
 
-        private PluginCollection _collection = new PluginCollection();
+        /// <summary>
+        /// Constructor of PluginServices
+        /// </summary>
+        public PluginServices()
+        {
+            this.AvailablePlugins = new PluginCollection();
+        }
 
         #endregion
 
@@ -43,26 +51,11 @@ namespace ItemEditor.Host
         /// <summary>
         /// A collection of all plugins found by FindPlugins()
         /// </summary>
-        public PluginCollection AvailablePlugins
-        {
-            get { return _collection; }
-            set { _collection = value; }
-        }
+        public PluginCollection AvailablePlugins { get; private set; }
 
         #endregion
 
-        #region Contructor
-
-        /// <summary>
-        /// Constructor of PluginServices
-        /// </summary>
-        public PluginServices()
-        {
-        }
-
-        #endregion
-
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         /// Searches the Path for plugins
@@ -76,15 +69,14 @@ namespace ItemEditor.Host
                 return;
             }
 
-            _collection.Clear();
+            this.AvailablePlugins.Clear();
 
             foreach (string file in Directory.GetFiles(path, "*.dll"))
             {
                 string name = Path.GetFileNameWithoutExtension(file);
-
                 if (name != "PluginInterface")
                 {
-                    AddPlugin(file);
+                    this.AddPlugin(file);
                 }
             }
         }
@@ -94,18 +86,18 @@ namespace ItemEditor.Host
         /// </summary>
         public void ClosePlugins()
         {
-            foreach (Plugin pluginOn in _collection)
+            foreach (Plugin pluginOn in this.AvailablePlugins)
             {
                 pluginOn.Instance.Dispose();
                 pluginOn.Instance = null;
             }
 
-            _collection.Clear();
+            this.AvailablePlugins.Clear();
         }
 
-        private void AddPlugin(string FileName)
+        private void AddPlugin(string path)
         {
-            Assembly pluginAssembly = Assembly.LoadFrom(FileName);
+            Assembly pluginAssembly = Assembly.LoadFrom(path);
 
             foreach (Type pluginType in pluginAssembly.GetTypes())
             {
@@ -117,11 +109,12 @@ namespace ItemEditor.Host
                         if (typeInterface != null)
                         {
                             Plugin newPlugin = new Plugin();
-                            newPlugin.AssemblyPath = FileName;
+                            newPlugin.AssemblyPath = path;
                             newPlugin.Instance = (IPlugin)Activator.CreateInstance(pluginAssembly.GetType(pluginType.ToString()));
                             newPlugin.Instance.Host = this;
                             newPlugin.Instance.Initialize();
-                            _collection.Add(newPlugin);
+                            
+                            this.AvailablePlugins.Add(newPlugin);
 
                             newPlugin = null;
                         }

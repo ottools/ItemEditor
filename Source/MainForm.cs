@@ -462,7 +462,7 @@ namespace ItemEditor
                     return false;
                 }
 
-                return item.IsEqual(clientItem);
+                return item.Equals(clientItem);
             }
 
             return false;
@@ -496,7 +496,7 @@ namespace ItemEditor
                 Trace.WriteLine(string.Format("Reloading item id: {0}.", item.ID));
 
                 ushort tmpId = item.ID;
-                item.itemImpl = (ItemImpl)clientItem.itemImpl.Clone();
+                item.CopyPropertiesFrom(clientItem);
                 item.ID = tmpId;
                 Buffer.BlockCopy(clientItem.SpriteHash, 0, item.SpriteHash, 0, clientItem.SpriteHash.Length);
 
@@ -1108,7 +1108,7 @@ namespace ItemEditor
                     ClientItem updateClientItem;
                     if (updateItems.TryGetValue(item.ClientId, out updateClientItem))
                     {
-                        bool compareResult = updateClientItem.IsEqual(item);
+                        bool compareResult = updateClientItem.Equals(item);
 
                         if (Utils.ByteArrayCompare(updateClientItem.SpriteHash, item.SpriteHash))
                         {
@@ -1150,7 +1150,7 @@ namespace ItemEditor
 
                             if (Utils.ByteArrayCompare(updateItem.SpriteHash, item.SpriteHash))
                             {
-                                if (updateItem.IsEqual(item))
+                                if (updateItem.Equals(item))
                                 {
                                     if (updateItem.ID != item.ClientId)
                                     {
@@ -1239,7 +1239,7 @@ namespace ItemEditor
                         return;
                     }
 
-                    if (!clientItem.IsEqual(this.CurrentServerItem))
+                    if (!clientItem.Equals(this.CurrentServerItem))
                     {
                         DialogResult result = MessageBox.Show(
                             "The item attributes does not match the current information, would you like to continue anyway?",

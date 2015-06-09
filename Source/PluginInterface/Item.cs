@@ -28,124 +28,93 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Reflection;
 using System.Security.Cryptography;
 #endregion
 
 namespace ItemEditor
 {
-    public class ItemImpl : ICloneable
+    public class Item
     {
-        public object Clone()
-        {
-            ItemImpl clone = (ItemImpl)this.MemberwiseClone();
-            return clone;
-        }
+        #region Private Properties
 
-        public ushort id;
-        public ServerItemType type;
-        public bool HasStackOrder;
-        public TileStackOrder StackOrder;
-        public ushort groundSpeed;
-        public bool multiUse;
-        public ushort maxReadChars;
-        public ushort maxReadWriteChars;
-        public bool hasElevation;
-        public ushort minimapColor;
-        public bool ignoreLook;
-        public ushort lightLevel;
-        public ushort lightColor;
-        public bool isStackable;
-        public bool isReadable;
-        public bool isMoveable;
-        public bool isPickupable;
-        public bool isHangable;
-        public bool isHorizontal;
-        public bool isVertical;
-        public bool isRotatable;
-        public bool isUnpassable;
-        public bool blockMissiles;
-        public bool blockPathfinder;
-        public bool allowDistanceRead;
-        public bool isAnimation;
-        public bool fullGround;
-        public ushort tradeAs;
-        public string name;
-    }
+        protected byte[] spriteHash = null;
 
-    public class Item : IServerItemType
-    {
-        public ItemImpl itemImpl = new ItemImpl();
+        #endregion
+
+        #region Constructor
 
         public Item()
         {
-            this.Name = "";
+            this.Type = ServerItemType.None;
+            this.StackOrder = TileStackOrder.None;
             this.Movable = true;
+            this.Name = string.Empty;
         }
 
-        public virtual bool IsEqual(Item item)
-        {
-            if (Type != item.Type) { return false; }
+        #endregion
 
-            if (Name.CompareTo(item.Name) != 0) { return false; }
-            if (TradeAs != item.TradeAs) { return false; }
-            if (FullGround != item.FullGround) { return false; }
-            if (IsAnimation != item.IsAnimation) { return false; }
-            if (StackOrder != item.StackOrder) { return false; }
-            if (Unpassable != item.Unpassable) { return false; }
-            if (BlockPathfinder != item.BlockPathfinder) { return false; }
-            if (BlockMissiles != item.BlockMissiles) { return false; }
-            if (GroundSpeed != item.GroundSpeed) { return false; }
-            if (HasElevation != item.HasElevation) { return false; }
-            if (MultiUse != item.MultiUse) { return false; }
-            if (Hangable != item.Hangable) { return false; }
-            if (HookEast != item.HookEast) { return false; }
-            if (HookSouth != item.HookSouth) { return false; }
-            if (Movable != item.Movable) { return false; }
-            if (Pickupable != item.Pickupable) { return false; }
-            if (Readable != item.Readable) { return false; }
-            if (Rotatable != item.Rotatable) { return false; }
-            if (Stackable != item.Stackable) { return false; }
-            if (LightColor != item.LightColor) { return false; }
-            if (LightLevel != item.LightLevel) { return false; }
-            if (IgnoreLook != item.IgnoreLook) { return false; }
-            if (MaxReadChars != item.MaxReadChars) { return false; }
-            if (MaxReadWriteChars != item.MaxReadWriteChars) { return false; }
-            if (MinimapColor != item.MinimapColor) { return false; }
-            return true;
-        }
+        #region Public Properties
 
-        public ushort ID { get { return itemImpl.id; } set { itemImpl.id = value; } }
-        public ServerItemType Type { get { return itemImpl.type; } set { itemImpl.type = value; } }
-        public bool HasStackOrder { get { return itemImpl.HasStackOrder; } set { itemImpl.HasStackOrder = value; } }
-        public TileStackOrder StackOrder { get { return itemImpl.StackOrder; } set { itemImpl.StackOrder = value; } }
-        public bool Unpassable { get { return itemImpl.isUnpassable; } set { itemImpl.isUnpassable = value; } }
-        public bool BlockMissiles { get { return itemImpl.blockMissiles; } set { itemImpl.blockMissiles = value; } }
-        public bool BlockPathfinder { get { return itemImpl.blockPathfinder; } set { itemImpl.blockPathfinder = value; } }
-        public bool HasElevation { get { return itemImpl.hasElevation; } set { itemImpl.hasElevation = value; } }
-        public bool MultiUse { get { return itemImpl.multiUse; } set { itemImpl.multiUse = value; } }
-        public bool Pickupable { get { return itemImpl.isPickupable; } set { itemImpl.isPickupable = value; } }
-        public bool Movable { get { return itemImpl.isMoveable; } set { itemImpl.isMoveable = value; } }
-        public bool Stackable { get { return itemImpl.isStackable; } set { itemImpl.isStackable = value; } }
-        public bool Readable { get { return itemImpl.isReadable; } set { itemImpl.isReadable = value; } }
-        public bool Rotatable { get { return itemImpl.isRotatable; } set { itemImpl.isRotatable = value; } }
-        public bool Hangable { get { return itemImpl.isHangable; } set { itemImpl.isHangable = value; } }
-        public bool HookSouth { get { return itemImpl.isVertical; } set { itemImpl.isVertical = value; } }
-        public bool HookEast { get { return itemImpl.isHorizontal; } set { itemImpl.isHorizontal = value; } }
-        public bool IgnoreLook { get { return itemImpl.ignoreLook; } set { itemImpl.ignoreLook = value; } }
-        public bool FullGround { get { return itemImpl.fullGround; } set { itemImpl.fullGround = value; } }
-        public ushort GroundSpeed { get { return itemImpl.groundSpeed; } set { itemImpl.groundSpeed = value; } }
-        public ushort LightLevel { get { return itemImpl.lightLevel; } set { itemImpl.lightLevel = value; } }
-        public ushort LightColor { get { return itemImpl.lightColor; } set { itemImpl.lightColor = value; } }
-        public ushort MaxReadChars { get { return itemImpl.maxReadChars; } set { itemImpl.maxReadChars = value; } }
-        public ushort MaxReadWriteChars { get { return itemImpl.maxReadWriteChars; } set { itemImpl.maxReadWriteChars = value; } }
-        public ushort MinimapColor { get { return itemImpl.minimapColor; } set { itemImpl.minimapColor = value; } }
-        public ushort TradeAs { get { return itemImpl.tradeAs; } set { itemImpl.tradeAs = value; } }
-        public string Name { get { return itemImpl.name; } set { itemImpl.name = value; } }
-        public bool AllowDistanceRead { get { return itemImpl.allowDistanceRead; } set { itemImpl.allowDistanceRead = value; } }
-        public bool IsAnimation { get { return itemImpl.isAnimation; } set { itemImpl.isAnimation = value; } }
+        public ushort ID { get; set; }
+
+        public ServerItemType Type { get; set; }
+
+        public bool HasStackOrder { get; set; }
+
+        public TileStackOrder StackOrder { get; set; }
+
+        public bool Unpassable { get; set; }
+
+        public bool BlockMissiles { get; set; }
+
+        public bool BlockPathfinder { get; set; }
+
+        public bool HasElevation { get; set; }
+
+        public bool MultiUse { get; set; }
+
+        public bool Pickupable { get; set; }
+
+        public bool Movable { get; set; }
+
+        public bool Stackable { get; set; }
+
+        public bool Readable { get; set; }
+
+        public bool Rotatable { get; set; }
+
+        public bool Hangable { get; set; }
+
+        public bool HookSouth { get; set; }
+
+        public bool HookEast { get; set; }
+
+        public bool IgnoreLook { get; set; }
+
+        public bool FullGround { get; set; }
+
+        public bool AllowDistanceRead { get; set; }
+
+        public bool IsAnimation { get; set; }
+
+        public ushort GroundSpeed { get; set; }
+
+        public ushort LightLevel { get; set; }
+
+        public ushort LightColor { get; set; }
+
+        public ushort MaxReadChars { get; set; }
+
+        public ushort MaxReadWriteChars { get; set; }
+
+        public ushort MinimapColor { get; set; }
+
+        public ushort TradeAs { get; set; }
+
+        public string Name { get; set; }
 
         // used to find sprites during updates
-        protected byte[] spriteHash = null;
         public virtual byte[] SpriteHash
         {
             get
@@ -158,6 +127,100 @@ namespace ItemEditor
                 this.spriteHash = value;
             }
         }
+
+        #endregion
+
+        #region Public Methods
+
+        public bool Equals(Item item)
+        {
+            if (this.Type != item.Type ||
+                this.StackOrder != item.StackOrder ||
+                this.Unpassable != item.Unpassable ||
+                this.BlockMissiles != item.BlockMissiles ||
+                this.BlockPathfinder != item.BlockPathfinder ||
+                this.HasElevation != item.HasElevation ||
+                this.MultiUse != item.MultiUse ||
+                this.Pickupable != item.Pickupable ||
+                this.Movable != item.Movable ||
+                this.Stackable != item.Stackable ||
+                this.Readable != item.Readable ||
+                this.Rotatable != item.Rotatable ||
+                this.Hangable != item.Hangable ||
+                this.HookSouth != item.HookSouth ||
+                this.HookEast != item.HookEast ||
+                this.IgnoreLook != item.IgnoreLook ||
+                this.FullGround != item.FullGround ||
+                this.AllowDistanceRead != item.AllowDistanceRead ||
+                this.IsAnimation != item.IsAnimation ||
+                this.GroundSpeed != item.GroundSpeed ||
+                this.LightLevel != item.LightLevel ||
+                this.LightColor != item.LightColor ||
+                this.MaxReadChars != item.MaxReadChars ||
+                this.MaxReadWriteChars != item.MaxReadWriteChars ||
+                this.MinimapColor != item.MinimapColor ||
+                this.TradeAs != item.TradeAs)
+            {
+                return false;
+            }
+
+            if (this.Name.CompareTo(item.Name) != 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public Item CopyPropertiesFrom(Item item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException("item");
+            }
+
+            Type type = this.GetType();
+
+            foreach (PropertyInfo property in item.GetType().GetProperties())
+            {
+                if (property.Name == "SpriteHash")
+                {
+                    continue;
+                }
+
+                PropertyInfo targetProperty = type.GetProperty(property.Name);
+                if (targetProperty == null)
+                {
+                    continue;
+                }
+
+                if (!targetProperty.CanWrite)
+                {
+                    continue;
+                }
+
+                if (targetProperty.GetSetMethod(true) != null && targetProperty.GetSetMethod(true).IsPrivate)
+                {
+                    continue;
+                }
+
+                if ((targetProperty.GetSetMethod().Attributes & MethodAttributes.Static) != 0)
+                {
+                    continue;
+                }
+
+                if (!targetProperty.PropertyType.IsAssignableFrom(property.PropertyType))
+                {
+                    continue;
+                }
+
+                targetProperty.SetValue(this, property.GetValue(item, null), null);
+            }
+
+            return this;
+        }
+
+        #endregion
     }
 
     public class ClientItem : Item
@@ -214,11 +277,8 @@ namespace ItemEditor
                             for (byte w = 0; w < this.Width; w++)
                             {
                                 int index = spriteBase + w + h * this.Width + l * this.Width * this.Height;
-                                Sprite sprite = SpriteList[index];
-                                if (sprite != null)
-                                {
-                                    stream.Write(sprite.GetARGBData(), 0, Sprite.ARGBPixelsDataSize);
-                                }
+                                Sprite sprite = this.SpriteList[index];
+                                stream.Write(sprite.GetARGBData(), 0, Sprite.ARGBPixelsDataSize);
                             }
                         }
                     }
@@ -269,6 +329,7 @@ namespace ItemEditor
                     }
 
                     locker.UnlockBits();
+                    bitmap.MakeTransparent(Color.FromArgb(0xFF, 0xFF, 0xFF));
                 }
             }
             catch

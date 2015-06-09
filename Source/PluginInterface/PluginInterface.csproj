@@ -82,7 +82,6 @@
     <Compile Include="OTLib\OTB\OtbReader.cs" />
     <Compile Include="OTLib\OTB\OtbVersionInfo.cs" />
     <Compile Include="OTLib\OTB\OtbWriter.cs" />
-    <Compile Include="OTLib\Server\Items\IServerItemType.cs" />
     <Compile Include="OTLib\Server\Items\ServerItemAttribute.cs" />
     <Compile Include="OTLib\Server\Items\ServerItemFlag.cs" />
     <Compile Include="OTLib\Utils\BinaryTreeReader.cs" />

@@ -21,6 +21,7 @@
 #region Using Statements
 using ItemEditor;
 using System;
+using System.Reflection;
 #endregion
 
 namespace OTLib.Server.Items
@@ -73,10 +74,7 @@ namespace OTLib.Server.Items
 
         public ServerItem(Item item)
         {
-            if (item != null)
-            {
-                this.itemImpl = (ItemImpl)item.itemImpl.Clone();
-            }
+            this.CopyPropertiesFrom(item);
         }
 
         #endregion

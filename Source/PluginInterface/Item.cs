@@ -279,7 +279,6 @@ namespace ItemEditor
                             {
                                 int index = spriteBase + w + h * this.Width + l * this.Width * this.Height;
                                 Sprite sprite = this.SpriteList[index];
-                                
                                 byte[] rgbData = sprite.GetRGBData();
 
                                 // reverse rgb

@@ -132,6 +132,7 @@
             this.findItemButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.serverItemListBox = new ItemEditor.Controls.ServerItemListBox();
+            this.allowDistanceReadCheckBox = new System.Windows.Forms.CheckBox();
             this.appearanceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.previousPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -215,6 +216,7 @@
             // 
             this.previousPictureBox.BackColor = System.Drawing.Color.White;
             this.previousPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.previousPictureBox.ClientItem = null;
             this.previousPictureBox.Location = new System.Drawing.Point(13, 36);
             this.previousPictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.previousPictureBox.Name = "previousPictureBox";
@@ -226,6 +228,7 @@
             // 
             this.pictureBox.BackColor = System.Drawing.Color.White;
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox.ClientItem = null;
             this.pictureBox.Location = new System.Drawing.Point(13, 121);
             this.pictureBox.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox.Name = "pictureBox";
@@ -294,6 +297,7 @@
             // 
             // optionsGroupBox
             // 
+            this.optionsGroupBox.Controls.Add(this.allowDistanceReadCheckBox);
             this.optionsGroupBox.Controls.Add(this.stackOrderComboBox);
             this.optionsGroupBox.Controls.Add(this.stackOrderLabel);
             this.optionsGroupBox.Controls.Add(this.wareIdText);
@@ -1052,6 +1056,7 @@
             // 
             this.candidatesPictureBox1.BackColor = System.Drawing.Color.White;
             this.candidatesPictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox1.ClientItem = null;
             this.candidatesPictureBox1.Location = new System.Drawing.Point(0, 0);
             this.candidatesPictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.candidatesPictureBox1.Name = "candidatesPictureBox1";
@@ -1065,6 +1070,7 @@
             // 
             this.candidatesPictureBox2.BackColor = System.Drawing.Color.White;
             this.candidatesPictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox2.ClientItem = null;
             this.candidatesPictureBox2.Location = new System.Drawing.Point(64, 0);
             this.candidatesPictureBox2.Margin = new System.Windows.Forms.Padding(0);
             this.candidatesPictureBox2.Name = "candidatesPictureBox2";
@@ -1078,6 +1084,7 @@
             // 
             this.candidatesPictureBox3.BackColor = System.Drawing.Color.White;
             this.candidatesPictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox3.ClientItem = null;
             this.candidatesPictureBox3.Location = new System.Drawing.Point(128, 0);
             this.candidatesPictureBox3.Margin = new System.Windows.Forms.Padding(0);
             this.candidatesPictureBox3.Name = "candidatesPictureBox3";
@@ -1091,6 +1098,7 @@
             // 
             this.candidatesPictureBox4.BackColor = System.Drawing.Color.White;
             this.candidatesPictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox4.ClientItem = null;
             this.candidatesPictureBox4.Location = new System.Drawing.Point(192, 0);
             this.candidatesPictureBox4.Margin = new System.Windows.Forms.Padding(0);
             this.candidatesPictureBox4.Name = "candidatesPictureBox4";
@@ -1104,6 +1112,7 @@
             // 
             this.candidatesPictureBox5.BackColor = System.Drawing.Color.White;
             this.candidatesPictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox5.ClientItem = null;
             this.candidatesPictureBox5.Location = new System.Drawing.Point(256, 0);
             this.candidatesPictureBox5.Margin = new System.Windows.Forms.Padding(0);
             this.candidatesPictureBox5.Name = "candidatesPictureBox5";
@@ -1200,6 +1209,16 @@
             this.serverItemListBox.TabIndex = 0;
             this.serverItemListBox.SelectedIndexChanged += new System.EventHandler(this.ItemsListBox_SelectedIndexChanged);
             this.serverItemListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ItemsListBox_MouseDown);
+            // 
+            // allowDistanceReadCheckBox
+            // 
+            this.allowDistanceReadCheckBox.AutoSize = true;
+            this.allowDistanceReadCheckBox.Location = new System.Drawing.Point(134, 95);
+            this.allowDistanceReadCheckBox.Name = "allowDistanceReadCheckBox";
+            this.allowDistanceReadCheckBox.Size = new System.Drawing.Size(125, 17);
+            this.allowDistanceReadCheckBox.TabIndex = 51;
+            this.allowDistanceReadCheckBox.Text = "Allow Distance Read";
+            this.allowDistanceReadCheckBox.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -1359,5 +1378,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox stackOrderComboBox;
         private System.Windows.Forms.Label stackOrderLabel;
+        private System.Windows.Forms.CheckBox allowDistanceReadCheckBox;
     }
 }

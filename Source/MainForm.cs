@@ -562,6 +562,7 @@ namespace ItemEditor
             this.AddBinding(this.hookEastCheck, "Checked", item, "HookEast", item.HookEast, clientItem.HookEast);
             this.AddBinding(this.ignoreLookCheck, "Checked", item, "IgnoreLook", item.IgnoreLook, clientItem.IgnoreLook);
             this.AddBinding(this.fullGroundCheck, "Checked", item, "FullGround", item.FullGround, clientItem.FullGround);
+            this.AddBinding(this.allowDistanceReadCheckBox, "Checked", item, "AllowDistanceRead", item.AllowDistanceRead, clientItem.AllowDistanceRead);
             this.AddBinding(this.groundSpeedText, "Text", item, "GroundSpeed", item.GroundSpeed, clientItem.GroundSpeed, true);
             this.AddBinding(this.lightLevelText, "Text", item, "LightLevel", item.LightLevel, clientItem.LightLevel, true);
             this.AddBinding(this.lightColorText, "Text", item, "LightColor", item.LightColor, clientItem.LightColor, true);

@@ -625,8 +625,8 @@ namespace ItemEditor
             this.candidatesButton.Enabled = false;
             for (int i = 0; i < this.candidatesTableLayoutPanel.ColumnCount; ++i)
             {
-                PictureBox box = (PictureBox)this.candidatesTableLayoutPanel.GetControlFromPosition(i, 0);
-                box.Image = null;
+                ClientItemPictureBox box = (ClientItemPictureBox)this.candidatesTableLayoutPanel.GetControlFromPosition(i, 0);
+                box.ClientItem = null;
             }
 
             if (this.PreviousPlugin != null)
@@ -643,7 +643,7 @@ namespace ItemEditor
                 }
                 else
                 {
-                    this.previousPictureBox.Image = null;
+                    this.previousPictureBox.ClientItem = null;
                 }
             }
 
@@ -686,9 +686,9 @@ namespace ItemEditor
             this.editDuplicateItemMenuItem.Enabled = false;
             this.optionsGroupBox.Enabled = false;
             this.appearanceGroupBox.Enabled = false;
-            this.pictureBox.Image = null;
+            this.pictureBox.ClientItem = null;
             this.pictureBox.BackColor = Color.White;
-            this.previousPictureBox.Image = null;
+            this.previousPictureBox.ClientItem = null;
             this.previousPictureBox.BackColor = Color.White;
             this.clientIdUpDown.Value = clientIdUpDown.Minimum;
             this.serverIdLbl.Text = "0";
@@ -1281,7 +1281,7 @@ namespace ItemEditor
         {
             if (this.CurrentServerItem != null)
             {
-                PictureBox box = (PictureBox)sender;
+                ClientItemPictureBox box = (ClientItemPictureBox)sender;
                 if (box.Tag is ServerItem)
                 {
                     ServerItem newItem = (ServerItem)box.Tag;

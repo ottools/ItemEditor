@@ -58,9 +58,12 @@ namespace ItemEditor.Controls
 
             set
             {
-                this.item = value;
-                this.Image = null;
-                this.DrawItem();
+                if (this.item != value)
+                {
+                    this.item = value;
+                    this.Image = null;
+                    this.DrawItem();
+                }
             }
         }
 

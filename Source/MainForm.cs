@@ -20,6 +20,7 @@
 
 #region Using Statements
 using ImageSimilarity;
+using ItemEditor.Controls;
 using ItemEditor.Diagnostics;
 using ItemEditor.Dialogs;
 using ItemEditor.Host;
@@ -458,66 +459,6 @@ namespace ItemEditor
             return canvas;
         }
 
-        private void DrawSprite(ref Bitmap canvas, ClientItem clientItem)
-        {
-            Graphics g = Graphics.FromImage(canvas);
-            Rectangle rect = new Rectangle();
-
-            // draw sprite
-            for (int l = 0; l < clientItem.layers; l++)
-            {
-                for (int h = 0; h < clientItem.height; ++h)
-                {
-                    for (int w = 0; w < clientItem.width; ++w)
-                    {
-                        int frameIndex = w + h * clientItem.width + l * clientItem.width * clientItem.height;
-                        Bitmap bmp = ImageUtils.GetBitmap(clientItem.GetRGBData(frameIndex), PixelFormat.Format24bppRgb, SpritePixels, SpritePixels);
-
-                        if (canvas.Width == SpritePixels)
-                        {
-                            rect.X = 0;
-                            rect.Y = 0;
-                            rect.Width = bmp.Width;
-                            rect.Height = bmp.Height;
-                        }
-                        else
-                        {
-                            rect.X = Math.Max(SpritePixels - w * SpritePixels, 0);
-                            rect.Y = Math.Max(SpritePixels - h * SpritePixels, 0);
-                            rect.Width = bmp.Width;
-                            rect.Height = bmp.Height;
-                        }
-
-                        g.DrawImage(bmp, rect);
-                    }
-                }
-            }
-
-            g.Save();
-        }
-
-        private void DrawSprite(PictureBox picturBox, ClientItem clientItem)
-        {
-            Bitmap canvas = new Bitmap(64, 64, PixelFormat.Format24bppRgb);
-            using (Graphics g = Graphics.FromImage(canvas))
-            {
-                g.FillRectangle(new SolidBrush(Color.FromArgb(0x11, 0x11, 0x11)), 0, 0, canvas.Width, canvas.Height);
-                g.Save();
-            }
-
-            this.DrawSprite(ref canvas, clientItem);
-
-            Bitmap newImage = new Bitmap(64, 64, PixelFormat.Format24bppRgb);
-            using (Graphics g = Graphics.FromImage(newImage))
-            {
-                g.DrawImage(canvas, new Point(canvas.Width > SpritePixels ? 0 : SpritePixels, canvas.Height > SpritePixels ? 0 : SpritePixels));
-                g.Save();
-            }
-
-            newImage.MakeTransparent(Color.FromArgb(0x11, 0x11, 0x11));
-            picturBox.Image = newImage;
-        }
-
         private void BuildItemsListBox()
         {
             this.ClearItemsListBox();
@@ -639,7 +580,7 @@ namespace ItemEditor
                 return false;
             }
 
-            this.DrawSprite(this.pictureBox, clientItem);
+            this.pictureBox.ClientItem = clientItem;
             if (!item.IsCustomCreated && item.SpriteHash != null && clientItem.SpriteHash != null)
             {
                 this.pictureBox.BackColor = Utils.ByteArrayCompare(item.SpriteHash, clientItem.SpriteHash) ? Color.White : Color.Red;
@@ -693,7 +634,7 @@ namespace ItemEditor
                 ClientItem prevClientItem;
                 if (this.PreviousPlugin.Instance.Items.TryGetValue(item.PreviousClientId, out prevClientItem))
                 {
-                    this.DrawSprite(this.previousPictureBox, prevClientItem);
+                    this.previousPictureBox.ClientItem = prevClientItem;
                     if (prevClientItem.SpriteSignature != null)
                     {
                         // Sprite does not match, use the sprite signature to find possible candidates
@@ -822,14 +763,14 @@ namespace ItemEditor
             int index = 0;
             foreach (KeyValuePair<double, ServerItem> kvp in signatureList)
             {
-                PictureBox box = (PictureBox)candidatesTableLayoutPanel.GetControlFromPosition(index, 0);
+                ClientItemPictureBox box = (ClientItemPictureBox)candidatesTableLayoutPanel.GetControlFromPosition(index, 0);
                 toolTip.SetToolTip(box, kvp.Value.ClientId.ToString());
                 box.Tag = kvp.Value;
 
-                ClientItem spriteCandidateItem;
-                if (this.CurrentPlugin.Instance.Items.TryGetValue(kvp.Value.ClientId, out spriteCandidateItem))
+                ClientItem candidateItem;
+                if (this.CurrentPlugin.Instance.Items.TryGetValue(kvp.Value.ClientId, out candidateItem))
                 {
-                    this.DrawSprite(box, spriteCandidateItem);
+                    box.ClientItem = candidateItem;
                 }
 
                 ++index;

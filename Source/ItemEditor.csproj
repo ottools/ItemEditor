@@ -98,6 +98,9 @@
     <Compile Include="Controls\ServerItemListBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ClientItemPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Dialogs\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>

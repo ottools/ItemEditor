@@ -73,6 +73,10 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageSimilarity\Complex.cs" />
+    <Compile Include="ImageSimilarity\Fourier.cs" />
+    <Compile Include="ImageSimilarity\ImageSimilarity.cs" />
+    <Compile Include="ImageSimilarity\ImageUtils.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="OTLib\Collections\ServerItemList.cs" />
     <Compile Include="OTLib\OTB\OtbReader.cs" />

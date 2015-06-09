@@ -35,7 +35,7 @@
             // bar
             // 
             this.bar.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bar.Location = new System.Drawing.Point(47, 59);
+            this.bar.Location = new System.Drawing.Point(47, 56);
             this.bar.Name = "bar";
             this.bar.Size = new System.Drawing.Size(257, 23);
             this.bar.TabIndex = 0;
@@ -44,7 +44,7 @@
             // progressLbl
             // 
             this.progressLbl.AutoSize = true;
-            this.progressLbl.Location = new System.Drawing.Point(44, 41);
+            this.progressLbl.Location = new System.Drawing.Point(44, 23);
             this.progressLbl.Name = "progressLbl";
             this.progressLbl.Size = new System.Drawing.Size(51, 13);
             this.progressLbl.TabIndex = 1;
@@ -55,7 +55,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(351, 123);
+            this.ClientSize = new System.Drawing.Size(347, 119);
             this.ControlBox = false;
             this.Controls.Add(this.progressLbl);
             this.Controls.Add(this.bar);

@@ -19,6 +19,7 @@
 #endregion
 
 #region Using Statements
+using ImageSimilarity;
 using OTLib.Server.Items;
 using OTLib.Utils;
 using System;
@@ -161,6 +162,12 @@ namespace ItemEditor
 
     public class ClientItem : Item
     {
+        #region Private Properties
+        
+        private static Rectangle Rect = new Rectangle();
+
+        #endregion
+
         #region Constructor
         
         public ClientItem()
@@ -273,26 +280,54 @@ namespace ItemEditor
             return bitmap;
         }
 
-        // used to calculate fourier transformation
-        public byte[] GetRGBData()
+        public void GenerateSignature()
         {
-            return SpriteList[0].GetRGBData();
-        }
+            int width = Sprite.DefaultSize;
+            int height = Sprite.DefaultSize;
 
-        public byte[] GetRGBData(int frameIndex)
-        {
-            return SpriteList[frameIndex].GetRGBData();
-        }
+            if (this.Width > 1 || this.Height > 1)
+            {
+                width = Sprite.DefaultSize * 2;
+                height = Sprite.DefaultSize * 2;
+            }
 
-        // used for drawing and calculating MD5
-        public byte[] GetRGBAData()
-        {
-            return SpriteList[0].GetARGBData();
-        }
+            Bitmap canvas = new Bitmap(width, height, PixelFormat.Format24bppRgb);
+            Graphics g = Graphics.FromImage(canvas);
 
-        public byte[] GetRGBAData(int frameIndex)
-        {
-            return SpriteList[frameIndex].GetARGBData();
+            // draw sprite
+            for (int l = 0; l < this.Layers; l++)
+            {
+                for (int h = 0; h < this.Height; ++h)
+                {
+                    for (int w = 0; w < this.Width; ++w)
+                    {
+                        int index = w + h * this.Width + l * this.Width * this.Height;
+                        Bitmap bitmap = ImageUtils.GetBitmap(this.SpriteList[index].GetRGBData(), PixelFormat.Format24bppRgb, Sprite.DefaultSize, Sprite.DefaultSize);
+
+                        if (canvas.Width == Sprite.DefaultSize)
+                        {
+                            Rect.X = 0;
+                            Rect.Y = 0;
+                            Rect.Width = bitmap.Width;
+                            Rect.Height = bitmap.Height;
+                        }
+                        else
+                        {
+                            Rect.X = Math.Max(Sprite.DefaultSize - w * Sprite.DefaultSize, 0);
+                            Rect.Y = Math.Max(Sprite.DefaultSize - h * Sprite.DefaultSize, 0);
+                            Rect.Width = bitmap.Width;
+                            Rect.Height = bitmap.Height;
+                        }
+
+                        g.DrawImage(bitmap, Rect);
+                    }
+                }
+            }
+
+            g.Save();
+
+            Bitmap ff2dBmp = Fourier.fft2dRGB(canvas, false);
+            this.SpriteSignature = ImageUtils.CalculateEuclideanDistance(ff2dBmp, 1);
         }
 
         #endregion

@@ -46,8 +46,6 @@ namespace ItemEditor
 
         public const string ApplicationName = "Item Editor";
         public const string VersionString = "0.3.4";
-        
-        private const int SpritePixels = 32;
 
         private bool showOnlyMismatchedItems = false;
         private bool showOnlyDeprecatedItems = false;
@@ -408,55 +406,6 @@ namespace ItemEditor
             this.toolTip.SetToolTip(this.duplicateItemButton, "Duplicate Item");
             this.toolTip.SetToolTip(this.reloadItemButton, "Reaload Item");
             this.toolTip.SetToolTip(this.findItemButton, "Find Item");
-        }
-
-        private Bitmap GetBitmap(ClientItem clientItem)
-        {
-            int width = SpritePixels;
-            int height = SpritePixels;
-
-            if (clientItem.Width > 1 || clientItem.Height > 1)
-            {
-                width = SpritePixels * 2;
-                height = SpritePixels * 2;
-            }
-
-            Bitmap canvas = new Bitmap(width, height, PixelFormat.Format24bppRgb);
-            Graphics g = Graphics.FromImage(canvas);
-            Rectangle rect = new Rectangle();
-            
-            // draw sprite
-            for (int l = 0; l < clientItem.Layers; l++)
-            {
-                for (int h = 0; h < clientItem.Height; ++h)
-                {
-                    for (int w = 0; w < clientItem.Width; ++w)
-                    {
-                        int frameIndex = w + h * clientItem.Width + l * clientItem.Width * clientItem.Height;
-                        Bitmap bmp = ImageUtils.GetBitmap(clientItem.GetRGBData(frameIndex), PixelFormat.Format24bppRgb, SpritePixels, SpritePixels);
-
-                        if (canvas.Width == SpritePixels)
-                        {
-                            rect.X = 0;
-                            rect.Y = 0;
-                            rect.Width = bmp.Width;
-                            rect.Height = bmp.Height;
-                        }
-                        else
-                        {
-                            rect.X = Math.Max(SpritePixels - w * SpritePixels, 0);
-                            rect.Y = Math.Max(SpritePixels - h * SpritePixels, 0);
-                            rect.Width = bmp.Width;
-                            rect.Height = bmp.Height;
-                        }
-
-                        g.DrawImage(bmp, rect);
-                    }
-                }
-            }
-
-            g.Save();
-            return canvas;
         }
 
         private void BuildItemsListBox()
@@ -912,20 +861,18 @@ namespace ItemEditor
             progress.bar.Minimum = 0;
             progress.bar.Maximum = items.Count;
             progress.Show(this);
+            progress.progressLbl.Text = "Calculating image signatures...";
 
             foreach (ClientItem clientItem in items.Values)
             {
-                Bitmap spriteBmp = this.GetBitmap(clientItem);
-                Bitmap ff2dBmp = Fourier.fft2dRGB(spriteBmp, false);
-                clientItem.SpriteSignature = ImageUtils.CalculateEuclideanDistance(ff2dBmp, 1);
+                clientItem.GenerateSignature();
 
                 if (progress.bar.Value % 20 == 0)
                 {
                     Application.DoEvents();
                 }
-
-                progress.progressLbl.Text = string.Format("Calculating image signature for item {0}.", clientItem.ID);
-                ++progress.bar.Value;
+                
+                progress.bar.Value++;
             }
 
             items.SignatureCalculated = true;

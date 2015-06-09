@@ -20,9 +20,14 @@
 
 #region Using Statements
 using OTLib.Server.Items;
+using OTLib.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Security.Cryptography;
 #endregion
 
 namespace ItemEditor
@@ -139,94 +144,157 @@ namespace ItemEditor
         public bool IsAnimation { get { return itemImpl.isAnimation; } set { itemImpl.isAnimation = value; } }
 
         // used to find sprites during updates
-        protected byte[] _spriteHash = null;
+        protected byte[] spriteHash = null;
         public virtual byte[] SpriteHash
         {
-            get { return _spriteHash; }
-            set { _spriteHash = value; }
+            get
+            {
+                return this.spriteHash;
+            }
+
+            set
+            {
+                this.spriteHash = value;
+            }
         }
     }
 
     public class ClientItem : Item
     {
-        // sprite meta-data
-        public byte width;
-        public byte height;
-        public byte layers;
-        public byte patternX;
-        public byte patternY;
-        public byte patternZ;
-        public byte frames;
-        public uint numSprites;
-        public List<Sprite> spriteList = new List<Sprite>();
+        #region Constructor
+        
+        public ClientItem()
+        {
+            this.SpriteList = new List<Sprite>();
+        }
+
+        #endregion
+
+        #region Public Properties
+
+        public byte Width { get; set; }
+
+        public byte Height { get; set; }
+
+        public byte Layers { get; set; }
+
+        public byte PatternX { get; set; }
+
+        public byte PatternY { get; set; }
+
+        public byte PatternZ { get; set; }
+
+        public byte Frames { get; set; }
+
+        public uint NumSprites { get; set; }
+
+        public List<Sprite> SpriteList { get; private set; }
 
         public override byte[] SpriteHash
         {
             get
             {
-                if (_spriteHash == null)
+                if (this.spriteHash == null)
                 {
-                    System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
-                    Int32 spriteBase = 0;
+                    MD5 md5 = MD5.Create();
+                    int spriteBase = 0;
                     MemoryStream stream = new MemoryStream();
 
-                    for (Int32 l = 0; l < layers; l++)
+                    for (byte l = 0; l < this.Layers; l++)
                     {
-                        for (Int32 h = 0; h < height; h++)
+                        for (byte h = 0; h < this.Height; h++)
                         {
-                            for (Int32 w = 0; w < width; w++)
+                            for (byte w = 0; w < this.Width; w++)
                             {
-                                Int32 frameIndex = spriteBase + w + h * width + l * width * height;
-                                Sprite sprite = spriteList[frameIndex];
+                                int index = spriteBase + w + h * this.Width + l * this.Width * this.Height;
+                                Sprite sprite = SpriteList[index];
                                 if (sprite != null)
                                 {
-                                    stream.Write(sprite.GetRGBAData(), 0, 32 * 32 * 4);
+                                    stream.Write(sprite.GetARGBData(), 0, Sprite.ARGBPixelsDataSize);
                                 }
                             }
                         }
                     }
 
                     stream.Position = 0;
-                    _spriteHash = md5.ComputeHash(stream);
+                    this.spriteHash = md5.ComputeHash(stream);
                 }
 
-                return _spriteHash;
+                return this.spriteHash;
             }
 
             set
             {
-                _spriteHash = value;
+                this.spriteHash = value;
             }
         }
 
         // contains sprite signatures using Euclidean distance (4x4 blocks) on a ff2d generated image of the sprite
-        private double[,] _spriteSignature = null;
-        public double[,] SpriteSignature
+        public double[,] SpriteSignature { get; set; }
+
+        #endregion
+
+        #region Public Methods
+
+        public Bitmap GetBitmap()
         {
-            get { return _spriteSignature; }
-            set { _spriteSignature = value; }
+            Bitmap bitmap = new Bitmap(this.Width * Sprite.DefaultSize, this.Height * Sprite.DefaultSize, PixelFormat.Format32bppArgb);
+
+            try
+            {
+                using (BitmapLocker locker = new BitmapLocker(bitmap))
+                {
+                    locker.LockBits();
+
+                    for (byte l = 0; l < this.Layers; l++)
+                    {
+                        for (byte w = 0; w < this.Width; w++)
+                        {
+                            for (byte h = 0; h < this.Height; h++)
+                            {
+                                int index = w + h * this.Width + l * this.Width * this.Height;
+                                int px = (this.Width - w - 1) * Sprite.DefaultSize;
+                                int py = (this.Height - h - 1) * Sprite.DefaultSize;
+
+                                locker.CopyPixels(this.SpriteList[index].GetBitmap(), px, py);
+                            }
+                        }
+                    }
+
+                    locker.UnlockBits();
+                }
+            }
+            catch
+            {
+                Trace.WriteLine(string.Format("Failed to get image for client id {0}. Check the transparency option.", this.ID));
+                return null;
+            }
+
+            return bitmap;
         }
 
         // used to calculate fourier transformation
         public byte[] GetRGBData()
         {
-            return spriteList[0].GetRGBData();
+            return SpriteList[0].GetRGBData();
         }
 
         public byte[] GetRGBData(int frameIndex)
         {
-            return spriteList[frameIndex].GetRGBData();
+            return SpriteList[frameIndex].GetRGBData();
         }
 
         // used for drawing and calculating MD5
         public byte[] GetRGBAData()
         {
-            return spriteList[0].GetRGBAData();
+            return SpriteList[0].GetARGBData();
         }
 
         public byte[] GetRGBAData(int frameIndex)
         {
-            return spriteList[frameIndex].GetRGBAData();
+            return SpriteList[frameIndex].GetARGBData();
         }
+
+        #endregion
     }
 }

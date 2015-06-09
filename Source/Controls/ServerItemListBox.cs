@@ -150,7 +150,7 @@ namespace ItemEditor.Controls
             ClientItem clientItem;
             if (this.plugin.Items.TryGetValue(item.ClientId, out clientItem))
             {
-                Bitmap bitmap = this.GetSpriteBitmap(clientItem);
+                Bitmap bitmap = clientItem.GetBitmap();
                 if (bitmap != null)
                 {
                     this.sourceRect.Width = bitmap.Width;
@@ -165,75 +165,5 @@ namespace ItemEditor.Controls
         }
 
         #endregion
-
-        private int spritePixels = 32;
-
-        private Bitmap GetSpriteBitmap(ClientItem clientItem)
-        {
-            int Width = spritePixels;
-            int Height = spritePixels;
-
-            if (clientItem.width > 1 || clientItem.height > 1)
-            {
-                Width = spritePixels * 2;
-                Height = spritePixels * 2;
-            }
-
-            Bitmap canvas = new Bitmap(Width, Height, PixelFormat.Format24bppRgb);
-            using (Graphics g = Graphics.FromImage(canvas))
-            {
-                g.FillRectangle(new SolidBrush(Color.FromArgb(0x11, 0x11, 0x11)), 0, 0, canvas.Width, canvas.Height);
-                g.Save();
-            }
-
-            DrawSprite(ref canvas, clientItem);
-
-            Bitmap newImage = new Bitmap(Width, Height, PixelFormat.Format24bppRgb);
-            using (Graphics g = Graphics.FromImage(newImage))
-            {
-                g.DrawImage(canvas, new Point(0, 0));
-                g.Save();
-            }
-
-            newImage.MakeTransparent(Color.FromArgb(0x11, 0x11, 0x11));
-            return newImage;
-        }
-
-        private void DrawSprite(ref Bitmap canvas, ClientItem clientItem)
-        {
-            Graphics g = Graphics.FromImage(canvas);
-            Rectangle rect = new Rectangle();
-
-            //draw sprite
-            for (int l = 0; l < clientItem.layers; l++)
-            {
-                for (int h = 0; h < clientItem.height; ++h)
-                {
-                    for (int w = 0; w < clientItem.width; ++w)
-                    {
-                        int frameIndex = w + h * clientItem.width + l * clientItem.width * clientItem.height;
-                        Bitmap bmp = ImageUtils.GetBitmap(clientItem.GetRGBData(frameIndex), PixelFormat.Format24bppRgb, spritePixels, spritePixels);
-
-                        if (canvas.Width == spritePixels)
-                        {
-                            rect.X = 0;
-                            rect.Y = 0;
-                            rect.Width = bmp.Width;
-                            rect.Height = bmp.Height;
-                        }
-                        else
-                        {
-                            rect.X = Math.Max(spritePixels - w * spritePixels, 0);
-                            rect.Y = Math.Max(spritePixels - h * spritePixels, 0);
-                            rect.Width = bmp.Width;
-                            rect.Height = bmp.Height;
-                        }
-                        g.DrawImage(bmp, rect);
-                    }
-                }
-            }
-
-            g.Save();
-        }
     }
 }

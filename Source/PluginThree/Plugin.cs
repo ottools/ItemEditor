@@ -366,38 +366,38 @@ namespace PluginThree
 
                     } while (flag != ItemFlag.LastFlag);
 
-                    item.width = reader.ReadByte();
-                    item.height = reader.ReadByte();
-                    if ((item.width > 1) || (item.height > 1))
+                    item.Width = reader.ReadByte();
+                    item.Height = reader.ReadByte();
+                    if ((item.Width > 1) || (item.Height > 1))
                     {
                         reader.BaseStream.Position++;
                     }
 
-                    item.layers = reader.ReadByte();
-                    item.patternX = reader.ReadByte();
-                    item.patternY = reader.ReadByte();
-                    item.patternZ = reader.ReadByte();
-                    item.frames = reader.ReadByte();
-                    item.IsAnimation = item.frames > 1;
-                    item.numSprites = (uint)item.width * item.height * item.layers * item.patternX * item.patternY * item.patternZ * item.frames;
+                    item.Layers = reader.ReadByte();
+                    item.PatternX = reader.ReadByte();
+                    item.PatternY = reader.ReadByte();
+                    item.PatternZ = reader.ReadByte();
+                    item.Frames = reader.ReadByte();
+                    item.IsAnimation = item.Frames > 1;
+                    item.NumSprites = (uint)item.Width * item.Height * item.Layers * item.PatternX * item.PatternY * item.PatternZ * item.Frames;
 
                     if (item.IsAnimation && skipFrameDuration)
                     {
-                        reader.ReadBytes(6 + 8 * item.frames);
+                        reader.ReadBytes(6 + 8 * item.Frames);
                     }
 
                     // Read the sprite ids
-                    for (uint i = 0; i < item.numSprites; ++i)
+                    for (uint i = 0; i < item.NumSprites; ++i)
                     {
                         uint spriteId = reader.ReadUInt32();
                         Sprite sprite;
                         if (!sprites.TryGetValue(spriteId, out sprite))
                         {
                             sprite = new Sprite();
-                            sprite.id = spriteId;
+                            sprite.ID = spriteId;
                             sprites[spriteId] = sprite;
                         }
-                        item.spriteList.Add(sprite);
+                        item.SpriteList.Add(sprite);
                     }
                     ++id;
                 }

@@ -67,6 +67,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data" />
     <Reference Include="System.XML" />
@@ -82,6 +83,7 @@
     <Compile Include="OTLib\Server\Items\ServerItemFlag.cs" />
     <Compile Include="OTLib\Utils\BinaryTreeReader.cs" />
     <Compile Include="OTLib\Utils\BinaryTreeWriter.cs" />
+    <Compile Include="OTLib\Utils\BitmapLocker.cs" />
     <Compile Include="OTLib\Utils\SpecialChar.cs" />
     <Compile Include="PluginInterface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

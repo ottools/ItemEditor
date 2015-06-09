@@ -415,7 +415,7 @@ namespace ItemEditor
             int width = SpritePixels;
             int height = SpritePixels;
 
-            if (clientItem.width > 1 || clientItem.height > 1)
+            if (clientItem.Width > 1 || clientItem.Height > 1)
             {
                 width = SpritePixels * 2;
                 height = SpritePixels * 2;
@@ -426,13 +426,13 @@ namespace ItemEditor
             Rectangle rect = new Rectangle();
             
             // draw sprite
-            for (int l = 0; l < clientItem.layers; l++)
+            for (int l = 0; l < clientItem.Layers; l++)
             {
-                for (int h = 0; h < clientItem.height; ++h)
+                for (int h = 0; h < clientItem.Height; ++h)
                 {
-                    for (int w = 0; w < clientItem.width; ++w)
+                    for (int w = 0; w < clientItem.Width; ++w)
                     {
-                        int frameIndex = w + h * clientItem.width + l * clientItem.width * clientItem.height;
+                        int frameIndex = w + h * clientItem.Width + l * clientItem.Width * clientItem.Height;
                         Bitmap bmp = ImageUtils.GetBitmap(clientItem.GetRGBData(frameIndex), PixelFormat.Format24bppRgb, SpritePixels, SpritePixels);
 
                         if (canvas.Width == SpritePixels)

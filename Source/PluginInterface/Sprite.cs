@@ -23,67 +23,74 @@ using PluginInterface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.InteropServices;
 #endregion
 
 namespace ItemEditor
 {
     public class Sprite
     {
-        #region Properties
-
-        public uint id;
-        public uint size;
-        public byte[] dump;
-        public bool useAlpha;
-
-        #endregion
-
         #region Contructor
 
         public Sprite()
         {
-            id = 0;
-            size = 0;
-            dump = null;
-            useAlpha = false;
+            this.ID = 0;
+            this.Size = 0;
+            this.CompressedPixels = null;
+            this.Transparent = false;
         }
 
         #endregion
 
-        #region Methods
+        #region Public Properties
+
+        public const byte DefaultSize = 32;
+        public const ushort RGBPixelsDataSize = 3072; // 32*32*3
+        public const ushort ARGBPixelsDataSize = 4096; // 32*32*4
+
+        public uint ID { get; set; }
+        public uint Size { get; set; }
+        public byte[] CompressedPixels { get; set; }
+        public bool Transparent { get; set; }
+
+        #endregion
+
+        #region Public Methods
 
         public byte[] GetRGBData()
         {
             try
             {
                 const byte transparentColor = 0x11;
-                return GetRGBData(transparentColor);
+                return this.GetRGBData(transparentColor);
             }
             catch
             {
-                Trace.WriteLine(String.Format("Failed to get sprite id {0}", this.id));
-                return blankSprite;
+                Trace.WriteLine(string.Format("Failed to get sprite id {0}", this.ID));
+                return BlankRGBSprite;
             }
         }
 
         private byte[] GetRGBData(byte transparentColor)
         {
-            byte[] rgb32x32x3 = new byte[32 * 32 * 3];
+            if (this.CompressedPixels == null || this.CompressedPixels.Length != Size)
+            {
+                return BlankRGBSprite;
+            }
+
+            byte[] rgb32x32x3 = new byte[RGBPixelsDataSize];
             uint bytes = 0;
             uint x = 0;
             uint y = 0;
             Int32 chunkSize;
-            byte channels = (byte)(useAlpha ? 4 : 3);
+            byte bitPerPixel = (byte)(this.Transparent ? 4 : 3);
 
-            if (dump == null || dump.Length != size)
+            while (bytes < Size)
             {
-                return blankSprite;
-            }
-
-            while (bytes < size)
-            {
-                chunkSize = dump[bytes] | dump[bytes + 1] << 8;
+                chunkSize = this.CompressedPixels[bytes] | this.CompressedPixels[bytes + 1] << 8;
                 bytes += 2;
 
                 for (int i = 0; i < chunkSize; ++i)
@@ -100,21 +107,27 @@ namespace ItemEditor
                     }
                 }
 
-                if (bytes >= size) break; // We're done
+                // We're done
+                if (bytes >= Size)
+                {
+                    break;
+                }
+
                 // Now comes a pixel chunk, read it!
-                chunkSize = dump[bytes] | dump[bytes + 1] << 8;
+                chunkSize = this.CompressedPixels[bytes] | this.CompressedPixels[bytes + 1] << 8;
                 bytes += 2;
+
                 for (int i = 0; i < chunkSize; ++i)
                 {
-                    byte red = dump[bytes + 0];
-                    byte green = dump[bytes + 1];
-                    byte blue = dump[bytes + 2];
+                    byte red = this.CompressedPixels[bytes + 0];
+                    byte green = this.CompressedPixels[bytes + 1];
+                    byte blue = this.CompressedPixels[bytes + 2];
 
                     rgb32x32x3[96 * y + x * 3 + 0] = red;
                     rgb32x32x3[96 * y + x * 3 + 1] = green;
                     rgb32x32x3[96 * y + x * 3 + 2] = blue;
 
-                    bytes += channels;
+                    bytes += bitPerPixel;
 
                     x++;
                     if (x >= 32)
@@ -126,13 +139,14 @@ namespace ItemEditor
             }
 
             // Fill up any trailing pixels
-            while (y < 32 && x < 32)
+            while (y < DefaultSize && x < DefaultSize)
             {
                 rgb32x32x3[96 * y + x * 3 + 0] = transparentColor;
                 rgb32x32x3[96 * y + x * 3 + 1] = transparentColor;
                 rgb32x32x3[96 * y + x * 3 + 2] = transparentColor;
                 x++;
-                if (x >= 32)
+
+                if (x >= DefaultSize)
                 {
                     x = 0;
                     ++y;
@@ -142,37 +156,94 @@ namespace ItemEditor
             return rgb32x32x3;
         }
 
-        public byte[] GetRGBAData()
+        public byte[] GetARGBData()
         {
-            byte[] rgb32x32x3 = GetRGBData();
-            byte[] rgbx32x32x4 = new byte[32 * 32 * 4];
-
-            //reverse rgb
-            for (int y = 0; y < 32; ++y)
+            if (this.CompressedPixels == null || this.CompressedPixels.Length != this.Size)
             {
-                for (int x = 0; x < 32; ++x)
+                return BlankARGBSprite;
+            }
+
+            int read = 0;
+            int write = 0;
+            int pos = 0;
+            int transparentPixels = 0;
+            int coloredPixels = 0;
+            int length = this.CompressedPixels.Length;
+            byte bitPerPixel = (byte)(this.Transparent ? 4 : 3);
+            byte[] pixels = new byte[ARGBPixelsDataSize];
+
+            for (read = 0; read < length; read += 4 + (bitPerPixel * coloredPixels))
+            {
+                transparentPixels = this.CompressedPixels[pos++] | this.CompressedPixels[pos++] << 8;
+                coloredPixels = this.CompressedPixels[pos++] | this.CompressedPixels[pos++] << 8;
+
+                for (int i = 0; i < transparentPixels; i++)
                 {
-                    rgbx32x32x4[128 * y + x * 4 + 0] = rgb32x32x3[(32 - y - 1) * 96 + x * 3 + 2]; //blue
-                    rgbx32x32x4[128 * y + x * 4 + 1] = rgb32x32x3[(32 - y - 1) * 96 + x * 3 + 1]; //green
-                    rgbx32x32x4[128 * y + x * 4 + 2] = rgb32x32x3[(32 - y - 1) * 96 + x * 3 + 0]; //red
-                    rgbx32x32x4[128 * y + x * 4 + 3] = 0;
+                    pixels[write++] = 0x00; // Blue
+                    pixels[write++] = 0x00; // Green
+                    pixels[write++] = 0x00; // Red
+                    pixels[write++] = 0x00; // Alpha
+                }
+
+                for (int i = 0; i < coloredPixels; i++)
+                {
+                    byte red = this.CompressedPixels[pos++];
+                    byte green = this.CompressedPixels[pos++];
+                    byte blue = this.CompressedPixels[pos++];
+                    byte alpha = this.Transparent ? this.CompressedPixels[pos++] : (byte)0xFF;
+
+                    pixels[write++] = blue;
+                    pixels[write++] = green;
+                    pixels[write++] = red;
+                    pixels[write++] = alpha;
                 }
             }
 
-            return rgbx32x32x4;
+            // Fills the remaining pixels
+            while (write < ARGBPixelsDataSize)
+            {
+                pixels[write++] = 0x00; // Blue
+                pixels[write++] = 0x00; // Green
+                pixels[write++] = 0x00; // Red
+                pixels[write++] = 0x00; // Alpha
+            }
+
+            return pixels;
+        }
+
+        public Bitmap GetBitmap()
+        {
+            Bitmap bitmap = new Bitmap(DefaultSize, DefaultSize, PixelFormat.Format32bppArgb);
+            byte[] pixels = this.GetARGBData();
+
+            if (pixels != null)
+            {
+                BitmapData bitmapData = bitmap.LockBits(Rect, ImageLockMode.ReadWrite, bitmap.PixelFormat);
+                Marshal.Copy(pixels, 0, bitmapData.Scan0, pixels.Length);
+                bitmap.UnlockBits(bitmapData);
+            }
+
+            return bitmap;
         }
 
         #endregion
 
         #region Static
 
-        private static byte[] blankSprite = new byte[32 * 32 * 3];
+        private static byte[] BlankRGBSprite = new byte[RGBPixelsDataSize];
+        private static byte[] BlankARGBSprite = new byte[ARGBPixelsDataSize];
+        private static readonly Rectangle Rect = new Rectangle(0, 0, DefaultSize, DefaultSize);
 
         public static void CreateBlankSprite()
         {
-            for (short i = 0; i < blankSprite.Length; i++)
+            for (short i = 0; i < RGBPixelsDataSize; i++)
             {
-                blankSprite[i] = 0x11;
+                BlankRGBSprite[i] = 0xFF;
+            }
+
+            for (short i = 0; i < ARGBPixelsDataSize; i++)
+            {
+                BlankARGBSprite[i] = 0xFF;
             }
         }
 
@@ -187,7 +258,7 @@ namespace ItemEditor
                     if (client.SprSignature != sprSignature)
                     {
                         string message = "Bad spr signature. Expected signature is {0:X} and loaded signature is {1:X}.";
-                        Trace.WriteLine(String.Format(message, client.SprSignature, sprSignature));
+                        Trace.WriteLine(string.Format(message, client.SprSignature, sprSignature));
                         return false;
                     }
 
@@ -220,16 +291,16 @@ namespace ItemEditor
                         {
                             if (sprite != null && size > 0)
                             {
-                                if (sprite.size > 0)
+                                if (sprite.Size > 0)
                                 {
-                                    //generate warning
+                                    // generate warning
                                 }
                                 else
                                 {
-                                    sprite.id = id;
-                                    sprite.size = size;
-                                    sprite.dump = reader.ReadBytes(size);
-                                    sprite.useAlpha = transparency;
+                                    sprite.ID = id;
+                                    sprite.Size = size;
+                                    sprite.CompressedPixels = reader.ReadBytes(size);
+                                    sprite.Transparent = transparency;
 
                                     sprites[id] = sprite;
                                 }

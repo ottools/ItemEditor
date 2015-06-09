@@ -34,7 +34,8 @@ namespace ItemEditor.Controls
         #region Private Properties
         
         private ClientItem item;
-        private Rectangle rect;
+        private Rectangle destRect;
+        private Rectangle sourceRect;
 
         #endregion
 
@@ -42,7 +43,8 @@ namespace ItemEditor.Controls
 
         public ClientItemPictureBox()
         {
-            this.rect = new Rectangle();
+            this.destRect = new Rectangle();
+            this.sourceRect = new Rectangle();
         }
 
         #endregion
@@ -84,37 +86,20 @@ namespace ItemEditor.Controls
             g.FillRectangle(new SolidBrush(Color.FromArgb(0x11, 0x11, 0x11)), 0, 0, canvas.Width, canvas.Height);
             g.Save();
 
-            // draw item
-            for (int l = 0; l < this.item.layers; l++)
+            Bitmap bitmap = this.item.GetBitmap();
+            if (bitmap != null)
             {
-                for (int h = 0; h < this.item.height; ++h)
-                {
-                    for (int w = 0; w < this.item.width; ++w)
-                    {
-                        int index = w + h * this.item.width + l * this.item.width * this.item.height;
-                        Bitmap bitmap = ImageUtils.GetBitmap(this.item.GetRGBData(index), PixelFormat.Format24bppRgb, 32, 32);
+                this.destRect.X = Math.Max(0, (int)((canvas.Width - bitmap.Width) * 0.5));
+                this.destRect.Y = Math.Max(0, (int)((canvas.Height - bitmap.Height) * 0.5));
+                this.destRect.Width = Math.Min(canvas.Width, bitmap.Width);
+                this.destRect.Height = Math.Min(canvas.Height, bitmap.Height);
 
-                        if (canvas.Width == 32)
-                        {
-                            this.rect.X = 0;
-                            this.rect.Y = 0;
-                            this.rect.Width = bitmap.Width;
-                            this.rect.Height = bitmap.Height;
-                        }
-                        else
-                        {
-                            this.rect.X = Math.Max(32 - (w * 32), 0);
-                            this.rect.Y = Math.Max(32 - (h * 32), 0);
-                            this.rect.Width = bitmap.Width;
-                            this.rect.Height = bitmap.Height;
-                        }
+                this.sourceRect.Width = bitmap.Width;
+                this.sourceRect.Height = bitmap.Height;
 
-                        g.DrawImage(bitmap, this.rect);
-                    }
-                }
+                g.DrawImage(bitmap, this.destRect, this.sourceRect, GraphicsUnit.Pixel);
+                g.Save();
             }
-
-            g.Save();
 
             canvas.MakeTransparent(Color.FromArgb(0x11, 0x11, 0x11));
             this.Image = canvas;

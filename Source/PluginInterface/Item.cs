@@ -344,7 +344,7 @@ namespace ItemEditor
                     }
 
                     locker.UnlockBits();
-                    bitmap.MakeTransparent(Color.FromArgb(0xFF, 0xFF, 0xFF));
+                    bitmap.MakeTransparent(Color.FromArgb(0x11, 0x11, 0x11));
                 }
             }
             catch

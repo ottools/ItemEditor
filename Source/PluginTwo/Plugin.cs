@@ -75,6 +75,7 @@ namespace PluginTwo
         #region Private Properties
 
         private Dictionary<uint, Sprite> sprites;
+        private ushort itemCount;
 
         #endregion
 
@@ -97,15 +98,24 @@ namespace PluginTwo
 
         // IPlugin implementation
         public IPluginHost Host { get; set; }
+
         public List<SupportedClient> SupportedClients { get; private set; }
+
         public ClientItems Items { get; set; }
+
+        public bool Loaded { get; private set; }
 
         #endregion
 
-        #region General Methods
+        #region Public Methods
 
         public bool LoadClient(SupportedClient client, bool extended, bool transparency, string datFullPath, string sprFullPath)
         {
+            if (this.Loaded)
+            {
+                this.Dispose();
+            }
+
             if (!LoadDat(datFullPath, client, extended))
             {
                 Trace.WriteLine("Failed to load dat.");
@@ -117,6 +127,8 @@ namespace PluginTwo
                 Trace.WriteLine("Failed to load spr.");
                 return false;
             }
+
+            this.Loaded = true;
             return true;
         }
 
@@ -139,10 +151,25 @@ namespace PluginTwo
             return null;
         }
 
+        public ClientItem GetClientItem(ushort id)
+        {
+            if (this.Loaded && id >= 100 && id <= this.itemCount)
+            {
+                return this.Items[id];
+            }
+
+            return null;
+        }
+
         public void Dispose()
         {
-            sprites.Clear();
-            this.Items.Clear();
+            if (this.Loaded)
+            {
+                this.sprites.Clear();
+                this.Items.Clear();
+                this.itemCount = 0;
+                this.Loaded = false;
+            }
         }
 
         public bool LoadSprites(string filename, SupportedClient client, bool extended, bool transparency)
@@ -164,16 +191,13 @@ namespace PluginTwo
                 }
 
                 // get max id
-                ushort itemCount = reader.ReadUInt16();
+                this.itemCount = reader.ReadUInt16();
                 reader.ReadUInt16(); // skipping outfits count
                 reader.ReadUInt16(); // skipping effects count
                 reader.ReadUInt16(); // skipping missiles count
 
-                ushort minclientID = 100; // items starts at 100
-                ushort maxclientID = itemCount;
-
-                ushort id = minclientID;
-                while (id <= maxclientID)
+                ushort id = 100;
+                while (id <= this.itemCount)
                 {
                     ClientItem item = new ClientItem();
                     item.ID = id;

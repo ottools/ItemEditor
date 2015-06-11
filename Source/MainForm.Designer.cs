@@ -36,8 +36,8 @@
             this.candidatesButton = new System.Windows.Forms.Button();
             this.currentSpriteLabel = new System.Windows.Forms.Label();
             this.previousLabel = new System.Windows.Forms.Label();
-            this.previousPictureBox = new ItemEditor.Controls.ClientItemPictureBox();
-            this.pictureBox = new ItemEditor.Controls.ClientItemPictureBox();
+            this.previousPictureBox = new ItemEditor.Controls.ClientItemView();
+            this.pictureBox = new ItemEditor.Controls.ClientItemView();
             this.serverIdLbl = new System.Windows.Forms.Label();
             this.clientIdUpDown = new System.Windows.Forms.NumericUpDown();
             this.sidLabel = new System.Windows.Forms.Label();
@@ -120,11 +120,11 @@
             this.toolStripCompareButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripFindItemButton = new System.Windows.Forms.ToolStripButton();
             this.candidatesTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.candidatesPictureBox1 = new ItemEditor.Controls.ClientItemPictureBox();
-            this.candidatesPictureBox2 = new ItemEditor.Controls.ClientItemPictureBox();
-            this.candidatesPictureBox3 = new ItemEditor.Controls.ClientItemPictureBox();
-            this.candidatesPictureBox4 = new ItemEditor.Controls.ClientItemPictureBox();
-            this.candidatesPictureBox5 = new ItemEditor.Controls.ClientItemPictureBox();
+            this.candidatesPictureBox1 = new ItemEditor.Controls.ClientItemView();
+            this.candidatesPictureBox2 = new ItemEditor.Controls.ClientItemView();
+            this.candidatesPictureBox3 = new ItemEditor.Controls.ClientItemView();
+            this.candidatesPictureBox4 = new ItemEditor.Controls.ClientItemView();
+            this.candidatesPictureBox5 = new ItemEditor.Controls.ClientItemView();
             this.candidatesDropDown = new System.Windows.Forms.ToolStripDropDown();
             this.newItemButton = new System.Windows.Forms.Button();
             this.duplicateItemButton = new System.Windows.Forms.Button();
@@ -134,18 +134,10 @@
             this.serverItemListBox = new ItemEditor.Controls.ServerItemListBox();
             this.allowDistanceReadCheckBox = new System.Windows.Forms.CheckBox();
             this.appearanceGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.previousPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.clientIdUpDown)).BeginInit();
             this.optionsGroupBox.SuspendLayout();
             this.menuBar.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.candidatesTableLayoutPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.candidatesPictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.candidatesPictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.candidatesPictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.candidatesPictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.candidatesPictureBox5)).BeginInit();
             this.SuspendLayout();
             // 
             // toolTip
@@ -1254,9 +1246,6 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.appearanceGroupBox.ResumeLayout(false);
             this.appearanceGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.previousPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.clientIdUpDown)).EndInit();
             this.optionsGroupBox.ResumeLayout(false);
             this.optionsGroupBox.PerformLayout();
             this.menuBar.ResumeLayout(false);
@@ -1264,11 +1253,6 @@
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.candidatesTableLayoutPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.candidatesPictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.candidatesPictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.candidatesPictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.candidatesPictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.candidatesPictureBox5)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1290,7 +1274,7 @@
         private System.Windows.Forms.ToolStripMenuItem helpAboutMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsUpdateVersionMenuItem;
-        private ItemEditor.Controls.ClientItemPictureBox pictureBox;
+        private ItemEditor.Controls.ClientItemView pictureBox;
         private System.Windows.Forms.TextBox outputTextBox;
         private System.Windows.Forms.Label cidLabel;
         private System.Windows.Forms.Label sidLabel;
@@ -1358,15 +1342,15 @@
         private System.Windows.Forms.ToolStripButton toolStripFindItemButton;
         private System.Windows.Forms.ToolStripMenuItem viewShowDecaptedItemsMenuItem;
         private System.Windows.Forms.Label previousLabel;
-        private ItemEditor.Controls.ClientItemPictureBox previousPictureBox;
+        private ItemEditor.Controls.ClientItemView previousPictureBox;
         private System.Windows.Forms.Label currentSpriteLabel;
         private System.Windows.Forms.TableLayoutPanel candidatesTableLayoutPanel;
         private System.Windows.Forms.ToolStripDropDown candidatesDropDown;
-        private ItemEditor.Controls.ClientItemPictureBox candidatesPictureBox1;
-        private ItemEditor.Controls.ClientItemPictureBox candidatesPictureBox2;
-        private ItemEditor.Controls.ClientItemPictureBox candidatesPictureBox3;
-        private ItemEditor.Controls.ClientItemPictureBox candidatesPictureBox4;
-        private ItemEditor.Controls.ClientItemPictureBox candidatesPictureBox5;
+        private ItemEditor.Controls.ClientItemView candidatesPictureBox1;
+        private ItemEditor.Controls.ClientItemView candidatesPictureBox2;
+        private ItemEditor.Controls.ClientItemView candidatesPictureBox3;
+        private ItemEditor.Controls.ClientItemView candidatesPictureBox4;
+        private ItemEditor.Controls.ClientItemView candidatesPictureBox5;
         private System.Windows.Forms.Button candidatesButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem filePreferencesMenuItem;

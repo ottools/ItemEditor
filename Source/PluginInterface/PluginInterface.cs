@@ -20,12 +20,13 @@
 
 #region Using Statements
 using ItemEditor;
+using System;
 using System.Collections.Generic;
 #endregion
 
 namespace PluginInterface
 {
-    public interface IPlugin
+    public interface IPlugin : IDisposable
     {
         IPluginHost Host { get; set; }
 
@@ -33,13 +34,15 @@ namespace PluginInterface
 
         List<SupportedClient> SupportedClients { get; }
 
+        bool Loaded { get; }
+
         bool LoadClient(SupportedClient client, bool extended, bool transparency, string datFullPath, string sprFullPath);
 
         void Initialize();
 
         SupportedClient GetClientBySignatures(uint datSignature, uint sprSignature);
 
-        void Dispose();
+        ClientItem GetClientItem(ushort id);
     }
 
     public interface IPluginHost

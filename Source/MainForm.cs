@@ -575,7 +575,7 @@ namespace ItemEditor
             this.candidatesButton.Enabled = false;
             for (int i = 0; i < this.candidatesTableLayoutPanel.ColumnCount; ++i)
             {
-                ClientItemPictureBox box = (ClientItemPictureBox)this.candidatesTableLayoutPanel.GetControlFromPosition(i, 0);
+                ClientItemView box = (ClientItemView)this.candidatesTableLayoutPanel.GetControlFromPosition(i, 0);
                 box.ClientItem = null;
             }
 
@@ -713,7 +713,7 @@ namespace ItemEditor
             int index = 0;
             foreach (KeyValuePair<double, ServerItem> kvp in signatureList)
             {
-                ClientItemPictureBox box = (ClientItemPictureBox)candidatesTableLayoutPanel.GetControlFromPosition(index, 0);
+                ClientItemView box = (ClientItemView)candidatesTableLayoutPanel.GetControlFromPosition(index, 0);
                 toolTip.SetToolTip(box, kvp.Value.ClientId.ToString());
                 box.Tag = kvp.Value;
 
@@ -1229,7 +1229,7 @@ namespace ItemEditor
         {
             if (this.CurrentServerItem != null)
             {
-                ClientItemPictureBox box = (ClientItemPictureBox)sender;
+                ClientItemView box = (ClientItemView)sender;
                 if (box.Tag is ServerItem)
                 {
                     ServerItem newItem = (ServerItem)box.Tag;

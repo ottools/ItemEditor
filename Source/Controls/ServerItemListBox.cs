@@ -19,13 +19,10 @@
 #endregion
 
 #region Using Statements
-using ImageSimilarity;
 using OTLib.Server.Items;
 using PluginInterface;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Windows.Forms;
 #endregion
 
@@ -121,20 +118,13 @@ namespace ItemEditor.Controls
 
             Rectangle bounds = ev.Bounds;
 
+            // draw background
             ev.DrawBackground();
-            ev.Graphics.DrawRectangle(Pens.Gray, bounds); // Border.
 
-            Brush brush;
-            if ((ev.State & DrawItemState.Selected) == DrawItemState.Selected)
-            {
-                brush = SystemBrushes.HighlightText;
-            }
-            else
-            {
-                brush = new SolidBrush(ev.ForeColor);
-            }
+            // draw border
+            ev.Graphics.DrawRectangle(Pens.Gray, bounds);
 
-            ServerItem item = (ServerItem)this.Items[ev.Index];
+            ServerItem serverItem = (ServerItem)this.Items[ev.Index];
 
             // Find the area in which to put the text and draw.
             this.layoutRect.X = bounds.Left + 32 + (3 * ItemMargin);
@@ -142,13 +132,22 @@ namespace ItemEditor.Controls
             this.layoutRect.Width = bounds.Right - ItemMargin - this.layoutRect.X;
             this.layoutRect.Height = bounds.Bottom - ItemMargin - this.layoutRect.Y;
 
-            // Draw sprite name
-            ev.Graphics.DrawString(item.ToString(), this.Font, brush, this.layoutRect);
+            // draw server item id and name
+            if ((ev.State & DrawItemState.Selected) == DrawItemState.Selected)
+            {
+                this.pen.Brush = WhiteBrush;
+                ev.Graphics.DrawString(serverItem.ToString(), this.Font, WhiteBrush, this.layoutRect);
+            }
+            else
+            {
+                this.pen.Brush = BlackBrush;
+                ev.Graphics.DrawString(serverItem.ToString(), this.Font, BlackBrush, this.layoutRect);
+            }
 
             this.destRect.Y = bounds.Top + ItemMargin;
 
-            ClientItem clientItem;
-            if (this.plugin.Items.TryGetValue(item.ClientId, out clientItem))
+            ClientItem clientItem = this.plugin.GetClientItem(serverItem.ClientId);
+            if (clientItem != null)
             {
                 Bitmap bitmap = clientItem.GetBitmap();
                 if (bitmap != null)
@@ -159,10 +158,19 @@ namespace ItemEditor.Controls
                 }
             }
 
-            this.pen.Brush = brush;
+            // draw item border
             ev.Graphics.DrawRectangle(this.pen, this.destRect);
+
+            // draw focus rect
             ev.DrawFocusRectangle();
         }
+
+        #endregion
+
+        #region Class Properties
+
+        private static readonly Brush WhiteBrush = new SolidBrush(Color.White);
+        private static readonly Brush BlackBrush = new SolidBrush(Color.Black);
 
         #endregion
     }

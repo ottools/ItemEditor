@@ -29,7 +29,7 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Controls
 {
-    public class ClientItemPictureBox : PictureBox
+    public class ClientItemView : UserControl
     {
         #region Private Properties
         
@@ -41,7 +41,7 @@ namespace ItemEditor.Controls
 
         #region Constructor
 
-        public ClientItemPictureBox()
+        public ClientItemView()
         {
             this.destRect = new Rectangle();
             this.sourceRect = new Rectangle();
@@ -63,46 +63,36 @@ namespace ItemEditor.Controls
                 if (this.item != value)
                 {
                     this.item = value;
-                    this.Image = null;
-                    this.DrawItem();
+                    this.Invalidate();
                 }
             }
         }
 
         #endregion
 
-        #region Private Methods
+        #region Event Handlers
 
-        private void DrawItem()
+        protected override void OnPaint(PaintEventArgs e)
         {
-            if (this.item == null)
+            if (this.item != null)
             {
-                return;
+                Bitmap bitmap = this.item.GetBitmap();
+                if (bitmap != null)
+                {
+                    this.destRect.X = Math.Max(0, (int)((this.Width - bitmap.Width) * 0.5));
+                    this.destRect.Y = Math.Max(0, (int)((this.Height - bitmap.Height) * 0.5));
+                    this.destRect.Width = Math.Min(this.Width, bitmap.Width);
+                    this.destRect.Height = Math.Min(this.Height, bitmap.Height);
+
+                    this.sourceRect.Width = bitmap.Width;
+                    this.sourceRect.Height = bitmap.Height;
+
+                    e.Graphics.DrawImage(bitmap, this.destRect, this.sourceRect, GraphicsUnit.Pixel);
+                    e.Graphics.Save();
+                }
             }
 
-            Bitmap canvas = new Bitmap(64, 64, PixelFormat.Format24bppRgb);
-
-            Graphics g = Graphics.FromImage(canvas);
-            g.FillRectangle(new SolidBrush(Color.FromArgb(0x11, 0x11, 0x11)), 0, 0, canvas.Width, canvas.Height);
-            g.Save();
-
-            Bitmap bitmap = this.item.GetBitmap();
-            if (bitmap != null)
-            {
-                this.destRect.X = Math.Max(0, (int)((canvas.Width - bitmap.Width) * 0.5));
-                this.destRect.Y = Math.Max(0, (int)((canvas.Height - bitmap.Height) * 0.5));
-                this.destRect.Width = Math.Min(canvas.Width, bitmap.Width);
-                this.destRect.Height = Math.Min(canvas.Height, bitmap.Height);
-
-                this.sourceRect.Width = bitmap.Width;
-                this.sourceRect.Height = bitmap.Height;
-
-                g.DrawImage(bitmap, this.destRect, this.sourceRect, GraphicsUnit.Pixel);
-                g.Save();
-            }
-
-            canvas.MakeTransparent(Color.FromArgb(0x11, 0x11, 0x11));
-            this.Image = canvas;
+            base.OnPaint(e);
         }
 
         #endregion

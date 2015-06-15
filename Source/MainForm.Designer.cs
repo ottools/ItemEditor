@@ -45,6 +45,7 @@
             this.typeCombo = new System.Windows.Forms.ComboBox();
             this.typeLabel = new System.Windows.Forms.Label();
             this.optionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.allowDistanceReadCheckBox = new System.Windows.Forms.CheckBox();
             this.stackOrderComboBox = new System.Windows.Forms.ComboBox();
             this.stackOrderLabel = new System.Windows.Forms.Label();
             this.wareIdText = new System.Windows.Forms.TextBox();
@@ -132,8 +133,8 @@
             this.findItemButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.serverItemListBox = new ItemEditor.Controls.ServerItemListBox();
-            this.allowDistanceReadCheckBox = new System.Windows.Forms.CheckBox();
             this.appearanceGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clientIdUpDown)).BeginInit();
             this.optionsGroupBox.SuspendLayout();
             this.menuBar.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -332,6 +333,16 @@
             this.optionsGroupBox.TabIndex = 1;
             this.optionsGroupBox.TabStop = false;
             this.optionsGroupBox.Text = "Attributes";
+            // 
+            // allowDistanceReadCheckBox
+            // 
+            this.allowDistanceReadCheckBox.AutoSize = true;
+            this.allowDistanceReadCheckBox.Location = new System.Drawing.Point(134, 95);
+            this.allowDistanceReadCheckBox.Name = "allowDistanceReadCheckBox";
+            this.allowDistanceReadCheckBox.Size = new System.Drawing.Size(125, 17);
+            this.allowDistanceReadCheckBox.TabIndex = 51;
+            this.allowDistanceReadCheckBox.Text = "Allow Distance Read";
+            this.allowDistanceReadCheckBox.UseVisualStyleBackColor = true;
             // 
             // stackOrderComboBox
             // 
@@ -1202,16 +1213,6 @@
             this.serverItemListBox.SelectedIndexChanged += new System.EventHandler(this.ItemsListBox_SelectedIndexChanged);
             this.serverItemListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ItemsListBox_MouseDown);
             // 
-            // allowDistanceReadCheckBox
-            // 
-            this.allowDistanceReadCheckBox.AutoSize = true;
-            this.allowDistanceReadCheckBox.Location = new System.Drawing.Point(134, 95);
-            this.allowDistanceReadCheckBox.Name = "allowDistanceReadCheckBox";
-            this.allowDistanceReadCheckBox.Size = new System.Drawing.Size(125, 17);
-            this.allowDistanceReadCheckBox.TabIndex = 51;
-            this.allowDistanceReadCheckBox.Text = "Allow Distance Read";
-            this.allowDistanceReadCheckBox.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1246,6 +1247,7 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.appearanceGroupBox.ResumeLayout(false);
             this.appearanceGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clientIdUpDown)).EndInit();
             this.optionsGroupBox.ResumeLayout(false);
             this.optionsGroupBox.PerformLayout();
             this.menuBar.ResumeLayout(false);

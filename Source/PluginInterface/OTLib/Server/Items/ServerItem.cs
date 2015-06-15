@@ -74,6 +74,11 @@ namespace OTLib.Server.Items
 
         public ServerItem(Item item)
         {
+            if (item == null)
+            {
+                throw new ArgumentNullException("item");
+            }
+
             this.CopyPropertiesFrom(item);
         }
 

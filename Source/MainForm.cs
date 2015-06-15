@@ -730,18 +730,20 @@ namespace ItemEditor
         private ServerItem CreateItem(Item item = null)
         {
             // create a new otb item
-            ServerItem newItem = new ServerItem(item);
+            ServerItem newItem = new ServerItem();
             newItem.ID = (ushort)(this.serverItems.MaxId + 1);
-            newItem.SpriteHash = new byte[16];
 
             if (item != null)
             {
+                newItem.CopyPropertiesFrom(item);
                 newItem.ClientId = item.ID;
+                newItem.SpriteHash = new byte[16];
                 Buffer.BlockCopy(item.SpriteHash, 0, newItem.SpriteHash, 0, newItem.SpriteHash.Length);
             }
             else
             {
                 newItem.ClientId = this.serverItems.MinId;
+                newItem.SpriteHash = new byte[16];
                 newItem.IsCustomCreated = true;
             }
 

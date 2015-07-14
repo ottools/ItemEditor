@@ -154,7 +154,6 @@ namespace ItemEditor
                 this.HookEast != item.HookEast ||
                 this.IgnoreLook != item.IgnoreLook ||
                 this.FullGround != item.FullGround ||
-                this.AllowDistanceRead != item.AllowDistanceRead ||
                 this.IsAnimation != item.IsAnimation ||
                 this.GroundSpeed != item.GroundSpeed ||
                 this.LightLevel != item.LightLevel ||

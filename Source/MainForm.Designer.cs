@@ -43,7 +43,6 @@
             this.typeCombo = new System.Windows.Forms.ComboBox();
             this.typeLabel = new System.Windows.Forms.Label();
             this.optionsGroupBox = new System.Windows.Forms.GroupBox();
-            this.allowDistanceReadCheckBox = new System.Windows.Forms.CheckBox();
             this.stackOrderComboBox = new System.Windows.Forms.ComboBox();
             this.stackOrderLabel = new System.Windows.Forms.Label();
             this.wareIdText = new System.Windows.Forms.TextBox();
@@ -268,7 +267,6 @@
             // optionsGroupBox
             // 
             this.optionsGroupBox.Controls.Add(this.forceUseCheckBox);
-            this.optionsGroupBox.Controls.Add(this.allowDistanceReadCheckBox);
             this.optionsGroupBox.Controls.Add(this.stackOrderComboBox);
             this.optionsGroupBox.Controls.Add(this.stackOrderLabel);
             this.optionsGroupBox.Controls.Add(this.wareIdText);
@@ -311,16 +309,6 @@
             this.optionsGroupBox.TabIndex = 1;
             this.optionsGroupBox.TabStop = false;
             this.optionsGroupBox.Text = "Attributes";
-            // 
-            // allowDistanceReadCheckBox
-            // 
-            this.allowDistanceReadCheckBox.AutoSize = true;
-            this.allowDistanceReadCheckBox.Location = new System.Drawing.Point(134, 118);
-            this.allowDistanceReadCheckBox.Name = "allowDistanceReadCheckBox";
-            this.allowDistanceReadCheckBox.Size = new System.Drawing.Size(125, 17);
-            this.allowDistanceReadCheckBox.TabIndex = 51;
-            this.allowDistanceReadCheckBox.Text = "Allow Distance Read";
-            this.allowDistanceReadCheckBox.UseVisualStyleBackColor = true;
             // 
             // stackOrderComboBox
             // 
@@ -1376,7 +1364,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox stackOrderComboBox;
         private System.Windows.Forms.Label stackOrderLabel;
-        private System.Windows.Forms.CheckBox allowDistanceReadCheckBox;
         private System.Windows.Forms.CheckBox forceUseCheckBox;
     }
 }

@@ -137,7 +137,8 @@ namespace OTLib.OTB
                         item.BlockMissiles = ((flags & ServerItemFlag.BlockMissiles) == ServerItemFlag.BlockMissiles);
                         item.BlockPathfinder = ((flags & ServerItemFlag.BlockPathfinder) == ServerItemFlag.BlockPathfinder);
                         item.HasElevation = ((flags & ServerItemFlag.HasElevation) == ServerItemFlag.HasElevation);
-                        item.MultiUse = ((flags & ServerItemFlag.Useable) == ServerItemFlag.Useable);
+                        item.ForceUse = ((flags & ServerItemFlag.ForceUse) == ServerItemFlag.ForceUse);
+                        item.MultiUse = ((flags & ServerItemFlag.MultiUse) == ServerItemFlag.MultiUse);
                         item.Pickupable = ((flags & ServerItemFlag.Pickupable) == ServerItemFlag.Pickupable);
                         item.Movable = ((flags & ServerItemFlag.Movable) == ServerItemFlag.Movable);
                         item.Stackable = ((flags & ServerItemFlag.Stackable) == ServerItemFlag.Stackable);

@@ -548,18 +548,19 @@ namespace ItemEditor
 
             // Attributes
             this.AddBinding(this.unpassableCheck, "Checked", item, "Unpassable", item.Unpassable, clientItem.Unpassable);
+            this.AddBinding(this.movableCheck, "Checked", item, "Movable", item.Movable, clientItem.Movable);
             this.AddBinding(this.blockMissilesCheck, "Checked", item, "BlockMissiles", item.BlockMissiles, clientItem.BlockMissiles);
             this.AddBinding(this.blockPathfinderCheck, "Checked", item, "BlockPathfinder", item.BlockPathfinder, clientItem.BlockPathfinder);
-            this.AddBinding(this.hasElevationCheck, "Checked", item, "HasElevation", item.HasElevation, clientItem.HasElevation);
+            this.AddBinding(this.forceUseCheckBox, "Checked", item, "ForceUse", item.ForceUse, clientItem.ForceUse);
             this.AddBinding(this.useableCheck, "Checked", item, "MultiUse", item.MultiUse, clientItem.MultiUse);
             this.AddBinding(this.pickupableCheck, "Checked", item, "Pickupable", item.Pickupable, clientItem.Pickupable);
-            this.AddBinding(this.movableCheck, "Checked", item, "Movable", item.Movable, clientItem.Movable);
             this.AddBinding(this.stackableCheck, "Checked", item, "Stackable", item.Stackable, clientItem.Stackable);
             this.AddBinding(this.readableCheck, "Checked", item, "Readable", item.Readable, clientItem.Readable);
             this.AddBinding(this.rotatableCheck, "Checked", item, "Rotatable", item.Rotatable, clientItem.Rotatable);
             this.AddBinding(this.hangableCheck, "Checked", item, "Hangable", item.Hangable, clientItem.Hangable);
             this.AddBinding(this.hookSouthCheck, "Checked", item, "HookSouth", item.HookSouth, clientItem.HookSouth);
             this.AddBinding(this.hookEastCheck, "Checked", item, "HookEast", item.HookEast, clientItem.HookEast);
+            this.AddBinding(this.hasElevationCheck, "Checked", item, "HasElevation", item.HasElevation, clientItem.HasElevation);
             this.AddBinding(this.ignoreLookCheck, "Checked", item, "IgnoreLook", item.IgnoreLook, clientItem.IgnoreLook);
             this.AddBinding(this.fullGroundCheck, "Checked", item, "FullGround", item.FullGround, clientItem.FullGround);
             this.AddBinding(this.allowDistanceReadCheckBox, "Checked", item, "AllowDistanceRead", item.AllowDistanceRead, clientItem.AllowDistanceRead);

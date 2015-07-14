@@ -191,9 +191,14 @@ namespace OTLib.OTB
                             flags |= (uint)ServerItemFlag.HasElevation;
                         }
 
+                        if (item.ForceUse)
+                        {
+                            flags |= (uint)ServerItemFlag.ForceUse;
+                        }
+
                         if (item.MultiUse)
                         {
-                            flags |= (uint)ServerItemFlag.Useable;
+                            flags |= (uint)ServerItemFlag.MultiUse;
                         }
 
                         if (item.Pickupable)

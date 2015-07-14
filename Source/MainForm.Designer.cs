@@ -36,8 +36,6 @@
             this.candidatesButton = new System.Windows.Forms.Button();
             this.currentSpriteLabel = new System.Windows.Forms.Label();
             this.previousLabel = new System.Windows.Forms.Label();
-            this.previousPictureBox = new ItemEditor.Controls.ClientItemView();
-            this.pictureBox = new ItemEditor.Controls.ClientItemView();
             this.serverIdLbl = new System.Windows.Forms.Label();
             this.clientIdUpDown = new System.Windows.Forms.NumericUpDown();
             this.sidLabel = new System.Windows.Forms.Label();
@@ -121,18 +119,21 @@
             this.toolStripCompareButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripFindItemButton = new System.Windows.Forms.ToolStripButton();
             this.candidatesTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.candidatesPictureBox1 = new ItemEditor.Controls.ClientItemView();
-            this.candidatesPictureBox2 = new ItemEditor.Controls.ClientItemView();
-            this.candidatesPictureBox3 = new ItemEditor.Controls.ClientItemView();
-            this.candidatesPictureBox4 = new ItemEditor.Controls.ClientItemView();
-            this.candidatesPictureBox5 = new ItemEditor.Controls.ClientItemView();
             this.candidatesDropDown = new System.Windows.Forms.ToolStripDropDown();
             this.newItemButton = new System.Windows.Forms.Button();
             this.duplicateItemButton = new System.Windows.Forms.Button();
             this.reloadItemButton = new System.Windows.Forms.Button();
             this.findItemButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.forceUseCheckBox = new System.Windows.Forms.CheckBox();
+            this.previousPictureBox = new ItemEditor.Controls.ClientItemView();
+            this.pictureBox = new ItemEditor.Controls.ClientItemView();
             this.serverItemListBox = new ItemEditor.Controls.ServerItemListBox();
+            this.candidatesPictureBox1 = new ItemEditor.Controls.ClientItemView();
+            this.candidatesPictureBox2 = new ItemEditor.Controls.ClientItemView();
+            this.candidatesPictureBox3 = new ItemEditor.Controls.ClientItemView();
+            this.candidatesPictureBox4 = new ItemEditor.Controls.ClientItemView();
+            this.candidatesPictureBox5 = new ItemEditor.Controls.ClientItemView();
             this.appearanceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clientIdUpDown)).BeginInit();
             this.optionsGroupBox.SuspendLayout();
@@ -205,30 +206,6 @@
             this.previousLabel.TabIndex = 14;
             this.previousLabel.Text = "Previous:";
             // 
-            // previousPictureBox
-            // 
-            this.previousPictureBox.BackColor = System.Drawing.Color.White;
-            this.previousPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.previousPictureBox.ClientItem = null;
-            this.previousPictureBox.Location = new System.Drawing.Point(13, 36);
-            this.previousPictureBox.Margin = new System.Windows.Forms.Padding(0);
-            this.previousPictureBox.Name = "previousPictureBox";
-            this.previousPictureBox.Size = new System.Drawing.Size(64, 64);
-            this.previousPictureBox.TabIndex = 13;
-            this.previousPictureBox.TabStop = false;
-            // 
-            // pictureBox
-            // 
-            this.pictureBox.BackColor = System.Drawing.Color.White;
-            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.ClientItem = null;
-            this.pictureBox.Location = new System.Drawing.Point(13, 121);
-            this.pictureBox.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(64, 64);
-            this.pictureBox.TabIndex = 0;
-            this.pictureBox.TabStop = false;
-            // 
             // serverIdLbl
             // 
             this.serverIdLbl.BackColor = System.Drawing.Color.White;
@@ -290,6 +267,7 @@
             // 
             // optionsGroupBox
             // 
+            this.optionsGroupBox.Controls.Add(this.forceUseCheckBox);
             this.optionsGroupBox.Controls.Add(this.allowDistanceReadCheckBox);
             this.optionsGroupBox.Controls.Add(this.stackOrderComboBox);
             this.optionsGroupBox.Controls.Add(this.stackOrderLabel);
@@ -337,7 +315,7 @@
             // allowDistanceReadCheckBox
             // 
             this.allowDistanceReadCheckBox.AutoSize = true;
-            this.allowDistanceReadCheckBox.Location = new System.Drawing.Point(134, 95);
+            this.allowDistanceReadCheckBox.Location = new System.Drawing.Point(134, 118);
             this.allowDistanceReadCheckBox.Name = "allowDistanceReadCheckBox";
             this.allowDistanceReadCheckBox.Size = new System.Drawing.Size(125, 17);
             this.allowDistanceReadCheckBox.TabIndex = 51;
@@ -502,7 +480,7 @@
             // ignoreLookCheck
             // 
             this.ignoreLookCheck.AutoSize = true;
-            this.ignoreLookCheck.Location = new System.Drawing.Point(134, 26);
+            this.ignoreLookCheck.Location = new System.Drawing.Point(134, 49);
             this.ignoreLookCheck.Name = "ignoreLookCheck";
             this.ignoreLookCheck.Size = new System.Drawing.Size(83, 17);
             this.ignoreLookCheck.TabIndex = 16;
@@ -512,7 +490,7 @@
             // readableCheck
             // 
             this.readableCheck.AutoSize = true;
-            this.readableCheck.Location = new System.Drawing.Point(134, 49);
+            this.readableCheck.Location = new System.Drawing.Point(134, 72);
             this.readableCheck.Name = "readableCheck";
             this.readableCheck.Size = new System.Drawing.Size(72, 17);
             this.readableCheck.TabIndex = 18;
@@ -522,7 +500,7 @@
             // stackableCheck
             // 
             this.stackableCheck.AutoSize = true;
-            this.stackableCheck.Location = new System.Drawing.Point(14, 233);
+            this.stackableCheck.Location = new System.Drawing.Point(14, 140);
             this.stackableCheck.Name = "stackableCheck";
             this.stackableCheck.Size = new System.Drawing.Size(74, 17);
             this.stackableCheck.TabIndex = 13;
@@ -554,15 +532,15 @@
             this.useableCheck.AutoSize = true;
             this.useableCheck.Location = new System.Drawing.Point(14, 187);
             this.useableCheck.Name = "useableCheck";
-            this.useableCheck.Size = new System.Drawing.Size(65, 17);
+            this.useableCheck.Size = new System.Drawing.Size(70, 17);
             this.useableCheck.TabIndex = 11;
-            this.useableCheck.Text = "Useable";
+            this.useableCheck.Text = "Multi Use";
             this.useableCheck.UseVisualStyleBackColor = true;
             // 
             // hangableCheck
             // 
             this.hangableCheck.AutoSize = true;
-            this.hangableCheck.Location = new System.Drawing.Point(14, 164);
+            this.hangableCheck.Location = new System.Drawing.Point(14, 233);
             this.hangableCheck.Name = "hangableCheck";
             this.hangableCheck.Size = new System.Drawing.Size(72, 17);
             this.hangableCheck.TabIndex = 10;
@@ -572,7 +550,7 @@
             // hasElevationCheck
             // 
             this.hasElevationCheck.AutoSize = true;
-            this.hasElevationCheck.Location = new System.Drawing.Point(14, 118);
+            this.hasElevationCheck.Location = new System.Drawing.Point(134, 26);
             this.hasElevationCheck.Name = "hasElevationCheck";
             this.hasElevationCheck.Size = new System.Drawing.Size(92, 17);
             this.hasElevationCheck.TabIndex = 8;
@@ -612,7 +590,7 @@
             // fullGroundCheck
             // 
             this.fullGroundCheck.AutoSize = true;
-            this.fullGroundCheck.Location = new System.Drawing.Point(134, 72);
+            this.fullGroundCheck.Location = new System.Drawing.Point(134, 95);
             this.fullGroundCheck.Name = "fullGroundCheck";
             this.fullGroundCheck.Size = new System.Drawing.Size(80, 17);
             this.fullGroundCheck.TabIndex = 14;
@@ -622,7 +600,7 @@
             // pickupableCheck
             // 
             this.pickupableCheck.AutoSize = true;
-            this.pickupableCheck.Location = new System.Drawing.Point(14, 141);
+            this.pickupableCheck.Location = new System.Drawing.Point(14, 118);
             this.pickupableCheck.Name = "pickupableCheck";
             this.pickupableCheck.Size = new System.Drawing.Size(79, 17);
             this.pickupableCheck.TabIndex = 9;
@@ -1055,76 +1033,6 @@
             this.candidatesTableLayoutPanel.Size = new System.Drawing.Size(320, 64);
             this.candidatesTableLayoutPanel.TabIndex = 0;
             // 
-            // candidatesPictureBox1
-            // 
-            this.candidatesPictureBox1.BackColor = System.Drawing.Color.White;
-            this.candidatesPictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.candidatesPictureBox1.ClientItem = null;
-            this.candidatesPictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.candidatesPictureBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.candidatesPictureBox1.Name = "candidatesPictureBox1";
-            this.candidatesPictureBox1.Size = new System.Drawing.Size(64, 64);
-            this.candidatesPictureBox1.TabIndex = 0;
-            this.candidatesPictureBox1.TabStop = false;
-            this.candidatesPictureBox1.Tag = "1";
-            this.candidatesPictureBox1.Click += new System.EventHandler(this.CandidatePictureBox_Click);
-            // 
-            // candidatesPictureBox2
-            // 
-            this.candidatesPictureBox2.BackColor = System.Drawing.Color.White;
-            this.candidatesPictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.candidatesPictureBox2.ClientItem = null;
-            this.candidatesPictureBox2.Location = new System.Drawing.Point(64, 0);
-            this.candidatesPictureBox2.Margin = new System.Windows.Forms.Padding(0);
-            this.candidatesPictureBox2.Name = "candidatesPictureBox2";
-            this.candidatesPictureBox2.Size = new System.Drawing.Size(64, 64);
-            this.candidatesPictureBox2.TabIndex = 1;
-            this.candidatesPictureBox2.TabStop = false;
-            this.candidatesPictureBox2.Tag = "2";
-            this.candidatesPictureBox2.Click += new System.EventHandler(this.CandidatePictureBox_Click);
-            // 
-            // candidatesPictureBox3
-            // 
-            this.candidatesPictureBox3.BackColor = System.Drawing.Color.White;
-            this.candidatesPictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.candidatesPictureBox3.ClientItem = null;
-            this.candidatesPictureBox3.Location = new System.Drawing.Point(128, 0);
-            this.candidatesPictureBox3.Margin = new System.Windows.Forms.Padding(0);
-            this.candidatesPictureBox3.Name = "candidatesPictureBox3";
-            this.candidatesPictureBox3.Size = new System.Drawing.Size(64, 64);
-            this.candidatesPictureBox3.TabIndex = 2;
-            this.candidatesPictureBox3.TabStop = false;
-            this.candidatesPictureBox3.Tag = "3";
-            this.candidatesPictureBox3.Click += new System.EventHandler(this.CandidatePictureBox_Click);
-            // 
-            // candidatesPictureBox4
-            // 
-            this.candidatesPictureBox4.BackColor = System.Drawing.Color.White;
-            this.candidatesPictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.candidatesPictureBox4.ClientItem = null;
-            this.candidatesPictureBox4.Location = new System.Drawing.Point(192, 0);
-            this.candidatesPictureBox4.Margin = new System.Windows.Forms.Padding(0);
-            this.candidatesPictureBox4.Name = "candidatesPictureBox4";
-            this.candidatesPictureBox4.Size = new System.Drawing.Size(64, 64);
-            this.candidatesPictureBox4.TabIndex = 3;
-            this.candidatesPictureBox4.TabStop = false;
-            this.candidatesPictureBox4.Tag = "4";
-            this.candidatesPictureBox4.Click += new System.EventHandler(this.CandidatePictureBox_Click);
-            // 
-            // candidatesPictureBox5
-            // 
-            this.candidatesPictureBox5.BackColor = System.Drawing.Color.White;
-            this.candidatesPictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.candidatesPictureBox5.ClientItem = null;
-            this.candidatesPictureBox5.Location = new System.Drawing.Point(256, 0);
-            this.candidatesPictureBox5.Margin = new System.Windows.Forms.Padding(0);
-            this.candidatesPictureBox5.Name = "candidatesPictureBox5";
-            this.candidatesPictureBox5.Size = new System.Drawing.Size(64, 64);
-            this.candidatesPictureBox5.TabIndex = 4;
-            this.candidatesPictureBox5.TabStop = false;
-            this.candidatesPictureBox5.Tag = "5";
-            this.candidatesPictureBox5.Click += new System.EventHandler(this.CandidatePictureBox_Click);
-            // 
             // candidatesDropDown
             // 
             this.candidatesDropDown.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
@@ -1199,6 +1107,40 @@
             this.label1.Size = new System.Drawing.Size(2, 20);
             this.label1.TabIndex = 41;
             // 
+            // forceUseCheckBox
+            // 
+            this.forceUseCheckBox.AutoSize = true;
+            this.forceUseCheckBox.Location = new System.Drawing.Point(14, 162);
+            this.forceUseCheckBox.Name = "forceUseCheckBox";
+            this.forceUseCheckBox.Size = new System.Drawing.Size(75, 17);
+            this.forceUseCheckBox.TabIndex = 52;
+            this.forceUseCheckBox.Text = "Force Use";
+            this.forceUseCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // previousPictureBox
+            // 
+            this.previousPictureBox.BackColor = System.Drawing.Color.White;
+            this.previousPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.previousPictureBox.ClientItem = null;
+            this.previousPictureBox.Location = new System.Drawing.Point(13, 36);
+            this.previousPictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.previousPictureBox.Name = "previousPictureBox";
+            this.previousPictureBox.Size = new System.Drawing.Size(64, 64);
+            this.previousPictureBox.TabIndex = 13;
+            this.previousPictureBox.TabStop = false;
+            // 
+            // pictureBox
+            // 
+            this.pictureBox.BackColor = System.Drawing.Color.White;
+            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox.ClientItem = null;
+            this.pictureBox.Location = new System.Drawing.Point(13, 121);
+            this.pictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(64, 64);
+            this.pictureBox.TabIndex = 0;
+            this.pictureBox.TabStop = false;
+            // 
             // serverItemListBox
             // 
             this.serverItemListBox.ContextMenuStrip = this.itemsListBoxContextMenu;
@@ -1212,6 +1154,76 @@
             this.serverItemListBox.TabIndex = 0;
             this.serverItemListBox.SelectedIndexChanged += new System.EventHandler(this.ItemsListBox_SelectedIndexChanged);
             this.serverItemListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ItemsListBox_MouseDown);
+            // 
+            // candidatesPictureBox1
+            // 
+            this.candidatesPictureBox1.BackColor = System.Drawing.Color.White;
+            this.candidatesPictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox1.ClientItem = null;
+            this.candidatesPictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.candidatesPictureBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.candidatesPictureBox1.Name = "candidatesPictureBox1";
+            this.candidatesPictureBox1.Size = new System.Drawing.Size(64, 64);
+            this.candidatesPictureBox1.TabIndex = 0;
+            this.candidatesPictureBox1.TabStop = false;
+            this.candidatesPictureBox1.Tag = "1";
+            this.candidatesPictureBox1.Click += new System.EventHandler(this.CandidatePictureBox_Click);
+            // 
+            // candidatesPictureBox2
+            // 
+            this.candidatesPictureBox2.BackColor = System.Drawing.Color.White;
+            this.candidatesPictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox2.ClientItem = null;
+            this.candidatesPictureBox2.Location = new System.Drawing.Point(64, 0);
+            this.candidatesPictureBox2.Margin = new System.Windows.Forms.Padding(0);
+            this.candidatesPictureBox2.Name = "candidatesPictureBox2";
+            this.candidatesPictureBox2.Size = new System.Drawing.Size(64, 64);
+            this.candidatesPictureBox2.TabIndex = 1;
+            this.candidatesPictureBox2.TabStop = false;
+            this.candidatesPictureBox2.Tag = "2";
+            this.candidatesPictureBox2.Click += new System.EventHandler(this.CandidatePictureBox_Click);
+            // 
+            // candidatesPictureBox3
+            // 
+            this.candidatesPictureBox3.BackColor = System.Drawing.Color.White;
+            this.candidatesPictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox3.ClientItem = null;
+            this.candidatesPictureBox3.Location = new System.Drawing.Point(128, 0);
+            this.candidatesPictureBox3.Margin = new System.Windows.Forms.Padding(0);
+            this.candidatesPictureBox3.Name = "candidatesPictureBox3";
+            this.candidatesPictureBox3.Size = new System.Drawing.Size(64, 64);
+            this.candidatesPictureBox3.TabIndex = 2;
+            this.candidatesPictureBox3.TabStop = false;
+            this.candidatesPictureBox3.Tag = "3";
+            this.candidatesPictureBox3.Click += new System.EventHandler(this.CandidatePictureBox_Click);
+            // 
+            // candidatesPictureBox4
+            // 
+            this.candidatesPictureBox4.BackColor = System.Drawing.Color.White;
+            this.candidatesPictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox4.ClientItem = null;
+            this.candidatesPictureBox4.Location = new System.Drawing.Point(192, 0);
+            this.candidatesPictureBox4.Margin = new System.Windows.Forms.Padding(0);
+            this.candidatesPictureBox4.Name = "candidatesPictureBox4";
+            this.candidatesPictureBox4.Size = new System.Drawing.Size(64, 64);
+            this.candidatesPictureBox4.TabIndex = 3;
+            this.candidatesPictureBox4.TabStop = false;
+            this.candidatesPictureBox4.Tag = "4";
+            this.candidatesPictureBox4.Click += new System.EventHandler(this.CandidatePictureBox_Click);
+            // 
+            // candidatesPictureBox5
+            // 
+            this.candidatesPictureBox5.BackColor = System.Drawing.Color.White;
+            this.candidatesPictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox5.ClientItem = null;
+            this.candidatesPictureBox5.Location = new System.Drawing.Point(256, 0);
+            this.candidatesPictureBox5.Margin = new System.Windows.Forms.Padding(0);
+            this.candidatesPictureBox5.Name = "candidatesPictureBox5";
+            this.candidatesPictureBox5.Size = new System.Drawing.Size(64, 64);
+            this.candidatesPictureBox5.TabIndex = 4;
+            this.candidatesPictureBox5.TabStop = false;
+            this.candidatesPictureBox5.Tag = "5";
+            this.candidatesPictureBox5.Click += new System.EventHandler(this.CandidatePictureBox_Click);
             // 
             // MainForm
             // 
@@ -1365,5 +1377,6 @@
         private System.Windows.Forms.ComboBox stackOrderComboBox;
         private System.Windows.Forms.Label stackOrderLabel;
         private System.Windows.Forms.CheckBox allowDistanceReadCheckBox;
+        private System.Windows.Forms.CheckBox forceUseCheckBox;
     }
 }

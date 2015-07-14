@@ -246,6 +246,7 @@ namespace PluginThree
                                 break;
 
                             case ItemFlag.ForceUse:
+                                item.ForceUse = true;
                                 break;
 
                             case ItemFlag.MultiUse:

@@ -72,6 +72,8 @@ namespace ItemEditor
 
         public bool HasElevation { get; set; }
 
+        public bool ForceUse { get; set; }
+
         public bool MultiUse { get; set; }
 
         public bool Pickupable { get; set; }
@@ -140,6 +142,7 @@ namespace ItemEditor
                 this.BlockMissiles != item.BlockMissiles ||
                 this.BlockPathfinder != item.BlockPathfinder ||
                 this.HasElevation != item.HasElevation ||
+                this.ForceUse != item.ForceUse ||
                 this.MultiUse != item.MultiUse ||
                 this.Pickupable != item.Pickupable ||
                 this.Movable != item.Movable ||

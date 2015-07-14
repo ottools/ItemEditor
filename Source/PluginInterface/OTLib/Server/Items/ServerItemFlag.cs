@@ -31,7 +31,7 @@ namespace OTLib.Server.Items
         BlockMissiles       = 1 << 1,
         BlockPathfinder     = 1 << 2,
         HasElevation        = 1 << 3,
-        Useable             = 1 << 4,
+        MultiUse            = 1 << 4,
         Pickupable          = 1 << 5,
         Movable             = 1 << 6,
         Stackable           = 1 << 7,

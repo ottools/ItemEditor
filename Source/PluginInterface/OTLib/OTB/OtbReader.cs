@@ -25,6 +25,7 @@ using OTLib.Utils;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 #endregion
 
 namespace OTLib.OTB
@@ -173,7 +174,8 @@ namespace OTLib.OTB
                                     break;
 
                                 case ServerItemAttribute.Name:
-                                    item.Name = new string(node.ReadChars(datalen));
+                                    byte[] buffer = node.ReadBytes(datalen);
+                                    item.Name = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
                                     break;
 
                                 case ServerItemAttribute.SpriteHash:

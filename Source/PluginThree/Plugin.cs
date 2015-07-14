@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 #endregion
 
 namespace PluginThree
@@ -366,8 +367,9 @@ namespace PluginThree
                                 reader.ReadUInt16(); // category
                                 item.TradeAs = reader.ReadUInt16(); // trade as
                                 reader.ReadUInt16(); // show as
-                                var size = reader.ReadUInt16();
-                                item.Name = new string(reader.ReadChars(size));
+                                ushort nameLength = reader.ReadUInt16();
+                                byte[] buffer = reader.ReadBytes(nameLength);
+                                item.Name = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
                                 reader.ReadUInt16(); // profession
                                 reader.ReadUInt16(); // level
                                 break;

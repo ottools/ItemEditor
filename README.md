@@ -11,7 +11,7 @@ Supported versions:
 Download
 ----
 
-[ItemEditor 0.3.5](https://github.com/ottools/ItemEditor/releases/tag/v0.3.5)
+[ItemEditor 0.3.6](https://github.com/ottools/ItemEditor/releases/tag/v0.3.6)
 
 Compiling
 ----

@@ -342,7 +342,7 @@ namespace PluginOne
                                 break;
 
                             case ItemFlag.FullGround:
-                                item.FullGround = true;
+                                //item.FullGround = true;
                                 break;
 
                             case ItemFlag.IgnoreLook:
@@ -372,7 +372,7 @@ namespace PluginOne
                     item.PatternY = reader.ReadByte();
                     item.PatternZ = reader.ReadByte();
                     item.Frames = reader.ReadByte();
-                    item.IsAnimation = item.Frames > 1;
+                    //item.IsAnimation = item.Frames > 1;
                     item.NumSprites = (uint)item.Width * item.Height * item.Layers * item.PatternX * item.PatternY * item.PatternZ * item.Frames;
 
                     // Read the sprite ids

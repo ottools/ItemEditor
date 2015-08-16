@@ -92,7 +92,7 @@ namespace OTLib.OTB
 
                     writer.WriteProp(RootAttribute.Version, property);
 
-                    foreach (ServerItem item in this.Items)
+                    foreach (ServerItem item in this.Items.Items)
                     {
                         List<ServerItemAttribute> saveAttributeList = new List<ServerItemAttribute>();
                         saveAttributeList.Add(ServerItemAttribute.ServerID);

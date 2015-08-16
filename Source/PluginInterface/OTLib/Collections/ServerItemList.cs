@@ -20,31 +20,33 @@
 
 #region Using Statements
 using OTLib.Server.Items;
-using System;
 using System.Collections.Generic;
 #endregion
 
 namespace OTLib.Collections
 {
-    public class ServerItemList : List<ServerItem>
+    public class ServerItemList
     {
         #region Contructor
 
         public ServerItemList()
         {
+            this.Items = new List<ServerItem>();
             this.MinId = 100;
+            this.MaxId = 100;
         }
 
         #endregion
 
         #region Public Properties
 
-        public ushort MinId { get; set; }
+        public List<ServerItem> Items { get; private set; }
 
-        public ushort MaxId
-        {
-            get { return (ushort)(MinId + Count - 1); }
-        }
+        public ushort MinId { get; private set; }
+
+        public ushort MaxId { get; private set; }
+
+        public int Count { get { return this.Items.Count; } }
 
         public uint MajorVersion { get; set; }
 
@@ -53,6 +55,37 @@ namespace OTLib.Collections
         public uint BuildNumber { get; set; }
 
         public uint ClientVersion { get; set; }
+
+        #endregion
+
+        #region Public Methods
+
+        public void Add(ServerItem item)
+        {
+            if (this.Items.Contains(item))
+            {
+                return;
+            }
+
+            this.Items.Add(item);
+
+            // increase max id
+            if (this.MaxId < item.ID)
+            {
+                this.MaxId = item.ID;
+            }
+        }
+
+        public IEnumerator<ServerItem> GetEnumerator()
+        {
+            return this.Items.GetEnumerator();
+        }
+
+        public void Clear()
+        {
+            this.Items.Clear();
+            this.MaxId = 100;
+        }
 
         #endregion
     }

@@ -245,7 +245,7 @@ namespace ItemEditor
 
             if (sid >= this.serverItems.MinId && sid <= this.serverItems.MaxId)
             {
-                ServerItem item = this.serverItems.Find(i => i.ID == sid);
+                ServerItem item = this.serverItems.Items.Find(i => i.ID == sid);
                 if (item != null)
                 {
                     return this.SelectItem(item);
@@ -790,7 +790,7 @@ namespace ItemEditor
                 }
                 else
                 {
-                    message = string.Format("The selected client is not compatible with this otb. Please navigate to the folder of a compatible client {0}.", client.Version);
+                    message = string.Format("The selected client is not compatible with this OTB(version {0}). Please navigate to the folder of a compatible client {1}.", client.OtbVersion, client.Version);
                 }
                 
                 MessageBox.Show(message);

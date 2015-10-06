@@ -153,6 +153,7 @@ namespace ItemEditor
                 this.fileSaveMenuItem.Enabled = true;
                 this.editCreateItemMenuItem.Enabled = true;
                 this.editFindItemMenuItem.Enabled = true;
+                this.editCreateMissingItemsMenuItem.Enabled = true;
                 this.viewShowOnlyMismatchedMenuItem.Enabled = true;
                 this.viewShowDecaptedItemsMenuItem.Enabled = true;
                 this.viewUpdateItemsListMenuItem.Enabled = true;
@@ -376,6 +377,7 @@ namespace ItemEditor
             this.editDuplicateItemMenuItem.Enabled = false;
             this.editReloadItemMenuItem.Enabled = false;
             this.editFindItemMenuItem.Enabled = false;
+            this.editCreateMissingItemsMenuItem.Enabled = false;
             this.viewShowOnlyMismatchedMenuItem.Enabled = false;
             this.viewShowDecaptedItemsMenuItem.Enabled = false;
             this.viewUpdateItemsListMenuItem.Enabled = false;
@@ -1300,6 +1302,41 @@ namespace ItemEditor
         private void EditReloadItemMenuItem_Click(object sender, EventArgs e)
         {
             this.ReloadSelectedItem();
+        }
+
+        private void EditCreateMissingItemsMenu_Click(object sender, EventArgs e)
+        {
+            ushort lastCid = 0;
+            ushort maxCid = this.CurrentPlugin.Instance.MaxItemId;
+
+            foreach (ServerItem item in this.serverItems.Items)
+            {
+                if (item.ClientId > lastCid)
+                {
+                    lastCid = item.ClientId;
+                }
+            }
+
+            ushort newItemCounter = 0;
+
+            if (lastCid < maxCid)
+            {
+                for (ushort i = (ushort)(lastCid + 1); i <= maxCid; i++)
+                {
+                    ServerItem item = this.CreateItem();
+                    item.ClientId = i;
+                    this.serverItems.Add(item);
+
+                    // sync with dat info
+                    this.ReloadItem(item);
+                    newItemCounter++;
+                }
+
+                // done
+                this.BuildItemsListBox();
+            }
+
+            Trace.WriteLine(string.Format("Created {0} new items.", newItemCounter));
         }
 
         private void TypeCombo_SelectedIndexChanged(object sender, EventArgs e)

@@ -32,6 +32,8 @@ namespace PluginInterface
 
         ClientItems Items { get; }
 
+        ushort MaxItemId { get; }
+
         List<SupportedClient> SupportedClients { get; }
 
         bool Loaded { get; }

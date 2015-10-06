@@ -93,6 +93,8 @@
             this.editReloadItemMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.editFindItemMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.separatorMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.editCreateMissingItemsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewShowOnlyMismatchedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewShowDecaptedItemsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -724,6 +726,8 @@
             this.editCreateItemMenuItem,
             this.editDuplicateItemMenuItem,
             this.editReloadItemMenuItem,
+            this.separatorMenuItem4,
+            this.editCreateMissingItemsMenuItem,
             this.toolStripSeparator2,
             this.editFindItemMenuItem});
             this.editMenuItem.Name = "editMenuItem";
@@ -774,6 +778,19 @@
             this.editFindItemMenuItem.Size = new System.Drawing.Size(193, 22);
             this.editFindItemMenuItem.Text = "&Find Item";
             this.editFindItemMenuItem.Click += new System.EventHandler(this.EditFindItemMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.separatorMenuItem4.Name = "separatorMenuItem4";
+            this.separatorMenuItem4.Size = new System.Drawing.Size(190, 6);
+            // 
+            // editCreateMissingItemsMenuItem
+            // 
+            this.editCreateMissingItemsMenuItem.Enabled = false;
+            this.editCreateMissingItemsMenuItem.Name = "editCreateMissingItemsMenuItem";
+            this.editCreateMissingItemsMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.editCreateMissingItemsMenuItem.Text = "Create Missing Items";
+            this.editCreateMissingItemsMenuItem.Click += new System.EventHandler(this.EditCreateMissingItemsMenu_Click);
             // 
             // viewMenuItem
             // 
@@ -1302,6 +1319,7 @@
         private System.Windows.Forms.ToolStripMenuItem viewShowOnlyMismatchedMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsReloadItemAttributesMenuItem;
         private System.Windows.Forms.ToolStripSeparator separatorMenuItem2;
+        private System.Windows.Forms.ToolStripSeparator separatorMenuItem4;
         private System.Windows.Forms.Label minimapColorLabel;
         private System.Windows.Forms.TextBox minimapColorText;
         private System.Windows.Forms.Label lightColorLabel;
@@ -1321,6 +1339,7 @@
         private System.Windows.Forms.ToolStripMenuItem editReloadItemMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editCreateItemMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editFindItemMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editCreateMissingItemsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewUpdateItemsListMenuItem;
         private System.Windows.Forms.TextBox wareIdText;
         private System.Windows.Forms.Label wareIdLabel;

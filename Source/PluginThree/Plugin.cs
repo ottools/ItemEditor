@@ -69,6 +69,8 @@ namespace PluginThree
         Cloth = 0x21,
         Market = 0x22,
         DefaultAction = 0x23,
+        Wrappable = 0x24,
+        Unwrappable = 0x25,
         Usable = 0xFE,
 
         LastFlag = 0xFF
@@ -380,6 +382,8 @@ namespace PluginThree
                                 reader.ReadUInt16();
                                 break;
 
+                            case ItemFlag.Wrappable:
+                            case ItemFlag.Unwrappable:
                             case ItemFlag.Usable:
                                 break;
 

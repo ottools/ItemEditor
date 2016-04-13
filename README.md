@@ -11,13 +11,12 @@ Supported versions:
 Download
 ----
 
-[ItemEditor 0.3.7](https://github.com/ottools/ItemEditor/releases/tag/v0.3.7)
+[ItemEditor 0.3.8](https://github.com/ottools/ItemEditor/releases/tag/v0.3.8)
 
 Compiling
 ----
 
-You can build the project using the provided ItemEditor.sln in Visual
-Studio 2010 or later.
+You can build the project using the provided ItemEditor.sln in Visual Studio 2013 or later.
 
 If somebody can contribute compiling instructions for other platforms, that'd be
 great.

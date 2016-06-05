@@ -45,7 +45,7 @@ namespace ItemEditor
         #region Private Properties
 
         public const string ApplicationName = "Item Editor";
-        public const string VersionString = "0.3.8";
+        public const string VersionString = "0.3.9";
 
         private bool showOnlyMismatchedItems = false;
         private bool showOnlyDeprecatedItems = false;

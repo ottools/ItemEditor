@@ -58,10 +58,5 @@ namespace ItemEditor.Dialogs
         }
 
         #endregion
-
-        private void copyLabel_Click(object sender, System.EventArgs e)
-        {
-
-        }
     }
 }

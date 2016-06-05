@@ -45,19 +45,23 @@ namespace ItemEditor.Dialogs
         {
             this.pictureBox.Image = ItemEditor.Properties.Resources.about_background;
             this.versionLabel.Text = MainForm.VersionString;
-            this.copyLabel.Text = "Development: EdMignari and all contributors of the original project.";
-            this.linkLabel.Text = "https://github.com/ottools/ItemEditor";
         }
 
         #endregion
 
         #region Event Handlers
 
-        private void LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabelClickedHandler(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/ottools/ItemEditor");
+            LinkLabel label = (LinkLabel)sender;
+            System.Diagnostics.Process.Start(label.Text);
         }
 
         #endregion
+
+        private void copyLabel_Click(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }

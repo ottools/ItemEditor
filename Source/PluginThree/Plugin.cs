@@ -71,6 +71,7 @@ namespace PluginThree
         DefaultAction = 0x23,
         Wrappable = 0x24,
         Unwrappable = 0x25,
+        TopEffect = 0x26,
         Usable = 0xFE,
 
         LastFlag = 0xFF
@@ -384,6 +385,7 @@ namespace PluginThree
 
                             case ItemFlag.Wrappable:
                             case ItemFlag.Unwrappable:
+                            case ItemFlag.TopEffect:
                             case ItemFlag.Usable:
                                 break;
 
@@ -400,9 +402,10 @@ namespace PluginThree
                     item.Width = reader.ReadByte();
                     item.Height = reader.ReadByte();
 
-                    if ((item.Width > 1) || (item.Height > 1))
+                    if (item.Width > 1 || item.Height > 1)
                     {
-                        reader.BaseStream.Position++;
+                        // Skipping exact size.
+                        reader.ReadByte();
                     }
 
                     item.Layers = reader.ReadByte();
@@ -411,10 +414,11 @@ namespace PluginThree
                     item.PatternZ = reader.ReadByte();
                     item.Frames = reader.ReadByte();
                     item.IsAnimation = item.Frames > 1;
-                    item.NumSprites = (uint)item.Width * item.Height * item.Layers * item.PatternX * item.PatternY * item.PatternZ * item.Frames;
+                    item.NumSprites = (uint)(item.Width * item.Height * item.Layers * item.PatternX * item.PatternY * item.PatternZ * item.Frames);
 
                     if (item.IsAnimation && skipFrameDuration)
                     {
+                        // Skipping frames animation info.
                         reader.ReadBytes(6 + 8 * item.Frames);
                     }
 

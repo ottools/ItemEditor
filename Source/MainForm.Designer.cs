@@ -777,7 +777,7 @@
             this.editFindItemMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.editFindItemMenuItem.Size = new System.Drawing.Size(193, 22);
             this.editFindItemMenuItem.Text = "&Find Item";
-            this.editFindItemMenuItem.Click += new System.EventHandler(this.EditFindItemMenuItem_Click);
+            this.editFindItemMenuItem.Click += new System.EventHandler(this.FindItemButton_Click);
             // 
             // toolStripSeparator4
             // 
@@ -1011,7 +1011,7 @@
             this.toolStripFindItemButton.Name = "toolStripFindItemButton";
             this.toolStripFindItemButton.Size = new System.Drawing.Size(23, 22);
             this.toolStripFindItemButton.Text = "Find Item";
-            this.toolStripFindItemButton.Click += new System.EventHandler(this.EditFindItemMenuItem_Click);
+            this.toolStripFindItemButton.Click += new System.EventHandler(this.FindItemButton_Click);
             // 
             // candidatesTableLayoutPanel
             // 

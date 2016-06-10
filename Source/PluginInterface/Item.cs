@@ -174,6 +174,30 @@ namespace ItemEditor
             return true;
         }
 
+        public bool HasProperties(ServerItemFlag properties)
+        {
+            if (properties == ServerItemFlag.None) return false;
+            if (properties.HasFlag(ServerItemFlag.Unpassable) && !this.Unpassable) return false;
+            if (properties.HasFlag(ServerItemFlag.BlockMissiles) && !this.BlockMissiles) return false;
+            if (properties.HasFlag(ServerItemFlag.BlockPathfinder) && !this.BlockPathfinder) return false;
+            if (properties.HasFlag(ServerItemFlag.HasElevation) && !this.HasElevation) return false;
+            if (properties.HasFlag(ServerItemFlag.ForceUse) && !this.ForceUse) return false;
+            if (properties.HasFlag(ServerItemFlag.MultiUse) && !this.MultiUse) return false;
+            if (properties.HasFlag(ServerItemFlag.Pickupable) && !this.Pickupable) return false;
+            if (properties.HasFlag(ServerItemFlag.Movable) && !this.Movable) return false;
+            if (properties.HasFlag(ServerItemFlag.Stackable) && !this.Stackable) return false;
+            if (properties.HasFlag(ServerItemFlag.Readable) && !this.Readable) return false;
+            if (properties.HasFlag(ServerItemFlag.Rotatable) && !this.Rotatable) return false;
+            if (properties.HasFlag(ServerItemFlag.Hangable) && !this.Hangable) return false;
+            if (properties.HasFlag(ServerItemFlag.HookSouth) && !this.HookSouth) return false;
+            if (properties.HasFlag(ServerItemFlag.HookEast) && !this.HookEast) return false;
+            if (properties.HasFlag(ServerItemFlag.AllowDistanceRead) && !this.AllowDistanceRead) return false;
+            if (properties.HasFlag(ServerItemFlag.IgnoreLook) && !this.IgnoreLook) return false;
+            if (properties.HasFlag(ServerItemFlag.FullGround) && !this.FullGround) return false;
+            if (properties.HasFlag(ServerItemFlag.IsAnimation) && !this.IsAnimation) return false;
+            return true;
+        }
+
         public Item CopyPropertiesFrom(Item item)
         {
             if (item == null)

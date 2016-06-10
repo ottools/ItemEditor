@@ -19,7 +19,10 @@
 #endregion
 
 #region Using Statements
+using ItemEditor.Controls;
+using OTLib.Server.Items;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 #endregion
 
@@ -29,7 +32,8 @@ namespace ItemEditor.Dialogs
     {
         #region Private Properties
 
-        private MainForm mainForm = null;
+        private MainForm m_mainForm;
+        private ServerItemFlag m_properties;
 
         #endregion
 
@@ -37,6 +41,8 @@ namespace ItemEditor.Dialogs
 
         public FindItemForm()
         {
+            m_properties = ServerItemFlag.None;
+
             this.InitializeComponent();
         }
 
@@ -48,18 +54,20 @@ namespace ItemEditor.Dialogs
         {
             get
             {
-                return this.mainForm;
+                return m_mainForm;
             }
 
             set
             {
-                this.mainForm = value;
-
-                if (this.mainForm != null)
+                if (value == null)
                 {
-                    this.findItemNumericUpDown.Minimum = this.mainForm.MinItemId;
-                    this.findItemNumericUpDown.Maximum = this.mainForm.MaxItemId;
+                    throw new ArgumentNullException("MainForm");
                 }
+
+                m_mainForm = value;
+                m_mainForm.OnCleaned += MainForm_CleanedHandler;
+                this.serverItemList.Plugin = m_mainForm.CurrentPlugin.Instance;
+                this.UpdateProperties();
             }
         }
 
@@ -67,15 +75,48 @@ namespace ItemEditor.Dialogs
 
         #region Private Methods
 
-        private void OnFind(ushort sid)
+        private void UpdateProperties()
         {
-            if (this.mainForm != null)
+            if (findBySidButton.Checked)
             {
-                if (!this.mainForm.SelectItem(sid))
-                {
-                    MessageBox.Show(string.Format("Item id {0} not found.", sid), "Find Item");
-                }
+                this.itemIdGroupBox.Enabled = true;
+                this.itemIdGroupBox.Text = "Server ID";
+                this.propertiesGroupBox.Enabled = false;
+                this.findIdNumericUpDown.Maximum = m_mainForm.MaxServerItemId;
             }
+            else if (findByCidButton.Checked)
+            {
+                this.itemIdGroupBox.Enabled = true;
+                this.itemIdGroupBox.Text = "Client ID";
+                this.propertiesGroupBox.Enabled = false;
+                this.findIdNumericUpDown.Maximum = m_mainForm.MaxClientItemId;
+            }
+            else if (findByPropertiesButton.Checked)
+            {
+                this.itemIdGroupBox.Enabled = false;
+                this.propertiesGroupBox.Enabled = true;
+            }
+        }
+
+        private void StartFind()
+        {
+            this.serverItemList.Clear();
+            this.findItemButton.Enabled = false;
+
+            if (findBySidButton.Checked)
+            {
+                this.serverItemList.Add(m_mainForm.ServerItems.FindByServerId((ushort)this.findIdNumericUpDown.Value));
+            }
+            else if (findByCidButton.Checked)
+            {
+                this.serverItemList.Add(m_mainForm.ServerItems.FindByClientId((ushort)this.findIdNumericUpDown.Value));
+            }
+            else if (findByPropertiesButton.Checked)
+            {
+                this.serverItemList.Add(m_mainForm.ServerItems.FindByProperties(m_properties));
+            }
+
+            this.findItemButton.Enabled = true;
         }
 
         #endregion
@@ -84,15 +125,55 @@ namespace ItemEditor.Dialogs
 
         private void FindItemButton_Click(object sender, EventArgs e)
         {
-            this.OnFind((ushort)this.findItemNumericUpDown.Value);
+            this.StartFind();
         }
 
-        private void FindItemNumericUpDown_KeyUp(object sender, KeyEventArgs e)
+        private void FindIdNumericUpDown_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                this.OnFind((ushort)this.findItemNumericUpDown.Value);
+                this.StartFind();
             }
+        }
+
+        private void RadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            this.UpdateProperties();
+        }
+
+        private void PropertyCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            FlagCheckBox checkBox = (FlagCheckBox)sender;
+            if (checkBox.Checked)
+            {
+                m_properties |= checkBox.ServerItemFlag;
+            }
+            else
+            {
+                m_properties &= ~checkBox.ServerItemFlag;
+            }
+        }
+
+        private void ServerItemList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ServerItem item = serverItemList.SelectedItem != null ? (ServerItem)serverItemList.SelectedItem : null;
+            if (item != null)
+            {
+                if (item.Type == ServerItemType.Deprecated)
+                {
+                    MessageBox.Show(string.Format("The id {0} is a deprecated item.", item.ID), "Deprecated Item");
+                }
+                else
+                {
+                    m_mainForm.SelectItem(item.ID);
+                }
+            }
+        }
+
+        private void MainForm_CleanedHandler(object sender, EventArgs e)
+        {
+            this.serverItemList.Clear();
+            this.UpdateProperties();
         }
 
         #endregion

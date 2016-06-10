@@ -102,6 +102,8 @@ namespace PluginOne
 
         public ClientItems Items { get; set; }
 
+        public ushort MinItemId { get { return 100; } }
+
         public ushort MaxItemId { get { return this.itemCount; } }
 
         public bool Loaded { get; private set; }

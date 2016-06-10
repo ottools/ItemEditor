@@ -35,6 +35,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 #endregion
 
@@ -44,14 +45,13 @@ namespace ItemEditor
     {
         #region Private Properties
 
-        public const string ApplicationName = "Item Editor";
-        public const string VersionString = "0.3.9";
+        public static string ApplicationName { get; private set; }
+        public static string ApplicationVersion { get; private set; }
 
         private bool showOnlyMismatchedItems = false;
         private bool showOnlyDeprecatedItems = false;
         private TextBoxTraceListener textBoxListener;
-
-        private ServerItemList serverItems;
+        private FindItemForm findItemForm;
 
         #endregion
 
@@ -63,6 +63,12 @@ namespace ItemEditor
             this.InitializeTooltips();
             this.CurrentOtbFullPath = string.Empty;
         }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler OnCleaned;
 
         #endregion
 
@@ -90,14 +96,26 @@ namespace ItemEditor
 
         public bool Saved { get; private set; }
 
-        public ushort MinItemId
+        public ServerItemList ServerItems { get; private set; }
+
+        public ushort MinServerItemId
         {
-            get { return this.serverItems.MinId; }
+            get { return this.ServerItems.MinId; }
         }
 
-        public ushort MaxItemId
+        public ushort MaxServerItemId
         {
-            get { return this.serverItems.MaxId; }
+            get { return this.ServerItems.MaxId; }
+        }
+
+        public ushort MinClientItemId
+        {
+            get { return this.CurrentPlugin != null ? this.CurrentPlugin.Instance.MinItemId : (ushort)100; }
+        }
+
+        public ushort MaxClientItemId
+        {
+            get { return this.CurrentPlugin != null ? this.CurrentPlugin.Instance.MaxItemId : (ushort)100; }
         }
 
         #endregion
@@ -130,15 +148,15 @@ namespace ItemEditor
             OtbReader reader = new OtbReader();
             if (reader.Read(path))
             {
-                this.serverItems = reader.Items;
+                this.ServerItems = reader.Items;
                 this.CurrentOtbFullPath = path;
-                this.CurrentOtbVersion = this.serverItems.MinorVersion;
+                this.CurrentOtbVersion = this.ServerItems.MinorVersion;
 
                 // try find a plugin that can handle this version of otb
                 this.CurrentPlugin = Program.plugins.AvailablePlugins.Find(this.CurrentOtbVersion);
                 if (this.CurrentPlugin == null)
                 {
-                    this.serverItems.Clear();
+                    this.ServerItems.Clear();
                     MessageBox.Show(string.Format("Could not find a plugin that could handle client version {0}", this.CurrentOtbVersion));
                     return;
                 }
@@ -188,7 +206,7 @@ namespace ItemEditor
 
             try
             {
-                OtbWriter writer = new OtbWriter(this.serverItems);
+                OtbWriter writer = new OtbWriter(this.ServerItems);
                 if (writer.Write(this.CurrentOtbFullPath))
                 {
                     this.Saved = true;
@@ -221,7 +239,7 @@ namespace ItemEditor
 
                 try
                 {
-                    OtbWriter writer = new OtbWriter(this.serverItems);
+                    OtbWriter writer = new OtbWriter(this.ServerItems);
                     if (writer.Write(dialog.FileName))
                     {
                         this.CurrentOtbFullPath = dialog.FileName;
@@ -244,9 +262,9 @@ namespace ItemEditor
                 return false;
             }
 
-            if (sid >= this.serverItems.MinId && sid <= this.serverItems.MaxId)
+            if (sid >= this.ServerItems.MinId && sid <= this.ServerItems.MaxId)
             {
-                ServerItem item = this.serverItems.Items.Find(i => i.ID == sid);
+                ServerItem item = this.ServerItems.Items.Find(i => i.ID == sid);
                 if (item != null)
                 {
                     return this.SelectItem(item);
@@ -292,8 +310,8 @@ namespace ItemEditor
             }
 
             ServerItem item = this.CreateItem();
-            item.ID = (ushort)(this.serverItems.MaxId + 1);
-            this.serverItems.Add(item);
+            item.ID = (ushort)(this.ServerItems.MaxId + 1);
+            this.ServerItems.Add(item);
             this.serverItemListBox.Add(item);
             this.SelectItem(item);
             this.itemsCountLabel.Text = this.serverItemListBox.Count + " Items";
@@ -314,8 +332,8 @@ namespace ItemEditor
             }
 
             ServerItem copyItem = this.CopyItem(item);
-            copyItem.ID = (ushort)(this.serverItems.MaxId + 1);
-            this.serverItems.Add(copyItem);
+            copyItem.ID = (ushort)(this.ServerItems.MaxId + 1);
+            this.ServerItems.Add(copyItem);
             this.serverItemListBox.Add(copyItem);
             this.SelectItem(copyItem);
             this.itemsCountLabel.Text = this.serverItemListBox.Count + " Items";
@@ -368,7 +386,7 @@ namespace ItemEditor
             this.PreviousPlugin = null;
             this.CurrentOtbVersion = 0;
             this.CurrentOtbFullPath = string.Empty;
-            this.serverItems.Clear();
+            this.ServerItems.Clear();
             this.serverItemListBox.Plugin = null;
             this.serverItemListBox.Enabled = false;
             this.fileSaveMenuItem.Enabled = false;
@@ -396,6 +414,11 @@ namespace ItemEditor
             {
                 this.textBoxListener.Clear();
             }
+
+            if (this.OnCleaned != null)
+            {
+                this.OnCleaned.Invoke(this, new EventArgs());
+            }
         }
 
         #endregion
@@ -417,12 +440,12 @@ namespace ItemEditor
 
             this.loadingItemsProgressBar.Visible = true;
             this.loadingItemsProgressBar.Minimum = 0;
-            this.loadingItemsProgressBar.Maximum = this.serverItems.Count + 1;
+            this.loadingItemsProgressBar.Maximum = this.ServerItems.Count + 1;
             
             List<ServerItem> items = new List<ServerItem>();
             ushort index = 0;
 
-            foreach (ServerItem item in this.serverItems)
+            foreach (ServerItem item in this.ServerItems)
             {
                 if (this.showOnlyMismatchedItems && this.CompareItem(item, true))
                 {
@@ -472,7 +495,7 @@ namespace ItemEditor
 
         private void ReloadItems()
         {
-            foreach (ServerItem item in this.serverItems)
+            foreach (ServerItem item in this.ServerItems)
             {
                 if (!this.CompareItem(item, true))
                 {
@@ -544,8 +567,8 @@ namespace ItemEditor
             this.stackOrderComboBox.ForeColor = item.StackOrder == clientItem.StackOrder ? Color.Black : Color.Red;
 
             this.serverIdLbl.DataBindings.Add("Text", item, "ID");
-            this.clientIdUpDown.Minimum = this.serverItems.MinId;
-            this.clientIdUpDown.Maximum = (this.CurrentPlugin.Instance.Items.Count + this.serverItems.MinId) - 1;
+            this.clientIdUpDown.Minimum = this.ServerItems.MinId;
+            this.clientIdUpDown.Maximum = (this.CurrentPlugin.Instance.Items.Count + this.ServerItems.MinId) - 1;
             this.clientIdUpDown.DataBindings.Add("Value", clientItem, "ID");
 
             // Attributes
@@ -673,7 +696,7 @@ namespace ItemEditor
             // list with the top 5 results
             List<KeyValuePair<double, ServerItem>> signatureList = new List<KeyValuePair<double, ServerItem>>();
 
-            foreach (ServerItem cmpItem in this.serverItems)
+            foreach (ServerItem cmpItem in this.ServerItems)
             {
                 if (cmpItem.Type == ServerItemType.Deprecated)
                 {
@@ -731,7 +754,7 @@ namespace ItemEditor
 
         private ServerItem CreateItem(Item item = null)
         {
-            ushort newId = (ushort)(this.serverItems.MaxId + 1);
+            ushort newId = (ushort)(this.ServerItems.MaxId + 1);
 
             // create a new otb item
             ServerItem newItem = new ServerItem();
@@ -747,7 +770,7 @@ namespace ItemEditor
             else
             {
                 newItem.ID = newId;
-                newItem.ClientId = this.serverItems.MinId;
+                newItem.ClientId = this.ServerItems.MinId;
                 newItem.SpriteHash = new byte[16];
                 newItem.IsCustomCreated = true;
             }
@@ -851,7 +874,7 @@ namespace ItemEditor
                 MessageBox.Show(string.Format("The plugin could not load dat or spr."));
             }
 
-            this.serverItems.ClientVersion = client.Version;
+            this.ServerItems.ClientVersion = client.Version;
             Trace.WriteLine(string.Format("Client version {0}.", client.Version));
             return result;
         }
@@ -913,7 +936,16 @@ namespace ItemEditor
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.Text = ApplicationName + " " + VersionString;
+            AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
+            ApplicationName = assemblyName.Name;
+            ApplicationVersion = assemblyName.Version.Major + "." + assemblyName.Version.Minor;
+            
+            if (assemblyName.Version.Revision != 0)
+            {
+                ApplicationVersion += "." + assemblyName.Version.Revision;
+            }
+            
+            this.Text = ApplicationName + " " + ApplicationVersion;
             this.typeCombo.DataSource = Enum.GetNames(typeof(ServerItemType));
             this.stackOrderComboBox.DataSource = Enum.GetNames(typeof(TileStackOrder));
 
@@ -1097,14 +1129,14 @@ namespace ItemEditor
                 this.CurrentPlugin = updatePlugin;
 
                 // update version information
-                this.serverItems.ClientVersion = updateClient.Version;
-                this.serverItems.MinorVersion = updateClient.OtbVersion;
-                this.serverItems.BuildNumber = this.serverItems.BuildNumber + 1;
-                this.CurrentOtbVersion = this.serverItems.MinorVersion;
+                this.ServerItems.ClientVersion = updateClient.Version;
+                this.ServerItems.MinorVersion = updateClient.OtbVersion;
+                this.ServerItems.BuildNumber = this.ServerItems.BuildNumber + 1;
+                this.CurrentOtbVersion = this.ServerItems.MinorVersion;
 
                 // Most items does have the same sprite after an update, so lets try that first
                 uint foundItemCounter = 0;
-                foreach (ServerItem item in this.serverItems)
+                foreach (ServerItem item in this.ServerItems)
                 {
                     item.SpriteAssigned = false;
 
@@ -1144,7 +1176,7 @@ namespace ItemEditor
                 {
                     foreach (Item updateItem in updateItems.Values)
                     {
-                        foreach (ServerItem item in this.serverItems)
+                        foreach (ServerItem item in this.ServerItems)
                         {
                             if (item.Type == ServerItemType.Deprecated)
                             {
@@ -1178,12 +1210,12 @@ namespace ItemEditor
                     }
                 }
 
-                Trace.WriteLine(string.Format("Found {0} of {1}.", foundItemCounter, this.serverItems.MaxId));
+                Trace.WriteLine(string.Format("Found {0} of {1}.", foundItemCounter, this.ServerItems.MaxId));
 
                 if (updateSettingsForm.reloadItemAttributesCheck.Checked)
                 {
                     uint reloadedItemCounter = 0;
-                    foreach (ServerItem item in this.serverItems)
+                    foreach (ServerItem item in this.ServerItems)
                     {
                         if (item.Type == ServerItemType.Deprecated)
                         {
@@ -1207,7 +1239,7 @@ namespace ItemEditor
                         }
                     }
 
-                    Trace.WriteLine(string.Format("Reloaded {0} of {1} items.", reloadedItemCounter, this.serverItems.MaxId));
+                    Trace.WriteLine(string.Format("Reloaded {0} of {1} items.", reloadedItemCounter, this.ServerItems.MaxId));
                 }
 
                 if (updateSettingsForm.createNewItemsCheck.Checked)
@@ -1219,7 +1251,7 @@ namespace ItemEditor
                         {
                             ++newItemCounter;
                             ServerItem newItem = this.CreateItem(updateItem);
-                            this.serverItems.Add(newItem);
+                            this.ServerItems.Add(newItem);
                             Trace.WriteLine(string.Format("Creating item id {0}", newItem.ID));
                         }
                     }
@@ -1309,7 +1341,7 @@ namespace ItemEditor
             ushort lastCid = 0;
             ushort maxCid = this.CurrentPlugin.Instance.MaxItemId;
 
-            foreach (ServerItem item in this.serverItems.Items)
+            foreach (ServerItem item in this.ServerItems.Items)
             {
                 if (item.ClientId > lastCid)
                 {
@@ -1325,7 +1357,7 @@ namespace ItemEditor
                 {
                     ServerItem item = this.CreateItem();
                     item.ClientId = i;
-                    this.serverItems.Add(item);
+                    this.ServerItems.Add(item);
 
                     // sync with dat info
                     this.ReloadItem(item);
@@ -1362,11 +1394,17 @@ namespace ItemEditor
             this.BuildItemsListBox();
         }
 
-        private void EditFindItemMenuItem_Click(object sender, EventArgs e)
+        private void FindItemButton_Click(object sender, EventArgs e)
         {
-            FindItemForm form = new FindItemForm();
-            form.MainForm = this;
-            form.Show(this);
+            if (this.findItemForm != null)
+            {
+                return;
+            }
+
+            this.findItemForm = new FindItemForm();
+            this.findItemForm.MainForm = this;
+            this.findItemForm.FormClosed += FindItemForm_CloseHandler;
+            this.findItemForm.Show(this);
         }
 
         private void CandidatesButton_Click(object sender, EventArgs e)
@@ -1389,11 +1427,9 @@ namespace ItemEditor
             this.ReloadSelectedItem();
         }
 
-        private void FindItemButton_Click(object sender, EventArgs e)
+        private void FindItemForm_CloseHandler(object sender, FormClosedEventArgs e)
         {
-            FindItemForm form = new FindItemForm();
-            form.MainForm = this;
-            form.Show(this);
+            this.findItemForm = null;
         }
 
         #endregion

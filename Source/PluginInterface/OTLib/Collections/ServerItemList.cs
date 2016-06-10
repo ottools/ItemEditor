@@ -81,6 +81,21 @@ namespace OTLib.Collections
             return this.Items.GetEnumerator();
         }
 
+        public List<ServerItem> FindByServerId(ushort sid)
+        {
+            return this.Items.FindAll(i => i.ID == sid);
+        }
+
+        public List<ServerItem> FindByClientId(ushort cid)
+        {
+            return this.Items.FindAll(i => i.ClientId == cid);
+        }
+
+        public List<ServerItem> FindByProperties(ServerItemFlag properties)
+        {
+            return this.Items.FindAll(i => i.HasProperties(properties));
+        }
+
         public void Clear()
         {
             this.Items.Clear();

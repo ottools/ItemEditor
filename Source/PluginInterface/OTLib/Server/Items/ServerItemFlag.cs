@@ -27,6 +27,7 @@ namespace OTLib.Server.Items
     [Flags]
     public enum ServerItemFlag
     {
+        None                = 0,
         Unpassable          = 1 << 0,
         BlockMissiles       = 1 << 1,
         BlockPathfinder     = 1 << 2,

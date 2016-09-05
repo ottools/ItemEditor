@@ -939,12 +939,7 @@ namespace ItemEditor
             AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
             ApplicationName = assemblyName.Name;
             ApplicationVersion = assemblyName.Version.Major + "." + assemblyName.Version.Minor;
-            
-            if (assemblyName.Version.Revision != 0)
-            {
-                ApplicationVersion += "." + assemblyName.Version.Revision;
-            }
-            
+
             this.Text = ApplicationName + " " + ApplicationVersion;
             this.typeCombo.DataSource = Enum.GetNames(typeof(ServerItemType));
             this.stackOrderComboBox.DataSource = Enum.GetNames(typeof(TileStackOrder));

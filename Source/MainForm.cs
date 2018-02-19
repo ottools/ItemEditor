@@ -1,6 +1,6 @@
 ﻿#region Licence
 /**
-* Copyright © 2014-2016 OTTools <https://github.com/ottools>
+* Copyright © 2014-2018 OTTools <https://github.com/ottools/ItemEditor/>
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -409,7 +409,7 @@ namespace ItemEditor
             this.reloadItemButton.Enabled = false;
             this.findItemButton.Enabled = false;
             this.Loaded = false;
-            
+
             if (clearLog)
             {
                 this.textBoxListener.Clear();
@@ -441,7 +441,7 @@ namespace ItemEditor
             this.loadingItemsProgressBar.Visible = true;
             this.loadingItemsProgressBar.Minimum = 0;
             this.loadingItemsProgressBar.Maximum = this.ServerItems.Count + 1;
-            
+
             List<ServerItem> items = new List<ServerItem>();
             ushort index = 0;
 
@@ -820,7 +820,7 @@ namespace ItemEditor
                 {
                     message = string.Format("The selected client is not compatible with this OTB(version {0}). Please navigate to the folder of a compatible client {1}.", client.OtbVersion, client.Version);
                 }
-                
+
                 MessageBox.Show(message);
 
                 PreferencesForm form = new PreferencesForm();
@@ -904,7 +904,7 @@ namespace ItemEditor
                 {
                     Application.DoEvents();
                 }
-                
+
                 progress.bar.Value++;
             }
 

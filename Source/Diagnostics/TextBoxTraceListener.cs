@@ -1,6 +1,6 @@
 ﻿#region Licence
 /**
-* Copyright © 2014-2016 OTTools <https://github.com/ottools>
+* Copyright © 2014-2018 OTTools <https://github.com/ottools/ItemEditor/>
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ namespace ItemEditor.Diagnostics
         #region Private Properties
 
         private delegate void StringSendDelegate(string message);
-        
+
         private const uint UpdateFrequency = 10;
         private uint updateCounter = 0;
 
@@ -73,7 +73,7 @@ namespace ItemEditor.Diagnostics
 
         private void SendString(string message)
         {
-            // No need to lock text box as this function will only 
+            // No need to lock text box as this function will only
             // ever be executed from the UI thread
             this.target.AppendText(message);
 

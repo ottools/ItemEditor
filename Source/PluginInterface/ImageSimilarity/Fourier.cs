@@ -1,6 +1,6 @@
 ﻿#region Licence
 /**
-* Copyright © 2014-2016 OTTools <https://github.com/ottools>
+* Copyright © 2014-2018 OTTools <https://github.com/ottools/ItemEditor/>
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -47,17 +47,17 @@ namespace ImageSimilarity
 
             // even fft
             Complex[] even = new Complex[length / 2];
-            
+
             for (int k = 0; k < length / 2; k++)
             {
                 even[k] = x[2 * k];
             }
-            
+
             Complex[] q = fft(even);
 
             // odd fft;
             Complex[] odd = even;
-            
+
             for (int k = 0; k < length / 2; k++)
             {
                 odd[k] = x[2 * k + 1];
@@ -67,7 +67,7 @@ namespace ImageSimilarity
 
             // combine
             Complex[] y = new Complex[length];
-            
+
             for (int k = 0; k < length / 2; k++)
             {
                 double value = -2 * k * Math.PI / length;
@@ -116,16 +116,16 @@ namespace ImageSimilarity
             Complex[,] output = (Complex[,])input.Clone();
             // Rows first:
             Complex[] x = new Complex[output.GetLength(1)];
-            
+
             for (int h = 0; h < output.GetLength(0); h++)
             {
                 for (int i = 0; i < output.GetLength(1); i++)
                 {
                     x[i] = output[h, i];
                 }
-                
+
                 x = fft(x);
-                
+
                 for (int i = 0; i < output.GetLength(1); i++)
                 {
                     output[h, i] = x[i];
@@ -134,16 +134,16 @@ namespace ImageSimilarity
 
             // Columns last
             Complex[] y = new Complex[output.GetLength(0)];
-            
+
             for (int h = 0; h < output.GetLength(1); h++)
             {
                 for (int i = 0; i < output.GetLength(0); i++)
                 {
                     y[i] = output[i, h];
                 }
-                
+
                 y = fft(y);
-                
+
                 for (int i = 0; i < output.GetLength(0); i++)
                 {
                     output[i, h] = y[i];
@@ -158,7 +158,7 @@ namespace ImageSimilarity
             Complex[,] output = (Complex[,])input.Clone();
             // Rows first:
             Complex[] x = new Complex[output.GetLength(1)];
-            
+
             for (int h = 0; h < output.GetLength(0); h++)
             {
                 for (int i = 0; i < output.GetLength(1); i++)
@@ -176,7 +176,7 @@ namespace ImageSimilarity
 
             // Columns last
             Complex[] y = new Complex[output.GetLength(0)];
-            
+
             for (int h = 0; h < output.GetLength(1); h++)
             {
                 for (int i = 0; i < output.GetLength(0); i++)
@@ -298,7 +298,7 @@ namespace ImageSimilarity
             Complex[,] cmplxG = new Complex[height, width];
             Complex[,] cmplxB = new Complex[height, width];
             double scale = 1.0 / (double)Math.Sqrt(width * height);
-            
+
             for (int i = 0; i < data.Length; i++)
             {
                 cmplxR[i / width, i % width] = new Complex(data[i].r / 256.0);
@@ -343,7 +343,7 @@ namespace ImageSimilarity
             int width = (int)Math.Pow(2, Math.Ceiling(Math.Log(input.Width, 2)));
             int height = (int)Math.Pow(2, Math.Ceiling(Math.Log(input.Width, 2)));
             ImageUtils.RGB[] data = ImageUtils.SplitColorChannels(input);
-            
+
             if (width != input.Width || height != input.Height)
             {
                 // Pad data

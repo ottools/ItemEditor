@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Plugin Three")]
-[assembly: AssemblyCopyright("Copyright © 2014-2016 OTTools")]
+[assembly: AssemblyCopyright("Copyright © 2014-2018 OTTools")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

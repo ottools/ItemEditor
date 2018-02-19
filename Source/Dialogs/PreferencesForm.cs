@@ -89,6 +89,8 @@ namespace ItemEditor.Dialogs
             this.Client = this.Plugin.Instance.GetClientBySignatures(datSignature, sprSignature);
             this.extendedCheckBox.Checked = this.extendedCheckBox.Checked || this.Client.Version >= 960;
             this.extendedCheckBox.Enabled = this.Client.Version < 960;
+            this.frameDurationsCheckBox.Checked = this.frameDurationsCheckBox.Checked || this.Client.Version >= 1050;
+            this.frameDurationsCheckBox.Enabled = this.Client.Version < 1050;
             this.datSignature = datSignature;
             this.sprSignature = sprSignature;
             this.directoryPathTextBox.Text = directory;
@@ -122,6 +124,7 @@ namespace ItemEditor.Dialogs
         {
             this.directoryPathTextBox.Text = string.Empty;
             this.extendedCheckBox.Checked = false;
+            this.frameDurationsCheckBox.Checked = false;
             this.transparencyCheckBox.Checked = false;
             this.datSignature = 0;
             this.sprSignature = 0;
@@ -135,6 +138,7 @@ namespace ItemEditor.Dialogs
         {
             this.directoryPathTextBox.Text = (string)Properties.Settings.Default["ClientDirectory"];
             this.extendedCheckBox.Checked = (bool)Properties.Settings.Default["Extended"];
+            this.frameDurationsCheckBox.Checked = (bool)Properties.Settings.Default["FrameDurations"];
             this.transparencyCheckBox.Checked = (bool)Properties.Settings.Default["Transparency"];
             this.datSignature = (uint)Properties.Settings.Default["DatSignature"];
             this.sprSignature = (uint)Properties.Settings.Default["SprSignature"];
@@ -161,6 +165,7 @@ namespace ItemEditor.Dialogs
         {
             Properties.Settings.Default["ClientDirectory"] = this.directoryPathTextBox.Text;
             Properties.Settings.Default["Extended"] = this.extendedCheckBox.Checked;
+            Properties.Settings.Default["FrameDurations"] = this.frameDurationsCheckBox.Checked;
             Properties.Settings.Default["Transparency"] = this.transparencyCheckBox.Checked;
             Properties.Settings.Default["DatSignature"] = this.datSignature;
             Properties.Settings.Default["SprSignature"] = this.sprSignature;

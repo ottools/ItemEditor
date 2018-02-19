@@ -40,7 +40,7 @@ namespace PluginInterface
 
         bool Loaded { get; }
 
-        bool LoadClient(SupportedClient client, bool extended, bool transparency, string datFullPath, string sprFullPath);
+        bool LoadClient(SupportedClient client, bool extended, bool frameDurations, bool transparency, string datFullPath, string sprFullPath);
 
         void Initialize();
 

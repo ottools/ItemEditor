@@ -120,14 +120,14 @@ namespace PluginThree
 
         #region Public Methods
 
-        public bool LoadClient(SupportedClient client, bool extended, bool transparency, string datFullPath, string sprFullPath)
+        public bool LoadClient(SupportedClient client, bool extended, bool frameDurations, bool transparency, string datFullPath, string sprFullPath)
         {
             if (this.Loaded)
             {
                 this.Dispose();
             }
 
-            if (!LoadDat(datFullPath, client, extended))
+            if (!LoadDat(datFullPath, client, extended, frameDurations))
             {
                 Trace.WriteLine("Failed to load dat.");
                 return false;
@@ -188,7 +188,7 @@ namespace PluginThree
             return Sprite.LoadSprites(filename, ref sprites, client, extended, transparency);
         }
 
-        public bool LoadDat(string filename, SupportedClient client, bool extended)
+        public bool LoadDat(string filename, SupportedClient client, bool extended, bool frameDurations)
         {
             using (FileStream fileStream = new FileStream(filename, FileMode.Open))
             {
@@ -207,8 +207,6 @@ namespace PluginThree
                 reader.ReadUInt16(); // skipping outfits count
                 reader.ReadUInt16(); // skipping effects count
                 reader.ReadUInt16(); // skipping missiles count
-
-                bool skipFrameDuration = (client.Version >= 1050);
 
                 ushort id = 100;
                 while (id <= this.itemCount)
@@ -418,9 +416,9 @@ namespace PluginThree
                     item.IsAnimation = item.Frames > 1;
                     item.NumSprites = (uint)(item.Width * item.Height * item.Layers * item.PatternX * item.PatternY * item.PatternZ * item.Frames);
 
-                    if (item.IsAnimation && skipFrameDuration)
+                    if (item.IsAnimation && frameDurations)
                     {
-                        // Skipping frames animation info.
+                        // Skipping frames durations info.
                         reader.ReadBytes(6 + 8 * item.Frames);
                     }
 

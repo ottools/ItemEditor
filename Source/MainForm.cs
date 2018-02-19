@@ -844,9 +844,11 @@ namespace ItemEditor
             string datPath = Utils.FindClientFile(clientFolder, ".dat");
             string sprPath = Utils.FindClientFile(clientFolder, ".spr");
             bool extended = (bool)Properties.Settings.Default["Extended"];
+            bool frameDurations = (bool)Properties.Settings.Default["FrameDurations"];
             bool transparency = (bool)Properties.Settings.Default["Transparency"];
 
             extended = extended || client.Version >= 960;
+            frameDurations = frameDurations || client.Version >= 1050;
 
             if (!File.Exists(datPath) || !File.Exists(sprPath))
             {
@@ -860,7 +862,7 @@ namespace ItemEditor
 
             try
             {
-                result = plugin.Instance.LoadClient(client, extended, transparency, datPath, sprPath);
+                result = plugin.Instance.LoadClient(client, extended, frameDurations, transparency, datPath, sprPath);
             }
             catch (UnauthorizedAccessException error)
             {

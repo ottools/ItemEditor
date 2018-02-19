@@ -82,5 +82,17 @@ namespace ItemEditor.Properties {
                 this["SprSignature"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FrameDurations {
+            get {
+                return ((bool)(this["FrameDurations"]));
+            }
+            set {
+                this["FrameDurations"] = value;
+            }
+        }
     }
 }

@@ -36,12 +36,13 @@
             this.transparencyCheckBox = new System.Windows.Forms.CheckBox();
             this.extendedCheckBox = new System.Windows.Forms.CheckBox();
             this.alertLabel = new System.Windows.Forms.Label();
+            this.frameDurationsCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(347, 167);
+            this.cancelButton.Location = new System.Drawing.Point(347, 183);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 0;
@@ -51,7 +52,7 @@
             // 
             // confirmButton
             // 
-            this.confirmButton.Location = new System.Drawing.Point(266, 166);
+            this.confirmButton.Location = new System.Drawing.Point(266, 182);
             this.confirmButton.Name = "confirmButton";
             this.confirmButton.Size = new System.Drawing.Size(75, 23);
             this.confirmButton.TabIndex = 1;
@@ -61,20 +62,21 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.frameDurationsCheckBox);
             this.groupBox1.Controls.Add(this.directoryPathTextBox);
             this.groupBox1.Controls.Add(this.browseButton);
             this.groupBox1.Controls.Add(this.transparencyCheckBox);
             this.groupBox1.Controls.Add(this.extendedCheckBox);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(411, 116);
+            this.groupBox1.Size = new System.Drawing.Size(411, 131);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Default Client";
             // 
             // directoryPathTextBox
             // 
-            this.directoryPathTextBox.Location = new System.Drawing.Point(12, 80);
+            this.directoryPathTextBox.Location = new System.Drawing.Point(12, 96);
             this.directoryPathTextBox.Name = "directoryPathTextBox";
             this.directoryPathTextBox.Size = new System.Drawing.Size(303, 20);
             this.directoryPathTextBox.TabIndex = 3;
@@ -82,7 +84,7 @@
             // 
             // browseButton
             // 
-            this.browseButton.Location = new System.Drawing.Point(325, 78);
+            this.browseButton.Location = new System.Drawing.Point(325, 94);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(75, 23);
             this.browseButton.TabIndex = 2;
@@ -93,7 +95,7 @@
             // transparencyCheckBox
             // 
             this.transparencyCheckBox.AutoSize = true;
-            this.transparencyCheckBox.Location = new System.Drawing.Point(12, 48);
+            this.transparencyCheckBox.Location = new System.Drawing.Point(12, 70);
             this.transparencyCheckBox.Name = "transparencyCheckBox";
             this.transparencyCheckBox.Size = new System.Drawing.Size(91, 17);
             this.transparencyCheckBox.TabIndex = 1;
@@ -114,16 +116,26 @@
             // 
             this.alertLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.alertLabel.ForeColor = System.Drawing.Color.Red;
-            this.alertLabel.Location = new System.Drawing.Point(13, 137);
+            this.alertLabel.Location = new System.Drawing.Point(13, 152);
             this.alertLabel.Name = "alertLabel";
             this.alertLabel.Size = new System.Drawing.Size(247, 53);
             this.alertLabel.TabIndex = 3;
+            // 
+            // frameDurationsCheckBox
+            // 
+            this.frameDurationsCheckBox.AutoSize = true;
+            this.frameDurationsCheckBox.Location = new System.Drawing.Point(12, 47);
+            this.frameDurationsCheckBox.Name = "frameDurationsCheckBox";
+            this.frameDurationsCheckBox.Size = new System.Drawing.Size(103, 17);
+            this.frameDurationsCheckBox.TabIndex = 4;
+            this.frameDurationsCheckBox.Text = "Frame Durations";
+            this.frameDurationsCheckBox.UseVisualStyleBackColor = true;
             // 
             // PreferencesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(435, 198);
+            this.ClientSize = new System.Drawing.Size(434, 221);
             this.Controls.Add(this.alertLabel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.confirmButton);
@@ -151,5 +163,6 @@
         private System.Windows.Forms.Button browseButton;
         private System.Windows.Forms.CheckBox transparencyCheckBox;
         private System.Windows.Forms.Label alertLabel;
+        private System.Windows.Forms.CheckBox frameDurationsCheckBox;
     }
 }

@@ -18,8 +18,7 @@ Compiling
 
 You can build the project using the provided ItemEditor.sln in Visual Studio 2013 or later.
 
-If somebody can contribute compiling instructions for other platforms, that'd be
-great.
+For linux follow this guide to install mono-devel and mono-complete packages for your distro https://www.mono-project.com/download/stable/, then execute linuxbuild.sh
 
 Bugs
 ----

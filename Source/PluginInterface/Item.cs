@@ -92,6 +92,8 @@ namespace ItemEditor
 
         public bool HookEast { get; set; }
 
+        public bool HasCharges { get; set; }
+
         public bool IgnoreLook { get; set; }
 
         public bool FullGround { get; set; }

@@ -246,6 +246,11 @@ namespace OTLib.OTB
                             flags |= (uint)ServerItemFlag.HookEast;
                         }
 
+                        if (item.HasCharges)
+                        {
+                            flags |= (uint)ServerItemFlag.ClientCharges;
+                        }
+
                         if (item.IgnoreLook)
                         {
                             flags |= (uint)ServerItemFlag.IgnoreLook;

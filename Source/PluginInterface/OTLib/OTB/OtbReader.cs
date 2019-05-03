@@ -150,6 +150,7 @@ namespace OTLib.OTB
                         item.HookSouth = ((flags & ServerItemFlag.HookSouth) == ServerItemFlag.HookSouth);
                         item.HookEast = ((flags & ServerItemFlag.HookEast) == ServerItemFlag.HookEast);
                         item.AllowDistanceRead = ((flags & ServerItemFlag.AllowDistanceRead) == ServerItemFlag.AllowDistanceRead);
+                        item.HasCharges = ((flags & ServerItemFlag.ClientCharges) == ServerItemFlag.ClientCharges);
                         item.IgnoreLook = ((flags & ServerItemFlag.IgnoreLook) == ServerItemFlag.IgnoreLook);
                         item.FullGround = ((flags & ServerItemFlag.FullGround) == ServerItemFlag.FullGround);
                         item.IsAnimation = ((flags & ServerItemFlag.IsAnimation) == ServerItemFlag.IsAnimation);

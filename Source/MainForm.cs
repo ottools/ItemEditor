@@ -940,7 +940,7 @@ namespace ItemEditor
         {
             AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
             ApplicationName = assemblyName.Name;
-            ApplicationVersion = assemblyName.Version.Major + "." + assemblyName.Version.Minor;
+            ApplicationVersion = assemblyName.Version.Major + "." + assemblyName.Version.Minor + "." + assemblyName.Version.Build;
 
             this.Text = ApplicationName + " " + ApplicationVersion;
             this.typeCombo.DataSource = Enum.GetNames(typeof(ServerItemType));

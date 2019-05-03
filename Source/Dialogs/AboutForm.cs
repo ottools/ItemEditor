@@ -45,7 +45,7 @@ namespace ItemEditor.Dialogs
         private void InitializeGraphics()
         {
             this.pictureBox.Image = ItemEditor.Properties.Resources.about_background;
-			this.versionLabel.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            this.versionLabel.Text = MainForm.ApplicationVersion;
         }
 
         #endregion

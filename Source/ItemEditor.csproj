@@ -232,6 +232,10 @@
     <None Include="Resources\folder_page.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ThirdParty\DarkUI\DarkUI.csproj">
+      <Project>{f19472f5-8c44-4c51-a8a0-b9de5f555255}</Project>
+      <Name>DarkUI</Name>
+    </ProjectReference>
     <ProjectReference Include="PluginInterface\PluginInterface.csproj">
       <Project>{cef21172-258c-4d0d-b024-ed7ef99612a2}</Project>
       <Name>PluginInterface</Name>

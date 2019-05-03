@@ -19,6 +19,7 @@
 #endregion
 
 #region Using Statements
+using DarkUI.Forms;
 using ItemEditor.Controls;
 using OTLib.Server.Items;
 using System;
@@ -28,7 +29,7 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Dialogs
 {
-    public partial class FindItemForm : Form
+    public partial class FindItemForm : DarkForm
     {
         #region Private Properties
 

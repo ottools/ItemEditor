@@ -19,6 +19,7 @@
 #endregion
 
 #region Using Statements
+using DarkUI.Forms;
 using ImageSimilarity;
 using ItemEditor.Controls;
 using ItemEditor.Diagnostics;
@@ -41,7 +42,7 @@ using System.Windows.Forms;
 
 namespace ItemEditor
 {
-    public partial class MainForm : Form
+    public partial class MainForm : DarkForm
     {
         #region Private Properties
 

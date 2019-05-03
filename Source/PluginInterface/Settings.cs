@@ -1,6 +1,6 @@
 ﻿#region Licence
 /**
-* Copyright © 2014-2018 OTTools <https://github.com/ottools/ItemEditor/>
+* Copyright © 2014-2019 OTTools <https://github.com/ottools/ItemEditor/>
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by

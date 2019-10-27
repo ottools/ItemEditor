@@ -1,4 +1,4 @@
-﻿#region Licence
+#region Licence
 /**
 * Copyright © 2014-2019 OTTools <https://github.com/ottools/ItemEditor/>
 *

@@ -1004,11 +1004,14 @@ namespace ItemEditor
 
         private void ItemsListBoxContextMenu_Opening(object sender, CancelEventArgs e)
         {
-            this.itemsListBoxContextMenu.Items.Clear();
-            if (this.Loaded)
+            itemsListBoxContextMenu.Items.Clear();
+            if (Loaded)
             {
-                this.itemsListBoxContextMenu.Items.Add("Duplicate");
-                this.itemsListBoxContextMenu.Items.Add("Reload");
+                itemsListBoxContextMenu.Items.Add("Duplicate");
+                itemsListBoxContextMenu.Items.Add("Reload");
+                itemsListBoxContextMenu.Items.Add("-");
+                itemsListBoxContextMenu.Items.Add("Copy Server ID");
+                itemsListBoxContextMenu.Items.Add("Copy Client ID");
             }
         }
 
@@ -1018,11 +1021,19 @@ namespace ItemEditor
             switch (menuItem.Text)
             {
                 case "Duplicate":
-                    this.DuplicateItem(this.CurrentServerItem);
+                    DuplicateItem(CurrentServerItem);
                     break;
 
                 case "Reload":
-                    this.ReloadSelectedItem();
+                    ReloadSelectedItem();
+                    break;
+
+                case "Copy Server ID":
+                    Clipboard.SetText(CurrentServerItem.ID.ToString());
+                    break;
+
+                case "Copy Client ID":
+                    Clipboard.SetText(CurrentServerItem.ClientId.ToString());
                     break;
             }
         }

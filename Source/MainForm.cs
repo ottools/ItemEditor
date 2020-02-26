@@ -350,7 +350,20 @@ namespace ItemEditor
             item.ID = 100;
 
             ServerItemList items = new ServerItemList();
-            items.MajorVersion = 3;
+
+            if (client.Version >= 740 && client.Version <= 792)
+            {
+                items.MajorVersion = 1;
+            }
+            else if (client.Version >= 800 && client.Version <= 811)
+            {
+                items.MajorVersion = 2;
+            }
+            else
+            {
+                items.MajorVersion = 3;
+            }
+            
             items.MinorVersion = client.OtbVersion;
             items.BuildNumber = 1;
             items.ClientVersion = client.Version;
@@ -856,7 +869,7 @@ namespace ItemEditor
                 return false;
             }
 
-            Trace.WriteLine(string.Format("OTB version {0}.", otbVersion));
+            Trace.WriteLine(string.Format("OTB version {0}. Tibia client version {1}", otbVersion, client.Version));
 
             bool result;
 

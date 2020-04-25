@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4624E915-FB86-4DDB-ACA6-A2313F70BA9C}</ProjectGuid>
+     <ProjectGuid>{A6AC9F32-8478-4543-8772-0AD590E94140}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PluginOne</RootNamespace>
-    <AssemblyName>PluginOne</AssemblyName>
+    <RootNamespace>PluginZero</RootNamespace>
+    <AssemblyName>PluginZero</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
@@ -51,21 +51,27 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\bin\x64\Debug\Plugins\</OutputPath>
+
     <PlatformTarget>x64</PlatformTarget>
+
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>..\bin\x64\Release\Plugins\</OutputPath>
+
     <Optimize>true</Optimize>
+
     <PlatformTarget>x64</PlatformTarget>
+
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DefineConstants>TRACE</DefineConstants>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -81,7 +87,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PluginOne.xml">
+    <Content Include="PluginZero.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

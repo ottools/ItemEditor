@@ -1,4 +1,4 @@
-#region Licence
+﻿#region Licence
 /**
 * Copyright © 2014-2019 OTTools <https://github.com/ottools/ItemEditor/>
 *
@@ -28,8 +28,9 @@ using System.Diagnostics;
 using System.IO;
 #endregion
 
-namespace PluginOne
+namespace PluginZero
 {
+
     internal enum ItemFlag : byte
     {
         Ground = 0x00,
@@ -40,31 +41,29 @@ namespace PluginOne
         Stackable = 0x05,
         ForceUse = 0x06,
         MultiUse = 0x07,
-        HasCharges = 0x08,
-        Writable = 0x09,
-        WritableOnce = 0x0A,
-        FluidContainer = 0x0B,
-        Fluid = 0x0C,
-        IsUnpassable = 0x0D,
-        IsUnmoveable = 0x0E,
-        BlockMissiles = 0x0F,
-        BlockPathfinder = 0x10,
-        Pickupable = 0x11,
-        Hangable = 0x12,
-        IsHorizontal = 0x13,
-        IsVertical = 0x14,
-        Rotatable = 0x15,
-        HasLight = 0x16,
-        DontHide = 0x17,
-        FloorChange = 0x18,
-        HasOffset = 0x19,
-        HasElevation = 0x1A,
-        Lying = 0x1B,
-        AnimateAlways = 0x1C,
-        Minimap = 0x1D,
-        LensHelp = 0x1E,
-        FullGround = 0x1F,
-        IgnoreLook = 0x20,
+        Writable = 0x08,
+        WritableOnce = 0x09,
+        FluidContainer = 0x0A,
+        Fluid = 0x0B,
+        IsUnpassable = 0x0C,
+        IsUnmoveable = 0x0D,
+        BlockMissiles = 0x0E,
+        BlockPathfinder = 0x0F,
+        Pickupable = 0x10,
+        Hangable = 0x11,
+        IsHorizontal = 0x12,
+        IsVertical = 0x13,
+        Rotatable = 0x14,
+        HasLight = 0x15,
+        DontHide = 0x16,
+        FloorChange = 0x17,
+        HasOffset = 0x18,
+        HasElevation = 0x19,
+        Lying = 0x1A,
+        AnimateAlways = 0x1B,
+        Minimap = 0x1C,
+        LensHelp = 0x1D,
+        FullGround = 0x1E,
 
         LastFlag = 0xFF
     }
@@ -137,7 +136,7 @@ namespace PluginOne
 
         public void Initialize()
         {
-            this.Settings.Load("PluginOne.xml");
+            this.Settings.Load("PluginZero.xml");
             this.SupportedClients = Settings.GetSupportedClientList();
         }
 
@@ -188,7 +187,7 @@ namespace PluginOne
                 uint datSignature = reader.ReadUInt32();
                 if (client.DatSignature != datSignature)
                 {
-                    string message = "PluginOne: Bad dat signature. Expected signature is {0:X} and loaded signature is {1:X}.";
+                    string message = "PluginZero: Bad dat signature. Expected signature is {0:X} and loaded signature is {1:X}.";
                     Trace.WriteLine(String.Format(message, client.DatSignature, datSignature));
                     return false;
                 }
@@ -215,9 +214,10 @@ namespace PluginOne
                         switch (flag)
                         {
                             case ItemFlag.Ground:
-                                item.Type = ServerItemType.Ground;
                                 item.GroundSpeed = reader.ReadUInt16();
+                                item.Type = ServerItemType.Ground;
                                 break;
+
 
                             case ItemFlag.GroundBorder:
                                 item.HasStackOrder = true;
@@ -228,6 +228,7 @@ namespace PluginOne
                                 item.HasStackOrder = true;
                                 item.StackOrder = TileStackOrder.Bottom;
                                 break;
+
 
                             case ItemFlag.OnTop:
                                 item.HasStackOrder = true;
@@ -247,9 +248,6 @@ namespace PluginOne
 
                             case ItemFlag.MultiUse:
                                 item.MultiUse = true;
-                                break;
-
-                            case ItemFlag.HasCharges:
                                 break;
 
                             case ItemFlag.Writable:
@@ -346,22 +344,19 @@ namespace PluginOne
                                 break;
 
                             case ItemFlag.FullGround:
-                                //item.FullGround = true;
-                                break;
-
-                            case ItemFlag.IgnoreLook:
-                                item.IgnoreLook = true;
                                 break;
 
                             case ItemFlag.LastFlag:
                                 break;
 
                             default:
-                                Trace.WriteLine(String.Format("PluginOne: Error while parsing, unknown flag 0x{0:X} at id {1}.", flag, id));
+                                Trace.WriteLine(String.Format("PluginZero: Error while parsing, unknown flag 0x{0:X} at id {1}.", flag, id));
                                 return false;
+
                         }
-                    }
-                    while (flag != ItemFlag.LastFlag);
+
+                    } while (flag != ItemFlag.LastFlag);
+
 
                     item.Width = reader.ReadByte();
                     item.Height = reader.ReadByte();
@@ -379,25 +374,10 @@ namespace PluginOne
                     item.IsAnimation = item.Frames > 1;
                     item.NumSprites = (uint)item.Width * item.Height * item.Layers * item.PatternX * item.PatternY * item.PatternZ * item.Frames;
 
-                    if (item.IsAnimation && frameDurations)
-                    {
-                        // Skipping frames durations info.
-                        reader.ReadBytes(6 + 8 * item.Frames);
-                    }
-
                     // Read the sprite ids
-                    for (uint i = 0; i < item.NumSprites; ++i)
+                    for (UInt32 i = 0; i < item.NumSprites; ++i)
                     {
-                        uint spriteId;
-                        if (extended)
-                        {
-                            spriteId = reader.ReadUInt32();
-                        }
-                        else
-                        {
-                            spriteId = reader.ReadUInt16();
-                        }
-
+                        UInt16 spriteId = reader.ReadUInt16();
                         Sprite sprite;
                         if (!sprites.TryGetValue(spriteId, out sprite))
                         {
@@ -410,12 +390,13 @@ namespace PluginOne
                     }
 
                     ++id;
+
+
                 }
             }
 
             return true;
         }
-
         #endregion
     }
 }

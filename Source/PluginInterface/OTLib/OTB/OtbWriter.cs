@@ -78,7 +78,7 @@ namespace OTLib.OTB
 
                     vi.MajorVersion = this.Items.MajorVersion;
                     vi.MinorVersion = this.Items.MinorVersion;
-                    vi.BuildNumber = this.Items.BuildNumber;
+                    vi.BuildNumber = this.Items.BuildNumber + 1;
                     vi.CSDVersion = string.Format("OTB {0}.{1}.{2}-{3}.{4}", vi.MajorVersion, vi.MinorVersion, vi.BuildNumber, this.Items.ClientVersion / 100, this.Items.ClientVersion % 100);
 
                     MemoryStream ms = new MemoryStream();

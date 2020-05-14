@@ -19,6 +19,7 @@
 #endregion
 
 #region Using Statements
+using DarkUI.Config;
 using OTLib.Server.Items;
 using PluginInterface;
 using System.Collections.Generic;
@@ -53,6 +54,8 @@ namespace ItemEditor.Controls
             this.MeasureItem += new MeasureItemEventHandler(this.MeasureItemHandler);
             this.DrawItem += new DrawItemEventHandler(this.DrawItemHandler);
             this.DrawMode = DrawMode.OwnerDrawVariable;
+            this.BackColor = Colors.DarkBackground;
+            this.BorderStyle = BorderStyle.None;
         }
 
         #endregion
@@ -109,42 +112,42 @@ namespace ItemEditor.Controls
             e.ItemHeight = (int)(32 + (2 * ItemMargin));
         }
 
-        private void DrawItemHandler(object sender, DrawItemEventArgs ev)
+        private void DrawItemHandler(object sender, DrawItemEventArgs args)
         {
-            if (this.plugin == null || ev.Index == -1)
+            if (Plugin == null || args.Index == -1)
             {
                 return;
             }
 
-            Rectangle bounds = ev.Bounds;
+            Graphics graphics = args.Graphics;
+            Rectangle bounds = args.Bounds;
+            bounds.Width--;
+
+            ServerItem serverItem = (ServerItem)Items[args.Index];
+
+            // find the area in which to put the text and draw.
+            layoutRect.X = bounds.Left + 32 + (3 * ItemMargin);
+            layoutRect.Y = bounds.Top + (ItemMargin * 2);
+            layoutRect.Width = bounds.Right - ItemMargin - layoutRect.X;
+            layoutRect.Height = bounds.Bottom - ItemMargin - layoutRect.Y;
 
             // draw background
-            ev.DrawBackground();
-
-            // draw border
-            ev.Graphics.DrawRectangle(Pens.Gray, bounds);
-
-            ServerItem serverItem = (ServerItem)this.Items[ev.Index];
-
-            // Find the area in which to put the text and draw.
-            this.layoutRect.X = bounds.Left + 32 + (3 * ItemMargin);
-            this.layoutRect.Y = bounds.Top + (ItemMargin * 2);
-            this.layoutRect.Width = bounds.Right - ItemMargin - this.layoutRect.X;
-            this.layoutRect.Height = bounds.Bottom - ItemMargin - this.layoutRect.Y;
-
-            // draw server item id and name
-            if ((ev.State & DrawItemState.Selected) == DrawItemState.Selected)
+            if ((args.State & DrawItemState.Selected) == DrawItemState.Selected)
             {
-                this.pen.Brush = WhiteBrush;
-                ev.Graphics.DrawString(serverItem.ToString(), this.Font, WhiteBrush, this.layoutRect);
+                graphics.FillRectangle(Colors.ListSelectionBrush, bounds);
             }
             else
             {
-                this.pen.Brush = BlackBrush;
-                ev.Graphics.DrawString(serverItem.ToString(), this.Font, BlackBrush, this.layoutRect);
+                graphics.FillRectangle(Colors.ListBackgroudBrush, bounds);
             }
 
-            this.destRect.Y = bounds.Top + ItemMargin;
+            destRect.Y = bounds.Top + ItemMargin;
+
+            // draw view background
+            graphics.FillRectangle(Colors.ListViewBackgroudBrush, destRect);
+
+            // draw text
+            graphics.DrawString(serverItem.ToString(), Font, Colors.TextColorBrush, layoutRect);
 
             ClientItem clientItem = this.plugin.GetClientItem(serverItem.ClientId);
             if (clientItem != null)
@@ -152,17 +155,17 @@ namespace ItemEditor.Controls
                 Bitmap bitmap = clientItem.GetBitmap();
                 if (bitmap != null)
                 {
-                    this.sourceRect.Width = bitmap.Width;
-                    this.sourceRect.Height = bitmap.Height;
-                    ev.Graphics.DrawImage(bitmap, this.destRect, this.sourceRect, GraphicsUnit.Pixel);
+                    sourceRect.Width = bitmap.Width;
+                    sourceRect.Height = bitmap.Height;
+                    graphics.DrawImage(bitmap, destRect, sourceRect, GraphicsUnit.Pixel);
                 }
             }
 
-            // draw item border
-            ev.Graphics.DrawRectangle(this.pen, this.destRect);
+            // draw view border
+            graphics.DrawRectangle(Colors.BorderColorPen, destRect);
 
-            // draw focus rect
-            ev.DrawFocusRectangle();
+            // draw border
+            graphics.DrawRectangle(Colors.BorderColorPen, bounds);
         }
 
         #endregion

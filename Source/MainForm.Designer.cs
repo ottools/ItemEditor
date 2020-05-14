@@ -32,52 +32,52 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.itemsListBoxContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.appearanceGroupBox = new System.Windows.Forms.GroupBox();
-            this.candidatesButton = new System.Windows.Forms.Button();
-            this.currentSpriteLabel = new System.Windows.Forms.Label();
-            this.previousLabel = new System.Windows.Forms.Label();
-            this.serverIdLbl = new System.Windows.Forms.Label();
-            this.clientIdUpDown = new System.Windows.Forms.NumericUpDown();
-            this.sidLabel = new System.Windows.Forms.Label();
-            this.cidLabel = new System.Windows.Forms.Label();
-            this.typeCombo = new System.Windows.Forms.ComboBox();
-            this.typeLabel = new System.Windows.Forms.Label();
-            this.optionsGroupBox = new System.Windows.Forms.GroupBox();
-            this.stackOrderComboBox = new System.Windows.Forms.ComboBox();
-            this.stackOrderLabel = new System.Windows.Forms.Label();
-            this.wareIdText = new System.Windows.Forms.TextBox();
-            this.wareIdLabel = new System.Windows.Forms.Label();
-            this.nameText = new System.Windows.Forms.TextBox();
-            this.nameLabel = new System.Windows.Forms.Label();
-            this.maxReadWriteCharsLabel = new System.Windows.Forms.Label();
-            this.maxReadWriteCharsText = new System.Windows.Forms.TextBox();
-            this.maxReadCharsLabel = new System.Windows.Forms.Label();
-            this.maxReadCharsText = new System.Windows.Forms.TextBox();
-            this.minimapColorLabel = new System.Windows.Forms.Label();
-            this.minimapColorText = new System.Windows.Forms.TextBox();
-            this.lightColorLabel = new System.Windows.Forms.Label();
-            this.lightColorText = new System.Windows.Forms.TextBox();
-            this.lightLevelLabel = new System.Windows.Forms.Label();
-            this.lightLevelText = new System.Windows.Forms.TextBox();
-            this.groundSpeedLabel = new System.Windows.Forms.Label();
-            this.groundSpeedText = new System.Windows.Forms.TextBox();
-            this.ignoreLookCheck = new System.Windows.Forms.CheckBox();
-            this.readableCheck = new System.Windows.Forms.CheckBox();
-            this.stackableCheck = new System.Windows.Forms.CheckBox();
-            this.hookEastCheck = new System.Windows.Forms.CheckBox();
-            this.rotatableCheck = new System.Windows.Forms.CheckBox();
-            this.useableCheck = new System.Windows.Forms.CheckBox();
-            this.hangableCheck = new System.Windows.Forms.CheckBox();
-            this.hasElevationCheck = new System.Windows.Forms.CheckBox();
-            this.movableCheck = new System.Windows.Forms.CheckBox();
-            this.blockPathfinderCheck = new System.Windows.Forms.CheckBox();
-            this.hookSouthCheck = new System.Windows.Forms.CheckBox();
-            this.fullGroundCheck = new System.Windows.Forms.CheckBox();
-            this.pickupableCheck = new System.Windows.Forms.CheckBox();
-            this.blockMissilesCheck = new System.Windows.Forms.CheckBox();
-            this.unpassableCheck = new System.Windows.Forms.CheckBox();
-            this.statusBar = new System.Windows.Forms.StatusStrip();
-            this.menuBar = new System.Windows.Forms.MenuStrip();
+            this.appearanceGroupBox = new DarkUI.Controls.DarkGroupBox();
+            this.candidatesButton = new DarkUI.Controls.DarkButton();
+            this.currentSpriteLabel = new DarkUI.Controls.DarkLabel();
+            this.previousLabel = new DarkUI.Controls.DarkLabel();
+            this.serverIdLbl = new DarkUI.Controls.DarkLabel();
+            this.clientIdUpDown = new DarkUI.Controls.DarkNumericUpDown();
+            this.sidLabel = new DarkUI.Controls.DarkLabel();
+            this.cidLabel = new DarkUI.Controls.DarkLabel();
+            this.typeCombo = new DarkUI.Controls.DarkComboBox();
+            this.typeLabel = new DarkUI.Controls.DarkLabel();
+            this.optionsGroupBox = new DarkUI.Controls.DarkGroupBox();
+            this.stackOrderComboBox = new DarkUI.Controls.DarkComboBox();
+            this.stackOrderLabel = new DarkUI.Controls.DarkLabel();
+            this.wareIdText = new DarkUI.Controls.DarkTextBox();
+            this.wareIdLabel = new DarkUI.Controls.DarkLabel();
+            this.nameText = new DarkUI.Controls.DarkTextBox();
+            this.nameLabel = new DarkUI.Controls.DarkLabel();
+            this.maxReadWriteCharsLabel = new DarkUI.Controls.DarkLabel();
+            this.maxReadWriteCharsText = new DarkUI.Controls.DarkTextBox();
+            this.maxReadCharsLabel = new DarkUI.Controls.DarkLabel();
+            this.maxReadCharsText = new DarkUI.Controls.DarkTextBox();
+            this.minimapColorLabel = new DarkUI.Controls.DarkLabel();
+            this.minimapColorText = new DarkUI.Controls.DarkTextBox();
+            this.lightColorLabel = new DarkUI.Controls.DarkLabel();
+            this.lightColorText = new DarkUI.Controls.DarkTextBox();
+            this.lightLevelLabel = new DarkUI.Controls.DarkLabel();
+            this.lightLevelText = new DarkUI.Controls.DarkTextBox();
+            this.groundSpeedLabel = new DarkUI.Controls.DarkLabel();
+            this.groundSpeedText = new DarkUI.Controls.DarkTextBox();
+            this.ignoreLookCheck = new DarkUI.Controls.DarkCheckBox();
+            this.readableCheck = new DarkUI.Controls.DarkCheckBox();
+            this.stackableCheck = new DarkUI.Controls.DarkCheckBox();
+            this.hookEastCheck = new DarkUI.Controls.DarkCheckBox();
+            this.rotatableCheck = new DarkUI.Controls.DarkCheckBox();
+            this.useableCheck = new DarkUI.Controls.DarkCheckBox();
+            this.hangableCheck = new DarkUI.Controls.DarkCheckBox();
+            this.hasElevationCheck = new DarkUI.Controls.DarkCheckBox();
+            this.movableCheck = new DarkUI.Controls.DarkCheckBox();
+            this.blockPathfinderCheck = new DarkUI.Controls.DarkCheckBox();
+            this.hookSouthCheck = new DarkUI.Controls.DarkCheckBox();
+            this.fullGroundCheck = new DarkUI.Controls.DarkCheckBox();
+            this.pickupableCheck = new DarkUI.Controls.DarkCheckBox();
+            this.blockMissilesCheck = new DarkUI.Controls.DarkCheckBox();
+            this.unpassableCheck = new DarkUI.Controls.DarkCheckBox();
+            this.statusBar = new DarkUI.Controls.DarkStatusStrip();
+            this.menuBar = new DarkUI.Controls.DarkMenuStrip();
             this.fileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileNewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileOpenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,12 +106,12 @@
             this.toolsUpdateVersionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpAboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.outputTextBox = new System.Windows.Forms.TextBox();
+            this.outputTextBox = new DarkUI.Controls.DarkTextBox();
             this.loadingItemsProgressBar = new System.Windows.Forms.ProgressBar();
-            this.itemsCountLabel = new System.Windows.Forms.Label();
-            this.separatorLabel1 = new System.Windows.Forms.Label();
-            this.separatorLabel2 = new System.Windows.Forms.Label();
-            this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.itemsCountLabel = new DarkUI.Controls.DarkLabel();
+            this.separatorLabel1 = new DarkUI.Controls.DarkLabel();
+            this.separatorLabel2 = new DarkUI.Controls.DarkLabel();
+            this.toolStrip = new DarkUI.Controls.DarkToolStrip();
             this.toolStripNewButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripOpenButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSaveButton = new System.Windows.Forms.ToolStripButton();
@@ -121,12 +121,12 @@
             this.toolStripFindItemButton = new System.Windows.Forms.ToolStripButton();
             this.candidatesTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.candidatesDropDown = new System.Windows.Forms.ToolStripDropDown();
-            this.newItemButton = new System.Windows.Forms.Button();
-            this.duplicateItemButton = new System.Windows.Forms.Button();
-            this.reloadItemButton = new System.Windows.Forms.Button();
-            this.findItemButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.forceUseCheckBox = new System.Windows.Forms.CheckBox();
+            this.newItemButton = new DarkUI.Controls.DarkButton();
+            this.duplicateItemButton = new DarkUI.Controls.DarkButton();
+            this.reloadItemButton = new DarkUI.Controls.DarkButton();
+            this.findItemButton = new DarkUI.Controls.DarkButton();
+            this.label1 = new DarkUI.Controls.DarkLabel();
+            this.forceUseCheckBox = new DarkUI.Controls.DarkCheckBox();
             this.previousPictureBox = new ItemEditor.Controls.ClientItemView();
             this.pictureBox = new ItemEditor.Controls.ClientItemView();
             this.serverItemListBox = new ItemEditor.Controls.ServerItemListBox();
@@ -184,7 +184,6 @@
             this.candidatesButton.Size = new System.Drawing.Size(68, 22);
             this.candidatesButton.TabIndex = 17;
             this.candidatesButton.Text = "Candidates";
-            this.candidatesButton.UseVisualStyleBackColor = true;
             this.candidatesButton.Click += new System.EventHandler(this.CandidatesButton_Click);
             // 
             // currentSpriteLabel
@@ -209,8 +208,9 @@
             // 
             // serverIdLbl
             // 
-            this.serverIdLbl.BackColor = System.Drawing.Color.White;
-            this.serverIdLbl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.serverIdLbl.BackColor = DarkUI.Config.Colors.LightBackground;
+            this.serverIdLbl.ForeColor = DarkUI.Config.Colors.LightText;
+            this.serverIdLbl.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.serverIdLbl.Location = new System.Drawing.Point(12, 206);
             this.serverIdLbl.Name = "serverIdLbl";
             this.serverIdLbl.Size = new System.Drawing.Size(66, 20);
@@ -475,7 +475,6 @@
             this.ignoreLookCheck.Size = new System.Drawing.Size(83, 17);
             this.ignoreLookCheck.TabIndex = 16;
             this.ignoreLookCheck.Text = "Ignore Look";
-            this.ignoreLookCheck.UseVisualStyleBackColor = true;
             // 
             // readableCheck
             // 
@@ -485,7 +484,6 @@
             this.readableCheck.Size = new System.Drawing.Size(72, 17);
             this.readableCheck.TabIndex = 18;
             this.readableCheck.Text = "Readable";
-            this.readableCheck.UseVisualStyleBackColor = true;
             // 
             // stackableCheck
             // 
@@ -495,7 +493,6 @@
             this.stackableCheck.Size = new System.Drawing.Size(74, 17);
             this.stackableCheck.TabIndex = 13;
             this.stackableCheck.Text = "Stackable";
-            this.stackableCheck.UseVisualStyleBackColor = true;
             // 
             // hookEastCheck
             // 
@@ -505,7 +502,6 @@
             this.hookEastCheck.Size = new System.Drawing.Size(76, 17);
             this.hookEastCheck.TabIndex = 15;
             this.hookEastCheck.Text = "Hook East";
-            this.hookEastCheck.UseVisualStyleBackColor = true;
             // 
             // rotatableCheck
             // 
@@ -515,7 +511,6 @@
             this.rotatableCheck.Size = new System.Drawing.Size(72, 17);
             this.rotatableCheck.TabIndex = 12;
             this.rotatableCheck.Text = "Rotatable";
-            this.rotatableCheck.UseVisualStyleBackColor = true;
             // 
             // useableCheck
             // 
@@ -525,7 +520,6 @@
             this.useableCheck.Size = new System.Drawing.Size(70, 17);
             this.useableCheck.TabIndex = 11;
             this.useableCheck.Text = "Multi Use";
-            this.useableCheck.UseVisualStyleBackColor = true;
             // 
             // hangableCheck
             // 
@@ -535,7 +529,6 @@
             this.hangableCheck.Size = new System.Drawing.Size(72, 17);
             this.hangableCheck.TabIndex = 10;
             this.hangableCheck.Text = "Hangable";
-            this.hangableCheck.UseVisualStyleBackColor = true;
             // 
             // hasElevationCheck
             // 
@@ -545,7 +538,6 @@
             this.hasElevationCheck.Size = new System.Drawing.Size(92, 17);
             this.hasElevationCheck.TabIndex = 8;
             this.hasElevationCheck.Text = "Has Elevation";
-            this.hasElevationCheck.UseVisualStyleBackColor = true;
             // 
             // movableCheck
             // 
@@ -555,7 +547,6 @@
             this.movableCheck.Size = new System.Drawing.Size(67, 17);
             this.movableCheck.TabIndex = 7;
             this.movableCheck.Text = "Movable";
-            this.movableCheck.UseVisualStyleBackColor = true;
             // 
             // blockPathfinderCheck
             // 
@@ -565,7 +556,6 @@
             this.blockPathfinderCheck.Size = new System.Drawing.Size(104, 17);
             this.blockPathfinderCheck.TabIndex = 6;
             this.blockPathfinderCheck.Text = "Block Pathfinder";
-            this.blockPathfinderCheck.UseVisualStyleBackColor = true;
             // 
             // hookSouthCheck
             // 
@@ -575,7 +565,6 @@
             this.hookSouthCheck.Size = new System.Drawing.Size(83, 17);
             this.hookSouthCheck.TabIndex = 14;
             this.hookSouthCheck.Text = "Hook South";
-            this.hookSouthCheck.UseVisualStyleBackColor = true;
             // 
             // fullGroundCheck
             // 
@@ -585,7 +574,6 @@
             this.fullGroundCheck.Size = new System.Drawing.Size(80, 17);
             this.fullGroundCheck.TabIndex = 14;
             this.fullGroundCheck.Text = "Full Ground";
-            this.fullGroundCheck.UseVisualStyleBackColor = true;
             // 
             // pickupableCheck
             // 
@@ -595,7 +583,6 @@
             this.pickupableCheck.Size = new System.Drawing.Size(79, 17);
             this.pickupableCheck.TabIndex = 9;
             this.pickupableCheck.Text = "Pickupable";
-            this.pickupableCheck.UseVisualStyleBackColor = true;
             // 
             // blockMissilesCheck
             // 
@@ -605,7 +592,6 @@
             this.blockMissilesCheck.Size = new System.Drawing.Size(92, 17);
             this.blockMissilesCheck.TabIndex = 5;
             this.blockMissilesCheck.Text = "Block Missiles";
-            this.blockMissilesCheck.UseVisualStyleBackColor = true;
             // 
             // unpassableCheck
             // 
@@ -615,7 +601,6 @@
             this.unpassableCheck.Size = new System.Drawing.Size(82, 17);
             this.unpassableCheck.TabIndex = 4;
             this.unpassableCheck.Text = "Unpassable";
-            this.unpassableCheck.UseVisualStyleBackColor = true;
             // 
             // statusBar
             // 
@@ -1047,61 +1032,41 @@
             // newItemButton
             // 
             this.newItemButton.Enabled = false;
-            this.newItemButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.newItemButton.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.newItemButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.newItemButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.newItemButton.Image = global::ItemEditor.Properties.Resources.page_white;
             this.newItemButton.Location = new System.Drawing.Point(10, 506);
             this.newItemButton.Name = "newItemButton";
             this.newItemButton.Size = new System.Drawing.Size(25, 25);
             this.newItemButton.TabIndex = 36;
-            this.newItemButton.UseVisualStyleBackColor = true;
             this.newItemButton.Click += new System.EventHandler(this.NewItemButton_Click);
             // 
             // duplicateItemButton
             // 
             this.duplicateItemButton.Enabled = false;
-            this.duplicateItemButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.duplicateItemButton.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.duplicateItemButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.duplicateItemButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.duplicateItemButton.Image = global::ItemEditor.Properties.Resources.page_white_copy;
             this.duplicateItemButton.Location = new System.Drawing.Point(40, 506);
             this.duplicateItemButton.Name = "duplicateItemButton";
             this.duplicateItemButton.Size = new System.Drawing.Size(25, 25);
             this.duplicateItemButton.TabIndex = 37;
-            this.duplicateItemButton.UseVisualStyleBackColor = true;
             this.duplicateItemButton.Click += new System.EventHandler(this.DuplicateItemButton_Click);
             // 
             // reloadItemButton
             // 
             this.reloadItemButton.Enabled = false;
-            this.reloadItemButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.reloadItemButton.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.reloadItemButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.reloadItemButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.reloadItemButton.Image = global::ItemEditor.Properties.Resources.reload;
             this.reloadItemButton.Location = new System.Drawing.Point(71, 506);
             this.reloadItemButton.Name = "reloadItemButton";
             this.reloadItemButton.Size = new System.Drawing.Size(25, 25);
             this.reloadItemButton.TabIndex = 38;
-            this.reloadItemButton.UseVisualStyleBackColor = true;
             this.reloadItemButton.Click += new System.EventHandler(this.ReloadItemButton_Click);
             // 
             // findItemButton
             // 
             this.findItemButton.Enabled = false;
-            this.findItemButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.findItemButton.FlatAppearance.CheckedBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.findItemButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.findItemButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.findItemButton.Image = global::ItemEditor.Properties.Resources.find;
             this.findItemButton.Location = new System.Drawing.Point(114, 506);
             this.findItemButton.Name = "findItemButton";
             this.findItemButton.Size = new System.Drawing.Size(25, 25);
             this.findItemButton.TabIndex = 40;
-            this.findItemButton.UseVisualStyleBackColor = true;
             this.findItemButton.Click += new System.EventHandler(this.FindItemButton_Click);
             // 
             // label1
@@ -1120,12 +1085,11 @@
             this.forceUseCheckBox.Size = new System.Drawing.Size(75, 17);
             this.forceUseCheckBox.TabIndex = 52;
             this.forceUseCheckBox.Text = "Force Use";
-            this.forceUseCheckBox.UseVisualStyleBackColor = true;
             // 
             // previousPictureBox
             // 
-            this.previousPictureBox.BackColor = System.Drawing.Color.White;
-            this.previousPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.previousPictureBox.BackColor = DarkUI.Config.Colors.DarkBackground;
+            this.previousPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.previousPictureBox.ClientItem = null;
             this.previousPictureBox.Location = new System.Drawing.Point(13, 36);
             this.previousPictureBox.Margin = new System.Windows.Forms.Padding(0);
@@ -1136,8 +1100,8 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.BackColor = System.Drawing.Color.White;
-            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox.BackColor = DarkUI.Config.Colors.DarkBackground;
+            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.pictureBox.ClientItem = null;
             this.pictureBox.Location = new System.Drawing.Point(13, 121);
             this.pictureBox.Margin = new System.Windows.Forms.Padding(0);
@@ -1162,8 +1126,8 @@
             // 
             // candidatesPictureBox1
             // 
-            this.candidatesPictureBox1.BackColor = System.Drawing.Color.White;
-            this.candidatesPictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox1.BackColor = DarkUI.Config.Colors.DarkBackground;
+            this.candidatesPictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.candidatesPictureBox1.ClientItem = null;
             this.candidatesPictureBox1.Location = new System.Drawing.Point(0, 0);
             this.candidatesPictureBox1.Margin = new System.Windows.Forms.Padding(0);
@@ -1176,8 +1140,8 @@
             // 
             // candidatesPictureBox2
             // 
-            this.candidatesPictureBox2.BackColor = System.Drawing.Color.White;
-            this.candidatesPictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox2.BackColor = DarkUI.Config.Colors.DarkBackground;
+            this.candidatesPictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.candidatesPictureBox2.ClientItem = null;
             this.candidatesPictureBox2.Location = new System.Drawing.Point(64, 0);
             this.candidatesPictureBox2.Margin = new System.Windows.Forms.Padding(0);
@@ -1190,8 +1154,8 @@
             // 
             // candidatesPictureBox3
             // 
-            this.candidatesPictureBox3.BackColor = System.Drawing.Color.White;
-            this.candidatesPictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox3.BackColor = DarkUI.Config.Colors.DarkBackground;
+            this.candidatesPictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.candidatesPictureBox3.ClientItem = null;
             this.candidatesPictureBox3.Location = new System.Drawing.Point(128, 0);
             this.candidatesPictureBox3.Margin = new System.Windows.Forms.Padding(0);
@@ -1204,8 +1168,8 @@
             // 
             // candidatesPictureBox4
             // 
-            this.candidatesPictureBox4.BackColor = System.Drawing.Color.White;
-            this.candidatesPictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox4.BackColor = DarkUI.Config.Colors.DarkBackground;
+            this.candidatesPictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.candidatesPictureBox4.ClientItem = null;
             this.candidatesPictureBox4.Location = new System.Drawing.Point(192, 0);
             this.candidatesPictureBox4.Margin = new System.Windows.Forms.Padding(0);
@@ -1218,8 +1182,8 @@
             // 
             // candidatesPictureBox5
             // 
-            this.candidatesPictureBox5.BackColor = System.Drawing.Color.White;
-            this.candidatesPictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.candidatesPictureBox5.BackColor = DarkUI.Config.Colors.DarkBackground;
+            this.candidatesPictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.candidatesPictureBox5.ClientItem = null;
             this.candidatesPictureBox5.Location = new System.Drawing.Point(256, 0);
             this.candidatesPictureBox5.Margin = new System.Windows.Forms.Padding(0);
@@ -1234,7 +1198,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(234)))), ((int)(((byte)(234)))), ((int)(((byte)(234)))));
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.findItemButton);
@@ -1280,8 +1243,8 @@
         #endregion
 
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.StatusStrip statusBar;
-        private System.Windows.Forms.MenuStrip menuBar;
+        private DarkUI.Controls.DarkStatusStrip statusBar;
+        private DarkUI.Controls.DarkMenuStrip menuBar;
         private System.Windows.Forms.ToolStripMenuItem fileMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileNewMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileExitMenuItem;
@@ -1294,46 +1257,46 @@
         private System.Windows.Forms.ToolStripMenuItem toolsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsUpdateVersionMenuItem;
         private ItemEditor.Controls.ClientItemView pictureBox;
-        private System.Windows.Forms.TextBox outputTextBox;
-        private System.Windows.Forms.Label cidLabel;
-        private System.Windows.Forms.Label sidLabel;
-        private System.Windows.Forms.Label serverIdLbl;
-        private System.Windows.Forms.CheckBox readableCheck;
-        private System.Windows.Forms.GroupBox optionsGroupBox;
-        private System.Windows.Forms.CheckBox ignoreLookCheck;
-        private System.Windows.Forms.CheckBox stackableCheck;
-        private System.Windows.Forms.CheckBox hookEastCheck;
-        private System.Windows.Forms.CheckBox rotatableCheck;
-        private System.Windows.Forms.CheckBox useableCheck;
-        private System.Windows.Forms.CheckBox hangableCheck;
-        private System.Windows.Forms.CheckBox hasElevationCheck;
-        private System.Windows.Forms.CheckBox movableCheck;
-        private System.Windows.Forms.CheckBox blockPathfinderCheck;
-        private System.Windows.Forms.CheckBox hookSouthCheck;
-        private System.Windows.Forms.CheckBox fullGroundCheck;
-        private System.Windows.Forms.CheckBox pickupableCheck;
-        private System.Windows.Forms.CheckBox blockMissilesCheck;
-        private System.Windows.Forms.CheckBox unpassableCheck;
+        private DarkUI.Controls.DarkTextBox outputTextBox;
+        private DarkUI.Controls.DarkLabel cidLabel;
+        private DarkUI.Controls.DarkLabel sidLabel;
+        private DarkUI.Controls.DarkLabel serverIdLbl;
+        private DarkUI.Controls.DarkCheckBox readableCheck;
+        private DarkUI.Controls.DarkGroupBox optionsGroupBox;
+        private DarkUI.Controls.DarkCheckBox ignoreLookCheck;
+        private DarkUI.Controls.DarkCheckBox stackableCheck;
+        private DarkUI.Controls.DarkCheckBox hookEastCheck;
+        private DarkUI.Controls.DarkCheckBox rotatableCheck;
+        private DarkUI.Controls.DarkCheckBox useableCheck;
+        private DarkUI.Controls.DarkCheckBox hangableCheck;
+        private DarkUI.Controls.DarkCheckBox hasElevationCheck;
+        private DarkUI.Controls.DarkCheckBox movableCheck;
+        private DarkUI.Controls.DarkCheckBox blockPathfinderCheck;
+        private DarkUI.Controls.DarkCheckBox hookSouthCheck;
+        private DarkUI.Controls.DarkCheckBox fullGroundCheck;
+        private DarkUI.Controls.DarkCheckBox pickupableCheck;
+        private DarkUI.Controls.DarkCheckBox blockMissilesCheck;
+        private DarkUI.Controls.DarkCheckBox unpassableCheck;
         private System.Windows.Forms.ToolStripMenuItem toolsCompareOtbFilesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewShowOnlyMismatchedMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsReloadItemAttributesMenuItem;
         private System.Windows.Forms.ToolStripSeparator separatorMenuItem2;
         private System.Windows.Forms.ToolStripSeparator separatorMenuItem4;
-        private System.Windows.Forms.Label minimapColorLabel;
-        private System.Windows.Forms.TextBox minimapColorText;
-        private System.Windows.Forms.Label lightColorLabel;
-        private System.Windows.Forms.TextBox lightColorText;
-        private System.Windows.Forms.Label lightLevelLabel;
-        private System.Windows.Forms.TextBox lightLevelText;
-        private System.Windows.Forms.Label groundSpeedLabel;
-        private System.Windows.Forms.TextBox groundSpeedText;
-        private System.Windows.Forms.Label typeLabel;
-        private System.Windows.Forms.ComboBox typeCombo;
-        private System.Windows.Forms.Label maxReadWriteCharsLabel;
-        private System.Windows.Forms.TextBox maxReadWriteCharsText;
-        private System.Windows.Forms.Label maxReadCharsLabel;
-        private System.Windows.Forms.TextBox maxReadCharsText;
+        private DarkUI.Controls.DarkLabel minimapColorLabel;
+        private DarkUI.Controls.DarkTextBox minimapColorText;
+        private DarkUI.Controls.DarkLabel lightColorLabel;
+        private DarkUI.Controls.DarkTextBox lightColorText;
+        private DarkUI.Controls.DarkLabel lightLevelLabel;
+        private DarkUI.Controls.DarkTextBox lightLevelText;
+        private DarkUI.Controls.DarkLabel groundSpeedLabel;
+        private DarkUI.Controls.DarkTextBox groundSpeedText;
+        private DarkUI.Controls.DarkLabel typeLabel;
+        private DarkUI.Controls.DarkComboBox typeCombo;
+        private DarkUI.Controls.DarkLabel maxReadWriteCharsLabel;
+        private DarkUI.Controls.DarkTextBox maxReadWriteCharsText;
+        private DarkUI.Controls.DarkLabel maxReadCharsLabel;
+        private DarkUI.Controls.DarkTextBox maxReadCharsText;
         private System.Windows.Forms.ToolStripMenuItem editMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editDuplicateItemMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editReloadItemMenuItem;
@@ -1341,30 +1304,30 @@
         private System.Windows.Forms.ToolStripMenuItem editFindItemMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editCreateMissingItemsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewUpdateItemsListMenuItem;
-        private System.Windows.Forms.TextBox wareIdText;
-        private System.Windows.Forms.Label wareIdLabel;
-        private System.Windows.Forms.TextBox nameText;
-        private System.Windows.Forms.Label nameLabel;
+        private DarkUI.Controls.DarkTextBox wareIdText;
+        private DarkUI.Controls.DarkLabel wareIdLabel;
+        private DarkUI.Controls.DarkTextBox nameText;
+        private DarkUI.Controls.DarkLabel nameLabel;
         private System.Windows.Forms.ContextMenuStrip itemsListBoxContextMenu;
-        private System.Windows.Forms.GroupBox appearanceGroupBox;
+        private DarkUI.Controls.DarkGroupBox appearanceGroupBox;
         private System.Windows.Forms.ProgressBar loadingItemsProgressBar;
-        private System.Windows.Forms.Label itemsCountLabel;
-        private System.Windows.Forms.Label separatorLabel1;
-        private System.Windows.Forms.Label separatorLabel2;
-        private System.Windows.Forms.ToolStrip toolStrip;
+        private DarkUI.Controls.DarkLabel itemsCountLabel;
+        private DarkUI.Controls.DarkLabel separatorLabel1;
+        private DarkUI.Controls.DarkLabel separatorLabel2;
+        private DarkUI.Controls.DarkToolStrip toolStrip;
         private System.Windows.Forms.ToolStripButton toolStripNewButton;
         private System.Windows.Forms.ToolStripButton toolStripOpenButton;
         private System.Windows.Forms.ToolStripButton toolStripSaveButton;
         private System.Windows.Forms.ToolStripButton toolStripSaveAsButton;
-        private System.Windows.Forms.NumericUpDown clientIdUpDown;
+        private DarkUI.Controls.DarkNumericUpDown clientIdUpDown;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripCompareButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripFindItemButton;
         private System.Windows.Forms.ToolStripMenuItem viewShowDecaptedItemsMenuItem;
-        private System.Windows.Forms.Label previousLabel;
+        private DarkUI.Controls.DarkLabel previousLabel;
         private ItemEditor.Controls.ClientItemView previousPictureBox;
-        private System.Windows.Forms.Label currentSpriteLabel;
+        private DarkUI.Controls.DarkLabel currentSpriteLabel;
         private System.Windows.Forms.TableLayoutPanel candidatesTableLayoutPanel;
         private System.Windows.Forms.ToolStripDropDown candidatesDropDown;
         private ItemEditor.Controls.ClientItemView candidatesPictureBox1;
@@ -1372,17 +1335,17 @@
         private ItemEditor.Controls.ClientItemView candidatesPictureBox3;
         private ItemEditor.Controls.ClientItemView candidatesPictureBox4;
         private ItemEditor.Controls.ClientItemView candidatesPictureBox5;
-        private System.Windows.Forms.Button candidatesButton;
+        private DarkUI.Controls.DarkButton candidatesButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem filePreferencesMenuItem;
         private ItemEditor.Controls.ServerItemListBox serverItemListBox;
-        private System.Windows.Forms.Button newItemButton;
-        private System.Windows.Forms.Button duplicateItemButton;
-        private System.Windows.Forms.Button reloadItemButton;
-        private System.Windows.Forms.Button findItemButton;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox stackOrderComboBox;
-        private System.Windows.Forms.Label stackOrderLabel;
-        private System.Windows.Forms.CheckBox forceUseCheckBox;
+        private DarkUI.Controls.DarkButton newItemButton;
+        private DarkUI.Controls.DarkButton duplicateItemButton;
+        private DarkUI.Controls.DarkButton reloadItemButton;
+        private DarkUI.Controls.DarkButton findItemButton;
+        private DarkUI.Controls.DarkLabel label1;
+        private DarkUI.Controls.DarkComboBox stackOrderComboBox;
+        private DarkUI.Controls.DarkLabel stackOrderLabel;
+        private DarkUI.Controls.DarkCheckBox forceUseCheckBox;
     }
 }

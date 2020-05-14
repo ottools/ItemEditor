@@ -19,6 +19,8 @@
 #endregion
 
 #region Using Statements
+using DarkUI.Config;
+using DarkUI.Forms;
 using ImageSimilarity;
 using ItemEditor.Controls;
 using ItemEditor.Diagnostics;
@@ -33,7 +35,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -41,7 +42,7 @@ using System.Windows.Forms;
 
 namespace ItemEditor
 {
-    public partial class MainForm : Form
+    public partial class MainForm : DarkForm
     {
         #region Private Properties
 
@@ -557,7 +558,7 @@ namespace ItemEditor
             this.pictureBox.ClientItem = clientItem;
             if (!item.IsCustomCreated && item.SpriteHash != null && clientItem.SpriteHash != null)
             {
-                this.pictureBox.BackColor = Utils.ByteArrayCompare(item.SpriteHash, clientItem.SpriteHash) ? Color.White : Color.Red;
+                this.pictureBox.BackColor = Utils.ByteArrayCompare(item.SpriteHash, clientItem.SpriteHash) ? Colors.DarkBackground : Color.Red;
             }
 
             this.typeCombo.Text = item.Type.ToString();
@@ -630,7 +631,7 @@ namespace ItemEditor
         {
             bool equals = value.Equals(clientValue);
             control.DataBindings.Add(propertyName, dataSource, dataMember);
-            control.ForeColor = equals ? Color.Black : Color.Red;
+            control.ForeColor = equals ? Colors.LightText : Color.Red;
 
             if (!equals && setToolTip)
             {
@@ -662,15 +663,15 @@ namespace ItemEditor
             this.optionsGroupBox.Enabled = false;
             this.appearanceGroupBox.Enabled = false;
             this.pictureBox.ClientItem = null;
-            this.pictureBox.BackColor = Color.White;
+            this.pictureBox.BackColor = Colors.DarkBackground;
             this.previousPictureBox.ClientItem = null;
-            this.previousPictureBox.BackColor = Color.White;
+            this.previousPictureBox.BackColor = Colors.DarkBackground;
             this.clientIdUpDown.Value = clientIdUpDown.Minimum;
             this.serverIdLbl.Text = "0";
             this.typeCombo.Text = string.Empty;
-            this.typeCombo.ForeColor = Color.Black;
+            this.typeCombo.ForeColor = Colors.LightText;
             this.stackOrderComboBox.Text = string.Empty;
-            this.stackOrderComboBox.ForeColor = Color.Black;
+            this.stackOrderComboBox.ForeColor = Colors.LightText;
             this.editDuplicateItemMenuItem.Enabled = false;
             this.candidatesButton.Enabled = false;
 

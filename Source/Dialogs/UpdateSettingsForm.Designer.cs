@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.updateSettingsGroupBox = new System.Windows.Forms.GroupBox();
-            this.createNewItemsCheck = new System.Windows.Forms.CheckBox();
-            this.reloadItemAttributesCheck = new System.Windows.Forms.CheckBox();
-            this.generateSignatureCheck = new System.Windows.Forms.CheckBox();
-            this.reassignUnmatchedSpritesCheck = new System.Windows.Forms.CheckBox();
-            this.closeBtn = new System.Windows.Forms.Button();
+            this.updateSettingsGroupBox = new DarkUI.Controls.DarkGroupBox();
+            this.createNewItemsCheck = new DarkUI.Controls.DarkCheckBox();
+            this.reloadItemAttributesCheck = new DarkUI.Controls.DarkCheckBox();
+            this.generateSignatureCheck = new DarkUI.Controls.DarkCheckBox();
+            this.reassignUnmatchedSpritesCheck = new DarkUI.Controls.DarkCheckBox();
+            this.closeBtn = new DarkUI.Controls.DarkButton();
             this.updateSettingsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +60,6 @@
             this.createNewItemsCheck.Size = new System.Drawing.Size(228, 17);
             this.createNewItemsCheck.TabIndex = 2;
             this.createNewItemsCheck.Text = "Create New Item(s) For Unassigned Sprites";
-            this.createNewItemsCheck.UseVisualStyleBackColor = true;
             // 
             // reloadItemAttributesCheck
             // 
@@ -72,7 +71,6 @@
             this.reloadItemAttributesCheck.Size = new System.Drawing.Size(130, 17);
             this.reloadItemAttributesCheck.TabIndex = 1;
             this.reloadItemAttributesCheck.Text = "Reload Item Attributes";
-            this.reloadItemAttributesCheck.UseVisualStyleBackColor = true;
             // 
             // generateSignatureCheck
             // 
@@ -82,7 +80,6 @@
             this.generateSignatureCheck.Size = new System.Drawing.Size(187, 17);
             this.generateSignatureCheck.TabIndex = 3;
             this.generateSignatureCheck.Text = "Generate Image Signatures (Slow)";
-            this.generateSignatureCheck.UseVisualStyleBackColor = true;
             // 
             // reassignUnmatchedSpritesCheck
             // 
@@ -94,7 +91,6 @@
             this.reassignUnmatchedSpritesCheck.Size = new System.Drawing.Size(216, 17);
             this.reassignUnmatchedSpritesCheck.TabIndex = 0;
             this.reassignUnmatchedSpritesCheck.Text = "Reassign Items With Unmatched Sprites";
-            this.reassignUnmatchedSpritesCheck.UseVisualStyleBackColor = true;
             // 
             // closeBtn
             // 
@@ -104,7 +100,6 @@
             this.closeBtn.Size = new System.Drawing.Size(75, 23);
             this.closeBtn.TabIndex = 4;
             this.closeBtn.Text = "OK";
-            this.closeBtn.UseVisualStyleBackColor = true;
             // 
             // UpdateSettingsForm
             // 
@@ -126,11 +121,11 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox updateSettingsGroupBox;
-        private System.Windows.Forms.Button closeBtn;
-        public System.Windows.Forms.CheckBox createNewItemsCheck;
-        public System.Windows.Forms.CheckBox reloadItemAttributesCheck;
-        public System.Windows.Forms.CheckBox generateSignatureCheck;
-        public System.Windows.Forms.CheckBox reassignUnmatchedSpritesCheck;
+        private DarkUI.Controls.DarkGroupBox updateSettingsGroupBox;
+        private DarkUI.Controls.DarkButton closeBtn;
+        public DarkUI.Controls.DarkCheckBox createNewItemsCheck;
+        public DarkUI.Controls.DarkCheckBox reloadItemAttributesCheck;
+        public DarkUI.Controls.DarkCheckBox generateSignatureCheck;
+        public DarkUI.Controls.DarkCheckBox reassignUnmatchedSpritesCheck;
     }
 }

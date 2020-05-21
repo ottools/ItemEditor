@@ -31,6 +31,7 @@ namespace DarkUI.Controls
         private Timer _dragTimer;
 
         private bool _hideScrollBars = true;
+        private bool _horizontalScrollBarHidden = false;
 
         #endregion
 
@@ -98,8 +99,24 @@ namespace DarkUI.Controls
             get { return _hideScrollBars; }
             set
             {
-                _hideScrollBars = value;
-                UpdateScrollBars();
+                if (value != _hideScrollBars)
+                {
+                    _hideScrollBars = value;
+                    UpdateScrollBars();
+                }
+            }
+        }
+
+        public bool HorizontalScrollBarHidden
+        {
+            get => _horizontalScrollBarHidden;
+            set
+            {
+                if (value != _horizontalScrollBarHidden)
+                {
+                    _horizontalScrollBarHidden = value;
+                    UpdateScrollBars();
+                }
             }
         }
 
@@ -180,7 +197,7 @@ namespace DarkUI.Controls
             if (_hideScrollBars)
             {
                 _vScrollBar.Visible = _vScrollBar.Enabled;
-                _hScrollBar.Visible = _hScrollBar.Enabled;
+                _hScrollBar.Visible = !_horizontalScrollBarHidden && _hScrollBar.Enabled;
             }
         }
 

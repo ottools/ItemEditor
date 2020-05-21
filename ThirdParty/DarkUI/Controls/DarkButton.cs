@@ -396,7 +396,7 @@ namespace DarkUI.Controls
                         break;
                 }
 
-                g.DrawImageUnscaled(Image, x, y);
+                g.DrawImage(Image, x, y, Image.Width, Image.Height);
             }
 
             using (var b = new SolidBrush(textColor))

@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.findIdNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.findBySidButton = new System.Windows.Forms.RadioButton();
-            this.findByPropertiesButton = new System.Windows.Forms.RadioButton();
-            this.findByCidButton = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.itemIdGroupBox = new System.Windows.Forms.GroupBox();
-            this.propertiesGroupBox = new System.Windows.Forms.GroupBox();
+            this.findIdNumericUpDown = new DarkUI.Controls.DarkNumericUpDown();
+            this.findBySidButton = new DarkUI.Controls.DarkRadioButton();
+            this.findByPropertiesButton = new DarkUI.Controls.DarkRadioButton();
+            this.findByCidButton = new DarkUI.Controls.DarkRadioButton();
+            this.groupBox1 = new DarkUI.Controls.DarkGroupBox();
+            this.itemIdGroupBox = new DarkUI.Controls.DarkGroupBox();
+            this.propertiesGroupBox = new DarkUI.Controls.DarkGroupBox();
             this.ignoreLookCheck = new ItemEditor.Controls.FlagCheckBox();
             this.readableCheck = new ItemEditor.Controls.FlagCheckBox();
             this.hasElevationCheck = new ItemEditor.Controls.FlagCheckBox();
@@ -51,9 +51,9 @@
             this.blockPathfinderCheckBox = new ItemEditor.Controls.FlagCheckBox();
             this.blockMissilesCheckBox = new ItemEditor.Controls.FlagCheckBox();
             this.unpassableCheckBox = new ItemEditor.Controls.FlagCheckBox();
-            this.resultGroupBox = new System.Windows.Forms.GroupBox();
+            this.resultGroupBox = new DarkUI.Controls.DarkGroupBox();
             this.serverItemList = new ItemEditor.Controls.ServerItemListBox();
-            this.findItemButton = new System.Windows.Forms.Button();
+            this.findItemButton = new DarkUI.Controls.DarkButton();
             ((System.ComponentModel.ISupportInitialize)(this.findIdNumericUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.itemIdGroupBox.SuspendLayout();
@@ -89,7 +89,6 @@
             this.findBySidButton.TabIndex = 2;
             this.findBySidButton.TabStop = true;
             this.findBySidButton.Text = "Find By Server ID";
-            this.findBySidButton.UseVisualStyleBackColor = true;
             this.findBySidButton.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // findByPropertiesButton
@@ -100,7 +99,6 @@
             this.findByPropertiesButton.Size = new System.Drawing.Size(110, 17);
             this.findByPropertiesButton.TabIndex = 3;
             this.findByPropertiesButton.Text = "Find By Properties";
-            this.findByPropertiesButton.UseVisualStyleBackColor = true;
             this.findByPropertiesButton.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // findByCidButton
@@ -111,7 +109,6 @@
             this.findByCidButton.Size = new System.Drawing.Size(103, 17);
             this.findByCidButton.TabIndex = 4;
             this.findByCidButton.Text = "Find By Client ID";
-            this.findByCidButton.UseVisualStyleBackColor = true;
             this.findByCidButton.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // groupBox1
@@ -170,7 +167,6 @@
             this.ignoreLookCheck.Size = new System.Drawing.Size(83, 17);
             this.ignoreLookCheck.TabIndex = 61;
             this.ignoreLookCheck.Text = "Ignore Look";
-            this.ignoreLookCheck.UseVisualStyleBackColor = true;
             this.ignoreLookCheck.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // readableCheck
@@ -182,7 +178,6 @@
             this.readableCheck.Size = new System.Drawing.Size(72, 17);
             this.readableCheck.TabIndex = 62;
             this.readableCheck.Text = "Readable";
-            this.readableCheck.UseVisualStyleBackColor = true;
             this.readableCheck.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // hasElevationCheck
@@ -194,7 +189,6 @@
             this.hasElevationCheck.Size = new System.Drawing.Size(92, 17);
             this.hasElevationCheck.TabIndex = 59;
             this.hasElevationCheck.Text = "Has Elevation";
-            this.hasElevationCheck.UseVisualStyleBackColor = true;
             this.hasElevationCheck.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // fullGroundCheck
@@ -206,7 +200,6 @@
             this.fullGroundCheck.Size = new System.Drawing.Size(80, 17);
             this.fullGroundCheck.TabIndex = 60;
             this.fullGroundCheck.Text = "Full Ground";
-            this.fullGroundCheck.UseVisualStyleBackColor = true;
             this.fullGroundCheck.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // forceUseCheckBox
@@ -218,7 +211,6 @@
             this.forceUseCheckBox.Size = new System.Drawing.Size(75, 17);
             this.forceUseCheckBox.TabIndex = 58;
             this.forceUseCheckBox.Text = "Force Use";
-            this.forceUseCheckBox.UseVisualStyleBackColor = true;
             this.forceUseCheckBox.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // hookEastCheck
@@ -230,7 +222,6 @@
             this.hookEastCheck.Size = new System.Drawing.Size(76, 17);
             this.hookEastCheck.TabIndex = 57;
             this.hookEastCheck.Text = "Hook East";
-            this.hookEastCheck.UseVisualStyleBackColor = true;
             this.hookEastCheck.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // rotatableCheck
@@ -242,7 +233,6 @@
             this.rotatableCheck.Size = new System.Drawing.Size(72, 17);
             this.rotatableCheck.TabIndex = 55;
             this.rotatableCheck.Text = "Rotatable";
-            this.rotatableCheck.UseVisualStyleBackColor = true;
             this.rotatableCheck.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // useableCheck
@@ -254,7 +244,6 @@
             this.useableCheck.Size = new System.Drawing.Size(70, 17);
             this.useableCheck.TabIndex = 54;
             this.useableCheck.Text = "Multi Use";
-            this.useableCheck.UseVisualStyleBackColor = true;
             this.useableCheck.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // hangableCheck
@@ -266,7 +255,6 @@
             this.hangableCheck.Size = new System.Drawing.Size(72, 17);
             this.hangableCheck.TabIndex = 53;
             this.hangableCheck.Text = "Hangable";
-            this.hangableCheck.UseVisualStyleBackColor = true;
             this.hangableCheck.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // hookSouthCheck
@@ -278,7 +266,6 @@
             this.hookSouthCheck.Size = new System.Drawing.Size(83, 17);
             this.hookSouthCheck.TabIndex = 56;
             this.hookSouthCheck.Text = "Hook South";
-            this.hookSouthCheck.UseVisualStyleBackColor = true;
             this.hookSouthCheck.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // flagCheckBox1
@@ -290,7 +277,6 @@
             this.flagCheckBox1.Size = new System.Drawing.Size(79, 17);
             this.flagCheckBox1.TabIndex = 5;
             this.flagCheckBox1.Text = "Pickupable";
-            this.flagCheckBox1.UseVisualStyleBackColor = true;
             this.flagCheckBox1.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // moveableFlagCheckBox
@@ -302,7 +288,6 @@
             this.moveableFlagCheckBox.Size = new System.Drawing.Size(73, 17);
             this.moveableFlagCheckBox.TabIndex = 4;
             this.moveableFlagCheckBox.Text = "Moveable";
-            this.moveableFlagCheckBox.UseVisualStyleBackColor = true;
             this.moveableFlagCheckBox.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // stackableCheckBox
@@ -314,7 +299,6 @@
             this.stackableCheckBox.Size = new System.Drawing.Size(74, 17);
             this.stackableCheckBox.TabIndex = 3;
             this.stackableCheckBox.Text = "Stackable";
-            this.stackableCheckBox.UseVisualStyleBackColor = true;
             this.stackableCheckBox.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // blockPathfinderCheckBox
@@ -326,7 +310,6 @@
             this.blockPathfinderCheckBox.Size = new System.Drawing.Size(104, 17);
             this.blockPathfinderCheckBox.TabIndex = 2;
             this.blockPathfinderCheckBox.Text = "Block Pathfinder";
-            this.blockPathfinderCheckBox.UseVisualStyleBackColor = true;
             this.blockPathfinderCheckBox.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // blockMissilesCheckBox
@@ -338,7 +321,6 @@
             this.blockMissilesCheckBox.Size = new System.Drawing.Size(92, 17);
             this.blockMissilesCheckBox.TabIndex = 1;
             this.blockMissilesCheckBox.Text = "Block Missiles";
-            this.blockMissilesCheckBox.UseVisualStyleBackColor = true;
             this.blockMissilesCheckBox.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // unpassableCheckBox
@@ -350,7 +332,6 @@
             this.unpassableCheckBox.Size = new System.Drawing.Size(82, 17);
             this.unpassableCheckBox.TabIndex = 0;
             this.unpassableCheckBox.Text = "Unpassable";
-            this.unpassableCheckBox.UseVisualStyleBackColor = true;
             this.unpassableCheckBox.CheckedChanged += new System.EventHandler(this.PropertyCheckBox_CheckedChanged);
             // 
             // resultGroupBox
@@ -365,14 +346,13 @@
             // 
             // serverItemList
             // 
-            this.serverItemList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.serverItemList.FormattingEnabled = true;
+            this.serverItemList.BackColor = DarkUI.Config.Colors.DarkBackground;
             this.serverItemList.Location = new System.Drawing.Point(7, 19);
             this.serverItemList.Name = "serverItemList";
             this.serverItemList.Plugin = null;
             this.serverItemList.Size = new System.Drawing.Size(244, 486);
             this.serverItemList.TabIndex = 0;
-            this.serverItemList.SelectedIndexChanged += new System.EventHandler(this.ServerItemList_SelectedIndexChanged);
+            this.serverItemList.SelectedIndexChanged += ServerItemList_SelectedIndexChanged;
             // 
             // findItemButton
             // 
@@ -381,7 +361,6 @@
             this.findItemButton.Size = new System.Drawing.Size(260, 22);
             this.findItemButton.TabIndex = 8;
             this.findItemButton.Text = "Find";
-            this.findItemButton.UseVisualStyleBackColor = true;
             this.findItemButton.Click += new System.EventHandler(this.FindItemButton_Click);
             // 
             // FindItemForm
@@ -415,14 +394,14 @@
 
         #endregion
 
-        private System.Windows.Forms.NumericUpDown findIdNumericUpDown;
-        private System.Windows.Forms.RadioButton findBySidButton;
-        private System.Windows.Forms.RadioButton findByPropertiesButton;
-        private System.Windows.Forms.RadioButton findByCidButton;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox itemIdGroupBox;
-        private System.Windows.Forms.GroupBox propertiesGroupBox;
-        private System.Windows.Forms.GroupBox resultGroupBox;
+        private DarkUI.Controls.DarkNumericUpDown findIdNumericUpDown;
+        private DarkUI.Controls.DarkRadioButton findBySidButton;
+        private DarkUI.Controls.DarkRadioButton findByPropertiesButton;
+        private DarkUI.Controls.DarkRadioButton findByCidButton;
+        private DarkUI.Controls.DarkGroupBox groupBox1;
+        private DarkUI.Controls.DarkGroupBox itemIdGroupBox;
+        private DarkUI.Controls.DarkGroupBox propertiesGroupBox;
+        private DarkUI.Controls.DarkGroupBox resultGroupBox;
         private Controls.ServerItemListBox serverItemList;
         private Controls.FlagCheckBox unpassableCheckBox;
         private Controls.FlagCheckBox blockPathfinderCheckBox;
@@ -440,6 +419,6 @@
         private Controls.FlagCheckBox readableCheck;
         private Controls.FlagCheckBox hasElevationCheck;
         private Controls.FlagCheckBox fullGroundCheck;
-        private System.Windows.Forms.Button findItemButton;
+        private DarkUI.Controls.DarkButton findItemButton;
     }
 }

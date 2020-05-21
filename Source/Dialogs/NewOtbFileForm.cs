@@ -19,6 +19,7 @@
 #endregion
 
 #region Using Statements
+using DarkUI.Forms;
 using ItemEditor.Host;
 using PluginInterface;
 using System;
@@ -30,7 +31,7 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Dialogs
 {
-    public partial class NewOtbFileForm : Form
+    public partial class NewOtbFileForm : DarkForm
     {
         #region Private Properties
 

@@ -1,9 +1,9 @@
-﻿using OTLib.Server.Items;
-using System.Windows.Forms;
+﻿using DarkUI.Controls;
+using OTLib.Server.Items;
 
 namespace ItemEditor.Controls
 {
-    public class FlagCheckBox : CheckBox
+    public class FlagCheckBox : DarkCheckBox
     {
         public ServerItemFlag ServerItemFlag { get; set; }
     }

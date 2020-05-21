@@ -19,6 +19,7 @@
 #endregion
 
 #region Using Statements
+using DarkUI.Forms;
 using ItemEditor.Host;
 using PluginInterface;
 using System;
@@ -29,7 +30,7 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Dialogs
 {
-    public partial class PreferencesForm : Form
+    public partial class PreferencesForm : DarkForm
     {
         #region Private Properties
 

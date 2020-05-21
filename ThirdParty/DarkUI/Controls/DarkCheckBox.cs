@@ -140,6 +140,8 @@ namespace DarkUI.Controls
                      ControlStyles.OptimizedDoubleBuffer |
                      ControlStyles.ResizeRedraw |
                      ControlStyles.UserPaint, true);
+
+            ForeColor = Colors.LightText;
         }
 
         #endregion

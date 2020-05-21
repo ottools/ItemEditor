@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.confirmButton = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.directoryPathTextBox = new System.Windows.Forms.TextBox();
-            this.browseButton = new System.Windows.Forms.Button();
-            this.transparencyCheckBox = new System.Windows.Forms.CheckBox();
-            this.extendedCheckBox = new System.Windows.Forms.CheckBox();
-            this.alertLabel = new System.Windows.Forms.Label();
-            this.frameDurationsCheckBox = new System.Windows.Forms.CheckBox();
+            this.cancelButton = new DarkUI.Controls.DarkButton();
+            this.confirmButton = new DarkUI.Controls.DarkButton();
+            this.groupBox1 = new DarkUI.Controls.DarkGroupBox();
+            this.directoryPathTextBox = new DarkUI.Controls.DarkTextBox();
+            this.browseButton = new DarkUI.Controls.DarkButton();
+            this.transparencyCheckBox = new DarkUI.Controls.DarkCheckBox();
+            this.extendedCheckBox = new DarkUI.Controls.DarkCheckBox();
+            this.alertLabel = new DarkUI.Controls.DarkLabel();
+            this.frameDurationsCheckBox = new DarkUI.Controls.DarkCheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,7 +47,6 @@
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 0;
             this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // confirmButton
@@ -57,7 +56,6 @@
             this.confirmButton.Size = new System.Drawing.Size(75, 23);
             this.confirmButton.TabIndex = 1;
             this.confirmButton.Text = "Confirm";
-            this.confirmButton.UseVisualStyleBackColor = true;
             this.confirmButton.Click += new System.EventHandler(this.ConfirmButton_Click);
             // 
             // groupBox1
@@ -89,7 +87,6 @@
             this.browseButton.Size = new System.Drawing.Size(75, 23);
             this.browseButton.TabIndex = 2;
             this.browseButton.Text = "Browse";
-            this.browseButton.UseVisualStyleBackColor = true;
             this.browseButton.Click += new System.EventHandler(this.BrowseButton_Click);
             // 
             // transparencyCheckBox
@@ -98,9 +95,9 @@
             this.transparencyCheckBox.Location = new System.Drawing.Point(12, 70);
             this.transparencyCheckBox.Name = "transparencyCheckBox";
             this.transparencyCheckBox.Size = new System.Drawing.Size(91, 17);
+            this.transparencyCheckBox.ForeColor = DarkUI.Config.Colors.LightText;
             this.transparencyCheckBox.TabIndex = 1;
             this.transparencyCheckBox.Text = "Transparency";
-            this.transparencyCheckBox.UseVisualStyleBackColor = true;
             // 
             // extendedCheckBox
             // 
@@ -108,9 +105,9 @@
             this.extendedCheckBox.Location = new System.Drawing.Point(12, 24);
             this.extendedCheckBox.Name = "extendedCheckBox";
             this.extendedCheckBox.Size = new System.Drawing.Size(71, 17);
+            this.extendedCheckBox.ForeColor = DarkUI.Config.Colors.LightText;
             this.extendedCheckBox.TabIndex = 0;
             this.extendedCheckBox.Text = "Extended";
-            this.extendedCheckBox.UseVisualStyleBackColor = true;
             // 
             // alertLabel
             // 
@@ -127,9 +124,9 @@
             this.frameDurationsCheckBox.Location = new System.Drawing.Point(12, 47);
             this.frameDurationsCheckBox.Name = "frameDurationsCheckBox";
             this.frameDurationsCheckBox.Size = new System.Drawing.Size(103, 17);
+            this.frameDurationsCheckBox.ForeColor = DarkUI.Config.Colors.LightText;
             this.frameDurationsCheckBox.TabIndex = 4;
             this.frameDurationsCheckBox.Text = "Frame Durations";
-            this.frameDurationsCheckBox.UseVisualStyleBackColor = true;
             // 
             // PreferencesForm
             // 
@@ -155,14 +152,14 @@
 
         #endregion
 
-        private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.Button confirmButton;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.CheckBox extendedCheckBox;
-        private System.Windows.Forms.TextBox directoryPathTextBox;
-        private System.Windows.Forms.Button browseButton;
-        private System.Windows.Forms.CheckBox transparencyCheckBox;
-        private System.Windows.Forms.Label alertLabel;
-        private System.Windows.Forms.CheckBox frameDurationsCheckBox;
+        private DarkUI.Controls.DarkButton cancelButton;
+        private DarkUI.Controls.DarkButton confirmButton;
+        private DarkUI.Controls.DarkGroupBox groupBox1;
+        private DarkUI.Controls.DarkCheckBox extendedCheckBox;
+        private DarkUI.Controls.DarkTextBox directoryPathTextBox;
+        private DarkUI.Controls.DarkButton browseButton;
+        private DarkUI.Controls.DarkCheckBox transparencyCheckBox;
+        private DarkUI.Controls.DarkLabel alertLabel;
+        private DarkUI.Controls.DarkCheckBox frameDurationsCheckBox;
     }
 }

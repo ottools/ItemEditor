@@ -98,6 +98,9 @@
     <Compile Include="Controls\FlagCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ListBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\ServerItemListBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -193,14 +196,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Dialogs\UpdateSettingsForm.resx">
       <DependentUpon>UpdateSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -209,6 +207,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -217,19 +220,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ItemEditor.ico" />
-    <None Include="Resources\about_background.png" />
-    <None Include="Resources\reload.png" />
-    <None Include="Resources\find.png" />
-    <None Include="Resources\application_form.png" />
-    <None Include="Resources\page_white_copy.png" />
-    <None Include="Resources\page_white1.png" />
-    <None Include="Resources\help.png" />
-    <None Include="Resources\page_delete.png" />
-    <None Include="Resources\page.png" />
-    <None Include="Resources\page_white.png" />
-    <None Include="Resources\disk_multiple.png" />
-    <None Include="Resources\disk.png" />
-    <None Include="Resources\folder_page.png" />
+    <None Include="Resources\FormIcon.png" />
+    <None Include="Resources\ReloadIcon.png" />
+    <None Include="Resources\DuplicateIcon.png" />
+    <None Include="Resources\InfoIcon.png" />
+    <None Include="Resources\OpenIcon.png" />
+    <None Include="Resources\SaveIcon.png" />
+    <None Include="Resources\SaveAsIcon.png" />
+    <None Include="Resources\NewIcon.png" />
+    <None Include="Resources\FindIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThirdParty\DarkUI\DarkUI.csproj">

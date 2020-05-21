@@ -8,9 +8,22 @@ namespace DarkUI.Controls
 {
     public class DarkComboBox : ComboBox
     {
+        private Color m_foreColor;
+
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new Color ForeColor { get; set; }
+        public new Color ForeColor
+        {
+            get => m_foreColor;
+            set
+            {
+                if (value != m_foreColor)
+                {
+                    m_foreColor = value;
+                    Invalidate();
+                }
+            }
+        }
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -33,6 +46,7 @@ namespace DarkUI.Controls
                      ControlStyles.UserPaint, true);
 
             DrawMode = DrawMode.OwnerDrawVariable;
+            m_foreColor = Colors.LightText;
 
             base.FlatStyle = FlatStyle.Flat;
             base.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -109,8 +123,6 @@ namespace DarkUI.Controls
             using (var g = Graphics.FromImage(_buffer))
             {
                 var rect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
-
-                var textColor = Colors.LightText;
                 var borderColor = Colors.GreySelection;
                 var fillColor = Colors.LightBackground;
 
@@ -135,7 +147,7 @@ namespace DarkUI.Controls
 
                 var text = SelectedItem != null ? SelectedItem.ToString() : Text;
 
-                using (var b = new SolidBrush(textColor))
+                using (var b = new SolidBrush(m_foreColor))
                 {
                     var padding = 2;
 

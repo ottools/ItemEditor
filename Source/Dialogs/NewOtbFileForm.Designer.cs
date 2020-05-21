@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.createButton = new System.Windows.Forms.Button();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.clientVersionComboBox = new System.Windows.Forms.ComboBox();
+            this.createButton = new DarkUI.Controls.DarkButton();
+            this.cancelButton = new DarkUI.Controls.DarkButton();
+            this.clientVersionComboBox = new DarkUI.Controls.DarkComboBox();
             this.SuspendLayout();
             // 
             // createButton
@@ -41,7 +41,6 @@
             this.createButton.Size = new System.Drawing.Size(75, 23);
             this.createButton.TabIndex = 3;
             this.createButton.Text = "Create";
-            this.createButton.UseVisualStyleBackColor = true;
             this.createButton.Click += new System.EventHandler(this.CreateButton_Click);
             // 
             // cancelButton
@@ -51,7 +50,6 @@
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 4;
             this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // clientVersionComboBox
@@ -87,8 +85,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button createButton;
-        private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.ComboBox clientVersionComboBox;
+        private DarkUI.Controls.DarkButton createButton;
+        private DarkUI.Controls.DarkButton cancelButton;
+        private DarkUI.Controls.DarkComboBox clientVersionComboBox;
     }
 }

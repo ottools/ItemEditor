@@ -18,163 +18,114 @@
 */
 #endregion
 
-#region Using Statements
 using DarkUI.Config;
+using GameEngine.Controls;
 using OTLib.Server.Items;
 using PluginInterface;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
-#endregion
+using System.Linq;
 
 namespace ItemEditor.Controls
 {
-    public class ServerItemListBox : ListBox
+    public class ServerItemListBox : ListBase<ServerItem>
     {
-        #region Private Properties
-
         private const int ItemMargin = 5;
 
-        private IPlugin plugin;
-        private Rectangle layoutRect;
-        private Rectangle destRect;
-        private Rectangle sourceRect;
-        private Pen pen;
+        private Rectangle m_layoutRect;
+        private Rectangle m_destRect;
+        private Rectangle m_sourceRect;
 
-        #endregion
-
-        #region Constructor
-
-        public ServerItemListBox()
+        public ServerItemListBox() : base(ListBaseLayout.Vertical)
         {
-            this.layoutRect = new Rectangle();
-            this.destRect = new Rectangle(ItemMargin, 0, 32, 32);
-            this.sourceRect = new Rectangle();
-            this.pen = new Pen(Color.Transparent);
-            this.MeasureItem += new MeasureItemEventHandler(this.MeasureItemHandler);
-            this.DrawItem += new DrawItemEventHandler(this.DrawItemHandler);
-            this.DrawMode = DrawMode.OwnerDrawVariable;
-            this.BackColor = Colors.DarkBackground;
-            this.BorderStyle = BorderStyle.None;
+            m_layoutRect = new Rectangle();
+            m_destRect = new Rectangle(ItemMargin, 0, 32, 32);
+            m_sourceRect = new Rectangle();
+
+            ItemSize = 32 + (ItemMargin * 2);
+            MultiSelect = false;
         }
 
-        #endregion
-
-        #region Public Properties
-
-        public IPlugin Plugin
-        {
-            get
-            {
-                return this.plugin;
-            }
-
-            set
-            {
-                this.Clear();
-                this.plugin = value;
-            }
-        }
-
-        public int Count
-        {
-            get
-            {
-                return this.Items.Count;
-            }
-        }
-
-        #endregion
-
-        #region Public Methods
-
-        public void Add(ServerItem item)
-        {
-            Items.Add(item);
-        }
+        public IPlugin Plugin { get; set; }
+        public ushort MinimumID { get; private set; }
+        public ushort MaximumID { get; private set; }
 
         public void Add(List<ServerItem> items)
         {
-            Items.AddRange(items.ToArray());
-        }
+            if (items == null)
+                throw new ArgumentNullException(nameof(items));
 
-        public void Clear()
-        {
-            Items.Clear();
-        }
-
-        #endregion
-
-        #region Event Handlers
-
-        private void MeasureItemHandler(object sender, MeasureItemEventArgs e)
-        {
-            e.ItemHeight = (int)(32 + (2 * ItemMargin));
-        }
-
-        private void DrawItemHandler(object sender, DrawItemEventArgs args)
-        {
-            if (Plugin == null || args.Index == -1)
+            BeginUpdate();
+            for (int i = 0, length = items.Count; i < length; i++)
             {
+                ServerItem item = items[i];
+                MinimumID = item.ID < MinimumID ? item.ID : MinimumID;
+                MaximumID = item.ID > MaximumID ? item.ID : MaximumID;
+                Items.Add(item);
+            }
+            EndUpdate();
+        }
+
+        protected override void UpdateItemPosition(ServerItem item, int index)
+        {
+            ////
+        }
+
+        protected override void PaintContent(Graphics graphics)
+        {
+            List<int> range = GetIndexesInView().ToList();
+            if (range.Count == 0)
                 return;
-            }
 
-            Graphics graphics = args.Graphics;
-            Rectangle bounds = args.Bounds;
-            bounds.Width--;
+            int min = range.Min();
+            int max = range.Max();
+            int width = Math.Max(ContentSize.Width, Viewport.Width);
+            Rectangle rect = new Rectangle(0, 0, width, ItemSize);
 
-            ServerItem serverItem = (ServerItem)Items[args.Index];
-
-            // find the area in which to put the text and draw.
-            layoutRect.X = bounds.Left + 32 + (3 * ItemMargin);
-            layoutRect.Y = bounds.Top + (ItemMargin * 2);
-            layoutRect.Width = bounds.Right - ItemMargin - layoutRect.X;
-            layoutRect.Height = bounds.Bottom - ItemMargin - layoutRect.Y;
-
-            // draw background
-            if ((args.State & DrawItemState.Selected) == DrawItemState.Selected)
+            for (int i = min; i <= max; i++)
             {
-                graphics.FillRectangle(Colors.ListSelectionBrush, bounds);
-            }
-            else
-            {
-                graphics.FillRectangle(Colors.ListBackgroudBrush, bounds);
-            }
+                rect.Y = i * ItemSize;
 
-            destRect.Y = bounds.Top + ItemMargin;
+                if (SelectedIndices.Count > 0 && SelectedIndices.Contains(i))
+                    graphics.FillRectangle(Colors.ListSelectionBrush, rect);
+                else
+                    graphics.FillRectangle(Colors.ListBackgroudBrush, rect);
 
-            // draw view background
-            graphics.FillRectangle(Colors.ListViewBackgroudBrush, destRect);
+                ServerItem item = Items[i];
 
-            // draw text
-            graphics.DrawString(serverItem.ToString(), Font, Colors.TextColorBrush, layoutRect);
+                // find the area in which to put the text and draw.
+                m_layoutRect.X = rect.Left + 32 + (3 * ItemMargin);
+                m_layoutRect.Y = rect.Top + (ItemMargin * 2);
+                m_layoutRect.Width = rect.Right - ItemMargin - m_layoutRect.X;
+                m_layoutRect.Height = rect.Bottom - ItemMargin - m_layoutRect.Y;
 
-            ClientItem clientItem = this.plugin.GetClientItem(serverItem.ClientId);
-            if (clientItem != null)
-            {
-                Bitmap bitmap = clientItem.GetBitmap();
-                if (bitmap != null)
+                m_destRect.Y = rect.Top + ItemMargin;
+
+                // draw view background
+                graphics.FillRectangle(Colors.ListViewBackgroudBrush, m_destRect);
+
+                // draw text
+                graphics.DrawString(item.ToString(), Font, Colors.TextColorBrush, m_layoutRect);
+
+                ClientItem clientItem = Plugin.GetClientItem(item.ClientId);
+                if (clientItem != null)
                 {
-                    sourceRect.Width = bitmap.Width;
-                    sourceRect.Height = bitmap.Height;
-                    graphics.DrawImage(bitmap, destRect, sourceRect, GraphicsUnit.Pixel);
+                    Bitmap bitmap = clientItem.GetBitmap();
+                    if (bitmap != null)
+                    {
+                        m_sourceRect.Width = bitmap.Width;
+                        m_sourceRect.Height = bitmap.Height;
+                        graphics.DrawImage(bitmap, m_destRect, m_sourceRect, GraphicsUnit.Pixel);
+                    }
                 }
+
+                // draw view border
+                graphics.DrawRectangle(Colors.BorderColorPen, m_destRect);
+
+                // draw border
+                graphics.DrawRectangle(Colors.BorderColorPen, rect);
             }
-
-            // draw view border
-            graphics.DrawRectangle(Colors.BorderColorPen, destRect);
-
-            // draw border
-            graphics.DrawRectangle(Colors.BorderColorPen, bounds);
         }
-
-        #endregion
-
-        #region Class Properties
-
-        private static readonly Brush WhiteBrush = new SolidBrush(Color.White);
-        private static readonly Brush BlackBrush = new SolidBrush(Color.Black);
-
-        #endregion
     }
 }

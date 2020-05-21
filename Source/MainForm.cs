@@ -20,7 +20,6 @@
 
 #region Using Statements
 using DarkUI.Config;
-using DarkUI.Forms;
 using ImageSimilarity;
 using ItemEditor.Controls;
 using ItemEditor.Diagnostics;
@@ -35,6 +34,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -42,7 +42,7 @@ using System.Windows.Forms;
 
 namespace ItemEditor
 {
-    public partial class MainForm : DarkForm
+    public partial class MainForm : Form
     {
         #region Private Properties
 
@@ -558,14 +558,14 @@ namespace ItemEditor
             this.pictureBox.ClientItem = clientItem;
             if (!item.IsCustomCreated && item.SpriteHash != null && clientItem.SpriteHash != null)
             {
-                this.pictureBox.BackColor = Utils.ByteArrayCompare(item.SpriteHash, clientItem.SpriteHash) ? Colors.DarkBackground : Color.Red;
+                this.pictureBox.BackColor = Utils.ByteArrayCompare(item.SpriteHash, clientItem.SpriteHash) ? Color.White : Color.Red;
             }
 
             this.typeCombo.Text = item.Type.ToString();
-            this.typeCombo.ForeColor = item.Type == clientItem.Type ? Color.Black : Color.Red;
+            this.typeCombo.ForeColor = item.Type == clientItem.Type ? Colors.LightText : Color.Red;
 
             this.stackOrderComboBox.Text = item.StackOrder.ToString();
-            this.stackOrderComboBox.ForeColor = item.StackOrder == clientItem.StackOrder ? Color.Black : Color.Red;
+            this.stackOrderComboBox.ForeColor = item.StackOrder == clientItem.StackOrder ? Colors.LightText : Color.Red;
 
             this.serverIdLbl.DataBindings.Add("Text", item, "ID");
             this.clientIdUpDown.Minimum = this.ServerItems.MinId;
@@ -631,7 +631,7 @@ namespace ItemEditor
         {
             bool equals = value.Equals(clientValue);
             control.DataBindings.Add(propertyName, dataSource, dataMember);
-            control.ForeColor = equals ? Colors.LightText : Color.Red;
+            control.ForeColor = equals ? Color.Black : Color.Red;
 
             if (!equals && setToolTip)
             {
@@ -663,15 +663,15 @@ namespace ItemEditor
             this.optionsGroupBox.Enabled = false;
             this.appearanceGroupBox.Enabled = false;
             this.pictureBox.ClientItem = null;
-            this.pictureBox.BackColor = Colors.DarkBackground;
+            this.pictureBox.BackColor = Color.White;
             this.previousPictureBox.ClientItem = null;
-            this.previousPictureBox.BackColor = Colors.DarkBackground;
+            this.previousPictureBox.BackColor = Color.White;
             this.clientIdUpDown.Value = clientIdUpDown.Minimum;
             this.serverIdLbl.Text = "0";
             this.typeCombo.Text = string.Empty;
-            this.typeCombo.ForeColor = Colors.LightText;
+            this.typeCombo.ForeColor = Color.Black;
             this.stackOrderComboBox.Text = string.Empty;
-            this.stackOrderComboBox.ForeColor = Colors.LightText;
+            this.stackOrderComboBox.ForeColor = Color.Black;
             this.editDuplicateItemMenuItem.Enabled = false;
             this.candidatesButton.Enabled = false;
 
@@ -941,7 +941,7 @@ namespace ItemEditor
         {
             AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
             ApplicationName = assemblyName.Name;
-            ApplicationVersion = assemblyName.Version.Major + "." + assemblyName.Version.Minor + "." + assemblyName.Version.Build;
+            ApplicationVersion = assemblyName.Version.Major + "." + assemblyName.Version.Minor;
 
             this.Text = ApplicationName + " " + ApplicationVersion;
             this.typeCombo.DataSource = Enum.GetNames(typeof(ServerItemType));
@@ -1039,7 +1039,7 @@ namespace ItemEditor
             }
         }
 
-        private void ItemsListBox_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void ItemsListBox_SelectedIndexChanged(object sender)
         {
             this.SelectItem(this.serverItemListBox.SelectedItem as ServerItem);
         }

@@ -19,12 +19,13 @@
 #endregion
 
 #region Using Statements
+using DarkUI.Forms;
 using System.Windows.Forms;
 #endregion
 
 namespace ItemEditor.Dialogs
 {
-    public partial class ProgressForm : Form
+    public partial class ProgressForm : DarkForm
     {
         #region Constructor
 

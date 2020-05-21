@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.pluginsListBox = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.selectBtn = new System.Windows.Forms.Button();
-            this.lblDescription = new System.Windows.Forms.Label();
+            this.button1 = new DarkUI.Controls.DarkButton();
+            this.selectBtn = new DarkUI.Controls.DarkButton();
+            this.lblDescription = new DarkUI.Controls.DarkLabel();
             this.SuspendLayout();
             // 
             // pluginsListBox
@@ -51,7 +51,6 @@
             this.button1.Size = new System.Drawing.Size(96, 23);
             this.button1.TabIndex = 3;
             this.button1.Text = "&Close";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // selectBtn
             // 
@@ -60,7 +59,6 @@
             this.selectBtn.Size = new System.Drawing.Size(96, 23);
             this.selectBtn.TabIndex = 1;
             this.selectBtn.Text = "&Select";
-            this.selectBtn.UseVisualStyleBackColor = true;
             this.selectBtn.Click += new System.EventHandler(this.SelectBtn_Click);
             // 
             // lblDescription
@@ -94,8 +92,8 @@
         #endregion
 
         private System.Windows.Forms.ListBox pluginsListBox;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button selectBtn;
-        public System.Windows.Forms.Label lblDescription;
+        private DarkUI.Controls.DarkButton button1;
+        private DarkUI.Controls.DarkButton selectBtn;
+        public DarkUI.Controls.DarkLabel lblDescription;
     }
 }

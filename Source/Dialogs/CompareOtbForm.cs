@@ -19,6 +19,7 @@
 #endregion
 
 #region Using Statements
+using DarkUI.Forms;
 using OTLib.Collections;
 using OTLib.OTB;
 using OTLib.Server.Items;
@@ -31,7 +32,7 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Dialogs
 {
-    public partial class CompareOtbForm : Form
+    public partial class CompareOtbForm : DarkForm
     {
         #region Contructor
 

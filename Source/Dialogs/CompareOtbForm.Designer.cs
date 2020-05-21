@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.resultTextBox = new System.Windows.Forms.TextBox();
-            this.browseButton1 = new System.Windows.Forms.Button();
-            this.browseButton2 = new System.Windows.Forms.Button();
-            this.file1Text = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.file2Text = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.compareButton = new System.Windows.Forms.Button();
+            this.resultTextBox = new DarkUI.Controls.DarkTextBox();
+            this.browseButton1 = new DarkUI.Controls.DarkButton();
+            this.browseButton2 = new DarkUI.Controls.DarkButton();
+            this.file1Text = new DarkUI.Controls.DarkTextBox();
+            this.label1 = new DarkUI.Controls.DarkLabel();
+            this.file2Text = new DarkUI.Controls.DarkTextBox();
+            this.label2 = new DarkUI.Controls.DarkLabel();
+            this.compareButton = new DarkUI.Controls.DarkButton();
             this.SuspendLayout();
             // 
             // resultTextBox
@@ -55,7 +55,6 @@
             this.browseButton1.Size = new System.Drawing.Size(75, 23);
             this.browseButton1.TabIndex = 1;
             this.browseButton1.Text = "Browse...";
-            this.browseButton1.UseVisualStyleBackColor = true;
             this.browseButton1.Click += new System.EventHandler(this.BrowseButton1_Click);
             // 
             // browseButton2
@@ -65,7 +64,6 @@
             this.browseButton2.Size = new System.Drawing.Size(75, 23);
             this.browseButton2.TabIndex = 2;
             this.browseButton2.Text = "Browse...";
-            this.browseButton2.UseVisualStyleBackColor = true;
             this.browseButton2.Click += new System.EventHandler(this.BrowseButton2_Click);
             // 
             // file1Text
@@ -110,7 +108,6 @@
             this.compareButton.Size = new System.Drawing.Size(75, 23);
             this.compareButton.TabIndex = 7;
             this.compareButton.Text = "Compare";
-            this.compareButton.UseVisualStyleBackColor = true;
             this.compareButton.Click += new System.EventHandler(this.CompareButton_Click);
             // 
             // CompareOtbForm
@@ -137,13 +134,13 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox resultTextBox;
-        private System.Windows.Forms.Button browseButton1;
-        private System.Windows.Forms.Button browseButton2;
-        private System.Windows.Forms.TextBox file1Text;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox file2Text;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button compareButton;
+        private DarkUI.Controls.DarkTextBox resultTextBox;
+        private DarkUI.Controls.DarkButton browseButton1;
+        private DarkUI.Controls.DarkButton browseButton2;
+        private DarkUI.Controls.DarkTextBox file1Text;
+        private DarkUI.Controls.DarkLabel label1;
+        private DarkUI.Controls.DarkTextBox file2Text;
+        private DarkUI.Controls.DarkLabel label2;
+        private DarkUI.Controls.DarkButton compareButton;
     }
 }

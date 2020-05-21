@@ -73,9 +73,9 @@ namespace ItemEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap application_form {
+        public static System.Drawing.Bitmap DuplicateIcon {
             get {
-                object obj = ResourceManager.GetObject("application_form", resourceCulture);
+                object obj = ResourceManager.GetObject("DuplicateIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace ItemEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap disk {
+        public static System.Drawing.Bitmap FindIcon {
             get {
-                object obj = ResourceManager.GetObject("disk", resourceCulture);
+                object obj = ResourceManager.GetObject("FindIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace ItemEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap disk_multiple {
+        public static System.Drawing.Bitmap FormIcon {
             get {
-                object obj = ResourceManager.GetObject("disk_multiple", resourceCulture);
+                object obj = ResourceManager.GetObject("FormIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace ItemEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap find {
+        public static System.Drawing.Bitmap InfoIcon {
             get {
-                object obj = ResourceManager.GetObject("find", resourceCulture);
+                object obj = ResourceManager.GetObject("InfoIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace ItemEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap folder_page {
+        public static System.Drawing.Bitmap NewIcon {
             get {
-                object obj = ResourceManager.GetObject("folder_page", resourceCulture);
+                object obj = ResourceManager.GetObject("NewIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace ItemEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap help {
+        public static System.Drawing.Bitmap OpenIcon {
             get {
-                object obj = ResourceManager.GetObject("help", resourceCulture);
+                object obj = ResourceManager.GetObject("OpenIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace ItemEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap page {
+        public static System.Drawing.Bitmap ReloadIcon {
             get {
-                object obj = ResourceManager.GetObject("page", resourceCulture);
+                object obj = ResourceManager.GetObject("ReloadIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace ItemEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap page_delete {
+        public static System.Drawing.Bitmap SaveAsIcon {
             get {
-                object obj = ResourceManager.GetObject("page_delete", resourceCulture);
+                object obj = ResourceManager.GetObject("SaveAsIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,39 +153,9 @@ namespace ItemEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap page_white {
+        public static System.Drawing.Bitmap SaveIcon {
             get {
-                object obj = ResourceManager.GetObject("page_white", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap page_white_copy {
-            get {
-                object obj = ResourceManager.GetObject("page_white_copy", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap page_white1 {
-            get {
-                object obj = ResourceManager.GetObject("page_white1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap reload {
-            get {
-                object obj = ResourceManager.GetObject("reload", resourceCulture);
+                object obj = ResourceManager.GetObject("SaveIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

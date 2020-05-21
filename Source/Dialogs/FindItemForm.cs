@@ -19,6 +19,7 @@
 #endregion
 
 #region Using Statements
+using DarkUI.Forms;
 using ItemEditor.Controls;
 using OTLib.Server.Items;
 using System;
@@ -28,7 +29,7 @@ using System.Windows.Forms;
 
 namespace ItemEditor.Dialogs
 {
-    public partial class FindItemForm : Form
+    public partial class FindItemForm : DarkForm
     {
         #region Private Properties
 
@@ -154,9 +155,9 @@ namespace ItemEditor.Dialogs
             }
         }
 
-        private void ServerItemList_SelectedIndexChanged(object sender, EventArgs e)
+        private void ServerItemList_SelectedIndexChanged(object sender)
         {
-            ServerItem item = serverItemList.SelectedItem != null ? (ServerItem)serverItemList.SelectedItem : null;
+            ServerItem item = serverItemList.SelectedItem != null ? serverItemList.SelectedItem : null;
             if (item != null)
             {
                 if (item.Type == ServerItemType.Deprecated)

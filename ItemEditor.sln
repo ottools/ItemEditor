@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemEditor", "Source\ItemEditor.csproj", "{9A90BE1A-4A8F-4BFE-92E7-2C0EF64D850C}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -15,6 +15,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginTwo", "Source\PluginTwo\PluginTwo.csproj", "{3624E915-FB86-4DDB-ACA6-A2313F70BA9C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PluginInterface", "Source\PluginInterface\PluginInterface.csproj", "{CEF21172-258C-4D0D-B024-ED7EF99612A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DarkUI", "ThirdParty\DarkUI\DarkUI.csproj", "{F19472F5-8C44-4C51-A8A0-B9DE5F555255}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,8 +88,23 @@ Global
 		{CEF21172-258C-4D0D-B024-ED7EF99612A2}.Release|x64.Build.0 = Release|x64
 		{CEF21172-258C-4D0D-B024-ED7EF99612A2}.Release|x86.ActiveCfg = Release|x86
 		{CEF21172-258C-4D0D-B024-ED7EF99612A2}.Release|x86.Build.0 = Release|x86
+		{F19472F5-8C44-4C51-A8A0-B9DE5F555255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F19472F5-8C44-4C51-A8A0-B9DE5F555255}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F19472F5-8C44-4C51-A8A0-B9DE5F555255}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F19472F5-8C44-4C51-A8A0-B9DE5F555255}.Debug|x64.Build.0 = Debug|Any CPU
+		{F19472F5-8C44-4C51-A8A0-B9DE5F555255}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F19472F5-8C44-4C51-A8A0-B9DE5F555255}.Debug|x86.Build.0 = Debug|Any CPU
+		{F19472F5-8C44-4C51-A8A0-B9DE5F555255}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F19472F5-8C44-4C51-A8A0-B9DE5F555255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F19472F5-8C44-4C51-A8A0-B9DE5F555255}.Release|x64.ActiveCfg = Release|Any CPU
+		{F19472F5-8C44-4C51-A8A0-B9DE5F555255}.Release|x64.Build.0 = Release|Any CPU
+		{F19472F5-8C44-4C51-A8A0-B9DE5F555255}.Release|x86.ActiveCfg = Release|Any CPU
+		{F19472F5-8C44-4C51-A8A0-B9DE5F555255}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6065E86-DE07-4D68-BF6B-DE8CF2201347}
 	EndGlobalSection
 EndGlobal

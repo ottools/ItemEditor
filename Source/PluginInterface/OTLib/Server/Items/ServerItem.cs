@@ -86,8 +86,8 @@ namespace OTLib.Server.Items
 
         #region Public Properties
 
+        public string NameXml { get; set; }
         public ushort ClientId { get; set; }
-
         public ushort PreviousClientId { get; set; }
 
         /// <summary>
@@ -106,12 +106,12 @@ namespace OTLib.Server.Items
 
         override public string ToString()
         {
-            if (!string.IsNullOrEmpty(Name))
-            {
-                return this.ID.ToString() + " - " + this.Name;
-            }
+            if (!string.IsNullOrEmpty(NameXml))
+                return ID.ToString() + " - " + this.NameXml;
+            else if (!string.IsNullOrEmpty(Name))
+                return ID.ToString() + " - " + this.Name;
 
-            return this.ID.ToString();
+            return ID.ToString();
         }
 
         #endregion

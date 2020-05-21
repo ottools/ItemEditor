@@ -71,9 +71,10 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data" />
     <Reference Include="System.XML" />
-    <Reference Include="System.Xml" >
-        <HintPath>lib\System.Xml.dll</HintPath>
+    <Reference Include="System.Xml">
+      <HintPath>lib\System.Xml.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ImageSimilarity\Complex.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="OTLib\OTB\OtbReader.cs" />
     <Compile Include="OTLib\OTB\OtbVersionInfo.cs" />
     <Compile Include="OTLib\OTB\OtbWriter.cs" />
+    <Compile Include="OTLib\Server\Items\ItemsXmlReader.cs" />
     <Compile Include="OTLib\Server\Items\ServerItemAttribute.cs" />
     <Compile Include="OTLib\Server\Items\ServerItemFlag.cs" />
     <Compile Include="OTLib\Utils\BinaryTreeReader.cs" />
@@ -108,7 +110,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

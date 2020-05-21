@@ -1,6 +1,7 @@
 # Scripts
 release/
 debug/
+packages/
 
 # Visual studio intermediate directories
 bin/

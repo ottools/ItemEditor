@@ -191,6 +191,20 @@ namespace ItemEditor
                 this.Loaded = true;
                 this.BuildItemsListBox();
             }
+
+            try
+            {
+                string directory = Path.GetDirectoryName(path);
+                if (Directory.Exists(directory))
+                {
+                    ItemsXmlReader xmlReader = new ItemsXmlReader();
+                    xmlReader.Read(directory, ServerItems);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex.StackTrace);
+            }
         }
 
         public void Save()

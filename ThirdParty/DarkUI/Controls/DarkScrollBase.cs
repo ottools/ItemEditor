@@ -107,6 +107,8 @@ namespace DarkUI.Controls
             }
         }
 
+        public int Ticks { get; set; }
+
         public bool HorizontalScrollBarHidden
         {
             get => _horizontalScrollBarHidden;
@@ -144,6 +146,8 @@ namespace DarkUI.Controls
             _dragTimer = new Timer();
             _dragTimer.Interval = 1;
             _dragTimer.Tick += DragTimer_Tick;
+
+            Ticks = 1;
         }
 
         #endregion
@@ -343,16 +347,16 @@ namespace DarkUI.Controls
             if (!horizontal)
             {
                 if (e.Delta > 0)
-                    _vScrollBar.ScrollByPhysical(3);
+                    _vScrollBar.ScrollBy(-Ticks);
                 else if (e.Delta < 0)
-                    _vScrollBar.ScrollByPhysical(-3);
+                    _vScrollBar.ScrollBy(Ticks);
             }
             else
             {
                 if (e.Delta > 0)
-                    _hScrollBar.ScrollByPhysical(3);
+                    _hScrollBar.ScrollBy(-Ticks);
                 else if (e.Delta < 0)
-                    _hScrollBar.ScrollByPhysical(-3);
+                    _hScrollBar.ScrollBy(Ticks);
             }
         }
 

@@ -1028,6 +1028,7 @@ namespace ItemEditor
                 itemsListBoxContextMenu.Items.Add("-");
                 itemsListBoxContextMenu.Items.Add("Copy Server ID");
                 itemsListBoxContextMenu.Items.Add("Copy Client ID");
+                itemsListBoxContextMenu.Items.Add("Copy Name");
             }
         }
 
@@ -1050,6 +1051,10 @@ namespace ItemEditor
 
                 case "Copy Client ID":
                     Clipboard.SetText(CurrentServerItem.ClientId.ToString());
+                    break;
+
+                case "Copy Name":
+                    Clipboard.SetText(CurrentServerItem.NameXml);
                     break;
             }
         }

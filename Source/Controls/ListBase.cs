@@ -19,7 +19,7 @@ namespace GameEngine.Controls
 
     public class ListBase<T> : DarkScrollView
     {
-        private ListBaseLayout m_layout;
+        private readonly ListBaseLayout m_layout;
         private int m_itemSize;
         private int m_anchoredItemStart;
         private int m_anchoredItemEnd;
@@ -98,6 +98,7 @@ namespace GameEngine.Controls
                 if (value != m_itemSize)
                 {
                     m_itemSize = value;
+                    Ticks = value;
                     UpdateListBox();
                 }
             }

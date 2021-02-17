@@ -1,5 +1,14 @@
 <settings>
 	<clients>
+		<client version="710" description="Client 7.10" otbversion="0" datsignature="3DFF4B2A" sprsignature="3DFF4AEB"/>
+		<client version="730" description="Client 7.30" otbversion="0" datsignature="411A6233" sprsignature="411A6279"/>
+		<client version="740" description="Client 7.40" otbversion="1" datsignature="41BF619C" sprsignature="41B9EA86"/>
+		<client version="750" description="Client 7.50" otbversion="1" datsignature="42F81973" sprsignature="42F81949"/>
+		<client version="755" description="Client 7.55" otbversion="2" datsignature="437B2B8F" sprsignature="434F9CDE"/>
+		<client version="760" description="Client 7.60" otbversion="3" datsignature="439D5A33" sprsignature="439852BE"/>
 		<client version="770" description="Client 7.70" otbversion="3" datsignature="439D5A33" sprsignature="439852BE"/>
+		<client version="770" description="Client 7.80" otbversion="4" datsignature="44CE4743" sprsignature="44CE4206"/>
+		<client version="790" description="Client 7.90" otbversion="5" datsignature="457D854E" sprsignature="457957C8"/>
+		<client version="792" description="Client 7.92" otbversion="5" datsignature="459E7B73" sprsignature="45880FE8"/>
 	</clients>
 </settings>

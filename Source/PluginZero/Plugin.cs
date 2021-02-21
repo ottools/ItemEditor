@@ -211,6 +211,67 @@ namespace PluginZero
                     {
                         flag = (ItemFlag)reader.ReadByte();
 
+                        //flags need to be adjusted before. 
+                        if (client.Version >= 780)
+                        {
+                            /* In 7.80-8.54 all attributes from 8 and higher were
+                             * incremented by 1 to make space for 8 as
+                             * "Item Charges" flag.
+                             */
+                            if (Convert.ToInt32(flag) == 8)
+                            {
+                                item.HasCharges = true;
+                                continue;
+                            }
+                            else if (Convert.ToInt32(flag) > 8)
+                                flag -= 1;
+                        }
+                        else if (client.Version >= 755)
+                        {
+                            /* In 7.55-7.72 attributes 23 is "Floor Change". */
+                            if (Convert.ToInt32(flag) == 23)
+                                flag = ItemFlag.FloorChange;
+                        }
+                        else if (client.Version >= 740)
+                        {
+                            /* In 7.4-7.5 attribute "Ground Border" did not exist
+                             * attributes 1-15 have to be adjusted.
+                             * Several other changes in the format.
+                             */
+                            if (Convert.ToInt32(flag) > 0 && Convert.ToInt32(flag) <= 15)
+                                flag += 1;
+                            else if (Convert.ToInt32(flag) == 16)
+                                flag = ItemFlag.HasLight;
+                            else if (Convert.ToInt32(flag) == 17)
+                                flag = ItemFlag.FloorChange;
+                            else if (Convert.ToInt32(flag) == 18)
+                                flag = ItemFlag.FullGround;
+                            else if (Convert.ToInt32(flag) == 19)
+                                flag = ItemFlag.HasElevation;
+                            else if (Convert.ToInt32(flag) == 20)
+                                flag = ItemFlag.HasOffset;
+                            else if (Convert.ToInt32(flag) == 22)
+                                flag = ItemFlag.Minimap;
+                            else if (Convert.ToInt32(flag) == 23)
+                                flag = ItemFlag.Rotatable;
+                            else if (Convert.ToInt32(flag) == 24)
+                                flag = ItemFlag.Lying;
+                            else if (Convert.ToInt32(flag) == 25)
+                                flag = ItemFlag.Hangable;
+                            else if (Convert.ToInt32(flag) == 26)
+                                flag = ItemFlag.IsHorizontal;
+                            else if (Convert.ToInt32(flag) == 27)
+                                flag = ItemFlag.IsVertical;
+                            else if (Convert.ToInt32(flag) == 28)
+                                flag = ItemFlag.AnimateAlways;
+
+                            /* "Multi Use" and "Force Use" are swapped */
+                            if (flag == ItemFlag.MultiUse)
+                                flag = ItemFlag.ForceUse;
+                            else if (flag == ItemFlag.ForceUse)
+                                flag = ItemFlag.MultiUse;
+                        }
+
                         switch (flag)
                         {
                             case ItemFlag.Ground:
@@ -222,6 +283,7 @@ namespace PluginZero
                             case ItemFlag.GroundBorder:
                                 item.HasStackOrder = true;
                                 item.StackOrder = TileStackOrder.Border;
+
                                 break;
 
                             case ItemFlag.OnBottom:
@@ -316,8 +378,11 @@ namespace PluginZero
                                 break;
 
                             case ItemFlag.HasOffset:
-                                reader.ReadUInt16(); // OffsetX
-                                reader.ReadUInt16(); // OffsetY
+                                if (client.Version >= 755)
+                                {
+                                    reader.ReadUInt16(); // OffsetX
+                                    reader.ReadUInt16(); // OffsetY
+                                }                                
                                 break;
 
                             case ItemFlag.HasElevation:
@@ -369,7 +434,12 @@ namespace PluginZero
                     item.Layers = reader.ReadByte();
                     item.PatternX = reader.ReadByte();
                     item.PatternY = reader.ReadByte();
-                    item.PatternZ = reader.ReadByte();
+
+                    if (client.Version >= 755)
+                        item.PatternZ = reader.ReadByte();
+                    else
+                        item.PatternZ = 1;
+
                     item.Frames = reader.ReadByte();
                     item.IsAnimation = item.Frames > 1;
                     item.NumSprites = (uint)item.Width * item.Height * item.Layers * item.PatternX * item.PatternY * item.PatternZ * item.Frames;

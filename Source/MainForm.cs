@@ -807,13 +807,14 @@ namespace ItemEditor
 
         private bool LoadClient(Plugin plugin, uint otbVersion)
         {
-            SupportedClient client = plugin.Instance.SupportedClients.Find(
+            List<SupportedClient> clientList = plugin.Instance.SupportedClients.FindAll(
                 delegate(SupportedClient sc)
                 {
                     return sc.OtbVersion == otbVersion;
                 });
 
-            if (client == null)
+
+            if (clientList.Count == 0)
             {
                 MessageBox.Show("The selected plugin does not support this version.");
                 return false;
@@ -822,16 +823,27 @@ namespace ItemEditor
             uint datSignature = (uint)Properties.Settings.Default["DatSignature"];
             uint sprSignature = (uint)Properties.Settings.Default["SprSignature"];
 
-            if (client.DatSignature != datSignature || client.SprSignature != sprSignature)
+            if (datSignature == 0 || sprSignature == 0)
+            {
+                MessageBox.Show("No client is selected. Please navigate to the client folder.");
+                return false;
+            }
+
+            SupportedClient client = null;
+
+            foreach (SupportedClient clientObject in clientList)
+            {
+                if (clientObject.DatSignature == datSignature && clientObject.SprSignature == sprSignature) 
+                {
+                    client = clientObject;
+                }
+            }
+
+            if (client == null)
             {
                 string message;
-                if (datSignature == 0 || sprSignature == 0)
                 {
-                    message = "No client is selected. Please navigate to the client folder.";
-                }
-                else
-                {
-                    message = string.Format("The selected client is not compatible with this OTB(version {0}). Please navigate to the folder of a compatible client {1}.", client.OtbVersion, client.Version);
+                    message = string.Format("The selected client is not compatible with this OTB(version {0}). Please navigate to the folder of a compatible client.", otbVersion);
                 }
 
                 MessageBox.Show(message);

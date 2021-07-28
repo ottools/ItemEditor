@@ -6,7 +6,7 @@ ItemEditor is a program used to edit the OTB data files.
 Supported versions:
 ----
 
-* 8.00 - 10.77
+* 8.00 - 10.98
 
 Download
 ----
@@ -23,7 +23,7 @@ For linux follow this guide to install mono-devel and mono-complete packages for
 Bugs
 ----
 
-If you find a bug use the bug tracker on github to report it.
+If you find a bug use the [issue tracker on GitHub](https://github.com/ottools/ItemEditor/issues) to report it.
 
 
 Icons

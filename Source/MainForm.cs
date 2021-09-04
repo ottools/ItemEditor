@@ -612,6 +612,7 @@ namespace ItemEditor
             this.AddBinding(this.minimapColorText, "Text", item, "MinimapColor", item.MinimapColor, clientItem.MinimapColor, true);
             this.AddBinding(this.wareIdText, "Text", item, "TradeAs", item.TradeAs, clientItem.TradeAs, true);
             this.AddBinding(this.nameText, "Text", item, "Name", item.Name, clientItem.Name, true);
+            this.AddBinding(this.allowDistanceReadCheck, "Checked", item, "AllowDistanceRead", item.AllowDistanceRead, clientItem.AllowDistanceRead, true);
 
             this.candidatesButton.Enabled = false;
             for (int i = 0; i < this.candidatesTableLayoutPanel.ColumnCount; ++i)

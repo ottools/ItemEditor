@@ -11,7 +11,7 @@ Supported versions:
 Download
 ----
 
-[ItemEditor 0.43](https://github.com/danilopucci/ItemEditor/releases/download/v0.4.3/ItemEditor_v043.zip)
+[ItemEditor 0.43](https://github.com/danilopucci/ItemEditor/releases/download/v0.4.3/ItemEditor_v0432.zip)
 
 Compiling
 ----

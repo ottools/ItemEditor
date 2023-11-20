@@ -47,9 +47,9 @@ namespace ItemEditor
 
         #region Public Properties
 
-        public const byte DefaultSize = 32;
-        public const ushort RGBPixelsDataSize = 3072; // 32*32*3
-        public const ushort ARGBPixelsDataSize = 4096; // 32*32*4
+        public const byte DefaultSize = 64;
+        public const ushort RGBPixelsDataSize = DefaultSize * DefaultSize * 3;
+        public const ushort ARGBPixelsDataSize = DefaultSize * DefaultSize * 4;
 
         public uint ID { get; set; }
         public uint Size { get; set; }
@@ -100,7 +100,7 @@ namespace ItemEditor
                     rgb32x32x3[96 * y + x * 3 + 1] = transparentColor;
                     rgb32x32x3[96 * y + x * 3 + 2] = transparentColor;
                     x++;
-                    if (x >= 32)
+                    if (x >= 64)
                     {
                         x = 0;
                         ++y;
@@ -130,7 +130,7 @@ namespace ItemEditor
                     bytes += bitPerPixel;
 
                     x++;
-                    if (x >= 32)
+                    if (x >= 64)
                     {
                         x = 0;
                         ++y;

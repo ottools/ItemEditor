@@ -40,10 +40,10 @@ namespace ItemEditor.Controls
         public ServerItemListBox() : base(ListBaseLayout.Vertical)
         {
             m_layoutRect = new Rectangle();
-            m_destRect = new Rectangle(ItemMargin, 0, 32, 32);
+            m_destRect = new Rectangle(ItemMargin, 0, 64, 64);
             m_sourceRect = new Rectangle();
 
-            ItemSize = 32 + (ItemMargin * 2);
+            ItemSize = 64 + (ItemMargin * 2);
             MultiSelect = false;
         }
 
@@ -95,7 +95,7 @@ namespace ItemEditor.Controls
                 ServerItem item = Items[i];
 
                 // find the area in which to put the text and draw.
-                m_layoutRect.X = rect.Left + 32 + (3 * ItemMargin);
+                m_layoutRect.X = rect.Left + 64 + (3 * ItemMargin);
                 m_layoutRect.Y = rect.Top + (ItemMargin * 2);
                 m_layoutRect.Width = rect.Right - ItemMargin - m_layoutRect.X;
                 m_layoutRect.Height = rect.Bottom - ItemMargin - m_layoutRect.Y;

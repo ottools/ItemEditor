@@ -314,9 +314,9 @@ namespace ItemEditor
                                 {
                                     for (int x = 0; x < Sprite.DefaultSize; ++x)
                                     {
-                                        rgbaData[128 * y + x * 4 + 0] = rgbData[(32 - y - 1) * 96 + x * 3 + 2]; // blue
-                                        rgbaData[128 * y + x * 4 + 1] = rgbData[(32 - y - 1) * 96 + x * 3 + 1]; // green
-                                        rgbaData[128 * y + x * 4 + 2] = rgbData[(32 - y - 1) * 96 + x * 3 + 0]; // red
+                                        rgbaData[128 * y + x * 4 + 0] = rgbData[(64 - y - 1) * 96 + x * 3 + 2]; // blue
+                                        rgbaData[128 * y + x * 4 + 1] = rgbData[(64 - y - 1) * 96 + x * 3 + 1]; // green
+                                        rgbaData[128 * y + x * 4 + 2] = rgbData[(64 - y - 1) * 96 + x * 3 + 0]; // red
                                         rgbaData[128 * y + x * 4 + 3] = 0;
                                     }
                                 }

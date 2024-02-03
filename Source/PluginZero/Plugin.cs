@@ -1,4 +1,4 @@
-﻿#region Licence
+#region Licence
 /**
 * Copyright © 2014-2019 OTTools <https://github.com/ottools/ItemEditor/>
 *
@@ -51,8 +51,8 @@ namespace PluginZero
         BlockPathfinder = 0x0F,
         Pickupable = 0x10,
         Hangable = 0x11,
-        IsHorizontal = 0x12,
-        IsVertical = 0x13,
+        IsVertical = 0x12,
+        IsHorizontal = 0x13,
         Rotatable = 0x14,
         HasLight = 0x15,
         DontHide = 0x16,
@@ -210,214 +210,25 @@ namespace PluginZero
                     do
                     {
                         flag = (ItemFlag)reader.ReadByte();
+                        flag = convertItemFlag(client.Version, flag);
 
-                        //flags need to be adjusted before. 
-                        if (client.Version >= 780)
+                        if (client.Version >= 740 && client.Version <= 750)
                         {
-                            /* In 7.80-8.54 all attributes from 8 and higher were
-                             * incremented by 1 to make space for 8 as
-                             * "Item Charges" flag.
-                             */
-                            if (Convert.ToInt32(flag) == 8)
+                            if (!readAndSetAttribute_740_750(reader, item, flag))
                             {
-                                item.HasCharges = true;
-                                continue;
-                            }
-                            else if (Convert.ToInt32(flag) > 8)
-                                flag -= 1;
-                        }
-                        else if (client.Version >= 755)
-                        {
-                            /* In 7.55-7.72 attributes 23 is "Floor Change". */
-                            if (Convert.ToInt32(flag) == 23)
-                                flag = ItemFlag.FloorChange;
-                        }
-                        else if (client.Version >= 740)
-                        {
-                            /* In 7.4-7.5 attribute "Ground Border" did not exist
-                             * attributes 1-15 have to be adjusted.
-                             * Several other changes in the format.
-                             */
-                            if (Convert.ToInt32(flag) > 0 && Convert.ToInt32(flag) <= 15)
-                                flag += 1;
-                            else if (Convert.ToInt32(flag) == 16)
-                                flag = ItemFlag.HasLight;
-                            else if (Convert.ToInt32(flag) == 17)
-                                flag = ItemFlag.FloorChange;
-                            else if (Convert.ToInt32(flag) == 18)
-                                flag = ItemFlag.FullGround;
-                            else if (Convert.ToInt32(flag) == 19)
-                                flag = ItemFlag.HasElevation;
-                            else if (Convert.ToInt32(flag) == 20)
-                                flag = ItemFlag.HasOffset;
-                            else if (Convert.ToInt32(flag) == 22)
-                                flag = ItemFlag.Minimap;
-                            else if (Convert.ToInt32(flag) == 23)
-                                flag = ItemFlag.Rotatable;
-                            else if (Convert.ToInt32(flag) == 24)
-                                flag = ItemFlag.Lying;
-                            else if (Convert.ToInt32(flag) == 25)
-                                flag = ItemFlag.Hangable;
-                            else if (Convert.ToInt32(flag) == 26)
-                                flag = ItemFlag.IsHorizontal;
-                            else if (Convert.ToInt32(flag) == 27)
-                                flag = ItemFlag.IsVertical;
-                            else if (Convert.ToInt32(flag) == 28)
-                                flag = ItemFlag.AnimateAlways;
-
-                            /* "Multi Use" and "Force Use" are swapped */
-                            if (flag == ItemFlag.MultiUse)
-                                flag = ItemFlag.ForceUse;
-                            else if (flag == ItemFlag.ForceUse)
-                                flag = ItemFlag.MultiUse;
-                        }
-
-                        switch (flag)
-                        {
-                            case ItemFlag.Ground:
-                                item.GroundSpeed = reader.ReadUInt16();
-                                item.Type = ServerItemType.Ground;
-                                break;
-
-
-                            case ItemFlag.GroundBorder:
-                                item.HasStackOrder = true;
-                                item.StackOrder = TileStackOrder.Border;
-
-                                break;
-
-                            case ItemFlag.OnBottom:
-                                item.HasStackOrder = true;
-                                item.StackOrder = TileStackOrder.Bottom;
-                                break;
-
-
-                            case ItemFlag.OnTop:
-                                item.HasStackOrder = true;
-                                item.StackOrder = TileStackOrder.Top;
-                                break;
-
-                            case ItemFlag.Container:
-                                item.Type = ServerItemType.Container;
-                                break;
-
-                            case ItemFlag.Stackable:
-                                item.Stackable = true;
-                                break;
-
-                            case ItemFlag.ForceUse:
-                                break;
-
-                            case ItemFlag.MultiUse:
-                                item.MultiUse = true;
-                                break;
-
-                            case ItemFlag.Writable:
-                                item.Readable = true;
-                                item.MaxReadWriteChars = reader.ReadUInt16();
-                                break;
-
-                            case ItemFlag.WritableOnce:
-                                item.Readable = true;
-                                item.MaxReadChars = reader.ReadUInt16();
-                                break;
-
-                            case ItemFlag.FluidContainer:
-                                item.Type = ServerItemType.Fluid;
-                                break;
-
-                            case ItemFlag.Fluid:
-                                item.Type = ServerItemType.Splash;
-                                break;
-
-                            case ItemFlag.IsUnpassable:
-                                item.Unpassable = true;
-                                break;
-
-                            case ItemFlag.IsUnmoveable:
-                                item.Movable = false;
-                                break;
-
-                            case ItemFlag.BlockMissiles:
-                                item.BlockMissiles = true;
-                                break;
-
-                            case ItemFlag.BlockPathfinder:
-                                item.BlockPathfinder = true;
-                                break;
-
-                            case ItemFlag.Pickupable:
-                                item.Pickupable = true;
-                                break;
-
-                            case ItemFlag.Hangable:
-                                item.Hangable = true;
-                                break;
-
-                            case ItemFlag.IsHorizontal:
-                                item.HookEast = true;
-                                break;
-
-                            case ItemFlag.IsVertical:
-                                item.HookSouth = true;
-                                break;
-
-                            case ItemFlag.Rotatable:
-                                item.Rotatable = true;
-                                break;
-
-                            case ItemFlag.HasLight:
-                                item.LightLevel = reader.ReadUInt16();
-                                item.LightColor = reader.ReadUInt16();
-                                break;
-
-                            case ItemFlag.DontHide:
-                                break;
-
-                            case ItemFlag.FloorChange:
-                                break;
-
-                            case ItemFlag.HasOffset:
-                                if (client.Version >= 755)
-                                {
-                                    reader.ReadUInt16(); // OffsetX
-                                    reader.ReadUInt16(); // OffsetY
-                                }                                
-                                break;
-
-                            case ItemFlag.HasElevation:
-                                item.HasElevation = true;
-                                reader.ReadUInt16(); // Height
-                                break;
-
-                            case ItemFlag.Lying:
-                                break;
-
-                            case ItemFlag.AnimateAlways:
-                                break;
-
-                            case ItemFlag.Minimap:
-                                item.MinimapColor = reader.ReadUInt16();
-                                break;
-
-                            case ItemFlag.LensHelp:
-                                ushort opt = reader.ReadUInt16();
-                                if (opt == 1112)
-                                {
-                                    item.Readable = true;
-                                }
-                                break;
-
-                            case ItemFlag.FullGround:
-                                break;
-
-                            case ItemFlag.LastFlag:
-                                break;
-
-                            default:
                                 Trace.WriteLine(String.Format("PluginZero: Error while parsing, unknown flag 0x{0:X} at id {1}.", flag, id));
-                                return false;
-
+                            }
+                        }
+                        else if (client.Version >= 755 && client.Version <= 772)
+                        {
+                            if (!readAndSetAttribute_755_772(reader, item, flag))
+                            {
+                                Trace.WriteLine(String.Format("PluginZero: Error while parsing, unknown flag 0x{0:X} at id {1}.", flag, id));
+                            }
+                        }
+                        else
+                        {
+                            Trace.WriteLine(String.Format("PluginZero: Error while parsing, not supported client version {1}.", client.Version));
                         }
 
                     } while (flag != ItemFlag.LastFlag);
@@ -467,6 +278,372 @@ namespace PluginZero
 
             return true;
         }
+
+        private ItemFlag convertItemFlag(uint clientVersion, ItemFlag flag)
+        {
+            ItemFlag resultFlag = flag;
+
+            if (clientVersion >= 740 && clientVersion <= 750)
+            {
+                /*  
+                 *  - In 7.4-7.5 attribute "Ground Border" did not exist, so attributes 1-15 have to be adjusted.
+                 *  - Several other changes in the format.
+                 *  - "Multi Use" and "Force Use" are swapped
+                 */
+                if (Convert.ToInt32(flag) > 0 && Convert.ToInt32(flag) <= 15)
+                {
+                    resultFlag = flag + 1;
+                }
+                else if (Convert.ToInt32(flag) == 16)
+                {
+                    resultFlag = ItemFlag.HasLight;
+                }
+                else if (Convert.ToInt32(flag) == 17)
+                {
+                    resultFlag = ItemFlag.FloorChange;
+                }
+                else if (Convert.ToInt32(flag) == 18)
+                {
+                    resultFlag = ItemFlag.FullGround;
+                }
+                else if (Convert.ToInt32(flag) == 19)
+                {
+                    resultFlag = ItemFlag.HasElevation;
+                }
+                else if (Convert.ToInt32(flag) == 20)
+                {
+                    resultFlag = ItemFlag.HasOffset;
+                }
+                else if (Convert.ToInt32(flag) == 22)
+                {
+                    resultFlag = ItemFlag.Minimap;
+                }
+                else if (Convert.ToInt32(flag) == 23)
+                {
+                    resultFlag = ItemFlag.Rotatable;
+                }
+                else if (Convert.ToInt32(flag) == 24)
+                {
+                    resultFlag = ItemFlag.Lying;
+                }
+                else if (Convert.ToInt32(flag) == 25)
+                {
+                    resultFlag = ItemFlag.Hangable;
+                }
+                else if (Convert.ToInt32(flag) == 26)
+                {
+                    resultFlag = ItemFlag.IsHorizontal;
+                }
+                else if (Convert.ToInt32(flag) == 27)
+                {
+                    resultFlag = ItemFlag.IsVertical;
+                }
+                else if (Convert.ToInt32(flag) == 28)
+                {
+                    resultFlag = ItemFlag.AnimateAlways;
+                }
+                else if (flag == ItemFlag.MultiUse)
+                {
+                    resultFlag = ItemFlag.ForceUse;
+                }
+                else if (flag == ItemFlag.ForceUse)
+                {
+                    resultFlag = ItemFlag.MultiUse;
+                }
+
+            }
+            return resultFlag;
+        }
+
+        private bool readAndSetAttribute_740_750(BinaryReader reader, ClientItem item, ItemFlag flag)
+        {
+
+            switch (flag)
+            {
+                case ItemFlag.Ground:
+                    item.GroundSpeed = reader.ReadUInt16();
+                    item.Type = ServerItemType.Ground;
+                    break;
+
+                case ItemFlag.OnBottom:
+                    item.HasStackOrder = true;
+                    item.StackOrder = TileStackOrder.Bottom;
+                    break;
+
+
+                case ItemFlag.OnTop:
+                    item.HasStackOrder = true;
+                    item.StackOrder = TileStackOrder.Top;
+                    break;
+
+                case ItemFlag.Container:
+                    item.Type = ServerItemType.Container;
+                    break;
+
+                case ItemFlag.Stackable:
+                    item.Stackable = true;
+                    break;
+
+                case ItemFlag.MultiUse:
+                    item.MultiUse = true;
+                    break;
+
+                case ItemFlag.ForceUse:
+                    item.ForceUse = true;
+                    break;
+
+                case ItemFlag.Writable:
+                    item.Readable = true;
+                    item.MaxReadWriteChars = reader.ReadUInt16();
+                    break;
+
+                case ItemFlag.WritableOnce:
+                    item.Readable = true;
+                    item.MaxReadChars = reader.ReadUInt16();
+                    break;
+
+                case ItemFlag.FluidContainer:
+                    item.Type = ServerItemType.Fluid;
+                    break;
+
+                case ItemFlag.Fluid:
+                    item.Type = ServerItemType.Splash;
+                    break;
+
+                case ItemFlag.IsUnpassable:
+                    item.Unpassable = true;
+                    break;
+
+                case ItemFlag.IsUnmoveable:
+                    item.Movable = false;
+                    break;
+
+                case ItemFlag.BlockMissiles:
+                    item.BlockMissiles = true;
+                    break;
+
+                case ItemFlag.BlockPathfinder:
+                    item.BlockPathfinder = true;
+                    break;
+
+                case ItemFlag.Pickupable:
+                    item.Pickupable = true;
+                    break;
+
+                case ItemFlag.HasLight:
+                    item.LightLevel = reader.ReadUInt16();
+                    item.LightColor = reader.ReadUInt16();
+                    break;
+
+                case ItemFlag.FloorChange:
+                    break;
+
+                case ItemFlag.FullGround:
+                    item.FullGround = true;
+                    break;
+
+                case ItemFlag.HasElevation:
+                    item.HasElevation = true;
+                    reader.ReadUInt16(); // Height
+                    break;
+
+                case ItemFlag.HasOffset:
+                    break;
+
+                case ItemFlag.Minimap:
+                    item.MinimapColor = reader.ReadUInt16();
+                    break;
+
+                case ItemFlag.Rotatable:
+                    item.Rotatable = true;
+                    break;
+
+                case ItemFlag.Lying:
+                    break;
+
+                case ItemFlag.Hangable:
+                    item.Hangable = true;
+                    break;
+
+                case ItemFlag.IsVertical:
+                    item.HookSouth = true;
+                    break;
+
+                case ItemFlag.IsHorizontal:
+                    item.HookEast = true;
+                    break;
+
+                case ItemFlag.AnimateAlways:
+                    break;
+
+                case ItemFlag.LensHelp:
+                    ushort opt = reader.ReadUInt16();
+                    if (opt == 1112)
+                    {
+                        item.Readable = true;
+                    }
+                    break;
+
+                case ItemFlag.LastFlag:
+                    break;
+
+                default:
+                    return false;
+            }
+
+            return true;
+        }
+
+
+        private bool readAndSetAttribute_755_772(BinaryReader reader, ClientItem item, ItemFlag flag) {
+
+            switch (flag)
+            {
+                case ItemFlag.Ground:
+                    item.GroundSpeed = reader.ReadUInt16();
+                    item.Type = ServerItemType.Ground;
+                    break;
+
+
+                case ItemFlag.GroundBorder:
+                    item.HasStackOrder = true;
+                    item.StackOrder = TileStackOrder.Border;
+
+                    break;
+
+                case ItemFlag.OnBottom:
+                    item.HasStackOrder = true;
+                    item.StackOrder = TileStackOrder.Bottom;
+                    break;
+
+
+                case ItemFlag.OnTop:
+                    item.HasStackOrder = true;
+                    item.StackOrder = TileStackOrder.Top;
+                    break;
+
+                case ItemFlag.Container:
+                    item.Type = ServerItemType.Container;
+                    break;
+
+                case ItemFlag.Stackable:
+                    item.Stackable = true;
+                    break;
+
+                case ItemFlag.MultiUse:
+                    item.MultiUse = true;
+                    break;
+
+                case ItemFlag.ForceUse:
+                    item.ForceUse = true;
+                    break;
+
+                case ItemFlag.Writable:
+                    item.Readable = true;
+                    item.MaxReadWriteChars = reader.ReadUInt16();
+                    break;
+
+                case ItemFlag.WritableOnce:
+                    item.Readable = true;
+                    item.MaxReadChars = reader.ReadUInt16();
+                    break;
+
+                case ItemFlag.FluidContainer:
+                    item.Type = ServerItemType.Fluid;
+                    break;
+
+                case ItemFlag.Fluid:
+                    item.Type = ServerItemType.Splash;
+                    break;
+
+                case ItemFlag.IsUnpassable:
+                    item.Unpassable = true;
+                    break;
+
+                case ItemFlag.IsUnmoveable:
+                    item.Movable = false;
+                    break;
+
+                case ItemFlag.BlockMissiles:
+                    item.BlockMissiles = true;
+                    break;
+
+                case ItemFlag.BlockPathfinder:
+                    item.BlockPathfinder = true;
+                    break;
+
+                case ItemFlag.Pickupable:
+                    item.Pickupable = true;
+                    break;
+
+                case ItemFlag.Hangable:
+                    item.Hangable = true;
+                    break;
+
+                case ItemFlag.IsVertical:
+                    item.HookEast = true;
+                    break;
+
+                case ItemFlag.IsHorizontal:
+                    item.HookSouth = true;
+                    break;                
+
+                case ItemFlag.Rotatable:
+                    item.Rotatable = true;
+                    break;
+
+                case ItemFlag.HasLight:
+                    item.LightLevel = reader.ReadUInt16();
+                    item.LightColor = reader.ReadUInt16();
+                    break;
+
+                case ItemFlag.DontHide:
+                    break;
+
+                case ItemFlag.FloorChange:
+                    break;
+
+                case ItemFlag.HasOffset:
+                    reader.ReadUInt16(); // OffsetX
+                    reader.ReadUInt16(); // OffsetY
+                    break;
+
+                case ItemFlag.HasElevation:
+                    item.HasElevation = true;
+                    reader.ReadUInt16(); // Height
+                    break;
+
+                case ItemFlag.Lying:
+                    break;
+
+                case ItemFlag.AnimateAlways:
+                    break;
+
+                case ItemFlag.Minimap:
+                    item.MinimapColor = reader.ReadUInt16();
+                    break;
+
+                case ItemFlag.LensHelp:
+                    ushort opt = reader.ReadUInt16();
+                    if (opt == 1112)
+                    {
+                        item.Readable = true;
+                    }
+                    break;
+
+                case ItemFlag.FullGround:
+                    break;
+
+                case ItemFlag.LastFlag:
+                    break;
+
+                default:
+                    return false;
+            }
+
+            return true;
+        }
+
         #endregion
     }
 }

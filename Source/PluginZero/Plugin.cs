@@ -30,7 +30,6 @@ using System.IO;
 
 namespace PluginZero
 {
-
     internal enum ItemFlag : byte
     {
         Ground = 0x00,
